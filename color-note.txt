@@ -1,0 +1,5 @@
+Xanh chủ đạo: blue-500
+Xanh nhạt: blue-400
+Chữ nhạt: slate-600
+Chữ đậm: slate-900
+Trắng: white
