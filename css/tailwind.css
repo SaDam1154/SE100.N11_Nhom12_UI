@@ -7,3 +7,125 @@
         @apply text-slate-600;
     }
 }
+
+/* Begin: add tree css */
+.pull-right {
+    float: right !important;
+}
+.row {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.row::after {
+    content: "";
+    display: block;
+    clear: both;
+} 
+
+.col {
+    float: left;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.col-half {
+    width: 50%;
+}
+
+.addtree-content {
+    font-size: 20px;
+    font-style: italic;
+    margin: 50px 30px 20px;
+    padding: 8px;
+}
+
+.addtree-content .form-control {
+    font-size: 17px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    outline: none;
+}
+
+.addtree-content .form-control:focus {
+    border: 2px solid #000
+}
+
+.addtree-content .block-img {
+    display: block;
+    background-color: #ccc;
+    height: 200px;
+    margin-bottom: 8px;
+    background-size: 100%;
+}
+.addtree-content .block-img img {
+    height: 100%;
+    width: 100%;
+}
+.addtree-content .input-date {
+    margin: -1px 0px;
+}
+
+.col-position {
+    position: relative;
+}
+
+.col-position .lb-value {
+    position: absolute;
+    width: 100%;
+    display: block;
+    border: none;
+    padding: 6px;
+    top: 0;
+    right: 0;
+    text-align: right;
+    user-select: none;
+    color: #ccc;
+}
+
+.form-value:focus + .lb-value{
+    color: #000;
+}
+
+.addtree-content .bnt-close {
+    width: 80%;
+    display: block;
+    float: left;
+    padding: 5px 20px;
+    margin-top: 10px;
+    margin-left: 8px    ;
+    color: #fff;
+    background-color: rgb(249, 9, 9);
+    text-decoration: none;
+    border: none;
+}
+
+.addtree-content .bnt-close:hover {
+    cursor: pointer;
+    color: #000;
+    background-color: #ccc;
+}
+
+.addtree-content .bnt-add {
+    width: 80%;
+    display: block;
+    float: right;
+    padding: 5px 20px;
+    margin-top: 10px;
+    color: #fff;
+    background-color: rgb(9, 249, 117);
+    text-decoration: none;
+    border: none;
+}
+
+.addtree-content .bnt-add:hover {
+    cursor: pointer;
+    color: #000;
+    background-color: #ccc;
+}
+.addtree-content .bnt-img {
+    width: 100%;
+    text-align: center;
+}
+/* End: addtree css */

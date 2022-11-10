@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full w-full">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/css/tailwind.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    </head>
+    <body class="h-full w-full">    
+        <header>Header</header>
+        <main class="p-5">Main</main>
+
+        <div class="addtree-content">
+            <form action="">
+                <div class="row">
+                    <div class="col col-half">
+                        <p class="font-bold">Tên cây</p>
+                        <input type="text" class="form-control" required>
+
+                        <p class="font-bold">Loại cây</p>
+                        <input type="text" class="form-control">
+
+                        <p class="font-bold">Số lượng</p>    
+                        <input type="number" value="1" class="form-control" required>
+                    </div>
+                    <div class="col col-half drag-area"> 
+                        <div class="block-img font-control">
+                            <img src="" alt="" id="image" height="200px">
+                            <input type="file" id="imageFile" hidden onchange="chooseFile(this)"
+                            accept="image/gif, image/ipeg, image/png" name="form-control">
+                        </div>     
+                        <button class="bnt-add form-control bnt-img">Chọn ảnh</button>                                    
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col col-half">
+                        <p class="font-bold">Ngày thêm</p>    
+                        <input type="date" class="form-control input-date">
+                    </div>
+
+                    <div class="col col-half">
+                        <p class="font-bold">Giá</p>
+                        <div class="col-position">
+                            <input type="text" id="value" value="0" class="form-control form-value" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" required>
+                            <label for="value" class="form-control lb-value ">VNĐ</label> 
+                        </div>                   
+                    </div>
+                        
+                </div>
+
+                <div class="row col-half col-bnt pull-right">
+                    <div class="col col-half">
+                        <input class="bnt-close form-control" type="submit" value="Hủy">
+                    </div>
+
+                    <div class="col col-half">
+                        <input class="bnt-add form-control" type="submit" value="Thêm">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!-- Script -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script>
+            const dropArea = document.querySelector('.drag-area');
+            const button = dropArea.querySelector('button');
+            const input = dropArea.querySelector('input') ;
+
+            button.addEventListener('click', ()=>{
+                input.click();
+            })
+
+            function chooseFile(fileInput) {
+                if(fileInput.files && fileInput.files[0]){
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#image').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(fileInput.files[0]);
+                }
+            }
+        </script>
+    </body>
+</html>
