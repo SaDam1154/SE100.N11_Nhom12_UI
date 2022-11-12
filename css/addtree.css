@@ -40,6 +40,11 @@
     border-radius: 8px;
     width: 100%;
     outline: none;
+    margin-bottom: 10px;
+}
+
+.addtree-content label:hover {
+    cursor: pointer;
 }
 
 .addtree-content .form-control:focus {
@@ -82,55 +87,57 @@
     color: #000;
 }
 
-.addtree-content .bnt-close {
-    width: 80%;
-    display: block;
-    float: left;
-    padding: 5px 20px;
-    margin-top: 10px;
-    margin-left: 8px    ;
-    color: #fff;
-    background-color: rgb(249, 9, 9);
-    text-decoration: none;
-    border: none;
-}
-
-.addtree-content .bnt-close:hover {
-    cursor: pointer;
-    color: #000;
-    background-color: #ccc;
-}
-
-.addtree-content .bnt-add {
-    width: 100%;
-    float: right;
-    text-align: center;
-    margin-top: 10px;
-    color: #fff;
-    background-color: rgb(9, 249, 117);
-    text-decoration: none;
-    border: none;
-}
-
-.addtree-content .bnt-add:hover {
-    cursor: pointer;
-    color: #000;
-    background-color: #ccc;
-}
-.addtree-content .bnt-img {
+.addtree-content .bnt {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #fff;
+    border: none;
+    margin-top: 10px;
+}
+
+.addtree-content .bnt:hover {
+    cursor: pointer;
+    color: #000;
+    background-color: #ccc;
+}
+
+.addtree-content .bnt-img {
+    width: 60%;
     position: relative;
+    background-color: rgb(9, 249, 117);
+    margin: auto;
     overflow: hidden;
 }
-.addtree-content .bnt-img input[type="file"]{
+.addtree-content input[type="file"]{
     width: 100%;
     cursor: pointer;
     position: absolute;
     left: 0;
     top: 0;
     opacity: 0;
+}
+.addtree-content .bnt-close {
+    width: 45%;
+    float: left;
+    background-color: rgb(249, 9, 9);
+    border: none;
+}
+
+.addtree-content .bnt-add {
+    width: 45%;
+    float: right;
+    background-color: rgb(59 130 246);
+    border: none;
+}
+
+.bnt i {
+    font-size: 17px;
+    padding-right: 5px;
+}
+
+.addtree-content .bnt:focus {
+    border: none;
 }
 /* End: addtree css */

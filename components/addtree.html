@@ -13,35 +13,35 @@
             <form action="">
                 <div class="row">
                     <div class="col col-half">
-                        <label class="font-bold" for="name">Tên cây</label>
+                        <label class="font-bold unit" for="name">Tên cây</label>
                         <input type="text" id="name" class="form-control" required>
 
-                        <label class="font-bold" for="type">Loại cây</label>
+                        <label class="font-bold unit" for="type">Loại cây</label>
                         <input type="text" class="form-control" id="type">
 
-                        <label class="font-bold" for="quantity">Số lượng</label>    
+                        <label class="font-bold unit" for="quantity">Số lượng</label>    
                         <input type="number" value="1" class="form-control" id="quantity" required>
                     </div>
                     
                     <div class="col col-half drag-area"> 
                         <div class="block-img">
-                            <img src="" alt="" id="image" width="auto" height="200px">                         
-                            <button class="bnt-add form-control bnt-img">Chọn ảnh
-                                <input type="file" id="imageFile" onchange="chooseFile(this)"
-                                accept="image/gif, image/ipeg, image/png" required>
-                            </button> 
+                            <img src="" alt="" id="image" height="200px" class="mb-3">
+                            <button class="form-control bnt bnt-img">Chọn ảnh
+                                <input type="file" name="" id="imageFile" onchange="chooseFile(this)"
+                                accept="image/gif, image/ipeg, image/png">
+                            </button>  
                         </div>                                        
                     </div>
                 </div>
 
-                <div class="row mt-5">
+                <div class="row mt-16">
                     <div class="col col-half">
-                        <label class="font-bold" for="date">Ngày thêm</label>    
+                        <label class="font-bold unit" for="date">Ngày thêm</label>    
                         <input type="date" class="form-control input-date" id="date">
                     </div>
 
                     <div class="col col-half">
-                        <label class="font-bold" for="value">Giá</label>
+                        <label class="font-bold unit" for="value">Giá</label>
                         <div class="col-position">
                             <input type="text" id="value" value="0" class="form-control form-value" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" required>
                             <label for="value" class="form-control lb-value ">VNĐ</label> 
@@ -50,13 +50,21 @@
                         
                 </div>
 
-                <div class="row col-half pull-right mt-3" >
-                    <div class="col col-half">
-                        <input class="bnt-close form-control" type="submit" value="Hủy">
-                    </div>
+                <div class="row mt-4">
+                    <div class="col col-half pull-right">
+                        <button type="submit" class="bnt bnt-close form-control">
+                            <span class="button-icon">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </span> 
+                            <span class="button-text">Hủy</span>
+                        </button>
 
-                    <div class="col col-half">
-                        <input class="bnt-add form-control" type="submit" value="Thêm">
+                        <button type="submit" class="bnt bnt-add form-control">
+                            <span class="button-icon">              
+                                <i class="fa-solid fa-circle-plus"></i>
+                            </span> 
+                            <span class="button-text">Thêm</span>
+                        </button>
                     </div>
                 </div>
             </form>

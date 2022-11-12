@@ -47,6 +47,9 @@
     border: 2px solid #000;
 }
 
+.detailcus-content label:hover {
+    cursor: pointer;
+}
 .detailcus-content .id-cus {
     height: 37.5px;
     background-color: #ccc;
