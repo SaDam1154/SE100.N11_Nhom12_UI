@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full w-full">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/css/tailwind.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+        <link rel="stylesheet" href="/css/rule.css" />
+    </head>
+    <body class="h-full w-full">
+        <div class="flex h-screen">
+            <!-- SIDEBAR -->
+            <!-- <iframe src="/components/sidebar.html" frameborder="0" class="h-full w-60"></iframe> -->
+
+            <!-- RIGHT -->
+            <div class="rule-content">
+                <div class="toolbar-content">
+                    <label for="" class="name-list font-bold">Danh sách chức vụ</label>
+                    <button type="button" class="bnt bnt-reload">
+                        <span class="button-icon">              
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </span> 
+                        <span class="button-text">Tải lại</span>
+                    </button>
+
+                    <div class="right">                      
+                        <input type="text" class="input-search">
+
+                        <button type="button" class="bnt bnt-search">
+                            <span class="button-icon">              
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </span> 
+                        </button>
+
+                        <button type="button" class="bnt bnt-filter">
+                            <span class="button-icon">                                                      
+                                <i class="fas fa-filter"></i>
+                            </span> 
+                    </button>
+                    </div>
+                </div>
+                <div class="table-content mt-5">
+                    <table class="table">
+                        <thead class="thead-first">
+                            <tr>
+                                <th class="id-table">ID</th>
+                                <th>Tên chức vụ</th>
+                                <th class="button-action">
+                                    <button type="button" class="bnt bnt-add">
+                                        <span class="button-icon">
+                                            <i class="fa-solid fa-circle-plus"></i> 
+                                        </span> 
+                                        <span class="button-text">Thêm</span>
+                                    </button>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <thead>
+                            <tr>
+                                <th class="id-table">ID</th>
+                                <th>Admin</th>
+                                <th class="button-action">
+                                    <button type="button" class="bnt bnt-update">
+                                        <span class="button-icon">
+                                            <i class='fas fa-file-export'></i>  
+                                        </span> 
+                                        <span class="button-text">Sửa</span>
+                                    </button>
+        
+                                    <button type="button" class="bnt bnt-delete">
+                                        <span class="button-icon">              
+                                            <i class='fas fa-file-export'></i>  
+                                        </span> 
+                                        <span class="button-text">Xóa</span>
+                                    </button>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <thead>
+                            <tr>
+                                <th class="id-table">ID</th>
+                                <th>Tên chức vụ</th>
+                                <th class="button-action">
+                                    <button type="button" class="bnt bnt-update">
+                                        <span class="button-icon">
+                                            <i class='fas fa-file-export'></i>  
+                                        </span> 
+                                        <span class="button-text">Sửa</span>
+                                    </button>
+        
+                                    <button type="button    " class="bnt bnt-delete">
+                                        <span class="button-icon">              
+                                            <i class='fas fa-file-export'></i>  
+                                        </span> 
+                                        <span class="button-text">Xóa</span>
+                                    </button>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>  
+            </div>
+        </div>
+    </body>
+</html>

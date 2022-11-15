@@ -1,0 +1,162 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
+.rule-content {
+    width: 100%;
+    margin: 0 30px;
+}
+
+.rule-content .toolbar-content {
+    content: " ";
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+}
+
+.toolbar-content .name-list {
+    font-size: 17px;
+    line-height: 35px;
+}
+
+.toolbar-content .right {
+    width: 65%;
+    float: right;
+}
+.toolbar-content input[type="text"] {
+    width: 75%;
+    height: 100%;
+    font-size: 17px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.toolbar-content .bnt {
+    height: 100%;
+    width: 10%;
+    background-color: #ccc;
+    line-height: 35px;
+    font-size: 17px; 
+    margin: 0 4px; 
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.toolbar-content .bnt:hover {
+    cursor: pointer;
+    color: #000;
+    background-color: #ccc;
+    border: 1px solid #000;
+}
+
+.bnt i {
+    font-size: 17px;
+    padding-right: 5px;
+}
+
+.toolbar-content .bnt-reload {
+    margin-left: 14px;
+}
+
+.toolbar-content .bnt-search {
+    margin-left: 10px;
+}
+
+.toolbar-content .bnt-filter {
+    float: right;
+    margin-right: 0px;
+}
+
+.rule-content .table-content {
+    width: 100%;
+}
+
+.table-content .table {
+    width: 100%;
+}
+
+.table thead {
+    border-bottom: 1.5px solid rgb(225, 222, 222);
+    line-height: 40px;
+}
+.table .thead-first {
+    border: none;
+    background-color: rgb(59 130 246);
+    color: #fff;
+}
+.table-content th {
+    padding: 5px 10px;
+    width: 33.3333%;
+    text-align: left;
+    justify-content: center;
+}
+.table-content .id-table {
+    width: 15%;
+}
+
+.table .bnt {   
+    width: 30%;
+    color: #fff;
+    background-color: #000;
+    border: none;
+    border-radius: 8px;
+}
+
+.rule-content .bnt:hover {
+    cursor: pointer;
+    color: #000;
+    border: 0.5px solid #ccc;
+    background-color: #ccc;
+}
+
+.table .bnt-add {
+    width: 50%;
+    border-radius: 20px;
+    background: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.table .bnt-add:hover {
+    color: #fff;
+    opacity: 0.9;
+}
+.table .bnt-add::before {
+    background-color: rgb(33, 247, 129);
+    content: " ";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 0;
+    z-index: -1;
+    transition: 0.7s;
+    bottom: 0;
+    border-radius: 50% 50% 0 0;
+}
+.table .bnt-add:hover::before {
+    height: 180%;
+}
+
+.table .bnt-update {
+    background-color: rgb(8, 226, 106);
+}
+
+.table .bnt-delete {
+    background-color: rgb(249, 9, 9);
+}
+
+.bnt i {
+    font-size: 17px;
+    padding-right: 5px;
+}  
+
+.table tr .button-action {
+    text-align: center;
+    justify-content: center;
+    width: 40%;
+}
+
+
