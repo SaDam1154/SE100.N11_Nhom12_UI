@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full w-full">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/css/tailwind.css" />
+        <link rel="stylesheet" href="/css/listtree.css" />
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        />
+        <link rel="stylesheet" href="/css/addtree.css" />
+    </head>
+    <body class="h-full w-full">
+        <div class="list_tree_main_window">
+            <div class="main_window__table_tree">
+                <h1 class="text-3xl font-bold text-slate-900">Danh sách cây</h1>
+                <table class="list_tree">
+                    <!-- Nhóm các column -->
+                    <colgroup>
+                        <col span="1" style="width: 10%" />
+                        <col span="1" style="width: 20%" />
+                        <col span="1" style="width: 20%" />
+                        <col span="1" style="width: 20%" />
+                        <col span="1" style="width: 20%" />
+                        <col span="1" style="width: 10%" />
+                    </colgroup>
+
+                    <!-- Content thead, tbody -->
+                    <thead class="list_tree_heading">
+                        <tr>
+                            <th scope="col" class="heading_cell">STT</th>
+                            <th scope="col" class="heading_cell">Mã số</th>
+                            <th scope="col" class="heading_cell">Loại cây</th>
+                            <th scope="col" class="heading_cell">Tên cây</th>
+                            <th scope="col" class="heading_cell">Giá (VND)</th>
+                            <th scope="col" class="heading_cell"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="list_tree_body">
+                        <tr>
+                            <td class="data_cell">1</td>
+                            <td class="data_cell">10001</td>
+                            <td class="data_cell">Xương rồng</td>
+                            <td class="data_cell">Cây cảnh</td>
+                            <td class="data_cell">4.500.000</td>
+                            <td class="data_cell">
+                                <div class="btn-form">
+                                    <button
+                                        type="submit"
+                                        class="bnt bnt-add form-control"
+                                    >
+                                        <span class="button-icon">
+                                            <i
+                                                class="fa-solid fa-circle-plus"
+                                            ></i>
+                                        </span>
+                                        <span class="button-text">Sửa</span>
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        class="bnt bnt-close form-control"
+                                    >
+                                        <span class="button-icon">
+                                            <i
+                                                class="fa-solid fa-circle-xmark"
+                                            ></i>
+                                        </span>
+                                        <span class="button-text">Xóa</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="data_cell">2</td>
+                            <td class="data_cell">10002</td>
+                            <td class="data_cell">Sen đá</td>
+                            <td class="data_cell">Cây cảnh</td>
+                            <td class="data_cell">4.500.000</td>
+                            <td class="data_cell">
+                                <button
+                                    type="submit"
+                                    class="bnt bnt-add form-control"
+                                >
+                                    <span class="button-icon">
+                                        <i class="fa-solid fa-circle-plus"></i>
+                                    </span>
+                                    <span class="button-text">Sửa</span>
+                                </button>
+                                <button
+                                    type="submit"
+                                    class="bnt bnt-close form-control"
+                                >
+                                    <span class="button-icon">
+                                        <i class="fa-solid fa-circle-xmark"></i>
+                                    </span>
+                                    <span class="button-text">Xóa</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="data_cell">3</td>
+                            <td class="data_cell">10003</td>
+                            <td class="data_cell">Cây Nhật Mạt Hương</td>
+                            <td class="data_cell">Sen đá</td>
+                            <td class="data_cell">4.500.000</td>
+                            <td class="data_cell">
+                                <div class="btn-form">
+                                    <button
+                                        type="submit"
+                                        class="bnt bnt-add form-control"
+                                    >
+                                        <span class="button-icon">
+                                            <i
+                                                class="fa-solid fa-circle-plus"
+                                            ></i>
+                                        </span>
+                                        <span class="button-text">S ửa</span>
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        class="bnt bnt-close form-control"
+                                    >
+                                        <span class="button-icon">
+                                            <i
+                                                class="fa-solid fa-circle-xmark"
+                                            ></i>
+                                        </span>
+                                        <span class="button-text">Xóa</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="data_cell">4</td>
+                            <td class="data_cell">10004</td>
+                            <td class="data_cell">Cây sen đá kim cương tím</td>
+                            <td class="data_cell">Sen đá</td>
+                            <td class="data_cell">4.500.000</td>
+                            <td class="data_cell">
+                                <div class="btn-form">
+                                    <button
+                                        type="submit"
+                                        class="bnt bnt-add form-control"
+                                    >
+                                        <span class="button-icon">
+                                            <i
+                                                class="fa-solid fa-circle-plus"
+                                            ></i>
+                                        </span>
+                                        <span class="button-text">Sửa</span>
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        class="bnt bnt-close form-control"
+                                    >
+                                        <span class="button-icon">
+                                            <i
+                                                class="fa-solid fa-circle-xmark"
+                                            ></i>
+                                        </span>
+                                        <span class="button-text">Xóa</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="data_cell">5</td>
+                            <td class="data_cell">10005</td>
+                            <td class="data_cell">Sen đá Giva</td>
+                            <td class="data_cell">Sen đá</td>
+                            <td class="data_cell">4.500.000</td>
+                            <td class="btn_cell">
+                                <div class="btn-form">
+                                    <button
+                                        type="submit"
+                                        class="bnt bnt-add form-control"
+                                    >
+                                        <span class="button-icon">
+                                            <i
+                                                class="fa-solid fa-circle-plus"
+                                            ></i>
+                                        </span>
+                                        <span class="button-text">Sửa</span>
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        class="bnt bnt-close form-control"
+                                    >
+                                        <span class="button-icon">
+                                            <i
+                                                class="fa-solid fa-circle-xmark"
+                                            ></i>
+                                        </span>
+                                        <span class="button-text">Xóa</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- *@ -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
