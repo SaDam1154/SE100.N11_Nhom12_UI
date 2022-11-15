@@ -5,8 +5,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="/css/tailwind.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-        <link rel="stylesheet" href="/css/detailtree.css">
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        />
+        <link rel="stylesheet" href="/css/detailtree.css" />
     </head>
     <body class="h-full w-full">
         <div class="detailtree-content">
@@ -14,90 +17,134 @@
                 <div class="row">
                     <div class="col col-half">
                         <label for="input-code" class="font-bold">Mã số</label>
-                        <input type="text" class="form-control input-code">
+                        <input type="text" class="form-control input-code" />
                     </div>
 
-                    <div class="col col-half blockdetail-img"> 
+                    <div class="col col-half blockdetail-img">
                         <div class="blockdetail-img">
-                            <img src="" alt="" id="image" height="200px" class="mb-3">
-                            <button class="form-control bnt bnt-img">Chọn ảnh
-                                <input type="file" name="" id="imageFile" onchange="chooseFile(this)"
-                                accept="image/gif, image/ipeg, image/png">
-                            </button>  
-                        </div>                                 
+                            <img
+                                src=""
+                                alt=""
+                                id="image"
+                                height="200px"
+                                class="mb-3"
+                            />
+                            <button class="form-control bnt bnt-img">
+                                Chọn ảnh
+                                <input
+                                    type="file"
+                                    name=""
+                                    id="imageFile"
+                                    onchange="chooseFile(this)"
+                                    accept="image/gif, image/ipeg, image/png"
+                                />
+                            </button>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row mt-14">
                     <div class="col col-half">
                         <label for="type" class="font-bold">Loại cây</label>
-                        <input type="text" class="form-control col-left" id="type">
+                        <input
+                            type="text"
+                            class="form-control col-left"
+                            id="type"
+                        />
                     </div>
                     <div class="col col-half">
                         <label for="name" class="font-bold">Tên cây</label>
-                        <input type="text" class="form-control" id="name">
+                        <input type="text" class="form-control" id="name" />
                     </div>
                 </div>
 
                 <div class="row mt-4">
                     <div class="col col-half">
                         <label for="quantity" class="font-bold">Số lượng</label>
-                        <input type="number" class="form-control col-left" id="quantity">
+                        <input
+                            type="number"
+                            class="form-control col-left"
+                            id="quantity"
+                        />
                     </div>
                     <div class="col col-half">
-                        <label for="price-one" class="font-bold">Giá mỗi cây</label>
+                        <label for="price-one" class="font-bold"
+                            >Giá mỗi cây</label
+                        >
                         <div class="field-unit">
-                            <input type="text" class="form-control form-price" id="price-one" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
-                            <label for="price-one" class="form-control vnd">VNĐ</label>
-                        </div>                 
+                            <input
+                                type="text"
+                                class="form-control form-price"
+                                id="price-one"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                            />
+                            <label for="price-one" class="form-control vnd"
+                                >VNĐ</label
+                            >
+                        </div>
                     </div>
                 </div>
 
                 <div class="row mt-4">
                     <div class="col col-half">
-                        <label for="date" class="font-bold">Ngày nhập cây</label>
-                        <input type="date" class="form-control col-left" id="date">
+                        <label for="date" class="font-bold"
+                            >Ngày nhập cây</label
+                        >
+                        <input
+                            type="date"
+                            class="form-control col-left"
+                            id="date"
+                        />
                     </div>
                     <div class="col col-half">
                         <label for="price-all" class="font-bold">Giá trị</label>
                         <div class="field-unit">
-                            <input type="text" class="form-control form-price" id="price-all" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
-                            <label for="price-all" class="form-control vnd">VNĐ</label>
-                        </div>                 
+                            <input
+                                type="text"
+                                class="form-control form-price"
+                                id="price-all"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                            />
+                            <label for="price-all" class="form-control vnd"
+                                >VNĐ</label
+                            >
+                        </div>
                     </div>
                 </div>
-
 
                 <div class="row mt-4">
                     <div class="col col-half pull-right">
                         <button type="submit" class="bnt bnt-back form-control">
                             <span class="button-icon">
                                 <i class="fa-solid fa-circle-xmark"></i>
-                            </span> 
+                            </span>
                             <span class="button-text">Quay lại </span>
                         </button>
 
-                        <button type="submit" class="bnt bnt-update form-control">
-                            <span class="button-icon">              
+                        <button
+                            type="submit"
+                            class="bnt bnt-update form-control"
+                        >
+                            <span class="button-icon">
                                 <i class="fa-solid fa-circle-plus"></i>
-                            </span> 
+                            </span>
                             <span class="button-text">Cập nhật</span>
                         </button>
                     </div>
                 </div>
             </form>
         </div>
-    
+
         <!-- Script -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-        <script>        
+        <script>
             function chooseFile(fileInput) {
-                if(fileInput.files && fileInput.files[0]){
+                if (fileInput.files && fileInput.files[0]) {
                     var fileReader = new FileReader();
-        
+
                     fileReader.onload = function (e) {
-                        $('#image').attr('src', e.target.result);
-                    }
+                        $("#image").attr("src", e.target.result);
+                    };
                     fileReader.readAsDataURL(fileInput.files[0]);
                 }
             }
