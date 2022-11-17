@@ -1,19 +1,38 @@
-import Header from "./layouts/components/Header";
-import Sidebar from "./layouts/components/Sidebar";
-
+import { Fragment } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { publicRoutes } from './routes';
+import DefaultLayout from './layouts/DefaultLayout';
 
 function App() {
     return (
-        <div className="flex h-screen">
-            <Sidebar></Sidebar>
+        <Router>
+            <div className="App">
+                <Routes>
+                    {publicRoutes.map((route, index) => {
+                        const Page = route.component;
+                        let Layout = DefaultLayout;
 
-            <div className="flex h-screen flex-1 flex-col">
-                <Header>Trang chủ</Header>
-                <main className="flex-1 p-5">
-                    Nội dung gì đó ở đây
-                </main>
+                        if (route.layout) {
+                            Layout = route.layout;
+                        } else if (route.layout === null) {
+                            Layout = Fragment;
+                        }
+
+                        return (
+                            <Route
+                                key={index}
+                                path={route.path}
+                                element={
+                                    <Layout {...route.props}>
+                                        <Page />
+                                    </Layout>
+                                }
+                            />
+                        );
+                    })}
+                </Routes>
             </div>
-        </div>
+        </Router>
     );
 }
 
