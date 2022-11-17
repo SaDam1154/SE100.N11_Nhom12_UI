@@ -41,7 +41,7 @@ function GroupMenu({ groupMenu }) {
                             key={index}
                             className={({ isActive }) =>
                                 clsx('flex cursor-pointer items-center pl-10 pr-3 text-white hover:underline', {
-                                    underline: isActive,
+                                    'underline font-semibold': isActive,
                                 })
                             }
                             to={groupMenu.main.link + item.link}
