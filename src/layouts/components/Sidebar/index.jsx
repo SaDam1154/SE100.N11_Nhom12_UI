@@ -1,31 +1,38 @@
-import GroupMenu from './GroupMenu';
+import GroupMenu from "./GroupMenu";
 
 const groupMenus = [
     {
         main: {
-            iconClassname: 'fa-solid fa-house',
-            text: 'Trang chủ',
-            link: '/',
+            iconClassname: "fa-solid fa-house",
+            text: "Trang chủ",
+            link: "/",
         },
     },
     {
         main: {
-            iconClassname: 'fa-solid fa-box-open',
-            text: 'Sản phẩm',
-            link: '/product'
+            iconClassname: "fa-solid fa-box-open",
+            text: "Sản phẩm",
+            link: "/product",
         },
         children: [
             {
-                iconClassname: 'fa-solid fa-list',
-                text: 'Danh sách',
-                link: '/',
+                iconClassname: "fa-solid fa-list",
+                text: "Danh sách",
+                link: "/",
             },
             {
-                iconClassname: 'fa-solid fa-circle-plus',
-                text: 'Thêm',
-                link: '/add',
+                iconClassname: "fa-solid fa-circle-plus",
+                text: "Thêm",
+                link: "/add",
             },
         ],
+    },
+    {
+        main: {
+            iconClassname: "fa-solid fa-users",
+            text: "Khách hàng",
+            link: "/customers",
+        },
     },
 ];
 
