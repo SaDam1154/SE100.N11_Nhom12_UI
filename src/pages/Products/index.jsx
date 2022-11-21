@@ -15,7 +15,7 @@ const products = [
     },
     {
         num: 3,
-        id: 1000003,
+        id: 1000009,
         type: "Cây sen đá kim cương tím",
         name: "Sen đá",
         price: 450000,
@@ -39,36 +39,36 @@ const products = [
 function Products() {
     return (
         <div className="wrapper">
-            <div class="flex">
+            <div className="flex">
                 <label className="text-2xl font-bold text-slate-800">
                     Danh sách cây
                 </label>
                 <button
                     type="button"
-                    class="flex  mx-2  items-center justify-center rounded px-4 py-1.5 text-gray-800 hover:bg-blue-400"
+                    className="flex  mx-2  items-center justify-center rounded px-4 py-1.5 text-gray-800 hover:bg-blue-400"
                 >
-                    <span class="button-icon">
-                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                    <span className="button-icon">
+                        <i className="fa fa-refresh" aria-hidden="true"></i>
                     </span>
-                    <span class="">Tải lại</span>
+                    <span className="">Tải lại</span>
                 </button>
                 <div className="flex grow">
-                    <input type="text" class="grow  rounded bg-gray-300" />
+                    <input type="text" className="grow  rounded bg-gray-300" />
 
-                    <button type="button" class="">
-                        <span class="px-4 rounded">
-                            <i class="fa fa-search" aria-hidden="true"></i>
+                    <button type="button" className="">
+                        <span className="px-4 rounded">
+                            <i className="fa fa-search" aria-hidden="true"></i>
                         </span>
                     </button>
 
-                    <button type="button" class="px-5">
-                        <span class="">
-                            <i class="fas fa-filter"></i>
+                    <button type="button" className="px-5">
+                        <span className="">
+                            <i className="fas fa-filter"></i>
                         </span>
                     </button>
                 </div>
 
-                <button className=" flex items-center justify-center rounded bg-green-600 px-4 py-1.5 mr-4 text-white hover:bg-green-400">
+                <button className="flex items-center justify-center rounded bg-green-600 px-4 py-1.5 text-white hover:bg-green-500">
                     <span className="pr-1">
                         <i className="fa-solid fa-circle-plus"></i>
                     </span>
@@ -98,7 +98,7 @@ function Products() {
 
                 <tbody className="list_tree_body">
                     {products.map((product) => (
-                        <tr className="border-b cursor-pointer border-slate-200 hover:bg-slate-100">
+                        <tr key={product.id} className="border-b cursor-pointer border-slate-200 hover:bg-slate-100">
                             <td className="py-2 text-center">{product.num}</td>
                             <td className="py-2 text-center">{product.id}</td>
                             <td className="py-2 text-center">{product.type}</td>
