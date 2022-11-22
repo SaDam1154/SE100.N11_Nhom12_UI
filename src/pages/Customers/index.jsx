@@ -1,3 +1,7 @@
+import { Fragment } from "react";
+import { Link } from "react-router-dom";
+import { Popover } from "@headlessui/react";
+
 const customers = [
     {
         num: 1,
@@ -107,13 +111,18 @@ const customers = [
 ];
 
 function Customers() {
-    return ( 
+    return (
         <div>
             <div className="flex space-x-4">
                 {/* tite + reload btn */}
                 <div className="flex">
-                    <label className="text-2xl font-bold text-slate-800">Danh sách khách hàng</label>
-                    <button type="button" className="ml-3 text-gray-800 hover:underline">
+                    <label className="text-2xl font-bold text-slate-800">
+                        Danh sách khách hàng
+                    </label>
+                    <button
+                        type="button"
+                        className="ml-3 text-gray-800 hover:underline"
+                    >
                         <span className="font-sm pr-1">
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </span>
@@ -125,7 +134,11 @@ function Customers() {
                 <div className="flex grow">
                     {/* Search */}
                     <div className="mr-2 flex grow">
-                        <input type="text" className="text-input grow" placeholder="Tìm kiếm khách hàng" />
+                        <input
+                            type="text"
+                            className="text-input grow"
+                            placeholder="Tìm kiếm khách hàng"
+                        />
 
                         <button className="btn btn-md bg-slate-200 !px-3 text-slate-600 hover:bg-slate-300">
                             <i className="fa fa-search" aria-hidden="true"></i>
@@ -136,22 +149,25 @@ function Customers() {
                         <i className="fas fa-filter"></i>
                     </button>
 
-                    <button className="btn btn-md bg-green-600 hover:bg-green-500">
+                    <Link
+                        to="/"
+                        className="btn btn-md bg-green-600 hover:bg-green-500"
+                    >
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
                         <span>Thêm khách hàng</span>
-                    </button>
+                    </Link>
                 </div>
             </div>
             <table className="mt-4 w-full">
                 <colgroup>
-                    <col span="1" style={{ width: '10%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '10%' }} />
+                    <col span="1" style={{ width: "10%" }} />
+                    <col span="1" style={{ width: "20%" }} />
+                    <col span="1" style={{ width: "20%" }} />
+                    <col span="1" style={{ width: "20%" }} />
+                    <col span="1" style={{ width: "20%" }} />
+                    <col span="1" style={{ width: "10%" }} />
                 </colgroup>
 
                 <thead className="h-11 rounded bg-blue-500 text-white">
@@ -167,17 +183,28 @@ function Customers() {
 
                 <tbody>
                     {customers.map((customers) => (
-                        <tr key={customers.id} className="cursor-pointer border-b border-slate-200 hover:bg-slate-100">
-                            <td className="py-2 text-center">{customers.num}</td>
-                            <td className="py-2 text-center">{customers.id}</td>
-                            <td className="py-2 text-center">{customers.name}</td>
-                            <td className="py-2 text-center">{customers.phone}</td>
-                            <td className="py-2 text-center">{customers.address}</td>
+                        <tr
+                            key={customers.id}
+                            className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                        >
                             <td className="py-2 text-center">
-                                <div className="flex">
+                                {customers.num}
+                            </td>
+                            <td className="py-2 text-center">{customers.id}</td>
+                            <td className="py-2 text-center">
+                                {customers.name}
+                            </td>
+                            <td className="py-2 text-center">
+                                {customers.phone}
+                            </td>
+                            <td className="py-2 text-center">
+                                {customers.address}
+                            </td>
+                            <td className="py-2 text-center">
+                                <div className="flex justify-end">
                                     <button className="btn btn-sm bg-blue-500 hover:bg-blue-400">
                                         <span className="pr-1">
-                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <i className="fa-solid fa-pen-to-square"></i>
                                         </span>
                                         <span>Sửa</span>
                                     </button>
@@ -194,7 +221,7 @@ function Customers() {
                 </tbody>
             </table>
         </div>
-    )
+    );
 }
 
 export default Customers;

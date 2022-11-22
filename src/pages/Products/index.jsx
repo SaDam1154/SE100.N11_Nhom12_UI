@@ -1,53 +1,69 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Popover } from '@headlessui/react';
+import { Listbox, Popover } from '@headlessui/react';
+import clsx from 'clsx';
+
 
 const products = [
     {
         num: 1,
         id: 1000001,
-        type: 'Cây cảnh',
-        name: 'Xương rồng',
+        type: "Cây cảnh",
+        name: "Xương rồng",
         price: 450000,
     },
     {
         num: 2,
         id: 1000003,
-        type: 'Cây Nhật Mạt Hương',
-        name: 'Sen đá',
+        type: "Cây Nhật Mạt Hương",
+        name: "Sen đá",
         price: 450000,
     },
     {
         num: 3,
         id: 1000003,
-        type: 'Cây sen đá kim cương tím',
-        name: 'Sen đá',
+        type: "Cây sen đá kim cương tím",
+        name: "Sen đá",
         price: 450000,
     },
     {
         num: 4,
         id: 1000004,
-        type: 'Sen đá Giva',
-        name: 'Sen đá',
+        type: "Sen đá Giva",
+        name: "Sen đá",
         price: 450000,
     },
     {
         num: 5,
         id: 1000005,
-        type: 'Cây Bình An',
-        name: 'Dây leo',
+        type: "Cây Bình An",
+        name: "Dây leo",
         price: 450000,
     },
 ];
 
+const people = [
+    { id: 1, name: 'Durward Reynolds' },
+    { id: 2, name: 'Kenton Towne' },
+    { id: 3, name: 'Therese Wunsch' },
+    { id: 4, name: 'Benedict Kessler' },
+    { id: 5, name: 'Katelyn Rohan' },
+];
+
 function Products() {
+    const [selectedPeople, setSelectedPeople] = useState([people[0], people[1]]);
     return (
         <div>
             <div className="flex space-x-4">
                 {/* tite + reload btn */}
                 <div className="flex">
-                    <label className="text-2xl font-bold text-slate-800">Danh sách cây</label>
-                    <button type="button" className="ml-3 text-gray-800 hover:underline">
+                    <label className="text-2xl font-bold text-slate-800">
+                        Danh sách cây
+                    </label>
+                    <button
+                        type="button"
+                        className="ml-3 text-gray-800 hover:underline"
+                    >
                         <span className="font-sm pr-1">
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </span>
@@ -59,7 +75,11 @@ function Products() {
                 <div className="flex grow">
                     {/* Search */}
                     <div className="mr-2 flex grow">
-                        <input type="text" className="text-input grow" placeholder="Tìm kiếm sản phẩm" />
+                        <input
+                            type="text"
+                            className="text-input grow"
+                            placeholder="Tìm kiếm sản phẩm"
+                        />
 
                         <button className="btn btn-md bg-slate-200 !px-3 text-slate-600 hover:bg-slate-300">
                             <i className="fa fa-search" aria-hidden="true"></i>
@@ -71,16 +91,52 @@ function Products() {
                             <i className="fas fa-filter"></i>
                         </Popover.Button>
 
-                        <Popover.Panel as="div" className="absolute right-0 z-10 rounded bg-white p-5 shadow border">
-                            <p>fasdfasdfasdfasdfsad</p>
-                            <p>fasdfasdfasdfasdfsad</p>
-                            <p>fasdfasdfasdfasdfsad</p>
-                            <p>fasdfasdfasdfasdfsad</p>
-                            <p>fasdfasdfasdfasdfsad</p>
+                        <Popover.Panel
+                            as="div"
+                            className="absolute right-0 z-10 min-w-[280px] max-w-[320px] rounded border bg-white px-4 py-3 shadow"
+                        >
+                            <h2 className="mb-2 text-lg font-semibold">Lọc sản phẩm</h2>
+                            <hr />
+                            <div className="mt-3 space-x-2">
+                                <div>
+                                    <Listbox value={selectedPeople} onChange={setSelectedPeople} multiple>
+                                        <Listbox.Button
+                                            as="div"
+                                            className="text-input flex min-h-[36px] cursor-pointer items-center"
+                                        >
+                                            <div className='flex-1 mr-2'>{`Loại cây (${selectedPeople.length})`}</div>
+                                            <i className="fa-solid fa-chevron-down"></i>
+                                        </Listbox.Button>
+                                        <Listbox.Options>
+                                            {people.map((person) => (
+                                                <Listbox.Option
+                                                    key={person.id}
+                                                    value={person}
+                                                    className="cursor-pointer hover:text-blue-500"
+                                                >
+                                                    {({ selected }) => (
+                                                        <div className="flex items-center">
+                                                            <i
+                                                                className={clsx('fa-solid fa-check pr-2', {
+                                                                    'opacity-0': !selected,
+                                                                })}
+                                                            ></i>
+                                                            <span>{person.name}</span>
+                                                        </div>
+                                                    )}
+                                                </Listbox.Option>
+                                            ))}
+                                        </Listbox.Options>
+                                    </Listbox>
+                                </div>
+                            </div>
                         </Popover.Panel>
                     </Popover>
 
-                    <Link to="/product/add" className="btn btn-md bg-green-600 hover:bg-green-500">
+                    <Link
+                        to="/product/add"
+                        className="btn btn-md bg-green-600 hover:bg-green-500"
+                    >
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
@@ -90,12 +146,12 @@ function Products() {
             </div>
             <table className="mt-4 w-full">
                 <colgroup>
-                    <col span="1" style={{ width: '10%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '10%' }} />
+                    <col span="1" style={{ width: "10%" }} />
+                    <col span="1" style={{ width: "20%" }} />
+                    <col span="1" style={{ width: "20%" }} />
+                    <col span="1" style={{ width: "20%" }} />
+                    <col span="1" style={{ width: "20%" }} />
+                    <col span="1" style={{ width: "10%" }} />
                 </colgroup>
 
                 <thead className="h-11 rounded bg-blue-500 text-white">
@@ -111,17 +167,20 @@ function Products() {
 
                 <tbody>
                     {products.map((product) => (
-                        <tr key={product.id} className="cursor-pointer border-b border-slate-200 hover:bg-slate-100">
+                        <tr
+                            key={product.id}
+                            className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                        >
                             <td className="py-2 text-center">{product.num}</td>
                             <td className="py-2 text-center">{product.id}</td>
                             <td className="py-2 text-center">{product.type}</td>
                             <td className="py-2 text-center">{product.name}</td>
                             <td className="py-2 text-center">{product.price}</td>
                             <td className="py-2 text-center">
-                                <div className="flex">
+                                <div className="flex justify-end">
                                     <button className="btn btn-sm bg-blue-500 hover:bg-blue-400">
                                         <span className="pr-1">
-                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <i className="fa-solid fa-pen-to-square"></i>
                                         </span>
                                         <span>Sửa</span>
                                     </button>
