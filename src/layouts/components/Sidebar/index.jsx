@@ -25,6 +25,10 @@ const groupMenus = [
                 text: "Thêm",
                 link: "/add",
             },
+            {
+                text: "detail tam",
+                link: "/detailtree",
+            },
         ],
     },
     {

@@ -6,6 +6,7 @@ import Products from "../pages/Products";
 import AddProduct from "../pages/AddProduct";
 import Customers from "../pages/Customers";
 import Rules from "../pages/Rules";
+import DetailTree from "../pages/DetailTree";
 
 // Public routes
 const publicRoutes = [
@@ -19,6 +20,13 @@ const publicRoutes = [
     {
         path: "/product",
         component: Products,
+        props: {
+            heading: "Danh sách sản phẩm",
+        },
+    },
+    {
+        path: "/product/detailtree",
+        component: DetailTree,
         props: {
             heading: "Danh sách sản phẩm",
         },
