@@ -121,7 +121,7 @@ function Customers() {
                                 <div className="flex">
                                     <button className="btn btn-sm bg-blue-500 hover:bg-blue-400">
                                         <span className="pr-1">
-                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <i className="fa-solid fa-pen-to-square"></i>
                                         </span>
                                         <span>Sửa</span>
                                     </button>

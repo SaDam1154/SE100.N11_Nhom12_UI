@@ -1,6 +1,7 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Popover } from '@headlessui/react';
+import { Listbox, Popover } from '@headlessui/react';
+import clsx from 'clsx';
 
 const products = [
     {
@@ -40,7 +41,16 @@ const products = [
     },
 ];
 
+const people = [
+    { id: 1, name: 'Durward Reynolds' },
+    { id: 2, name: 'Kenton Towne' },
+    { id: 3, name: 'Therese Wunsch' },
+    { id: 4, name: 'Benedict Kessler' },
+    { id: 5, name: 'Katelyn Rohan' },
+];
+
 function Products() {
+    const [selectedPeople, setSelectedPeople] = useState([people[0], people[1]]);
     return (
         <div>
             <div className="flex space-x-4">
@@ -71,12 +81,45 @@ function Products() {
                             <i className="fas fa-filter"></i>
                         </Popover.Button>
 
-                        <Popover.Panel as="div" className="absolute right-0 z-10 rounded bg-white p-5 shadow border">
-                            <p>fasdfasdfasdfasdfsad</p>
-                            <p>fasdfasdfasdfasdfsad</p>
-                            <p>fasdfasdfasdfasdfsad</p>
-                            <p>fasdfasdfasdfasdfsad</p>
-                            <p>fasdfasdfasdfasdfsad</p>
+                        <Popover.Panel
+                            as="div"
+                            className="absolute right-0 z-10 min-w-[280px] max-w-[320px] rounded border bg-white px-4 py-3 shadow"
+                        >
+                            <h2 className="mb-2 text-lg font-semibold">Lọc sản phẩm</h2>
+                            <hr />
+                            <div className="mt-3 space-x-2">
+                                <div>
+                                    <Listbox value={selectedPeople} onChange={setSelectedPeople} multiple>
+                                        <Listbox.Button
+                                            as="div"
+                                            className="text-input flex min-h-[36px] cursor-pointer items-center"
+                                        >
+                                            <div className='flex-1 mr-2'>{`Loại cây (${selectedPeople.length})`}</div>
+                                            <i className="fa-solid fa-chevron-down"></i>
+                                        </Listbox.Button>
+                                        <Listbox.Options>
+                                            {people.map((person) => (
+                                                <Listbox.Option
+                                                    key={person.id}
+                                                    value={person}
+                                                    className="cursor-pointer hover:text-blue-500"
+                                                >
+                                                    {({ selected }) => (
+                                                        <div className="flex items-center">
+                                                            <i
+                                                                className={clsx('fa-solid fa-check pr-2', {
+                                                                    'opacity-0': !selected,
+                                                                })}
+                                                            ></i>
+                                                            <span>{person.name}</span>
+                                                        </div>
+                                                    )}
+                                                </Listbox.Option>
+                                            ))}
+                                        </Listbox.Options>
+                                    </Listbox>
+                                </div>
+                            </div>
                         </Popover.Panel>
                     </Popover>
 
@@ -118,10 +161,10 @@ function Products() {
                             <td className="py-2 text-center">{product.name}</td>
                             <td className="py-2 text-center">{product.price}</td>
                             <td className="py-2 text-center">
-                                <div className="flex">
+                                <div className="flex justify-end">
                                     <button className="btn btn-sm bg-blue-500 hover:bg-blue-400">
                                         <span className="pr-1">
-                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <i className="fa-solid fa-pen-to-square"></i>
                                         </span>
                                         <span>Sửa</span>
                                     </button>
