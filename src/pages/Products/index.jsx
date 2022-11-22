@@ -107,7 +107,7 @@ function Products() {
                                 <div className="flex">
                                     <button className="btn btn-sm bg-blue-500 hover:bg-blue-400">
                                         <span className="pr-1">
-                                            <i className="fa-solid fa-circle-plus"></i>
+                                            <i class="fa-solid fa-pen-to-square"></i>
                                         </span>
                                         <span>Sửa</span>
                                     </button>
