@@ -17,7 +17,7 @@ function Addroduct() {
         setImg(file)
     }
     return (
-        <div className="wrapper mx-2">
+        <div className="wrapper mx-[8%]">
             <div className="flex flex-row mt-4 italic text-lg">
                 <div className="basis-1/2 flex flex-col mr-2 mt-3" >
                     <label className="font-bold mb-1 mt-2 text-xl" htmlFor="name">Tên cây </label>
@@ -62,16 +62,16 @@ function Addroduct() {
 
             <div className="flex flex-row-reverse w-full mt-5 italic text-lg">
                 <div className="basis-1/2 flex">
-                    <button className="flex-col w-1/2 ml-4 mr-2 items-center justify-center rounded bg-red-500 px-4 py-1.5 text-white hover:bg-red-300 hover:text-black">
+                    <button className="flex-col w-1/2 ml-4 mr-[10%] items-center justify-center rounded bg-red-500 px-4 py-1.5 text-white hover:bg-red-300 hover:text-black">
                         <span className="pr-1">
-                            <i className="fa-solid fa-circle-plus"></i>
+                            <i className="fa-solid fa-circle-xmark"></i>
                         </span>
                         <span>Hủy</span>
                     </button>
                 
-                    <button className="flex-col-reverse w-1/2 items-center ml-2 justify-center rounded bg-blue-500 px-4 py-1.5 text-white hover:bg-blue-300 hover:text-black">
+                    <button className="flex-col-reverse w-1/2 ml-[10%] items-center justify-center rounded bg-blue-500 px-4 py-1.5 text-white hover:bg-blue-300 hover:text-black">
                         <span className="pr-1">
-                            <i className="fa-solid fa-circle-xmark"></i>
+                            <i className="fa-solid fa-circle-plus"></i>
                         </span>
                         <span>Thêm</span>
                     </button>
