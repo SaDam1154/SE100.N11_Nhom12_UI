@@ -38,40 +38,45 @@ const products = [
 
 function Products() {
     return (
-        <div className="wrapper">
-            <div className="flex">
-                <label className="text-2xl font-bold text-slate-800">Danh sách cây</label>
-                <button
-                    type="button"
-                    className="flex mx-2 items-center justify-center rounded px-4 py-1.5 text-gray-800 hover:bg-blue-400"
-                >
-                    <span className="button-icon">
-                        <i className="fa fa-refresh" aria-hidden="true"></i>
-                    </span>
-                    <span className="">Tải lại</span>
-                </button>
-                <div className="flex grow">
-                    <input type="text" className="grow  rounded bg-gray-300" />
-
-                    <button type="button" className="">
-                        <span className="px-4 rounded">
-                            <i className="fa fa-search" aria-hidden="true"></i>
+        <div>
+            <div className="flex space-x-4">
+                {/* tite + reload btn */}
+                <div className="flex">
+                    <label className="text-2xl font-bold text-slate-800">Danh sách cây</label>
+                    <button type="button" className="text-gray-800 ml-3 hover:underline">
+                        <span className="font-sm pr-1">
+                            <i className="fa fa-refresh" aria-hidden="true"></i>
                         </span>
-                    </button>
-
-                    <button type="button" className="px-5">
-                        <span className="">
-                            <i className="fas fa-filter"></i>
-                        </span>
+                        <span className="">Tải lại</span>
                     </button>
                 </div>
 
-                <button className="btn btn-md bg-green-600 hover:bg-green-500">
-                    <span className="pr-1">
-                        <i className="fa-solid fa-circle-plus"></i>
-                    </span>
-                    <span>Thêm cây mới</span>
-                </button>
+                {/* Action group */}
+                <div className="flex grow">
+                    {/* Search */}
+                    <div className="flex mr-2 grow">
+                        <input
+                            type="text"
+                            className="grow border-slate-300 border outline-none rounded px-3 focus:border-slate-500"
+                            placeholder="Tìm kiếm sản phẩm"
+                        />
+
+                        <button className="btn btn-md bg-slate-200 hover:bg-slate-300 text-slate-600 !px-3">
+                            <i className="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <button className="btn btn-md bg-slate-200 hover:bg-slate-300 text-slate-600 !px-3">
+                        <i className="fas fa-filter"></i>
+                    </button>
+
+                    <button className="btn btn-md bg-green-600 hover:bg-green-500">
+                        <span className="pr-1">
+                            <i className="fa-solid fa-circle-plus"></i>
+                        </span>
+                        <span>Thêm cây mới</span>
+                    </button>
+                </div>
             </div>
             <table className="mt-4 w-full">
                 <colgroup>
