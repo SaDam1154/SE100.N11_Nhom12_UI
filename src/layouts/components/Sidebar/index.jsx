@@ -37,7 +37,7 @@ const groupMenus = [
     {
         main: {
             iconClassname: "fa-solid fa-users",
-            text: "Thống kê",
+            text: "Báo cáo",
             link: "/dashboard",
         },
     },

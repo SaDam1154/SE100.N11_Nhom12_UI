@@ -43,7 +43,7 @@ const publicRoutes = [
         path: "/dashboard",
         component: Dashboard,
         props: {
-            heading: "Thống kê",
+            heading: "Báo cáo",
         },
     },
     {
