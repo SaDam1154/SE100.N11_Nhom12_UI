@@ -34,11 +34,25 @@ const groupMenus = [
             link: "/customers",
         },
     },
+    {
+        main: {
+            iconClassname: "fa-solid fa-users",
+            text: "Báo cáo",
+            link: "/dashboard",
+        },
+    },
+    {
+        main: {
+            iconClassname: "fa-solid fa-users",
+            text: "Quy định",
+            link: "/rules",
+        },
+    },
 ];
 
 function Sidebar() {
     return (
-        <div className="min-w-[240px] flex h-full flex-col bg-blue-500">
+        <div className="flex h-full min-w-[240px] flex-col bg-blue-500">
             <header className="mb-8 h-16 w-full bg-slate-400"></header>
 
             <ul className="flex flex-col space-y-0.5 overflow-y-auto p-2">
