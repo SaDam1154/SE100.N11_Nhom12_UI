@@ -15,7 +15,7 @@ const products = [
     },
     {
         num: 3,
-        id: 1000009,
+        id: 1000003,
         type: "Cây sen đá kim cương tím",
         name: "Sen đá",
         price: 450000,
