@@ -1,3 +1,7 @@
+import { Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { Popover } from '@headlessui/react';
+
 const products = [
     {
         num: 1,
@@ -16,8 +20,8 @@ const products = [
     {
         num: 3,
         id: 1000003,
-        type: "Cây sen đá kim cương tím",
-        name: "Sen đá",
+        type: 'Cây sen đá kim cương tím',
+        name: 'Sen đá',
         price: 450000,
     },
     {
@@ -62,16 +66,26 @@ function Products() {
                         </button>
                     </div>
 
-                    <button className="btn btn-md bg-slate-200 !px-3 text-slate-600 hover:bg-slate-300">
-                        <i className="fas fa-filter"></i>
-                    </button>
+                    <Popover className="relative mr-2">
+                        <Popover.Button className="btn btn-md h-full bg-slate-200 !px-3 text-slate-600 outline-none hover:bg-slate-300">
+                            <i className="fas fa-filter"></i>
+                        </Popover.Button>
 
-                    <button className="btn btn-md bg-green-600 hover:bg-green-500">
+                        <Popover.Panel as="div" className="absolute right-0 z-10 rounded bg-white p-5 shadow border">
+                            <p>fasdfasdfasdfasdfsad</p>
+                            <p>fasdfasdfasdfasdfsad</p>
+                            <p>fasdfasdfasdfasdfsad</p>
+                            <p>fasdfasdfasdfasdfsad</p>
+                            <p>fasdfasdfasdfasdfsad</p>
+                        </Popover.Panel>
+                    </Popover>
+
+                    <Link to="/product/add" className="btn btn-md bg-green-600 hover:bg-green-500">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
                         <span>Thêm cây mới</span>
-                    </button>
+                    </Link>
                 </div>
             </div>
             <table className="mt-4 w-full">
