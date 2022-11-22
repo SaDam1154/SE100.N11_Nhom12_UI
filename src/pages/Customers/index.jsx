@@ -48,6 +48,62 @@ const customers = [
         phone: "0917823923",
         address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
     },
+    {
+        num: 7,
+        id: 1000007,
+        name: "Nguyễn Văn A",
+        phone: "0917823923",
+        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
+    },
+    {
+        num: 7,
+        id: 1000007,
+        name: "Nguyễn Văn A",
+        phone: "0917823923",
+        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
+    },
+    {
+        num: 7,
+        id: 1000007,
+        name: "Nguyễn Văn A",
+        phone: "0917823923",
+        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
+    },
+    {
+        num: 7,
+        id: 1000007,
+        name: "Nguyễn Văn A",
+        phone: "0917823923",
+        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
+    },
+    {
+        num: 7,
+        id: 1000007,
+        name: "Nguyễn Văn A",
+        phone: "0917823923",
+        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
+    },
+    {
+        num: 7,
+        id: 1000007,
+        name: "Nguyễn Văn A",
+        phone: "0917823923",
+        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
+    },
+    {
+        num: 7,
+        id: 1000007,
+        name: "Nguyễn Văn A",
+        phone: "0917823923",
+        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
+    },
+    {
+        num: 20,
+        id: 1000007,
+        name: "Nguyễn Văn A",
+        phone: "0917823923",
+        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
+    },
 ];
 
 function Customers() {

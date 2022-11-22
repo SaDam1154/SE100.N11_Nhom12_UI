@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Products from "../pages/Products";
 import AddProduct from "../pages/AddProduct";
 import Customers from "../pages/Customers";
+import Rules from "../pages/Rules";
 
 // Public routes
 const publicRoutes = [
@@ -34,6 +35,13 @@ const publicRoutes = [
         component: Customers,
         props: {
             heading: "Khách hàng",
+        },
+    },
+    {
+        path: "/rules",
+        component: Rules,
+        props: {
+            heading: "Quy định",
         },
     },
 ];

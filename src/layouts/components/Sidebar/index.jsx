@@ -34,6 +34,13 @@ const groupMenus = [
             link: "/customers",
         },
     },
+    {
+        main: {
+            iconClassname: "fa-solid fa-users",
+            text: "Quy định",
+            link: "/rules",
+        },
+    },
 ];
 
 function Sidebar() {
