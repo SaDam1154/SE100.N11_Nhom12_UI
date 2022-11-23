@@ -8,6 +8,7 @@ import Customers from "../pages/Customers";
 import Dashboard from "../pages/Dashboard";
 import Rules from "../pages/Rules";
 import DetailTree from "../pages/DetailTree";
+import DetailCustomer from "../pages/DetailCustomer";
 
 // Public routes
 const publicRoutes = [
@@ -29,7 +30,14 @@ const publicRoutes = [
         path: "/product/detailtree",
         component: DetailTree,
         props: {
-            heading: "Danh sách sản phẩm",
+            heading: "Chi tiết sản phẩm",
+        },
+    },
+    {
+        path: "/product/detailcus",
+        component: DetailCustomer,
+        props: {
+            heading: "Chi tiết khách hàng",
         },
     },
     {

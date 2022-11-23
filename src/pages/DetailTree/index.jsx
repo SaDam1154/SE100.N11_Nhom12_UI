@@ -39,7 +39,7 @@ function DetailTree() {
                 </div>
             </div>
 
-            <div className="flex flex-row mt-2 italic text-lg">
+            <div className="flex flex-row italic text-lg">
                 <div className="basis-1/2 flex flex-col mr-4 mt-3" >
                     <label className="font-bold mb-1 mt-2 text-xl" htmlFor="type">Loại cây</label>
                     <input type="text" id="type" className="border cursor-pointer border-gray-300 px-2 py-1 opacity-80 rounded-lg" required/>
@@ -63,7 +63,7 @@ function DetailTree() {
                 <div className="basis-1/2 flex flex-col ml-4 mt-3" >
                     <label className="font-bold mb-1 mt-2 text-xl" htmlFor="value" defaultValue={0}>Giá mỗi cây</label>
                     <div className="relative">
-                        <input type="text" id="value" defaultValue={0} className="border cursor-pointer w-full border-gray-300 px-2 py-1 opacity-80 rounded-lg focus:text-black" 
+                        <input type="number" id="value" defaultValue={0} className="border cursor-pointer w-full border-gray-300 px-2 py-1 opacity-80 rounded-lg focus:text-black" 
                         required/>
                         <label htmlFor="value" className="lb-value absolute top-0 right-0 px-[6%] py-1 text-gray-600 text-lg select-none">VNĐ</label>
                     </div>
@@ -77,10 +77,10 @@ function DetailTree() {
                 </div>
 
                 <div className="basis-1/2 flex flex-col ml-4 mt-3" >
-                    <label className="font-bold mb-1 mt-2 text-xl" htmlFor="value" defaultValue={0}>Giá tổng</label>
+                    <label className="font-bold mb-1 mt-2 text-xl" htmlFor="value-all" defaultValue={0}>Giá tổng</label>
                     <div className="relative">
-                        <input type="text" id="value" defaultValue={0} className="border cursor-pointer w-full border-gray-300 px-2 py-1 opacity-80 rounded-lg focus:text-black" required/>
-                        <label htmlFor="value" className="lb-value absolute top-0 right-0 px-[6%] py-1 text-gray-600 text-lg select-none">VNĐ</label>
+                        <input type="number" id="value-all" defaultValue={0} className="border cursor-pointer w-full border-gray-300 px-2 py-1 opacity-80 rounded-lg focus:text-black" required/>
+                        <label htmlFor="value-all" className="lb-value absolute top-0 right-0 px-[6%] py-1 text-gray-600 text-lg select-none">VNĐ</label>
                     </div>
                 </div>
             </div>
