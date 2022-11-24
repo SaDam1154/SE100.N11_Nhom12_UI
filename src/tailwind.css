@@ -13,9 +13,9 @@
         @apply px-4 py-1.5;
     }
     .btn.btn-md {
-        @apply px-5 py-2 min-w-[150px];
+        @apply min-w-[150px] px-5 py-2;
     }
-    
+
     .btn-red {
         @apply bg-red-500 hover:bg-red-400 hover:text-black;
     }
@@ -27,13 +27,10 @@
     }
 
     .text-input {
-        @apply rounded-xl opacity-80 border border-slate-300 px-2 outline-none focus:border-blue-500;
-    }
-    .text-input:focus {
-        opacity: 1;
+        @apply rounded-xl border border-slate-300 px-2 opacity-80 outline-none focus:border-blue-500;
     }
 
     .container {
-        @apply max-w-[1200px] my-0 mx-auto;
+        @apply my-0 mx-auto max-w-[1200px];
     }
 }
