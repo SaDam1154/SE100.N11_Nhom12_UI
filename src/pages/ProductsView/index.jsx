@@ -4,44 +4,6 @@ import { Listbox, Popover } from "@headlessui/react";
 import clsx from "clsx";
 import { useEffect } from "react";
 
-const products = [
-    {
-        num: 1,
-        id: 1000001,
-        type: "Cây cảnh",
-        name: "Xương rồng",
-        price: 450000,
-    },
-    {
-        num: 2,
-        id: 1000003,
-        type: "Cây Nhật Mạt Hương",
-        name: "Sen đá",
-        price: 450000,
-    },
-    {
-        num: 3,
-        id: 1000003,
-        type: "Cây sen đá kim cương tím",
-        name: "Sen đá",
-        price: 450000,
-    },
-    {
-        num: 4,
-        id: 1000004,
-        type: "Sen đá Giva",
-        name: "Sen đá",
-        price: 450000,
-    },
-    {
-        num: 5,
-        id: 1000005,
-        type: "Cây Bình An",
-        name: "Dây leo",
-        price: 450000,
-    },
-];
-
 const people = [
     { id: 1, name: "Durward Reynolds" },
     { id: 2, name: "Kenton Towne" },
@@ -50,7 +12,7 @@ const people = [
     { id: 5, name: "Katelyn Rohan" },
 ];
 
-function Dashboard() {
+function ProductsView() {
     const [selectedPeople, setSelectedPeople] = useState([
         people[0],
         people[1],
@@ -195,4 +157,4 @@ function Dashboard() {
     );
 }
 
-export default Dashboard;
+export default ProductsView;
