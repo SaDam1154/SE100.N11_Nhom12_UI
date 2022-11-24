@@ -138,7 +138,7 @@ function Products() {
                         </Popover.Panel>
                     </Popover>
 
-                    <Link to="/product/add" className="btn btn-md bg-green-600 hover:bg-green-500">
+                    <Link to="/product/add" className="btn btn-md btn-green">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
@@ -177,13 +177,13 @@ function Products() {
                             <td className="py-2 text-center">{product.price}</td>
                             <td className="py-2 text-center">
                                 <div className="flex justify-end">
-                                    <button className="btn btn-sm bg-blue-500 hover:bg-blue-400">
+                                    <button className="btn btn-sm btn-blue">
                                         <span className="pr-1">
                                             <i className="fa-solid fa-pen-to-square"></i>
                                         </span>
                                         <span>Sửa</span>
                                     </button>
-                                    <button className="btn btn-sm bg-red-500 hover:bg-red-400">
+                                    <button className="btn btn-sm btn-red">
                                         <span className="pr-1">
                                             <i className="fa-solid fa-circle-xmark"></i>
                                         </span>

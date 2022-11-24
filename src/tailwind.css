@@ -13,7 +13,17 @@
         @apply px-4 py-1.5;
     }
     .btn.btn-md {
-        @apply px-5 py-2;
+        @apply px-5 py-2 min-w-[150px];
+    }
+    
+    .btn-red {
+        @apply bg-red-500 hover:bg-red-400;
+    }
+    .btn-blue {
+        @apply bg-blue-500 hover:bg-blue-400;
+    }
+    .btn-green {
+        @apply bg-green-600 hover:bg-green-500;
     }
 
     .text-input {

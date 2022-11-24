@@ -67,22 +67,20 @@ function Addroduct() {
                     </div>
                 </div>
     
-                <div className="flex flex-row-reverse w-full mt-5 italic text-lg">
-                    <div className="basis-1/2 flex">
-                        <button className="flex-col w-1/2 ml-4 mr-[10%] items-center justify-center rounded bg-red-500 px-4 py-1.5 text-white hover:bg-red-300 hover:text-black">
-                            <span className="pr-1">
+                <div className="flex justify-end mt-6">
+                        <button className="btn btn-red btn-md">
+                            <span className="pr-2">
                                 <i className="fa-solid fa-circle-xmark"></i>
                             </span>
                             <span>Hủy</span>
                         </button>
                     
-                        <button className="flex-col-reverse w-1/2 ml-[10%] items-center justify-center rounded bg-blue-500 px-4 py-1.5 text-white hover:bg-blue-300 hover:text-black">
-                            <span className="pr-1">
+                        <button className="btn btn-blue btn-md">
+                            <span className="pr-2">
                                 <i className="fa-solid fa-circle-plus"></i>
                             </span>
                             <span>Thêm</span>
                         </button>
-                    </div>
                 </div>
             </div> 
         </div>     
