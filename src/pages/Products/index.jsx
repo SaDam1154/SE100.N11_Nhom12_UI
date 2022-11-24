@@ -85,14 +85,10 @@ function Products() {
                     {/* Search */}
                     <div className="mr-2 flex grow">
                         <input type="text" className="text-input grow" placeholder="Tìm kiếm sản phẩm" />
-
-                        <button className="btn btn-md bg-slate-200 !px-3 text-slate-600 hover:bg-slate-300">
-                            <i className="fa fa-search" aria-hidden="true"></i>
-                        </button>
                     </div>
 
                     <Popover className="relative mr-2">
-                        <Popover.Button className="btn btn-md h-full bg-slate-200 !px-3 text-slate-600 outline-none hover:bg-slate-300">
+                        <Popover.Button className="btn btn-md h-full !min-w-0 bg-slate-200 !px-3 text-slate-600 outline-none hover:bg-slate-300">
                             <i className="fas fa-filter"></i>
                         </Popover.Button>
 
