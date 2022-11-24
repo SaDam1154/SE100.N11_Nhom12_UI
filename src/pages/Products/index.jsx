@@ -4,7 +4,7 @@ import { Listbox, Popover } from '@headlessui/react';
 import clsx from 'clsx';
 import { useEffect } from 'react';
 
-const products = [
+const productss = [
     {
         num: 1,
         id: 1000001,
