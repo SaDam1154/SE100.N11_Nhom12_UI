@@ -1,73 +1,80 @@
 // Layouts
+import FullLayout from '../layouts/FullLayout';
 
 // Pages
-import Home from "../pages/Home";
-import Products from "../pages/Products";
-import AddProduct from "../pages/AddProduct";
-import Customers from "../pages/Customers";
-import Dashboard from "../pages/Dashboard";
-import Rules from "../pages/Rules";
-import DetailTree from "../pages/DetailTree";
-import DetailCustomer from "../pages/DetailCustomer";
+import Home from '../pages/Home';
+import Products from '../pages/Products';
+import AddProduct from '../pages/AddProduct';
+import Customers from '../pages/Customers';
+import Dashboard from '../pages/Dashboard';
+import Rules from '../pages/Rules';
+import DetailTree from '../pages/DetailTree';
+import DetailCustomer from '../pages/DetailCustomer';
+import Login from '../pages/Login';
 
 // Public routes
 const publicRoutes = [
     {
-        path: "/",
+        path: '/',
         component: Home,
         props: {
-            heading: "Trang chủ",
+            heading: 'Trang chủ',
         },
     },
     {
-        path: "/product",
+        path: '/product',
         component: Products,
         props: {
-            heading: "Danh sách sản phẩm",
+            heading: 'Danh sách sản phẩm',
         },
     },
     {
-        path: "/product/detailtree",
+        path: '/product/detailtree',
         component: DetailTree,
         props: {
-            heading: "Chi tiết sản phẩm",
+            heading: 'Chi tiết sản phẩm',
         },
     },
     {
-        path: "/product/detailcus",
+        path: '/product/detailcus',
         component: DetailCustomer,
         props: {
-            heading: "Chi tiết khách hàng",
+            heading: 'Chi tiết khách hàng',
         },
     },
     {
-        path: "/product/add",
+        path: '/product/add',
         component: AddProduct,
         props: {
-            heading: "Thêm sản phẩm",
+            heading: 'Thêm sản phẩm',
         },
     },
     {
-        path: "/customers",
+        path: '/customers',
         component: Customers,
         props: {
-            heading: "Khách hàng",
+            heading: 'Khách hàng',
         },
     },
     ,
     {
-        path: "/dashboard",
+        path: '/dashboard',
         component: Dashboard,
         props: {
-            heading: "Báo cáo",
+            heading: 'Báo cáo',
         },
     },
     {
-        path: "/rules",
+        path: '/rules',
         component: Rules,
         props: {
-            heading: "Quy định",
+            heading: 'Quy định',
         },
+    },
+    {
+        path: '/login',
+        layout: FullLayout,
+        component: Login,
     },
 ];
 
