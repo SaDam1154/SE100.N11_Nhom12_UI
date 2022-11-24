@@ -16,13 +16,13 @@
         @apply min-w-[150px] px-5 py-2;
     }
 
-    .btn-red {
+    .btn.btn-red {
         @apply bg-red-500 hover:bg-red-400;
     }
-    .btn-blue {
+    .btn.btn-blue {
         @apply bg-blue-500 hover:bg-blue-400;
     }
-    .btn-green {
+    .btn.btn-green {
         @apply bg-green-600 hover:bg-green-500;
     }
 
