@@ -69,6 +69,7 @@ function Products() {
     return (
         <div className="container">
             <div className="flex space-x-4">
+                
                 {/* tite + reload btn */}
                 <div className="flex">
                     <label className="text-2xl font-bold text-slate-800">Danh sách cây</label>
