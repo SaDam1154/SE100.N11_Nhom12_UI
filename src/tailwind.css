@@ -4,7 +4,7 @@
 
 @layer components {
     .btn {
-        @apply flex items-center justify-center rounded text-white;
+        @apply flex items-center justify-center rounded text-white hover:text-black;
     }
     .btn + .btn {
         @apply ml-2;
@@ -27,7 +27,7 @@
     }
 
     .text-input {
-        @apply rounded border border-slate-300 px-2 outline-none focus:border-blue-500;
+        @apply rounded border border-slate-300 px-2 text-lg outline-none focus:border-blue-500 opacity-75 focus:opacity-100;
     }
 
     .container {
