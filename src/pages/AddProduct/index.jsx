@@ -20,7 +20,7 @@ function Addroduct() {
         <div className="container">
             <div className="w-full">
                 <div className="flex flex-row mt-4">
-                    <div className="w-1/2 flex flex-col mr-2 mt-3 italic text-lg space-y-4" >
+                    <div className="w-1/2 flex flex-col mr-8 mt-3 italic text-lg space-y-4" >
                         <div className="flex flex-col">
                             <label className="font-semibold mb-1 text-xl" htmlFor="name">Tên cây </label>
                             <input type="text" id="name" className="text-input px-2 py-1" required/>
@@ -53,7 +53,7 @@ function Addroduct() {
                 </div>
     
                 <div className="flex flex-row mt-4 italic text-lg">
-                    <div className="basis-1/2 flex flex-col mr-4 mt-3" >
+                    <div className="basis-1/2 flex flex-col mr-8 mt-3" >
                         <label className="font-semibold mb-1 text-xl" htmlFor="date">Ngày thêm</label>
                         <input type="date" id="date" className="text-input px-2 py-1" required/>
                     </div>
