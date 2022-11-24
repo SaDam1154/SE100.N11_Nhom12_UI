@@ -17,7 +17,7 @@ function Addroduct() {
         setImg(file)
     }
     return (
-        <div className="max-w-[1200px] my-0 mx-auto">
+        <div className="container">
             <div className="w-full">
                 <div className="flex flex-row mt-4">
                     <div className="w-1/2 flex flex-col mr-2 mt-3 space-y-4" >

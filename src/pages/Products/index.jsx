@@ -67,7 +67,7 @@ function Products() {
     }, []);
 
     return (
-        <div>
+        <div className="container">
             <div className="flex space-x-4">
                 {/* tite + reload btn */}
                 <div className="flex">

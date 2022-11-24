@@ -19,4 +19,8 @@
     .text-input {
         @apply rounded border border-slate-300 px-2 outline-none focus:border-blue-500;
     }
+
+    .container {
+        @apply max-w-[1200px] my-0 mx-auto;
+    }
 }
