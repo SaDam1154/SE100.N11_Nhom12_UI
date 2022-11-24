@@ -55,6 +55,10 @@ function Products() {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
+        callApi();
+    }, []);
+
+    function callApi() {
         fetch('http://localhost:5000/api/product')
             .then((res) => res.json())
             .then((resJson) => {
@@ -64,7 +68,7 @@ function Products() {
                     setProducts([]);
                 }
             });
-    }, []);
+    }
 
     return (
         <div className="container">
@@ -72,7 +76,7 @@ function Products() {
                 {/* tite + reload btn */}
                 <div className="flex">
                     <label className="text-2xl font-bold text-slate-800">Danh sách cây</label>
-                    <button type="button" className="ml-3 text-gray-800 hover:underline">
+                    <button type="button" className="ml-3 text-gray-800 hover:underline" onClick={() => callApi()}>
                         <span className="font-sm pr-1">
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </span>
@@ -134,7 +138,7 @@ function Products() {
                             </div>
                         </Popover.Panel>
                     </Popover>
-                    <Link to="/product/views" className="btn btn-md btn-green">
+                    <Link to="/product/" className="btn btn-md btn-green">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
@@ -173,7 +177,7 @@ function Products() {
                     {products?.map((product, index) => (
                         <tr key={product.id} className="cursor-pointer border-b border-slate-200 hover:bg-slate-100">
                             <td className="py-2 text-center">{index + 1}</td>
-                            <td className="py-2 text-center">{product._id}</td>
+                            <td className="py-2 text-center">{product.id}</td>
                             <td className="py-2 text-center">{product.type}</td>
                             <td className="py-2 text-center">{product.name}</td>
                             <td className="py-2 text-center">{product.price}</td>
