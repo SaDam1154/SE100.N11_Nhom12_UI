@@ -119,7 +119,12 @@ function ProductsView() {
                             </div>
                         </Popover.Panel>
                     </Popover>
-
+                    <Link to="/product" className="btn btn-md btn-green">
+                        <span className="pr-1">
+                            <i className="fa-solid fa-circle-plus"></i>
+                        </span>
+                        <span>Views</span>
+                    </Link>
                     <Link to="/product/add" className="btn btn-md btn-green">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
