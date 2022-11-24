@@ -1,14 +1,17 @@
 // Layouts
+import FullLayout from "../layouts/FullLayout";
 
 // Pages
-import Home from "../pages/Home";
-import Products from "../pages/Products";
-import AddProduct from "../pages/AddProduct";
-import Customers from "../pages/Customers";
-import Dashboard from "../pages/Dashboard";
-import Rules from "../pages/Rules";
-import DetailTree from "../pages/DetailTree";
-import DetailCustomer from "../pages/DetailCustomer";
+import Home from '../pages/Home';
+import Products from '../pages/Products';
+import AddProduct from '../pages/AddProduct';
+import ProductsView from '../pages/ProductsView';
+import Customers from '../pages/Customers';
+import Dashboard from '../pages/Dashboard';
+import Rules from '../pages/Rules';
+import DetailTree from '../pages/DetailTree';
+import DetailCustomer from '../pages/DetailCustomer';
+import Login from '../pages/Login';
 
 // Public routes
 const publicRoutes = [
@@ -48,7 +51,14 @@ const publicRoutes = [
         },
     },
     {
-        path: "/customers",
+        path: '/product/views',
+        component: ProductsView,
+        props: {
+            heading: 'Thêm sản phẩm',
+        },
+    },
+    {
+        path: '/customers',
         component: Customers,
         props: {
             heading: "Khách hàng",
@@ -68,6 +78,11 @@ const publicRoutes = [
         props: {
             heading: "Quy định",
         },
+    },
+    {
+        path: "/login",
+        layout: FullLayout,
+        component: Login,
     },
 ];
 
