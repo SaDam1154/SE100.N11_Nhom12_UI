@@ -27,7 +27,7 @@
     }
 
     .text-input {
-        @apply rounded-xl opacity-80 border border-slate-300 px-2 outline-none focus:border-blue-500;
+        @apply rounded opacity-80 border border-slate-300 px-2 outline-none focus:border-blue-500;
     }
     .text-input:focus {
         opacity: 1;
