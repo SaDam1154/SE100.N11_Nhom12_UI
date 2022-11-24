@@ -4,7 +4,7 @@
 
 @layer components {
     .btn {
-        @apply flex items-center justify-center rounded text-white;
+        @apply flex items-center justify-center rounded-xl text-white;
     }
     .btn + .btn {
         @apply ml-2;
@@ -17,17 +17,20 @@
     }
     
     .btn-red {
-        @apply bg-red-500 hover:bg-red-400;
+        @apply bg-red-500 hover:bg-red-400 hover:text-black;
     }
     .btn-blue {
-        @apply bg-blue-500 hover:bg-blue-400;
+        @apply bg-blue-500 hover:bg-blue-400 hover:text-black;
     }
     .btn-green {
-        @apply bg-green-600 hover:bg-green-500;
+        @apply bg-green-600 hover:bg-green-500 hover:text-black;
     }
 
     .text-input {
-        @apply rounded border border-slate-300 px-2 outline-none focus:border-blue-500;
+        @apply rounded-xl opacity-80 border border-slate-300 px-2 outline-none focus:border-blue-500;
+    }
+    .text-input:focus {
+        opacity: 1;
     }
 
     .container {
