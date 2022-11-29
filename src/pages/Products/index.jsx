@@ -172,7 +172,9 @@ function Products() {
                         >
                             <td className="py-2 text-center">{index + 1}</td>
                             <td className="py-2 text-center">{product.id}</td>
-                            <td className="py-2 text-center">{product.type}</td>
+                            <td className="py-2 text-center">
+                                {product.type.name}
+                            </td>
                             <td className="py-2 text-center">{product.name}</td>
                             <td className="py-2 text-center">
                                 {product.price}
