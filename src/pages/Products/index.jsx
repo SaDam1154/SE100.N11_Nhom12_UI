@@ -3,23 +3,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Listbox, Popover } from '@headlessui/react';
 import clsx from 'clsx';
 import { useEffect } from 'react';
-const people = [
-    { id: 1, name: 'Durward Reynolds' },
-    { id: 2, name: 'Kenton Towne' },
-    { id: 3, name: 'Therese Wunsch' },
-    { id: 4, name: 'Benedict Kessler' },
-    { id: 5, name: 'Katelyn Rohan' },
-];
+
 function Products() {
-    const [selectedPeople, setSelectedPeople] = useState([
-        people[0],
-        people[1],
-    ]);
     const [products, setProducts] = useState([]);
+    const [productTypes, setProductTypes] = useState([]);
     const navigate = useNavigate();
 
+    const [selectedProductTypes, setSelectedProductTypes] = useState([]);
     useEffect(() => {
         callApi();
+        callApiPeople();
     }, []);
 
     function callApi() {
@@ -30,6 +23,17 @@ function Products() {
                     setProducts(resJson.products);
                 } else {
                     setProducts([]);
+                }
+            });
+    }
+    function callApiPeople() {
+        fetch('http://localhost:5000/api/product-type')
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success) {
+                    setProductTypes(resJson.productTypes);
+                } else {
+                    setProductTypes([]);
                 }
             });
     }
@@ -86,22 +90,22 @@ function Products() {
                             <div className="mt-3 space-x-2">
                                 <div>
                                     <Listbox
-                                        value={selectedPeople}
-                                        onChange={setSelectedPeople}
+                                        value={selectedProductTypes}
+                                        onChange={setSelectedProductTypes}
                                         multiple
                                     >
                                         <Listbox.Button
                                             as="div"
                                             className="text-input flex min-h-[36px] cursor-pointer items-center"
                                         >
-                                            <div className="mr-2 flex-1">{`Loại cây (${selectedPeople.length})`}</div>
+                                            <div className="mr-2 flex-1">{`Loại cây (${selectedProductTypes.length})`}</div>
                                             <i className="fa-solid fa-chevron-down"></i>
                                         </Listbox.Button>
                                         <Listbox.Options>
-                                            {people.map((person) => (
+                                            {productTypes.map((type) => (
                                                 <Listbox.Option
-                                                    key={person.id}
-                                                    value={person}
+                                                    key={type._id}
+                                                    value={type}
                                                     className="cursor-pointer hover:text-blue-500"
                                                 >
                                                     {({ selected }) => (
@@ -116,7 +120,7 @@ function Products() {
                                                                 )}
                                                             ></i>
                                                             <span>
-                                                                {person.name}
+                                                                {type.name}
                                                             </span>
                                                         </div>
                                                     )}
