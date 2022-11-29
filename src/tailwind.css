@@ -4,7 +4,7 @@
 
 @layer components {
     .btn {
-        @apply flex items-center justify-center rounded text-white hover:text-black;
+        @apply flex items-center justify-center rounded text-white;
     }
     .btn + .btn {
         @apply ml-2;
@@ -13,25 +13,25 @@
         @apply px-4 py-1.5;
     }
     .btn.btn-md {
-        @apply px-5 py-2 min-w-[150px];
+        @apply min-w-[150px] px-5 py-2;
     }
-    
-    .btn-red {
-        @apply bg-red-500 hover:bg-red-400 hover:text-black;
+
+    .btn.btn-red {
+        @apply bg-red-500 hover:bg-red-400;
     }
-    .btn-blue {
-        @apply bg-blue-500 hover:bg-blue-400 hover:text-black;
+    .btn.btn-blue {
+        @apply bg-blue-500 hover:bg-blue-400;
     }
-    .btn-green {
-        @apply bg-green-600 hover:bg-green-500 hover:text-black;
+    .btn.btn-green {
+        @apply bg-green-600 hover:bg-green-500;
     }
 
     .text-input {
-        @apply rounded border border-slate-300 px-2 text-lg outline-none focus:border-blue-500 opacity-75 focus:opacity-100;
+        @apply rounded border border-slate-300 px-2 outline-none focus:border-blue-500;
     }
 
     .container {
-        @apply max-w-[1200px] my-0 mx-auto;
+        @apply my-0 mx-auto max-w-[1200px];
     }
     
     label {
