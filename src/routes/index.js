@@ -1,5 +1,5 @@
 // Layouts
-import FullLayout from "../layouts/FullLayout";
+import FullLayout from '../layouts/FullLayout';
 
 // Pages
 import Home from '../pages/Home';
@@ -16,38 +16,38 @@ import Login from '../pages/Login';
 // Public routes
 const publicRoutes = [
     {
-        path: "/",
+        path: '/',
         component: Home,
         props: {
-            heading: "Trang chủ",
+            heading: 'Trang chủ',
         },
     },
     {
-        path: "/product",
+        path: '/product',
         component: Products,
         props: {
-            heading: "Danh sách sản phẩm",
+            heading: 'Danh sách sản phẩm',
         },
     },
     {
-        path: "/product/detailtree",
+        path: '/product/detail/:id',
         component: DetailTree,
         props: {
-            heading: "Chi tiết sản phẩm",
+            heading: 'Chi tiết sản phẩm',
         },
     },
     {
-        path: "/product/detailcus",
+        path: '/product/detailcus',
         component: DetailCustomer,
         props: {
-            heading: "Chi tiết khách hàng",
+            heading: 'Chi tiết khách hàng',
         },
     },
     {
-        path: "/product/add",
+        path: '/product/add',
         component: AddProduct,
         props: {
-            heading: "Thêm sản phẩm",
+            heading: 'Thêm sản phẩm',
         },
     },
     {
@@ -61,26 +61,26 @@ const publicRoutes = [
         path: '/customers',
         component: Customers,
         props: {
-            heading: "Khách hàng",
+            heading: 'Khách hàng',
         },
     },
     ,
     {
-        path: "/dashboard",
+        path: '/dashboard',
         component: Dashboard,
         props: {
-            heading: "Báo cáo",
+            heading: 'Báo cáo',
         },
     },
     {
-        path: "/rules",
+        path: '/rules',
         component: Rules,
         props: {
-            heading: "Quy định",
+            heading: 'Quy định',
         },
     },
     {
-        path: "/login",
+        path: '/login',
         layout: FullLayout,
         component: Login,
     },
