@@ -33,4 +33,14 @@
     .container {
         @apply max-w-[1200px] my-0 mx-auto;
     }
+    
+    label {
+        cursor: pointer;
+    }
+
+    input[type="checkbox"] {
+        height: 28px;
+        width: 28px;
+        border-radius: 4px;
+    }
 }

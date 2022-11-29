@@ -12,6 +12,7 @@ import Rules from '../pages/Rules';
 import DetailTree from '../pages/DetailTree';
 import DetailCustomer from '../pages/DetailCustomer';
 import Login from '../pages/Login';
+import AddRule from "../pages/AddRule";
 
 // Public routes
 const publicRoutes = [
@@ -77,6 +78,13 @@ const publicRoutes = [
         component: Rules,
         props: {
             heading: "Quy định",
+        },
+    },
+    {
+        path: "/rules/addrule",
+        component: AddRule,
+        props: {
+            heading: "Thêm chức vụ",
         },
     },
     {
