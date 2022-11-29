@@ -71,7 +71,7 @@ function AddRule () {
             </div>  
             <div className="form-check mt-6">
                 <input className="form-check-input" type="checkbox" id="checkbox-all"/>
-                <label htmlFor="checkbox-all">hsiha</label>
+                <label htmlFor="checkbox-all">Chọn tất cả</label>
             </div>
         </div>
     )

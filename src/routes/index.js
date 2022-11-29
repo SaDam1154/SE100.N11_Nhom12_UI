@@ -38,13 +38,6 @@ const publicRoutes = [
         },
     },
     {
-        path: '/product/detailcus',
-        component: DetailCustomer,
-        props: {
-            heading: 'Chi tiết khách hàng',
-        },
-    },
-    {
         path: '/product/add',
         component: AddProduct,
         props: {
@@ -65,6 +58,13 @@ const publicRoutes = [
             heading: 'Khách hàng',
         },
     },
+    {
+        path: '/customers/detailcus',
+        component: DetailCustomer,
+        props: {
+            heading: 'Chi tiết khách hàng',
+        },
+    },
     ,
     {
         path: '/dashboard',
@@ -81,14 +81,14 @@ const publicRoutes = [
         },
     },
     {
-        path: "/rules/addrule",
+        path: '/rules/addrule',
         component: AddRule,
         props: {
             heading: "Thêm chức vụ",
         },
     },
     {
-        path: "/login",
+        path: '/login',
         layout: FullLayout,
         component: Login,
     },
