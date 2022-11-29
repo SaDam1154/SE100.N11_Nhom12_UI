@@ -27,7 +27,7 @@ const groupMenus = [
             },
             {
                 text: 'detail',
-                link: '/detail',
+                link: '/detail/:id',
             },
         ],
     },

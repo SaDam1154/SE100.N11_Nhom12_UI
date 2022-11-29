@@ -1,39 +1,54 @@
-const rules = [
+import { useEffect, useState } from "react";
+
+const userData = [
     {
-        id:"1",
-        rule: "Bán hàng",
+        id: "1",
+        name: "Bán hàng",
     },
     {
-        id:"2",
-        rule: "Thống kê doanh thu",
+        id: "2",
+        name: "Thống kê doanh thu",
     },
     {
-        id:"3",
-        rule: "Thống kê hàng hóa",
+        id: "3",
+        name: "Thống kê hàng hóa",
     },
     {
-        id:"4",
-        rule: "QUản lý nhân viên",
+        id: "4",
+        name: "QUản lý nhân viên basn han",
+    },   
+    {
+        id: "5",
+        name: "Thống kê hàng hóa da bans",
+    },
+    {
+        id: "6",
+        name: "QUản lý nhân viên",
     },    
-    {
-        id:"5",
-        rule: "QUản lý hàng hóa",
-    },
-    {
-        id:"6",
-        rule: "Bán hàng",
-    },
-    {
-        id:"7",
-        rule: "Thống kê doanh thu",
-    },
-    {
-        id:"8",
-        rule: "Thống kê hàng hóa",
-    },
 ];
 
 function AddRule () {
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+    setUsers(userData);
+    }, []);
+
+    const handleChange = (e) => {
+        const { name, checked } = e.target;
+        if (name === "allSelect") {
+        let tempUser = users.map((user) => {
+            return { ...user, isChecked: checked };
+        });
+        setUsers(tempUser);
+        } else {
+        let tempUser = users.map((user) =>
+            user.name === name ? { ...user, isChecked: checked } : user
+        );
+        setUsers(tempUser);
+        }
+    };
+
     return (
         <div className="container text-lg">
             <div className="flex flex-row">
@@ -44,36 +59,63 @@ function AddRule () {
                 </div>
             </div>
             
-            <div className="flex flex-row mt-10 justify-center">
+            <div className="flex flex-row mt-10 justify-center items-center">
                 <div className="flex-col">
-                    <label htmlFor="" className="text-2xl pr-5">Chức vụ:</label>
+                    <label htmlFor="rule-name" className="text-3xl pr-5">Chức vụ:</label>
                 </div>
                 <div className="flex-col border-solib border-b-[1px] border-stone-900">
-                    <input type="text" className="text-input text-xl border-none text-blue-400 " placeholder="Tên chức vụ"/>
+                    <input type="text" id="rule-name" className="text-input text-2xl border-none text-blue-500 " placeholder="Tên chức vụ"/>
                 </div>
             </div>
 
-            <div className="table-content flex flex-row mt-10 text-xl">
-                <table className="w-[80%] m-auto">                
-                <tbody>
-                    {rules.map((rules) => (
-                        <tr key={rules.id} className="cursor-pointer border-b border-slate-200 hover:bg-slate-100">
-                            <td className="py-2 text-center">
-                                <input type="checkbox" className="check border-dashed-black appearance-none checked:bg-blue-500 " id={rules.id}/>
-                            </td>
-                            <td className="py-2 text-left">
-                                <label className="" htmlFor={rules.id}>{rules.rule}</label>
-                            </td>
-                        </tr>
+            <div className="flex flex-row justify-center mt-10">
+                <form className="form w-[80%] m-auto rounded-xl border border-gray-300 px-10 py-3 text-xl">
+                {users.map((user, index) => (
+                    <div className="py-3 text-left check-form cursor-pointer border-b border-slate-300 hover:bg-slate-100" key={index}>
+                        <input
+                            type="checkbox"
+                            className="form-check-input mr-10"
+                            id={user.id}
+                            name={user.name}
+                            checked={user?.isChecked || false}
+                            onChange={handleChange}
+                        />
+
+                        <label htmlFor={user.id} className="form-check-label">{user.name}</label>
+                    </div>
                     ))}
-                </tbody>
-                </table>
-            </div>  
-            <div className="form-check mt-6">
-                <input className="form-check-input" type="checkbox" id="checkbox-all"/>
-                <label htmlFor="checkbox-all">Chọn tất cả</label>
+                
+                    {/* check all */}
+                </form>
             </div>
-        </div>
-    )
+
+            <div className="flex flex-row mt-6 text-xl">
+                <div className="flex-col w-1/2 ml-[10%] px-3">
+                    <input
+                        type="checkbox"
+                        className="form-check-input mr-5"
+                        name="allSelect"
+                        id="checkall"
+                        // checked={
+                        //   users.filter((user) => user?.isChecked !== true).length < 1
+                        // }
+                        checked={!users.some((user) => user?.isChecked !== true)}
+                        onChange={handleChange}
+                    />
+                    <label htmlFor="checkall" className="form-check-label">Chọn tất cả</label>
+                </div>
+
+                <div className="flex-col w-1/2 mr-[10%]">
+                    <button className="float-right btn btn-green btn-md w-1/2">
+                        <span className="pr-1">
+                            <i className="fa-solid fa-circle-plus"></i>
+                        </span>
+                        <span className="text-lg">Thêm</span>
+                    </button>
+                </div>
+            </div>
+    </div>
+  );
 }
+
 export default AddRule;
