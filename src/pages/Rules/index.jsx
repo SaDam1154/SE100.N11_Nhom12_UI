@@ -57,7 +57,7 @@ function Rules() {
                     </button>
 
                     <Link
-                        to="/"
+                        to="/rules/addrule"
                         className="btn btn-md bg-green-600 hover:bg-green-500"
                     >
                         <span className="pr-1">

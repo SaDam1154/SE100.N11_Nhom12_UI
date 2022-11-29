@@ -12,6 +12,7 @@ import Rules from '../pages/Rules';
 import DetailTree from '../pages/DetailTree';
 import DetailCustomer from '../pages/DetailCustomer';
 import Login from '../pages/Login';
+import AddRule from "../pages/AddRule";
 
 // Public routes
 const publicRoutes = [
@@ -37,13 +38,6 @@ const publicRoutes = [
         },
     },
     {
-        path: '/product/detailcus',
-        component: DetailCustomer,
-        props: {
-            heading: 'Chi tiết khách hàng',
-        },
-    },
-    {
         path: '/product/add',
         component: AddProduct,
         props: {
@@ -64,6 +58,13 @@ const publicRoutes = [
             heading: 'Khách hàng',
         },
     },
+    {
+        path: '/customers/detailcus',
+        component: DetailCustomer,
+        props: {
+            heading: 'Chi tiết khách hàng',
+        },
+    },
     ,
     {
         path: '/dashboard',
@@ -77,6 +78,13 @@ const publicRoutes = [
         component: Rules,
         props: {
             heading: 'Quy định',
+        },
+    },
+    {
+        path: '/rules/addrule',
+        component: AddRule,
+        props: {
+            heading: "Thêm chức vụ",
         },
     },
     {
