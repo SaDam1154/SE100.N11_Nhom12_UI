@@ -4,6 +4,7 @@ import FullLayout from '../layouts/FullLayout';
 // Pages
 import Home from '../pages/Home';
 import Order from '../pages/Order';
+import AddOrder from '../pages/AddOrder';
 import Products from '../pages/Products';
 import AddProduct from '../pages/AddProduct';
 import ProductsView from '../pages/ProductsView';
@@ -30,6 +31,14 @@ const publicRoutes = [
         component: Order,
         props: {
             heading: 'Order',
+        },
+    },
+
+    {
+        path: '/order/add',
+        component: AddOrder,
+        props: {
+            heading: 'Đặt thêm sản phẩm',
         },
     },
     {
