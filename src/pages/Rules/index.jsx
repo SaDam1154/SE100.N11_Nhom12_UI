@@ -95,12 +95,12 @@ function Rules() {
                             <td className="py-2 text-center">{rule.name}</td>
                             <td className="py-2 text-center">
                                 <div className="flex justify-end">
-                                    <button className="btn btn-sm bg-blue-500 hover:bg-blue-400">
+                                    <Link to="/rules/updaterule" className="btn btn-sm bg-blue-500 hover:bg-blue-400">
                                         <span className="pr-1">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </span>
                                         <span>Sửa</span>
-                                    </button>
+                                    </Link>
                                     <button className="btn btn-sm bg-red-500 hover:bg-red-400">
                                         <span className="pr-1">
                                             <i className="fa-solid fa-circle-xmark"></i>

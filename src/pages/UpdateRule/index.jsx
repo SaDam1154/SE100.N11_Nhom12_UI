@@ -23,19 +23,23 @@ const userData = [
     },
     {
         id: "6",
-        name: "QUản lý nhân viên",
-    }, 
+        name: "QUản lý nhân viêndd",
+    },  
     {
         id: "7",
-        name: "Thống kê hàng hóa day",
-    },
+        name: "QUản lý nhân viên basn handdd",
+    },   
     {
         id: "8",
-        name: "QUản lý nhân viên ddd",
+        name: "Thống kê hàng hóa da bandds",
+    },
+    {
+        id: "9",
+        name: "QUản lý nhân viênddd",
     },    
 ];
 
-function AddRule () {
+function UpdateRule () {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -58,11 +62,11 @@ function AddRule () {
     };
 
     return (
-        <div className="container text-lg h-[100%]  min-w-[790px]">
+        <div className="container text-lg min-w-[700px]">
             <div className="flex flex-row">
                 <div className="title m-auto">
                     <label className="text-4xl">
-                        Thêm chức vụ
+                        Thông tin chức vụ
                     </label>
                 </div>
             </div>
@@ -76,10 +80,11 @@ function AddRule () {
                 </div>
             </div>
 
-            <div className="flex flex-row justify-center mt-5">
-                <form className="form !h-[400px] overflow-y-scroll w-[80%] m-auto rounded-xl border border-gray-300 px-10 py-3 text-lg">
+            <div className="flex flex-row justify-center mt-10">
+                <form className="form w-[80%] !h-[400px] overflow-y-scroll rounded-xl border border-gray-300 px-10 py-3 text-xl">
                 {users.map((user, index) => (
                     <div className="py-3 text-left check-form cursor-pointer border-b border-slate-300 hover:bg-slate-100" key={index}>
+                        <div className="w-[10%] !inline-block">
                         <input
                             type="checkbox"
                             className="form-check-input mr-10"
@@ -88,8 +93,11 @@ function AddRule () {
                             checked={user?.isChecked || false}
                             onChange={handleChange}
                         />
-
-                        <label htmlFor={user.id} className="form-check-label">{user.name}</label>
+                        </div>
+                        
+                        <div className="flex-col w-[90%] !inline-block">
+                            <label htmlFor={user.id} className="form-check-label">{user.name}</label>
+                        </div>
                     </div>
                     ))}
                 
@@ -97,8 +105,8 @@ function AddRule () {
                 </form>
             </div>
 
-            <div className="flex flex-row mt-[5%] text-xl">
-                <div className="flex-col w-1/2 ml-[10%] px-3">
+            <div className="flex flex-row mt-6 text-xl">
+                <div className="!inline-block flex-col w-1/2 ml-[10%] px-3">
                     <input
                         type="checkbox"
                         className="form-check-input mr-5"
@@ -113,15 +121,14 @@ function AddRule () {
                     <label htmlFor="checkall" className="form-check-label">Chọn tất cả</label>
                 </div>
 
-                <div className="flex-col w-1/2 mr-[10%]">
-                    <button className="float-left btn btn-red btn-md w-1/3">
+                <div className="flex-row w-2/3 mr-[10%]">
+                    <button className="!inline-block flex-col float-left btn btn-blue btn-md w-[40%]">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-xmark"></i>
                         </span>
-                        <span className="text-lg">Hủy</span>
+                        <span className="text-lg">Quay lại</span>
                     </button>
-
-                    <button className="float-right btn btn-green btn-md w-1/3">
+                    <button className="!inline-block flex-col float-right btn btn-green btn-md w-[40%]">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
@@ -133,4 +140,4 @@ function AddRule () {
   );
 }
 
-export default AddRule;
+export default UpdateRule;

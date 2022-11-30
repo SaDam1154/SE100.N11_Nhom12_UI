@@ -14,6 +14,7 @@ import DetailTree from '../pages/DetailTree';
 import DetailCustomer from '../pages/DetailCustomer';
 import Login from '../pages/Login';
 import AddRule from '../pages/AddRule';
+import UpdateRule from '../pages/UpdateRule';
 
 // Public routes
 const publicRoutes = [
@@ -93,6 +94,13 @@ const publicRoutes = [
         component: AddRule,
         props: {
             heading: 'Thêm chức vụ',
+        },
+    },
+    {
+        path: '/rules/updaterule',
+        component: UpdateRule,
+        props: {
+            heading: 'Sửa chức vụ',
         },
     },
     {
