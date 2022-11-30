@@ -14,6 +14,18 @@ const groupMenus = [
             text: 'Order',
             link: '/order',
         },
+        children: [
+            {
+                iconClassname: 'fa-solid fa-list',
+                text: 'Danh sách',
+                link: '/',
+            },
+            {
+                iconClassname: 'fa-solid fa-circle-plus',
+                text: 'Thêm',
+                link: '/add',
+            },
+        ],
     },
     {
         main: {
