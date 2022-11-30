@@ -3,6 +3,7 @@ import FullLayout from '../layouts/FullLayout';
 
 // Pages
 import Home from '../pages/Home';
+import Order from '../pages/Order';
 import Products from '../pages/Products';
 import AddProduct from '../pages/AddProduct';
 import ProductsView from '../pages/ProductsView';
@@ -12,7 +13,7 @@ import Rules from '../pages/Rules';
 import DetailTree from '../pages/DetailTree';
 import DetailCustomer from '../pages/DetailCustomer';
 import Login from '../pages/Login';
-import AddRule from "../pages/AddRule";
+import AddRule from '../pages/AddRule';
 
 // Public routes
 const publicRoutes = [
@@ -21,6 +22,13 @@ const publicRoutes = [
         component: Home,
         props: {
             heading: 'Trang chủ',
+        },
+    },
+    {
+        path: '/order',
+        component: Order,
+        props: {
+            heading: 'Order',
         },
     },
     {
@@ -84,7 +92,7 @@ const publicRoutes = [
         path: '/rules/addrule',
         component: AddRule,
         props: {
-            heading: "Thêm chức vụ",
+            heading: 'Thêm chức vụ',
         },
     },
     {

@@ -1,112 +1,21 @@
-import { Fragment } from "react";
-import { Link } from "react-router-dom";
-import { Popover } from "@headlessui/react";
+import { Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { Popover } from '@headlessui/react';
 
 const customers = [
     {
         num: 1,
         id: 1000001,
-        name: "Nguyễn Văn A",
-        phone: "0917823923",
-        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
+        name: 'Nguyễn Văn A',
+        phone: '0917823923',
+        address: 'Số 34, đường Gì Đó, phường Ngẫu Nhiên....',
     },
     {
         num: 2,
         id: 1000002,
-        name: "Nguyễn Văn A",
-        phone: "0917823923",
-        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
-    },
-    {
-        num: 3,
-        id: 1000003,
-        name: "Nguyễn Văn A",
-        phone: "0917823923",
-        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
-    },
-    {
-        num: 4,
-        id: 1000004,
-        name: "Nguyễn Văn A",
-        phone: "0917823923",
-        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
-    },
-    {
-        num: 5,
-        id: 1000005,
-        name: "Nguyễn Văn A",
-        phone: "0917823923",
-        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
-    },
-    {
-        num: 6,
-        id: 1000006,
-        name: "Nguyễn Văn A",
-        phone: "0917823923",
-        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
-    },
-    {
-        num: 7,
-        id: 1000007,
-        name: "Nguyễn Văn A",
-        phone: "0917823923",
-        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
-    },
-    {
-        num: 7,
-        id: 1000007,
-        name: "Nguyễn Văn A",
-        phone: "0917823923",
-        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
-    },
-    {
-        num: 7,
-        id: 1000007,
-        name: "Nguyễn Văn A",
-        phone: "0917823923",
-        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
-    },
-    {
-        num: 7,
-        id: 1000007,
-        name: "Nguyễn Văn A",
-        phone: "0917823923",
-        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
-    },
-    {
-        num: 7,
-        id: 1000007,
-        name: "Nguyễn Văn A",
-        phone: "0917823923",
-        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
-    },
-    {
-        num: 7,
-        id: 1000007,
-        name: "Nguyễn Văn A",
-        phone: "0917823923",
-        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
-    },
-    {
-        num: 7,
-        id: 1000007,
-        name: "Nguyễn Văn A",
-        phone: "0917823923",
-        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
-    },
-    {
-        num: 7,
-        id: 1000007,
-        name: "Nguyễn Văn A",
-        phone: "0917823923",
-        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
-    },
-    {
-        num: 20,
-        id: 1000007,
-        name: "Nguyễn Văn A",
-        phone: "0917823923",
-        address: "Số 34, đường Gì Đó, phường Ngẫu Nhiên....",
+        name: 'Nguyễn Văn A',
+        phone: '0917823923',
+        address: 'Số 34, đường Gì Đó, phường Ngẫu Nhiên....',
     },
 ];
 
@@ -162,12 +71,12 @@ function Customers() {
             </div>
             <table className="mt-4 w-full">
                 <colgroup>
-                    <col span="1" style={{ width: "10%" }} />
-                    <col span="1" style={{ width: "20%" }} />
-                    <col span="1" style={{ width: "20%" }} />
-                    <col span="1" style={{ width: "20%" }} />
-                    <col span="1" style={{ width: "20%" }} />
-                    <col span="1" style={{ width: "10%" }} />
+                    <col span="1" style={{ width: '10%' }} />
+                    <col span="1" style={{ width: '20%' }} />
+                    <col span="1" style={{ width: '20%' }} />
+                    <col span="1" style={{ width: '20%' }} />
+                    <col span="1" style={{ width: '20%' }} />
+                    <col span="1" style={{ width: '10%' }} />
                 </colgroup>
 
                 <thead className="h-11 rounded bg-blue-500 text-white">
@@ -202,7 +111,10 @@ function Customers() {
                             </td>
                             <td className="py-2 text-center">
                                 <div className="flex justify-end">
-                                    <Link to="/customers/detailcus" className="btn btn-sm bg-blue-500 hover:bg-blue-400">
+                                    <Link
+                                        to="/customers/detailcus"
+                                        className="btn btn-sm bg-blue-500 hover:bg-blue-400"
+                                    >
                                         <span className="pr-1">
                                             <i className="fa-solid fa-pen-to-square"></i>
                                         </span>

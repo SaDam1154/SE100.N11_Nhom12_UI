@@ -3,11 +3,27 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Listbox, Popover } from '@headlessui/react';
 import clsx from 'clsx';
 import { useEffect } from 'react';
-
+const orders = [
+    {
+        id: 1000001,
+        name: 'Nguyễn Văn A',
+        price: '20000',
+    },
+    {
+        id: 1000002,
+        name: 'Nguyễn Văn B',
+        price: '20000',
+    },
+    {
+        id: 1000003,
+        name: 'Nguyễn Văn C',
+        price: '20000',
+    },
+];
 function Orders() {
-    const [orders, setOrders] = useState([]);
+    // const [orders, setOrders] = useState([]);
     const navigate = useNavigate();
-    const [selectedProductTypes, setSelectedProductTypes] = useState([]);
+
     useEffect(() => {
         callApi();
     }, []);
@@ -124,7 +140,7 @@ function Orders() {
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
-                        <span>Thêm cây mới</span>
+                        <span>Đặt hàng</span>
                     </Link>
                 </div>
             </div>
@@ -134,8 +150,6 @@ function Orders() {
                     <col span="1" style={{ width: '20%' }} />
                     <col span="1" style={{ width: '20%' }} />
                     <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '10%' }} />
                 </colgroup>
 
                 <thead className="h-11 rounded bg-blue-500 text-white">

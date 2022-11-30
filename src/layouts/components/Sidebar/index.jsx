@@ -10,6 +10,13 @@ const groupMenus = [
     },
     {
         main: {
+            iconClassname: 'fa-solid fa-house',
+            text: 'Order',
+            link: '/order',
+        },
+    },
+    {
+        main: {
             iconClassname: 'fa-solid fa-box-open',
             text: 'Sản phẩm',
             link: '/product',
