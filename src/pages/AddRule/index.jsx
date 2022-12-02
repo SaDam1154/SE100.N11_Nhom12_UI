@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const userData = [
     {
@@ -15,24 +16,28 @@ const userData = [
     },
     {
         id: "4",
-        name: "QUản lý nhân viên basn han",
+        name: "Quản lý nhân viên",
     },   
     {
         id: "5",
-        name: "Thống kê hàng hóa da bans",
+        name: "Quản lý khách hàng thân thiết",
     },
     {
         id: "6",
-        name: "QUản lý nhân viên",
-    }, 
+        name: "Duyệt đơn hàng",
+    },  
     {
         id: "7",
-        name: "Thống kê hàng hóa day",
-    },
+        name: "Duyệt khách hàng thân thiết",
+    },   
     {
         id: "8",
-        name: "QUản lý nhân viên ddd",
-    },    
+        name: "In hóa đơn",
+    },
+    {
+        id: "9",
+        name: "Quản lý quy định",
+    },     
 ];
 
 function AddRule () {
@@ -114,12 +119,12 @@ function AddRule () {
                 </div>
 
                 <div className="flex-col w-1/2 mr-[10%]">
-                    <button className="float-left btn btn-red btn-md w-1/3">
+                    <Link to={"/rules"} className="float-left btn btn-red btn-md w-1/3">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-xmark"></i>
                         </span>
                         <span className="text-lg">Hủy</span>
-                    </button>
+                    </Link>
 
                     <button className="float-right btn btn-green btn-md w-1/3">
                         <span className="pr-1">
