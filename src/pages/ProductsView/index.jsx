@@ -1,35 +1,46 @@
-import { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
-import { Listbox, Popover } from "@headlessui/react";
-import clsx from "clsx";
-import { useEffect } from "react";
-
-const people = [
-    { id: 1, name: "Durward Reynolds" },
-    { id: 2, name: "Kenton Towne" },
-    { id: 3, name: "Therese Wunsch" },
-    { id: 4, name: "Benedict Kessler" },
-    { id: 5, name: "Katelyn Rohan" },
-];
+import { Fragment, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Listbox, Popover } from '@headlessui/react';
+import clsx from 'clsx';
+import { useEffect } from 'react';
 
 function ProductsView() {
-    const [selectedPeople, setSelectedPeople] = useState([
-        people[0],
-        people[1],
-    ]);
     const [products, setProducts] = useState([]);
+    const [productTypes, setProductTypes] = useState([]);
+    const navigate = useNavigate();
 
+    const [selectedProductTypes, setSelectedProductTypes] = useState([]);
     useEffect(() => {
-        fetch("http://localhost:5000/api/product")
+        callApi();
+        callApiPeople();
+    }, []);
+
+    function callApi() {
+        fetch('http://localhost:5000/api/product')
             .then((res) => res.json())
             .then((resJson) => {
                 if (resJson.success) {
-                    setProducts(resJson.data);
+                    setProducts(resJson.products);
                 } else {
                     setProducts([]);
                 }
             });
-    }, []);
+    }
+    function callApiPeople() {
+        fetch('http://localhost:5000/api/product-type')
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success) {
+                    setProductTypes(resJson.productTypes);
+                } else {
+                    setProductTypes([]);
+                }
+            });
+    }
+
+    function linkToDetail(id) {
+        navigate('/product/detail/' + id);
+    }
 
     return (
         <div className="container">
@@ -42,6 +53,7 @@ function ProductsView() {
                     <button
                         type="button"
                         className="ml-3 text-gray-800 hover:underline"
+                        onClick={() => callApi()}
                     >
                         <span className="font-sm pr-1">
                             <i className="fa fa-refresh" aria-hidden="true"></i>
@@ -73,41 +85,42 @@ function ProductsView() {
                             <h2 className="mb-2 text-lg font-semibold">
                                 Lọc sản phẩm
                             </h2>
+
                             <hr />
                             <div className="mt-3 space-x-2">
                                 <div>
                                     <Listbox
-                                        value={selectedPeople}
-                                        onChange={setSelectedPeople}
+                                        value={selectedProductTypes}
+                                        onChange={setSelectedProductTypes}
                                         multiple
                                     >
                                         <Listbox.Button
                                             as="div"
                                             className="text-input flex min-h-[36px] cursor-pointer items-center"
                                         >
-                                            <div className="mr-2 flex-1">{`Loại cây (${selectedPeople.length})`}</div>
+                                            <div className="mr-2 flex-1">{`Loại cây (${selectedProductTypes.length})`}</div>
                                             <i className="fa-solid fa-chevron-down"></i>
                                         </Listbox.Button>
                                         <Listbox.Options>
-                                            {people.map((person) => (
+                                            {productTypes.map((type) => (
                                                 <Listbox.Option
-                                                    key={person.id}
-                                                    value={person}
+                                                    key={type._id}
+                                                    value={type}
                                                     className="cursor-pointer hover:text-blue-500"
                                                 >
                                                     {({ selected }) => (
                                                         <div className="flex items-center">
                                                             <i
                                                                 className={clsx(
-                                                                    "fa-solid fa-check pr-2",
+                                                                    'fa-solid fa-check pr-2',
                                                                     {
-                                                                        "opacity-0":
+                                                                        'opacity-0':
                                                                             !selected,
                                                                     }
                                                                 )}
                                                             ></i>
                                                             <span>
-                                                                {person.name}
+                                                                {type.name}
                                                             </span>
                                                         </div>
                                                     )}
@@ -119,7 +132,7 @@ function ProductsView() {
                             </div>
                         </Popover.Panel>
                     </Popover>
-                    <Link to="/product" className="btn btn-md btn-green">
+                    <Link to="/product/" className="btn btn-md btn-green">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
@@ -134,11 +147,13 @@ function ProductsView() {
                 </div>
             </div>
             <div className="grid grid-cols-5 gap-4">
-                {products.map((product) => (
+                {products?.map((product) => (
                     <div key={product.id} className=" rounded border ">
                         <h1 className="py-2 text-center">{product.num}</h1>
                         <h1 className="py-2 text-center">{product.id}</h1>
-                        <h1 className="py-2 text-center">{product.type}</h1>
+                        <h1 className="py-2 text-center">
+                            {product.type?.name || '-'}
+                        </h1>
                         <h1 className="py-2 text-center">{product.name}</h1>
                         <h1 className="py-2 text-center">{product.price}</h1>
                         <div className="flex justify-center">

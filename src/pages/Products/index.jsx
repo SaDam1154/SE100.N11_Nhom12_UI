@@ -132,7 +132,7 @@ function Products() {
                             </div>
                         </Popover.Panel>
                     </Popover>
-                    <Link to="/product/" className="btn btn-md btn-green">
+                    <Link to="/product/views" className="btn btn-md btn-green">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
