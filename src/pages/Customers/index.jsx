@@ -20,6 +20,14 @@ const customers = [
 ];
 
 function Customers() {
+    // fake api
+    // const [customers, setCustomers] = useState([]);
+
+    // useEffect(() => {
+    // fetch("http://localhost:9000/customers").then((res) => res.json()).then(data => {
+    // setCustomers(data);
+    // });
+    // },[]);
     return (
         <div>
             <div className="flex space-x-4">
@@ -91,23 +99,23 @@ function Customers() {
                 </thead>
 
                 <tbody>
-                    {customers.map((customers) => (
+                    {customers.map((customer) => (
                         <tr
-                            key={customers.id}
+                            key={customer.id}
                             className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
                         >
                             <td className="py-2 text-center">
-                                {customers.num}
+                                {customer.num}
                             </td>
-                            <td className="py-2 text-center">{customers.id}</td>
+                            <td className="py-2 text-center">{customer.id}</td>
                             <td className="py-2 text-center">
-                                {customers.name}
-                            </td>
-                            <td className="py-2 text-center">
-                                {customers.phone}
+                                {customer.name}
                             </td>
                             <td className="py-2 text-center">
-                                {customers.address}
+                                {customer.phone}
+                            </td>
+                            <td className="py-2 text-center">
+                                {customer.address}
                             </td>
                             <td className="py-2 text-center">
                                 <div className="flex justify-end">

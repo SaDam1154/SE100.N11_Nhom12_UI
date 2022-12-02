@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const userData = [
     {
@@ -15,28 +16,28 @@ const userData = [
     },
     {
         id: "4",
-        name: "QUản lý nhân viên basn han",
+        name: "Quản lý nhân viên",
     },   
     {
         id: "5",
-        name: "Thống kê hàng hóa da bans",
+        name: "Quản lý khách hàng thân thiết",
     },
     {
         id: "6",
-        name: "QUản lý nhân viêndd",
+        name: "Duyệt đơn hàng",
     },  
     {
         id: "7",
-        name: "QUản lý nhân viên basn handdd",
+        name: "Duyệt khách hàng thân thiết",
     },   
     {
         id: "8",
-        name: "Thống kê hàng hóa da bandds",
+        name: "In hóa đơn",
     },
     {
         id: "9",
-        name: "QUản lý nhân viênddd",
-    },    
+        name: "Quản lý quy định",
+    }, 
 ];
 
 function UpdateRule () {
@@ -122,12 +123,12 @@ function UpdateRule () {
                 </div>
 
                 <div className="flex-row w-2/3 mr-[10%]">
-                    <button className="!inline-block flex-col float-left btn btn-blue btn-md w-[40%]">
+                    <Link to={"/rules"} className="!inline-block text-center flex-col float-left btn btn-blue btn-md w-[40%]">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-xmark"></i>
                         </span>
                         <span className="text-lg">Quay lại</span>
-                    </button>
+                    </Link>
                     <button className="!inline-block flex-col float-right btn btn-green btn-md w-[40%]">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
