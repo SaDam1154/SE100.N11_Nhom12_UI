@@ -1,8 +1,6 @@
-import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import { Popover } from '@headlessui/react';
-
-const customers = [
+import { Fragment, useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+const customers2 = [
     {
         num: 1,
         id: 1000001,
@@ -21,13 +19,19 @@ const customers = [
 
 function Customers() {
     // fake api
-    // const [customers, setCustomers] = useState([]);
+    const [customers, setCustomers] = useState([]);
 
-    // useEffect(() => {
-    // fetch("http://localhost:9000/customers").then((res) => res.json()).then(data => {
-    // setCustomers(data);
-    // });
-    // },[]);
+    useEffect(() => {
+        fetch('http://localhost:5000/api/customer')
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success) {
+                    setCustomers(resJson.customers);
+                } else {
+                    setCustomers([]);
+                }
+            });
+    }, []);
     return (
         <div>
             <div className="flex space-x-4">
@@ -99,15 +103,13 @@ function Customers() {
                 </thead>
 
                 <tbody>
-                    {customers.map((customer) => (
+                    {customers?.map((customer) => (
                         <tr
-                            key={customer.id}
+                            key={customer._id}
                             className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
                         >
-                            <td className="py-2 text-center">
-                                {customer.num}
-                            </td>
                             <td className="py-2 text-center">{customer.id}</td>
+                            <td className="py-2 text-center">{customer._id}</td>
                             <td className="py-2 text-center">
                                 {customer.name}
                             </td>

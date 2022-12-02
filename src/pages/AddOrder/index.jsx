@@ -8,6 +8,19 @@ const initOrder = {
     price: '',
 };
 function AddOrder() {
+    // const [customers, setCustomers] = useState([]);
+
+    // useEffect(() => {
+    //     fetch('http://localhost:5000/api/customer')
+    //         .then((res) => res.json())
+    //         .then((resJson) => {
+    //             if (resJson.success) {
+    //                 setCustomers(resJson.customers);
+    //             } else {
+    //                 setCustomers([]);
+    //             }
+    //         });
+    // }, []);
     const [productType, setProductType] = useState([]);
     const [productName, setProductName] = useState([]);
     const [productQuanity, setProductQuanity] = useState([]);
