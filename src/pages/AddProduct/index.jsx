@@ -30,9 +30,6 @@ function Addroduct() {
 
         file.preview = URL.createObjectURL(file);
 
-        const {name, value}= e.target;
-        setFormdata({...formdata, [name]:value});
-
         setImg(file);
     };
 
@@ -114,7 +111,7 @@ function Addroduct() {
                                     />
                                 )}
                             </div>
-                            <button className="btn btn-green btn-md relative inset-x-1/4 mt-4 h-10 w-1/2 hover:bg-green-400">
+                            <div className="btn btn-green text-center btn-md relative inset-x-1/4 mt-4 h-10 w-1/2 hover:bg-green-400">
                                 <p className="tezt w-full">Chọn ảnh</p>
                                 <input
                                     type="file"
@@ -123,10 +120,11 @@ function Addroduct() {
                                     value={formdata.imageFile}
                                     accept="image/gif, image/ipeg, image/png"
                                     className="absolute top-0 left-0 w-full cursor-pointer opacity-0 form-control"
-                                    onChange={chooseFile}
+                                    onChange={handleInput}
+                                    onChangeCapture={chooseFile}
                                     required
                                 />
-                            </button>
+                            </div>
                         </div>
                     </div>
 
