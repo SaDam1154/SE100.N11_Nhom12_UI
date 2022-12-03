@@ -2,21 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Addroduct() {
-    const [formdata, setFormdata] = useState ({
-        name:'',
-        type:'',
-        quantity: "",
-        imageFile:'',
-        date:'',
-        value:''
-    })
-
-    const handleInput = (e) => {
-        const {name, value}= e.target;
-        setFormdata({...formdata, [name]:value});
-        //console.log(formdata);
-    }
-
     const [img, setImg] = useState();
 
     useEffect(() => {
@@ -33,14 +18,39 @@ function Addroduct() {
         setImg(file);
     };
 
+    const [formdata, setFormdata] = useState ({
+        name:'',
+        type:'',
+        quantity: "",
+        imageFile:'',
+        date:'',
+        value:''
+    })
+    const handleInput = (e) => {
+        const {name, value}= e.target;
+        setFormdata({...formdata, [name]:value});
+        //console.log(formdata);
+    }
+    const posturl ='http://localhost:5173/product'
     const handleFormsubmit = (e) => {
         e.preventDefault();
         console.log(formdata);
+
+        //test POST api
+        fetch('http://localhost:9000/treeinfo',{ 
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify(formdata)  
+    });
+
     }
+       
     return (
         <div className="container">
             <div className="w-full">
-                <form onSubmit={handleFormsubmit}>
+                <form  method="POST"  onSubmit={handleFormsubmit} action="">
                     <div className="mt-4 flex flex-row">
                         <div className="mr-8 mt-3 flex w-1/2 flex-col space-y-4 text-lg">
                             <div className="flex flex-col form-group ">
