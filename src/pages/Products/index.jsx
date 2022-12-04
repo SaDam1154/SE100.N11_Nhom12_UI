@@ -172,7 +172,7 @@ function Products() {
                         <tr
                             key={product.id}
                             className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
-                            onClick={(id) => linkToDetail(product.id)}
+                            onClick={() => linkToDetail(product.id)}
                         >
                             <td className="py-2 text-center">{index + 1}</td>
                             <td className="py-2 text-center">{product.id}</td>

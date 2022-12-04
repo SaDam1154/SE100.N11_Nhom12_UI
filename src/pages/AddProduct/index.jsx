@@ -1,7 +1,9 @@
-import { data } from 'autoprefixer';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import { Fragment, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import TypeProduct from '../../components/TypeProduct';
+import clsx from 'clsx';
+import { useEffect } from 'react';
+import TimeNow from '../../components/TimeNow';
 function Addroduct() {
     const [img, setImg] = useState();
 
@@ -19,42 +21,50 @@ function Addroduct() {
         setImg(file);
     };
 
-    const [formdata, setFormdata] = useState ({
-        name:'',
-        type:'',
-        quantity: "",
-        imageFile:'',
-        date:'',
-        value:''
-    })
+    const [formdata, setFormdata] = useState({
+        name: '',
+        price: '',
+        type: '',
+        quantity: '',
+        imageFile: '',
+        date: '',
+    });
+
     const handleInput = (e) => {
-        const {name, value}= e.target;
-        setFormdata({...formdata, [name]:value});
+        const { name, value } = e.target;
+        setFormdata({ ...formdata, [name]: value });
         //console.log(formdata);
-    }
-    const posturl ='http://localhost:5173/product'// link trang listproduct
+    };
+    const posturl = 'http://localhost:5173/product';
     const handleFormsubmit = (e) => {
         e.preventDefault();
         console.log(formdata);  
         //test POST api // link test api json server add data tạm
-        fetch('http://localhost:9000/treeinfo',{ 
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-              },
-            body: JSON.stringify(formdata) 
-        }); 
-        window.location.href = posturl;
+        // fetch('http://localhost:9000/treeinfo',{ 
+        //     method: "POST",
+        // console.log(formdata);
 
-    }
-       
+        //test POST api
+        fetch('http://localhost:5000/api/product', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formdata),
+        });
+    };
+
+    //SaDam load typeProduct
+
+    //end load type product
+
     return (
         <div className="container">
             <div className="w-full">
-                <form onSubmit={handleFormsubmit} action="">
+                <form method="POST" onSubmit={handleFormsubmit} action="">
                     <div className="mt-4 flex flex-row">
                         <div className="mr-8 mt-3 flex w-1/2 flex-col space-y-4 text-lg">
-                            <div className="flex flex-col form-group ">
+                            <div className="form-group flex flex-col ">
                                 <label
                                     className="mb-1 font-semibold"
                                     htmlFor="name"
@@ -67,13 +77,24 @@ function Addroduct() {
                                     name="name"
                                     value={formdata.name}
                                     onChange={handleInput}
-                                    className="text-input form-control py-[5px] invalid"
+                                    className="text-input form-control invalid py-[5px]"
                                     required
                                 />
                                 {/* <span className="form-message">Vui lòng nhập tên cây</span> */}
                             </div>
+                            <div className="mt-3 space-x-2">
+                                <TypeProduct
+                                    onChange={(selectedProductType) => {
+                                        setFormdata({
+                                            ...formdata,
+                                            type: selectedProductType._id,
+                                        });
+                                    }}
+                                />
+                            </div>
 
-                            <div className="flex flex-col form-group">
+                            {/*  
+                            <div className="form-group flex flex-col">
                                 <label
                                     className="mb-1 font-semibold"
                                     htmlFor="type"
@@ -89,10 +110,11 @@ function Addroduct() {
                                     value={formdata.type}
                                     required
                                 />
-                                 {/* <span className="form-message">Vui chọn loại cây</span> */}
-                            </div>
+                                <span className="form-message">Vui chọn loại cây</span>
+                        </div> 
+                             */}
 
-                            <div className="flex flex-col form-group">
+                            <div className="form-group flex flex-col">
                                 <label
                                     className="mb-1 font-semibold"
                                     htmlFor="quantity"
@@ -101,7 +123,7 @@ function Addroduct() {
                                 </label>
                                 <input
                                     type="number"
-                                    placeholder="Nhập số lượng" 
+                                    placeholder="Nhập số lượng"
                                     id="quantity"
                                     name="quantity"
                                     value={formdata.quantity}
@@ -112,7 +134,7 @@ function Addroduct() {
                             </div>
                         </div>
 
-                        <div className="w-1/2 flex-col form-group items-center justify-items-center ">
+                        <div className="form-group w-1/2 flex-col items-center justify-items-center ">
                             <div className="h-60 w-full rounded-xl border-2 border-dashed border-cyan-300 bg-gray-100">
                                 {img && (
                                     <img
@@ -122,7 +144,7 @@ function Addroduct() {
                                     />
                                 )}
                             </div>
-                            <div className="btn btn-green text-center btn-md relative inset-x-1/4 mt-4 h-10 w-1/2 hover:bg-green-400">
+                            <div className="btn btn-green btn-md relative inset-x-1/4 mt-4 h-10 w-1/2 text-center hover:bg-green-400">
                                 <p className="tezt w-full">Chọn ảnh</p>
                                 <input
                                     type="file"
@@ -130,7 +152,7 @@ function Addroduct() {
                                     name="imageFile"
                                     value={formdata.imageFile}
                                     accept="image/gif, image/ipeg, image/png"
-                                    className="absolute top-0 left-0 w-full cursor-pointer opacity-0 form-control"
+                                    className="form-control absolute top-0 left-0 w-full cursor-pointer opacity-0"
                                     onChange={handleInput}
                                     onChangeCapture={chooseFile}
                                     required
@@ -140,28 +162,20 @@ function Addroduct() {
                     </div>
 
                     <div className="mt-4 flex flex-row">
-                        <div className="mr-4 mt-3 flex basis-1/2 flex-col form-group">
+                        <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col">
                             <label
                                 className="mb-1 text-xl font-semibold"
                                 htmlFor="date"
                             >
                                 Ngày thêm
                             </label>
-                            <input
-                                type="date"
-                                id="date"
-                                name="date"
-                                value={formdata.date}
-                                onChange={handleInput}
-                                className="text-input form-control py-[4px]"
-                                required
-                            />
+                            <TimeNow />
                         </div>
 
                         <div className="ml-4 mt-3 flex basis-1/2 flex-col">
                             <label
                                 className="mb-1 text-xl font-semibold"
-                                htmlFor="value"
+                                htmlFor="price"
                             >
                                 Giá
                             </label>
@@ -169,15 +183,15 @@ function Addroduct() {
                                 <input
                                     type="number"
                                     placeholder="Nhập giá mỗi cây"
-                                    id="value"
-                                    name="value"
-                                    value={formdata.value}
+                                    id="price"
+                                    name="price"
+                                    value={formdata.price}
                                     onChange={handleInput}
                                     className="text-input form-control w-full py-[5px]"
                                     required
                                 />
                                 <label
-                                    htmlFor="value"
+                                    htmlFor="price"
                                     className="lb-value absolute top-0 right-0 select-none px-[6%] py-1 text-lg text-gray-600"
                                 >
                                     VNĐ
@@ -188,7 +202,10 @@ function Addroduct() {
 
                     <div className="ml-4px float-right mt-8 flex w-1/2 flex-row pl-4">
                         <div className="mr-[3%] flex basis-1/2 flex-col pl-[5%]">
-                            <Link to={"/product"} className="btn btn-red btn-md w-full">
+                            <Link
+                                to={'/product'}
+                                className="btn btn-red btn-md w-full"
+                            >
                                 <span className="pr-2">
                                     <i className="fa-solid fa-circle-xmark"></i>
                                 </span>
@@ -196,7 +213,10 @@ function Addroduct() {
                             </Link>
                         </div>
                         <div className="ml-[3%] flex basis-1/2 flex-col pr-[5%]">
-                            <button type="submit" className="btn btn-blue btn-md w-full">
+                            <button
+                                type="submit"
+                                className="btn btn-blue btn-md w-full"
+                            >
                                 <span className="pr-2">
                                     <i className="fa-solid fa-circle-plus"></i>
                                 </span>

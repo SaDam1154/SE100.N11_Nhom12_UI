@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import TypeProduct from '../../components/TypeProduct';
 
 const initOrder = {
     id: 0,
@@ -102,15 +103,12 @@ function AddOrder() {
                 <div className="mt-1  flex basis-1/4 flex-col border-4 border-solid py-4 text-lg">
                     <div className="flex flex-col px-2 py-2">
                         <label className="mb-1 font-semibold" htmlFor="name">
-                            Loại cây
+                            Loại Cây
                         </label>
-                        <input
-                            type="text"
-                            id="name"
-                            value={productType}
-                            className="text-input mr-8 py-[5px]"
-                            onChange={(e) => setProductType(e.target.value)}
-                            required
+                        <TypeProduct
+                            onChange={(selectedProductType) => {
+                                setProductType(selectedProductType._i);
+                            }}
                         />
                     </div>
                     <div className="flex flex-col px-2 py-2">

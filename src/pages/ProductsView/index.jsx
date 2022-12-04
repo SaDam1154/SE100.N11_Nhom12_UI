@@ -12,7 +12,7 @@ function ProductsView() {
     const [selectedProductTypes, setSelectedProductTypes] = useState([]);
     useEffect(() => {
         callApi();
-        callApiPeople();
+        callApiProductTypes();
     }, []);
 
     function callApi() {
@@ -26,7 +26,7 @@ function ProductsView() {
                 }
             });
     }
-    function callApiPeople() {
+    function callApiProductTypes() {
         fetch('http://localhost:5000/api/product-type')
             .then((res) => res.json())
             .then((resJson) => {
