@@ -1,22 +1,9 @@
 import { Fragment, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Listbox, Popover } from '@headlessui/react';
+import TypeProduct from '../../components/TypeProduct';
 import clsx from 'clsx';
 import { useEffect } from 'react';
-function TimeNow() {
-    //SaDam Time.Now
-    const [dt, setDt] = useState(new Date().toLocaleString());
-
-    useEffect(() => {
-        let secTimer = setInterval(() => {
-            setDt(new Date().toLocaleString());
-        }, 1000);
-
-        return () => clearInterval(secTimer);
-    }, []);
-    ///end time
-    return <div className="text-3xl">{dt}</div>;
-}
+import TimeNow from '../../components/TimeNow';
 function Addroduct() {
     const [img, setImg] = useState();
 
@@ -64,28 +51,8 @@ function Addroduct() {
     };
 
     //SaDam load typeProduct
-    const [productTypes, setProductTypes] = useState([]);
 
-    const [selectedProductType, setSelectedProductType] = useState({});
-    useEffect(() => {
-        callApiProductTypes();
-    }, []);
-
-    function callApiProductTypes() {
-        fetch('http://localhost:5000/api/product-type')
-            .then((res) => res.json())
-            .then((resJson) => {
-                if (resJson.success) {
-                    setProductTypes(resJson.productTypes);
-                } else {
-                    setProductTypes([]);
-                }
-            });
-    }
     //end load type product
-    useEffect(() => {
-        setFormdata({ ...formdata, type: selectedProductType._id });
-    }, [selectedProductType._id]);
 
     return (
         <div className="container">
@@ -112,49 +79,14 @@ function Addroduct() {
                                 {/* <span className="form-message">Vui lòng nhập tên cây</span> */}
                             </div>
                             <div className="mt-3 space-x-2">
-                                <div>
-                                    <Listbox
-                                        value={selectedProductType}
-                                        onChange={setSelectedProductType}
-                                    >
-                                        <Listbox.Button
-                                            as="div"
-                                            className="text-input flex min-h-[36px] cursor-pointer items-center"
-                                        >
-                                            <div className="mr-2 flex-1">
-                                                {selectedProductType.name ||
-                                                    'Loại cây'}{' '}
-                                            </div>
-                                            <i className="fa-solid fa-chevron-down"></i>
-                                        </Listbox.Button>
-                                        <Listbox.Options>
-                                            {productTypes.map((type) => (
-                                                <Listbox.Option
-                                                    key={type._id}
-                                                    value={type}
-                                                    className="cursor-pointer hover:text-blue-500"
-                                                >
-                                                    {({ selected }) => (
-                                                        <div className="flex items-center">
-                                                            <i
-                                                                className={clsx(
-                                                                    'fa-solid fa-check pr-2',
-                                                                    {
-                                                                        'opacity-0':
-                                                                            !selected,
-                                                                    }
-                                                                )}
-                                                            ></i>
-                                                            <span>
-                                                                {type.name}
-                                                            </span>
-                                                        </div>
-                                                    )}
-                                                </Listbox.Option>
-                                            ))}
-                                        </Listbox.Options>
-                                    </Listbox>
-                                </div>
+                                <TypeProduct
+                                    onChange={(selectedProductType) => {
+                                        setFormdata({
+                                            ...formdata,
+                                            type: selectedProductType._id,
+                                        });
+                                    }}
+                                />
                             </div>
 
                             {/*  
