@@ -36,7 +36,7 @@ function Addroduct() {
     const handleFormsubmit = (e) => {
         e.preventDefault();
         console.log(formdata);  
-        //test POST api link test api json server
+        //test POST api // link test api json server add data tạm
         fetch('http://localhost:9000/treeinfo',{ 
             method: "POST",
             headers: {
