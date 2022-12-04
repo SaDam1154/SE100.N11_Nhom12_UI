@@ -1,3 +1,4 @@
+import { data } from 'autoprefixer';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -31,26 +32,26 @@ function Addroduct() {
         setFormdata({...formdata, [name]:value});
         //console.log(formdata);
     }
-    const posturl ='http://localhost:5173/product'
+    const posturl ='http://localhost:5173/product'// link trang listproduct
     const handleFormsubmit = (e) => {
         e.preventDefault();
-        console.log(formdata);
-
-        //test POST api
+        console.log(formdata);  
+        //test POST api link test api json server
         fetch('http://localhost:9000/treeinfo',{ 
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
               },
-            body: JSON.stringify(formdata)  
-    });
+            body: JSON.stringify(formdata) 
+        }); 
+        window.location.href = posturl;
 
     }
        
     return (
         <div className="container">
             <div className="w-full">
-                <form  method="POST"  onSubmit={handleFormsubmit} action="">
+                <form onSubmit={handleFormsubmit} action="">
                     <div className="mt-4 flex flex-row">
                         <div className="mr-8 mt-3 flex w-1/2 flex-col space-y-4 text-lg">
                             <div className="flex flex-col form-group ">
