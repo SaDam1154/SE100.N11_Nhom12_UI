@@ -3,7 +3,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Listbox, Popover } from '@headlessui/react';
 import clsx from 'clsx';
 import { useEffect } from 'react';
+function TimeNow() {
+    //SaDam Time.Now
+    const [dt, setDt] = useState(new Date().toLocaleString());
 
+    useEffect(() => {
+        let secTimer = setInterval(() => {
+            setDt(new Date().toLocaleString());
+        }, 1000);
+
+        return () => clearInterval(secTimer);
+    }, []);
+    ///end time
+    return <div className="text-3xl">{dt}</div>;
+}
 function Addroduct() {
     const [img, setImg] = useState();
 
@@ -29,6 +42,7 @@ function Addroduct() {
         imageFile: '',
         date: '',
     });
+
     const handleInput = (e) => {
         const { name, value } = e.target;
         setFormdata({ ...formdata, [name]: value });
@@ -69,6 +83,9 @@ function Addroduct() {
             });
     }
     //end load type product
+    useEffect(() => {
+        setFormdata({ ...formdata, type: selectedProductType._id });
+    }, [selectedProductType._id]);
 
     return (
         <div className="container">
@@ -216,15 +233,7 @@ function Addroduct() {
                             >
                                 Ngày thêm
                             </label>
-                            <input
-                                type="date"
-                                id="date"
-                                name="date"
-                                value={formdata.date}
-                                onChange={handleInput}
-                                className="text-input form-control py-[4px]"
-                                required
-                            />
+                            <TimeNow />
                         </div>
 
                         <div className="ml-4 mt-3 flex basis-1/2 flex-col">
