@@ -52,6 +52,7 @@ function Addroduct() {
             },
             body: JSON.stringify(formdata),
         });
+        window.location.href = posturl;
     };
 
     //SaDam load typeProduct
@@ -82,7 +83,13 @@ function Addroduct() {
                                 />
                                 {/* <span className="form-message">Vui lòng nhập tên cây</span> */}
                             </div>
-                            <div className="mt-3 space-x-2">
+                            <div className="form-group flex flex-col">
+                                <label
+                                    className="mb-1 font-semibold"
+                                    htmlFor="type"
+                                >
+                                    Loại cây
+                                </label>
                                 <TypeProduct
                                     onChange={(selectedProductType) => {
                                         setFormdata({
@@ -90,6 +97,7 @@ function Addroduct() {
                                             type: selectedProductType._id,
                                         });
                                     }}
+                                    required
                                 />
                             </div>
 
@@ -162,14 +170,17 @@ function Addroduct() {
                     </div>
 
                     <div className="mt-4 flex flex-row">
-                        <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col">
+                        <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col ">
                             <label
                                 className="mb-1 text-xl font-semibold"
                                 htmlFor="date"
                             >
                                 Ngày thêm
                             </label>
-                            <TimeNow />
+                            <div className="rounded border border-slate-300 px-2 outline-none bg-slate-50">
+                                <TimeNow/>
+                            </div>
+                
                         </div>
 
                         <div className="ml-4 mt-3 flex basis-1/2 flex-col">
