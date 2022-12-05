@@ -13,11 +13,17 @@ function Addroduct() {
             img && URL.revokeObjectURL(img.preview);
         };
     }, [img]);
+
     const chooseFile = (e) => {
         const file = e.target.files[0];
 
+        var fileReader = new FileReader()
+        fileReader.readAsDataURL(file)
+        fileReader.onloadend= function(e) {
+            const imageFile = e.target.result;
+            setFormdata({...formdata, image: imageFile});
+        }  
         file.preview = URL.createObjectURL(file);
-
         setImg(file);
     };
 
@@ -26,7 +32,7 @@ function Addroduct() {
         price: '',
         type: '',
         quantity: '',
-        imageFile: '',
+        image: '',
         date: '',
     });
 
@@ -46,21 +52,9 @@ function Addroduct() {
             },
             body: JSON.stringify(formdata),
         });
-        console.log(formdata);
-        // setFormdata({
-        //     name: '',
-        //     price: '',
-        //     type: '',
-        //     quantity: '',
-        //     imageFile: '',
-        //     date: '',
-        // });
-        // setImg();
+        window.location.href = posturl;
     };
 
-    //SaDam load typeProduct
-
-    //end load type product
 
     return (
         <div className="container">
@@ -84,20 +78,7 @@ function Addroduct() {
                                     className="text-input form-control invalid py-[5px]"
                                     required
                                 />
-                                {/* <span className="form-message">Vui lòng nhập tên cây</span> */}
                             </div>
-                            <div className="mt-3 space-x-2">
-                                <TypeProduct
-                                    onChange={(selectedProductType) => {
-                                        setFormdata({
-                                            ...formdata,
-                                            type: selectedProductType._id,
-                                        });
-                                    }}
-                                />
-                            </div>
-
-                            {/*  
                             <div className="form-group flex flex-col">
                                 <label
                                     className="mb-1 font-semibold"
@@ -105,25 +86,25 @@ function Addroduct() {
                                 >
                                     Loại cây
                                 </label>
-                                <input
-                                    type="text"
-                                    onChange={handleInput}
-                                    className="text-input form-control py-[5px]"
-                                    id="type"
-                                    name="type"
-                                    value={formdata.type}
+                                <TypeProduct
+                                    onChange={(selectedProductType) => {
+                                        setFormdata({
+                                            ...formdata,
+                                            type: selectedProductType._id,
+                                        });
+                                    }}
                                     required
                                 />
-                                <span className="form-message">Vui chọn loại cây</span>
-                        </div> 
-                             */}
+                            </div>
+
+                          
 
                             <div className="form-group flex flex-col">
                                 <label
                                     className="mb-1 font-semibold"
                                     htmlFor="quantity"
                                 >
-                                    Số lượng {formdata.quantity}
+                                    Số lượng
                                 </label>
                                 <input
                                     type="number"
@@ -153,8 +134,8 @@ function Addroduct() {
                                 <input
                                     type="file"
                                     id="imageFile"
-                                    name="imageFile"
-                                    value={formdata.imageFile}
+                                    // name="imageFile"
+                                    // value={formdata.imageFile}
                                     accept="image/gif, image/ipeg, image/png"
                                     className="form-control absolute top-0 left-0 w-full cursor-pointer opacity-0"
                                     onChange={handleInput}
@@ -173,7 +154,10 @@ function Addroduct() {
                             >
                                 Ngày thêm
                             </label>
-                            <TimeNow />
+                            <div className="rounded border border-slate-300 px-2 outline-none bg-slate-50">
+                                <TimeNow/>
+                            </div>
+                
                         </div>
 
                         <div className="ml-4 mt-3 flex basis-1/2 flex-col">
