@@ -77,6 +77,9 @@ function AddOrder() {
         callApi();
         callApiProductTypes();
     }, []);
+    useEffect(() => {
+        callApiCustomer();
+    }, [customerPhone]);
 
     function callApi() {
         fetch('http://localhost:5000/api/product')
@@ -97,6 +100,21 @@ function AddOrder() {
                     setProductTypes(resJson.productTypes);
                 } else {
                     setProductTypes([]);
+                }
+            });
+    }
+    function callApiCustomer() {
+        fetch(
+            `http://localhost:5000/api/customer?filters={"phone": "${customerPhone}"}`
+        )
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success && resJson.customers[0]) {
+                    setCustomerName(resJson.customers[0].name);
+                    setCustomerAddress(resJson.customers[0].address);
+                } else {
+                    setCustomerName('');
+                    setCustomerAddress('');
                 }
             });
     }
