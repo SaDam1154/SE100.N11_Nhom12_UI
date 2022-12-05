@@ -13,11 +13,17 @@ function Addroduct() {
             img && URL.revokeObjectURL(img.preview);
         };
     }, [img]);
+
     const chooseFile = (e) => {
         const file = e.target.files[0];
 
+        var fileReader = new FileReader()
+        fileReader.readAsDataURL(file)
+        fileReader.onloadend= function(e) {
+            const imageFile = e.target.result;
+            setFormdata({...formdata, image: imageFile});
+        }  
         file.preview = URL.createObjectURL(file);
-
         setImg(file);
     };
 
@@ -26,7 +32,7 @@ function Addroduct() {
         price: '',
         type: '',
         quantity: '',
-        imageFile: '',
+        image: '',
         date: '',
     });
 
@@ -52,7 +58,7 @@ function Addroduct() {
             },
             body: JSON.stringify(formdata),
         });
-        window.location.href = posturl;
+        //window.location.href = posturl;
     };
 
     //SaDam load typeProduct
@@ -157,8 +163,8 @@ function Addroduct() {
                                 <input
                                     type="file"
                                     id="imageFile"
-                                    name="imageFile"
-                                    value={formdata.imageFile}
+                                    // name="imageFile"
+                                    // value={formdata.imageFile}
                                     accept="image/gif, image/ipeg, image/png"
                                     className="form-control absolute top-0 left-0 w-full cursor-pointer opacity-0"
                                     onChange={handleInput}

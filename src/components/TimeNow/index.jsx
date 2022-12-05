@@ -11,6 +11,6 @@ function TimeNow() {
         return () => clearInterval(secTimer);
     }, []);
     ///end time
-    return <div className="text-3xl">{dt}</div>;
+    return <div className="text-2xl">{dt}</div>;
 }
 export default TimeNow;
