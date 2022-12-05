@@ -33,16 +33,10 @@ function Addroduct() {
     const handleInput = (e) => {
         const { name, value } = e.target;
         setFormdata({ ...formdata, [name]: value });
-        //console.log(formdata);
     };
     const posturl = 'http://localhost:5173/product';
     const handleFormsubmit = (e) => {
         e.preventDefault();
-        console.log(formdata);  
-        //test POST api // link test api json server add data tạm
-        // fetch('http://localhost:9000/treeinfo',{ 
-        //     method: "POST",
-        // console.log(formdata);
 
         //test POST api
         fetch('http://localhost:5000/api/product', {
@@ -52,7 +46,16 @@ function Addroduct() {
             },
             body: JSON.stringify(formdata),
         });
-        window.location.href = posturl;
+        console.log(formdata);
+        // setFormdata({
+        //     name: '',
+        //     price: '',
+        //     type: '',
+        //     quantity: '',
+        //     imageFile: '',
+        //     date: '',
+        // });
+        // setImg();
     };
 
     //SaDam load typeProduct
@@ -83,13 +86,7 @@ function Addroduct() {
                                 />
                                 {/* <span className="form-message">Vui lòng nhập tên cây</span> */}
                             </div>
-                            <div className="form-group flex flex-col">
-                                <label
-                                    className="mb-1 font-semibold"
-                                    htmlFor="type"
-                                >
-                                    Loại cây
-                                </label>
+                            <div className="mt-3 space-x-2">
                                 <TypeProduct
                                     onChange={(selectedProductType) => {
                                         setFormdata({
@@ -97,7 +94,6 @@ function Addroduct() {
                                             type: selectedProductType._id,
                                         });
                                     }}
-                                    required
                                 />
                             </div>
 
@@ -127,7 +123,7 @@ function Addroduct() {
                                     className="mb-1 font-semibold"
                                     htmlFor="quantity"
                                 >
-                                    Số lượng
+                                    Số lượng {formdata.quantity}
                                 </label>
                                 <input
                                     type="number"
@@ -170,17 +166,14 @@ function Addroduct() {
                     </div>
 
                     <div className="mt-4 flex flex-row">
-                        <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col ">
+                        <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col">
                             <label
                                 className="mb-1 text-xl font-semibold"
                                 htmlFor="date"
                             >
                                 Ngày thêm
                             </label>
-                            <div className="rounded border border-slate-300 px-2 outline-none bg-slate-50">
-                                <TimeNow/>
-                            </div>
-                
+                            <TimeNow />
                         </div>
 
                         <div className="ml-4 mt-3 flex basis-1/2 flex-col">

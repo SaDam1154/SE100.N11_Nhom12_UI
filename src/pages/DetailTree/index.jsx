@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import moment from 'moment';
 
 function DetailTree() {
     const [img, setImg] = useState();
     const { id } = useParams();
     const [product, setProduct] = useState({});
-
     useEffect(() => {
         //cleanup
         return () => {
@@ -23,7 +23,6 @@ function DetailTree() {
             .then((resJson) => {
                 if (resJson.success) {
                     setProduct(resJson.product);
-                    console.log(product);
                 } else {
                     setProduct({});
                 }
@@ -37,6 +36,12 @@ function DetailTree() {
 
         setImg(file);
     };
+    // console.log(product.type?.name);
+    function formatDate(date) {
+        date = moment('2014-08-20 15:30:00').format('MM/DD/YYYY h:mm a');
+        return date;
+    }
+
     return (
         <div className="container">
             <div className="wrapper text-lg">
@@ -79,7 +84,7 @@ function DetailTree() {
                         </label>
                         <input
                             type="text"
-                            value={product.type}
+                            value={product?.type?.name}
                             id="type"
                             className="text-input py-[5px]"
                             required
@@ -157,13 +162,11 @@ function DetailTree() {
                         <label className="mb-1 font-semibold" htmlFor="date">
                             Ngày nhập cây
                         </label>
-                        <input
-                            type="date"
-                            value={product.createdAt}
-                            id="date"
-                            className="text-input px-2 py-1"
-                            required
-                        />
+                        <div>
+                            {moment(product.createdAt).format(
+                                'HH:mm:ss DD/MM/YYYY '
+                            )}
+                        </div>
                     </div>
 
                     <div className="mt-2 flex basis-1/2 flex-col">
