@@ -30,7 +30,6 @@ function Addroduct() {
     const [formdata, setFormdata] = useState({
         name: '',
         price: '',
-        type: '',
         quantity: '',
         image: '',
         date: '',
@@ -58,7 +57,7 @@ function Addroduct() {
             },
             body: JSON.stringify(formdata),
         });
-        //window.location.href = posturl;
+        window.location.href = posturl;
     };
 
     //SaDam load typeProduct
@@ -94,7 +93,7 @@ function Addroduct() {
                                     className="mb-1 font-semibold"
                                     htmlFor="type"
                                 >
-                                    Loại cây
+                                    Loại cây 
                                 </label>
                                 <TypeProduct
                                     onChange={(selectedProductType) => {
