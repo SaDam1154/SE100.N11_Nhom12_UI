@@ -5,7 +5,7 @@ import TypeProduct from '../../components/TypeProduct';
 import clsx from 'clsx';
 import { useEffect } from 'react';
 
-import moment from 'moment';
+//import moment from 'moment';
 import TimeNow from '../../components/TimeNow';
 
 function DetailTree() {
@@ -124,11 +124,11 @@ function DetailTree() {
                         >
                             Ngày nhập cây
                         </label>
-                        <div>
+                        {/* <div>
                             {moment(product.createdAt).format(
                                 'HH:mm:ss DD/MM/YYYY '
                             )}
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className="ml-4 mt-3 flex basis-1/2 flex-col">

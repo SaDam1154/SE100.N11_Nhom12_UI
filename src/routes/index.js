@@ -16,6 +16,7 @@ import DetailCustomer from '../pages/DetailCustomer';
 import Login from '../pages/Login';
 import AddRule from '../pages/AddRule';
 import UpdateRule from '../pages/UpdateRule';
+import UpdateProduct from '../pages/UpdateProduct';
 
 // Public routes
 const publicRoutes = [
@@ -60,6 +61,13 @@ const publicRoutes = [
         component: AddProduct,
         props: {
             heading: 'Thêm sản phẩm',
+        },
+    },
+    {
+        path: '/product/update/:id',
+        component: UpdateProduct,
+        props: {
+            heading: 'Chỉnh sửa sản phẩm',
         },
     },
     {

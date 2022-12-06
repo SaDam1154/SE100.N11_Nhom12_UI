@@ -38,10 +38,16 @@ function Addroduct() {
     const handleInput = (e) => {
         const { name, value } = e.target;
         setFormdata({ ...formdata, [name]: value });
+        //console.log(formdata);
     };
     const posturl = 'http://localhost:5173/product';
     const handleFormsubmit = (e) => {
         e.preventDefault();
+        console.log(formdata);  
+        //test POST api // link test api json server add data tạm
+        // fetch('http://localhost:9000/treeinfo',{ 
+        //     method: "POST",
+        // console.log(formdata);
 
         //test POST api
         fetch('http://localhost:5000/api/product', {
@@ -54,6 +60,9 @@ function Addroduct() {
         window.location.href = posturl;
     };
 
+    //SaDam load typeProduct
+
+    //end load type product
 
     return (
         <div className="container">
@@ -77,6 +86,7 @@ function Addroduct() {
                                     className="text-input form-control invalid py-[5px]"
                                     required
                                 />
+                                {/* <span className="form-message">Vui lòng nhập tên cây</span> */}
                             </div>
                             <div className="form-group flex flex-col">
                                 <label
@@ -96,7 +106,26 @@ function Addroduct() {
                                 />
                             </div>
 
-                          
+                            {/*  
+                            <div className="form-group flex flex-col">
+                                <label
+                                    className="mb-1 font-semibold"
+                                    htmlFor="type"
+                                >
+                                    Loại cây
+                                </label>
+                                <input
+                                    type="text"
+                                    onChange={handleInput}
+                                    className="text-input form-control py-[5px]"
+                                    id="type"
+                                    name="type"
+                                    value={formdata.type}
+                                    required
+                                />
+                                <span className="form-message">Vui chọn loại cây</span>
+                        </div> 
+                             */}
 
                             <div className="form-group flex flex-col">
                                 <label
@@ -146,7 +175,7 @@ function Addroduct() {
                     </div>
 
                     <div className="mt-4 flex flex-row">
-                        <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col">
+                        <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col ">
                             <label
                                 className="mb-1 text-xl font-semibold"
                                 htmlFor="date"
