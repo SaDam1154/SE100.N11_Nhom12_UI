@@ -31,7 +31,7 @@ function TypeProduct({ onChange }) {
             >
                 <Listbox.Button
                     as="div"
-                    className="text-input flex min-h-[36px] cursor-pointer items-center"
+                    className="text-input flex min-h-[40px] cursor-pointer items-center"
                 >
                     <div
                         className={clsx('mr-2 flex-1 ', {
