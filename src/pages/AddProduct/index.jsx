@@ -1,9 +1,23 @@
 import { Fragment, useState } from 'react';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import TypeProduct from '../../components/TypeProduct';
 import clsx from 'clsx';
 import { useEffect } from 'react';
 import TimeNow from '../../components/TimeNow';
+
+const validationSchema = Yup.object({
+    // id: Yup.string().required('Trường này bắt buộc'),
+    // moneyDeposit: Yup.number()
+    //     .typeError('Tiền gởi phải là số')
+    //     .min(minMoney, `Tiền gởi tối thiểu là ${minMoney}`)
+    //     .required('Trường này bắt buộc'),
+    name: Yup.string().required('Trường này bắt buộc'),
+    price: Yup.number().required('Trường này bắt buộc').min(1, 'Giá phải lớn hơn 0'),
+    quantity: Yup.number().required('Trường này bắt buộc').min(1, 'Số lượng phải lớn hơn 0'),
+});
+
 function Addroduct() {
     const [img, setImg] = useState();
 
@@ -17,12 +31,12 @@ function Addroduct() {
     const chooseFile = (e) => {
         const file = e.target.files[0];
 
-        var fileReader = new FileReader()
-        fileReader.readAsDataURL(file)
-        fileReader.onloadend= function(e) {
+        var fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onloadend = function (e) {
             const imageFile = e.target.result;
-            setFormdata({...formdata, image: imageFile});
-        }  
+            setFormdata({ ...formdata, image: imageFile });
+        };
         file.preview = URL.createObjectURL(file);
         setImg(file);
     };
@@ -30,10 +44,8 @@ function Addroduct() {
     const [formdata, setFormdata] = useState({
         name: '',
         price: '',
-        type: '',
         quantity: '',
         image: '',
-        date: '',
     });
 
     const handleInput = (e) => {
@@ -41,59 +53,62 @@ function Addroduct() {
         setFormdata({ ...formdata, [name]: value });
         //console.log(formdata);
     };
-    const posturl = 'http://localhost:5173/product';
-    const handleFormsubmit = (e) => {
-        e.preventDefault();
-        console.log(formdata);  
-        //test POST api // link test api json server add data tạm
-        // fetch('http://localhost:9000/treeinfo',{ 
-        //     method: "POST",
-        // console.log(formdata);
 
-        //test POST api
+    const bacsicForm = useFormik({
+        initialValues: {
+            name: '',
+            price: '',
+            quantity: '',
+        },
+        validationSchema,
+        onSubmit: handleFormsubmit,
+    });
+
+    const API_URL = 'http://localhost:5173/product';
+    function handleFormsubmit(values) {
+        const finalReq = { ...formdata, ...values };
+        console.log(finalReq);
+
         fetch('http://localhost:5000/api/product', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formdata),
+            body: JSON.stringify(finalReq),
         });
-        //window.location.href = posturl;
-    };
-
-    //SaDam load typeProduct
-
-    //end load type product
+    }
 
     return (
         <div className="container">
             <div className="w-full">
-                <form method="POST" onSubmit={handleFormsubmit} action="">
+                <form onSubmit={bacsicForm.handleSubmit}>
                     <div className="mt-4 flex flex-row">
-                        <div className="mr-8 mt-3 flex w-1/2 flex-col space-y-4 text-lg">
+                        <div className="mr-8 mt-3 flex w-1/2 flex-col space-y-2 text-lg">
                             <div className="form-group flex flex-col ">
-                                <label
-                                    className="mb-1 font-semibold"
-                                    htmlFor="name"
-                                >
-                                    Tên cây{' '}
+                                <label className="mb-1 font-semibold" htmlFor="name">
+                                    Tên cây
                                 </label>
                                 <input
                                     type="text"
-                                    id="name"
+                                    className={clsx('text-input py-[5px]', {
+                                        invalid: bacsicForm.touched.name && bacsicForm.errors.name,
+                                    })}
+                                    onChange={bacsicForm.handleChange}
+                                    onBlur={bacsicForm.handleBlur}
+                                    value={bacsicForm.values.name}
                                     name="name"
-                                    value={formdata.name}
-                                    onChange={handleInput}
-                                    className="text-input form-control invalid py-[5px]"
-                                    required
                                 />
-                                {/* <span className="form-message">Vui lòng nhập tên cây</span> */}
+                                <span
+                                    className={clsx('text-sm text-red-500 opacity-0', {
+                                        'opacity-100':
+                                            bacsicForm.touched.name && bacsicForm.errors.name,
+                                    })}
+                                >
+                                    {bacsicForm.errors.name || 'No message'}
+                                </span>
                             </div>
                             <div className="form-group flex flex-col">
-                                <label
-                                    className="mb-1 font-semibold"
-                                    htmlFor="type"
-                                >
+                                <label className="mb-1 font-semibold" htmlFor="type">
                                     Loại cây
                                 </label>
                                 <TypeProduct
@@ -103,48 +118,35 @@ function Addroduct() {
                                             type: selectedProductType._id,
                                         });
                                     }}
-                                    required
                                 />
                             </div>
 
-                            {/*  
                             <div className="form-group flex flex-col">
-                                <label
-                                    className="mb-1 font-semibold"
-                                    htmlFor="type"
-                                >
-                                    Loại cây
-                                </label>
-                                <input
-                                    type="text"
-                                    onChange={handleInput}
-                                    className="text-input form-control py-[5px]"
-                                    id="type"
-                                    name="type"
-                                    value={formdata.type}
-                                    required
-                                />
-                                <span className="form-message">Vui chọn loại cây</span>
-                        </div> 
-                             */}
-
-                            <div className="form-group flex flex-col">
-                                <label
-                                    className="mb-1 font-semibold"
-                                    htmlFor="quantity"
-                                >
+                                <label className="mb-1 font-semibold" htmlFor="quantity">
                                     Số lượng
                                 </label>
                                 <input
                                     type="number"
-                                    placeholder="Nhập số lượng"
-                                    id="quantity"
+                                    className={clsx('text-input w-full py-[5px]', {
+                                        invalid:
+                                            bacsicForm.touched.quantity &&
+                                            bacsicForm.errors.quantity,
+                                    })}
+                                    onChange={bacsicForm.handleChange}
+                                    onBlur={bacsicForm.handleBlur}
+                                    value={bacsicForm.values.quantity}
                                     name="quantity"
-                                    value={formdata.quantity}
-                                    onChange={handleInput}
-                                    className="text-input form-control py-[5px]"
-                                    required
+                                    placeholder="Nhập số lượng"
                                 />
+                                <span
+                                    className={clsx('text-sm text-red-500 opacity-0', {
+                                        'opacity-100':
+                                            bacsicForm.touched.quantity &&
+                                            bacsicForm.errors.quantity,
+                                    })}
+                                >
+                                    {bacsicForm.errors.quantity || 'No message'}
+                                </span>
                             </div>
                         </div>
 
@@ -169,7 +171,6 @@ function Addroduct() {
                                     className="form-control absolute top-0 left-0 w-full cursor-pointer opacity-0"
                                     onChange={handleInput}
                                     onChangeCapture={chooseFile}
-                                    required
                                 />
                             </div>
                         </div>
@@ -177,35 +178,30 @@ function Addroduct() {
 
                     <div className="mt-4 flex flex-row">
                         <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col ">
-                            <label
-                                className="mb-1 text-xl font-semibold"
-                                htmlFor="date"
-                            >
+                            <label className="mb-1 text-xl font-semibold" htmlFor="date">
                                 Ngày thêm
                             </label>
-                            <div className="rounded border border-slate-300 px-2 outline-none bg-slate-50">
-                                <TimeNow/>
+                            <div className="rounded border border-slate-300 bg-slate-50 px-2 outline-none">
+                                <TimeNow />
                             </div>
-                
                         </div>
 
                         <div className="ml-4 mt-3 flex basis-1/2 flex-col">
-                            <label
-                                className="mb-1 text-xl font-semibold"
-                                htmlFor="price"
-                            >
+                            <label className="mb-1 text-xl font-semibold" htmlFor="price">
                                 Giá
                             </label>
                             <div className="relative">
                                 <input
                                     type="number"
-                                    placeholder="Nhập giá mỗi cây"
-                                    id="price"
+                                    className={clsx('text-input w-full py-[5px]', {
+                                        invalid:
+                                            bacsicForm.touched.price && bacsicForm.errors.price,
+                                    })}
+                                    onChange={bacsicForm.handleChange}
+                                    onBlur={bacsicForm.handleBlur}
+                                    value={bacsicForm.values.price}
                                     name="price"
-                                    value={formdata.price}
-                                    onChange={handleInput}
-                                    className="text-input form-control w-full py-[5px]"
-                                    required
+                                    placeholder="Nhập giá mỗi cây"
                                 />
                                 <label
                                     htmlFor="price"
@@ -214,15 +210,20 @@ function Addroduct() {
                                     VNĐ
                                 </label>
                             </div>
+                            <span
+                                className={clsx('text-sm text-red-500 opacity-0', {
+                                    'opacity-100':
+                                        bacsicForm.touched.price && bacsicForm.errors.price,
+                                })}
+                            >
+                                {bacsicForm.errors.price || 'No message'}
+                            </span>
                         </div>
                     </div>
 
                     <div className="ml-4px float-right mt-8 flex w-1/2 flex-row pl-4">
                         <div className="mr-[3%] flex basis-1/2 flex-col pl-[5%]">
-                            <Link
-                                to={'/product'}
-                                className="btn btn-red btn-md w-full"
-                            >
+                            <Link to={'/product'} className="btn btn-red btn-md w-full">
                                 <span className="pr-2">
                                     <i className="fa-solid fa-circle-xmark"></i>
                                 </span>
@@ -230,10 +231,7 @@ function Addroduct() {
                             </Link>
                         </div>
                         <div className="ml-[3%] flex basis-1/2 flex-col pr-[5%]">
-                            <button
-                                type="submit"
-                                className="btn btn-blue btn-md w-full"
-                            >
+                            <button type="submit" className="btn btn-blue btn-md w-full">
                                 <span className="pr-2">
                                     <i className="fa-solid fa-circle-plus"></i>
                                 </span>

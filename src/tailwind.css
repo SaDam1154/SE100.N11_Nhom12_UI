@@ -30,15 +30,19 @@
         @apply rounded border border-slate-300 px-2 outline-none focus:border-blue-500;
     }
 
+    .text-input.invalid {
+        @apply border-red-500;
+    }
+
     .container {
         @apply my-0 mx-auto max-w-[1200px];
     }
-    
+
     label {
         cursor: pointer;
     }
 
-    input[type="checkbox"] {
+    input[type='checkbox'] {
         height: 28px;
         width: 28px;
         border-radius: 4px;
