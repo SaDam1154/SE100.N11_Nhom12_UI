@@ -21,7 +21,7 @@ const orders = [
     },
 ];
 function Orders() {
-    // const [orders, setOrders] = useState([]);
+    const [orders, setOrders] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {

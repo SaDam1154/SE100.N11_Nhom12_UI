@@ -1,11 +1,15 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import TimeNow from '../../components/TimeNow';
+import { Fragment, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+
 import TypeProduct from '../../components/TypeProduct';
+import clsx from 'clsx';
+import { useEffect } from 'react';
+
+import moment from 'moment';
+import TimeNow from '../../components/TimeNow';
+
 function DetailTree() {
     const [img, setImg] = useState();
-    const { id } = useParams();
-    const [product, setProduct] = useState({});
 
     useEffect(() => {
         //cleanup
@@ -14,6 +18,14 @@ function DetailTree() {
         };
     }, [img]);
 
+    const [product, setProduct] = useState({});
+    useEffect(() => {
+        //cleanup
+        return () => {
+            img && URL.revokeObjectURL(img.preview);
+        };
+    }, [img]);
+    const { id } = useParams();
     useEffect(() => {
         callApi();
     }, []);
@@ -30,203 +42,139 @@ function DetailTree() {
             });
     }
 
-    const chooseFile = (e) => {
-        const file = e.target.files[0];
-
-        file.preview = URL.createObjectURL(file);
-
-        setImg(file);
-    };
-    const handleInput = (e) => {
-        const { name, value } = e.target;
-        setFormdata({ ...formdata, [name]: value });
-        //console.log(formdata);
-    };
     return (
         <div className="container">
-            <div className="wrapper text-lg">
-                <form>
-                    <div className="flex flex-row">
-                        <div className="mr-12 mt-[4%] flex basis-1/2 flex-col">
-                            <label className="mb-1 font-semibold">Mã số</label>
-                            <div className="h-10 rounded-lg border border-gray-300 bg-gray-400 px-2 py-1 opacity-70">
-                                {product.id}
-                            </div>
-                        </div>
-
-                        <div className="basis-1/2 flex-col items-center justify-items-center ">
-                            <div className="h-60 w-full rounded-xl border-2 border-dashed border-cyan-300 bg-gray-100">
-                                {img && (
-                                    <img
-                                        src={img.preview}
-                                        alt=""
-                                        className="h-full w-full object-contain py-[1.5px]"
-                                    />
-                                )}
-                            </div>
-                            <button className="btn btn-green btn-md relative inset-x-1/4 mt-4 h-10 w-1/2 hover:bg-green-400">
-                                <p className="w-full text-lg">Chọn ảnh</p>
-                                <input
-                                    type="file"
-                                    name="file"
-                                    id="imageFile"
-                                    //value={product.image}
-                                    accept="image/gif, image/ipeg, image/png"
-                                    className="absolute top-0 left-0 w-full cursor-pointer opacity-0"
-                                    onChange={handleInput}
-                                    onChangeCapture={chooseFile}
-                                />
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-row">
-                        <div className="mr-12 mt-2 flex basis-1/2 flex-col">
-                            <label className="mb-1 font-semibold" htmlFor="type">
-                                Loại cây
-                            </label>
-                            <input
-                                type="text"
-                                value={product.type}
-                                onChange={handleInput}
-                                id="type"
-                                className="text-input py-[5px]"
-                                required
-                            /> 
-                            {/* <TypeProduct
-                                onChange={(selectedProductType) => {
-                                    setFormdata({
-                                        ...formdata,
-                                        type: selectedProductType._id,
-                                    });
-                                    }}
-                                required
-                            /> */}
-                        </div>
-
-                        <div className="mt-2 flex basis-1/2 flex-col">
-                            <label className="mb-1 font-semibold" htmlFor="name">
-                                Tên cây
+            <div className="w-full">
+                <div className="mt-4 flex flex-row">
+                    <div className="mr-8 mt-3 flex w-1/2 flex-col space-y-4 text-lg">
+                        <div className="form-group flex flex-col ">
+                            <label
+                                className="mb-1 font-semibold"
+                                htmlFor="name"
+                            >
+                                Tên cây{' '}
                             </label>
                             <input
                                 type="text"
                                 id="name"
                                 name="name"
                                 value={product.name}
-                                onChange={handleInput}
-                                className="text-input py-[5px]"
-                                required
+                                className="text-input form-control invalid select-none py-[5px]"
                             />
                         </div>
-                    </div>
+                        <div className="form-group flex flex-col">
+                            <label
+                                className="mb-1 font-semibold"
+                                htmlFor="type"
+                            >
+                                Loại cây
+                            </label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                value={product?.type?.name}
+                                className="text-input form-control invalid select-none py-[5px]"
+                            />
+                        </div>
 
-                    <div className="mt-2 flex flex-row">
-                        <div className="mr-12 mt-2 flex basis-1/2 flex-col">
+                        <div className="form-group flex flex-col">
                             <label
                                 className="mb-1 font-semibold"
                                 htmlFor="quantity"
                             >
                                 Số lượng
                             </label>
-                            <div className="relative">
-                                <input
-                                    type="number"
-                                    name="quantity"
-                                    value={product.quantity}
-                                    onChange={handleInput}
-                                    className="text-input w-full py-[5px]"
-                                    id="quantity"
-                                    required
+                            <input
+                                type="number"
+                                placeholder="Nhập số lượng"
+                                id="quantity"
+                                name="quantity"
+                                value={product.quantity}
+                                className="text-input form-control py-[5px]"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div className="form-group w-1/2 flex-col items-center justify-items-center ">
+                        <label
+                            className="mb-1 font-semibold"
+                            htmlFor="quantity"
+                        >
+                            Hình ảnh
+                        </label>
+                        <div className="h-60 w-full rounded-xl border-2 border-dashed border-cyan-300 bg-gray-100">
+                            {
+                                <img
+                                    src={product.image}
+                                    alt=""
+                                    className="h-full w-full rounded-xl object-contain py-[1.5px]"
                                 />
-                                <label
-                                    htmlFor="quanlity"
-                                    className="lb-value absolute top-0 right-0 select-none px-[6%] py-1 text-lg text-gray-600"
-                                >
-                                    Cây
-                                </label>
-                            </div>
+                            }
                         </div>
+                    </div>
+                </div>
 
-                        <div className="mt-2 flex basis-1/2 flex-col">
+                <div className="mt-4 flex flex-row">
+                    <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col">
+                        <label
+                            className="mb-1 text-xl font-semibold"
+                            htmlFor="date"
+                        >
+                            Ngày nhập cây
+                        </label>
+                        <div>
+                            {moment(product.createdAt).format(
+                                'HH:mm:ss DD/MM/YYYY '
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="ml-4 mt-3 flex basis-1/2 flex-col">
+                        <label
+                            className="mb-1 text-xl font-semibold"
+                            htmlFor="price"
+                        >
+                            Giá
+                        </label>
+                        <div className="relative">
+                            <input
+                                type="number"
+                                placeholder="Nhập giá mỗi cây"
+                                id="price"
+                                name="price"
+                                value={product.price}
+                                className="text-input form-control w-full py-[5px]"
+                                required
+                            />
                             <label
-                                className="mb-1 font-semibold"
-                                htmlFor="value"
+                                htmlFor="price"
+                                className="lb-value absolute top-0 right-0 select-none px-[6%] py-1 text-lg text-gray-600"
                             >
-                                Giá mỗi cây
+                                VNĐ
                             </label>
-                            <div className="relative">
-                                <input
-                                    type="number"
-                                    id="value"
-                                    value={product.price}
-                                    onChange={handleInput}
-                                    className="text-input w-full py-[5px]"
-                                    required
-                                />
-                                <label
-                                    htmlFor="value"
-                                    className="lb-value absolute top-0 right-0 select-none px-[6%] py-1 text-lg text-gray-600"
-                                >
-                                    VNĐ
-                                </label>
-                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div className="mt-2 flex flex-row">
-                        <div className="mr-12 mt-2 flex basis-1/2 flex-col">
-                            <label className="mb-1 font-semibold" htmlFor="date">
-                                Ngày cập nhật
-                            </label>
-                            <div className="rounded border border-slate-300 px-2 py-[3px] outline-none bg-slate-50">
-                                <TimeNow>
-                                </TimeNow>
-                            </div>
-                        </div>
-
-                        <div className="mt-2 flex basis-1/2 flex-col">
-                            <label
-                                className="mb-1 font-semibold"
-                                htmlFor="value-all"
-                            >
-                                Giá tổng
-                            </label>
-                            <div className="relative">
-                            <div className="h-10 rounded-lg border border-gray-300 px-2 py-1">
-                                {product.price*product.quantity}
-                            </div>
-                                <label
-                                    htmlFor="value-all"
-                                    className="lb-value absolute top-0 right-0 select-none px-[6%] py-1 text-lg text-gray-600"
-                                >
-                                    VNĐ
-                                </label>
-                            </div>
-                        </div>
+                <div className="ml-4px float-right mt-8 flex  flex-row pl-4">
+                    <div className="float-right mr-[3%] flex basis-1 flex-col pl-[5%]">
+                        <Link
+                            to={'/product'}
+                            className="btn btn-md w-full bg-blue-400"
+                        >
+                            <span className="pr-2">
+                                <i className="fa-solid fa-circle-xmark"></i>
+                            </span>
+                            <span>Quay lại</span>
+                        </Link>
                     </div>
-
-                    <div className="float-right mt-5 ml-4 flex w-1/2 flex-row pl-4">
-                        <div className="mr-[3%] flex basis-1/2 flex-col pl-[5%]">
-                            <Link to="/product" className="btn btn-blue btn-md">
-                                <span className="pr-1">
-                                    <i className="fa-solid fa-circle-xmark"></i>
-                                </span>
-                                <span className="text-lg">Quay lại</span>
-                            </Link>
-                        </div>
-                        <div className="ml-[3%] flex basis-1/2 flex-col pr-[5%]">
-                            <button className="btn btn-green btn-md">
-                                <span className="pr-1">
-                                    <i className="fa-solid fa-circle-plus"></i>
-                                </span>
-                                <span className="text-lg">Cập nhật</span>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     );
 }
-
+//
+//
 export default DetailTree;

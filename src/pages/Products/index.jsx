@@ -12,6 +12,7 @@ function Products() {
     const [selectedProductTypes, setSelectedProductTypes] = useState([]);
     useEffect(() => {
         callApi();
+        console.log(products);
         callApiPeople();
     }, []);
 
@@ -148,7 +149,7 @@ function Products() {
             </div>
             <table className="mt-4 w-full">
                 <colgroup>
-                    <col span="1" style={{ width: '10%' }} />
+                    <col span="1" style={{ width: '8%' }} />
                     <col span="1" style={{ width: '20%' }} />
                     <col span="1" style={{ width: '20%' }} />
                     <col span="1" style={{ width: '20%' }} />
@@ -159,10 +160,10 @@ function Products() {
                 <thead className="h-11 rounded bg-blue-500 text-white">
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Mã số</th>
                         <th scope="col">Loại cây</th>
                         <th scope="col">Tên cây</th>
                         <th scope="col">Giá (VND)</th>
+                        <th scope="col">Số lượng tồn kho</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -175,13 +176,15 @@ function Products() {
                             onClick={() => linkToDetail(product.id)}
                         >
                             <td className="py-2 text-center">{index + 1}</td>
-                            <td className="py-2 text-center">{product.id}</td>
                             <td className="py-2 text-center">
                                 {product.type?.name || '-'}
                             </td>
                             <td className="py-2 text-center">{product.name}</td>
                             <td className="py-2 text-center">
                                 {product.price}
+                            </td>
+                            <td className="py-2 text-center">
+                                {product.quantity}
                             </td>
                             <td className="py-2 text-center">
                                 <div className="flex justify-end">
