@@ -13,6 +13,11 @@ function TimeNow() {
         return () => clearInterval(secTimer);
     }, []);
     ///end time
-    return <div>{moment(dt).format('HH:mm:ss DD/MM/YYYY ')}</div>;
+    return (
+        <div>
+            &ensp;
+            {moment(dt).format('HH:mm:ss DD/MM/YYYY ')}
+        </div>
+    );
 }
 export default TimeNow;

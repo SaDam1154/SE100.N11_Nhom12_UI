@@ -21,6 +21,7 @@ const orders = [
     },
 ];
 function Orders() {
+    const [search, setSearch] = useState('');
     const [orders, setOrders] = useState([]);
     const navigate = useNavigate();
 
@@ -71,6 +72,9 @@ function Orders() {
                         <input
                             type="text"
                             className="text-input grow"
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                            }}
                             placeholder="Tìm kiếm sản phẩm"
                         />
                     </div>
@@ -162,33 +166,51 @@ function Orders() {
                 </thead>
 
                 <tbody>
-                    {orders?.map((order, index) => (
-                        <tr
-                            key={order.id}
-                            className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
-                            onClick={(id) => linkToDetail(order.id)}
-                        >
-                            <td className="py-2 text-center">{order.id}</td>
-                            <td className="py-2 text-center">{order.name}</td>
-                            <td className="py-2 text-center">{order.price}</td>
-                            <td className="py-2 text-center">
-                                <div className="flex justify-end">
-                                    <button className="btn btn-sm btn-blue">
-                                        <span className="pr-1">
-                                            <i className="fa-solid fa-pen-to-square"></i>
-                                        </span>
-                                        <span>Sửa</span>
-                                    </button>
-                                    <button className="btn btn-sm btn-red">
-                                        <span className="pr-1">
-                                            <i className="fa-solid fa-circle-xmark"></i>
-                                        </span>
-                                        <span>Xoá</span>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
+                    {orders
+                        .filter((order) => {
+                            return search.toLowerCase() === ''
+                                ? order
+                                : order.name.toLowerCase().includes(search) ||
+                                      order?.type.name
+                                          .toLowerCase()
+                                          .includes(search);
+                        })
+                        ?.map((order, index) => (
+                            <tr
+                                key={order.id}
+                                className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                                onClick={(id) => linkToDetail(order.id)}
+                            >
+                                <td className="py-2 text-center">{order.id}</td>
+                                <td className="py-2 text-center">
+                                    {order.name}
+                                </td>
+                                <td className="py-2 text-center">
+                                    {order.price
+                                        .toFixed(0)
+                                        .replace(
+                                            /(\d)(?=(\d{3})+(?!\d))/g,
+                                            '$1,'
+                                        )}
+                                </td>
+                                <td className="py-2 text-center">
+                                    <div className="flex justify-end">
+                                        <button className="btn btn-sm btn-blue">
+                                            <span className="pr-1">
+                                                <i className="fa-solid fa-pen-to-square"></i>
+                                            </span>
+                                            <span>Sửa</span>
+                                        </button>
+                                        <button className="btn btn-sm btn-red">
+                                            <span className="pr-1">
+                                                <i className="fa-solid fa-circle-xmark"></i>
+                                            </span>
+                                            <span>Xoá</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
                 </tbody>
             </table>
         </div>
