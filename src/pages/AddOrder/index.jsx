@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Listbox, Popover } from '@headlessui/react';
 import clsx from 'clsx';
 import TypeProduct from '../../components/TypeProduct';
-
+import TimeNow from '../../components/TimeNow';
 function AddOrder() {
     // const [customers, setCustomers] = useState([]);
 
@@ -167,7 +167,7 @@ function AddOrder() {
                 </div>
             </div>
             <div className="flex ">
-                <div className="flex flex-col px-2 shadow-md">
+                <div className="flex flex-grow flex-col px-2 shadow-md">
                     <div className="flex space-x-4  py-3">
                         {/* tite + reload btn */}
                         <div className="flex">
@@ -256,8 +256,8 @@ function AddOrder() {
                             </Popover>
                         </div>
                     </div>
-                    <div className="flex h-[520px] flex-col overflow-scroll">
-                        <div className=" grid max-h-[50] grid-cols-4 gap-4   ">
+                    <div className="flex h-[70vh] flex-col overflow-scroll">
+                        <div className=" grid max-h-[100] min-h-[50] grid-cols-3 gap-4  ">
                             {products?.map((product) => (
                                 <div
                                     key={product.id}
@@ -285,107 +285,94 @@ function AddOrder() {
                     </div>
                 </div>
 
-                <div className="ml-4 mt-1 flex w-full flex-1 flex-col  border-2 border-solid py-4  px-4 shadow-xl">
+                <div className="ml-4 mt-1 flex   flex-col  border-2 border-solid py-4  px-4 shadow-xl">
                     <label className="text-center align-middle text-2xl font-bold text-blue-800">
                         Hóa đơn
                     </label>
-                    <label className="">Tên khách hàng : {customerName}</label>
-                    <label className="">Số điện thoại : {customerPhone}</label>
-                    <label className="">Địa chỉ : {customerAddress}</label>
-                    {/* table */}
-
-                    <div className="flex flex-col border-2 border-solid  ">
-                        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                            <div className="inline-block min-w-full py-4 sm:px-6 lg:px-8">
-                                <div className="overflow-hidden">
-                                    <table className="flex min-w-full flex-col text-center">
-                                        <thead className="border-b bg-gray-800 ">
-                                            <tr>
-                                                <th
-                                                    scope="col"
-                                                    className="px-6 py-4 text-sm font-medium text-white"
-                                                >
-                                                    #
-                                                </th>
-                                                <th
-                                                    scope="col"
-                                                    className="px-6 py-4 text-sm font-medium text-white"
-                                                >
-                                                    Tên
-                                                </th>
-                                                <th
-                                                    scope="col"
-                                                    className="px-6 py-4 text-sm font-medium text-white"
-                                                >
-                                                    Loại
-                                                </th>
-                                                <th
-                                                    scope="col"
-                                                    className="px-6 py-4 text-sm font-medium text-white"
-                                                >
-                                                    Số lượng
-                                                </th>
-                                                <th
-                                                    scope="col"
-                                                    className="px-6 py-4 text-sm font-medium text-white"
-                                                >
-                                                    Giá(VND)
-                                                </th>
-                                                <th
-                                                    scope="col"
-                                                    className="px-6 py-4 text-sm font-medium text-white"
-                                                >
-                                                    Handleeee
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="flex h-[300px]  w-[550px] flex-col overflow-y-scroll">
-                                            {selectedProducts?.map(
-                                                (selectedProduct, index) => (
-                                                    <tr
-                                                        key={index}
-                                                        className="border-b bg-white"
-                                                    >
-                                                        <td className="max-w-2xl whitespace-normal px-6 py-4 text-sm font-medium text-gray-900">
-                                                            {index + 1}
-                                                        </td>
-
-                                                        <td className=" max-w-[130px] overflow-hidden  px-6 py-4 text-sm font-medium text-gray-900">
-                                                            {selectedProduct?.name ||
-                                                                '-'}
-                                                        </td>
-                                                        <td className="max-w-2xl whitespace-normal px-6 py-4 text-sm font-light text-gray-900">
-                                                            {selectedProduct
-                                                                ?.type?.name ||
-                                                                '-'}
-                                                        </td>
-                                                        <td className="max-w-2xl whitespace-normal px-6 py-4 text-sm font-light text-gray-900">
-                                                            {selectedProduct?.quantity ||
-                                                                '-'}
-                                                        </td>
-                                                        <td className="max-w-2xl whitespace-normal px-6 py-4 text-sm font-light text-gray-900">
-                                                            {selectedProduct?.price ||
-                                                                '-'}
-                                                        </td>
-                                                        <td className="max-w-2xl px-6 py-4 text-sm font-light text-gray-900">
-                                                            <button className="btn btn-sm btn-red">
-                                                                <span className="pr-1">
-                                                                    <i className="fa-solid fa-circle-xmark"></i>
-                                                                </span>
-                                                                <span>Xoá</span>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                )
-                                            )}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                    <div className="flex flex-col">
+                        <label className="">
+                            Tên khách hàng : {customerName}
+                        </label>
+                        <label className="">
+                            Số điện thoại : {customerPhone}
+                        </label>
+                        <label className="">Địa chỉ : {customerAddress}</label>
+                        <div className=" flex">
+                            <label>Ngày đặt : </label>
+                            <TimeNow />
                         </div>
                     </div>
 
-                    {/* end */}
+                    {/* table */}
+                    <table className="mt-8 w-[550px] max-w-[600px]">
+                        <thead className="w-[500px] rounded border-b bg-gray-700 text-sm font-medium text-white">
+                            <tr className="flex h-11 w-fit">
+                                <th className=" max-w-12 flex w-12 items-center justify-center  ">
+                                    #
+                                </th>
+                                <th className="flex w-12 items-center justify-center ">
+                                    Ảnh
+                                </th>
+                                <th className="  flex w-36   items-center justify-center ">
+                                    Tên cây
+                                </th>
+                                <th className="flex w-28  items-center justify-center ">
+                                    Loại cây
+                                </th>
+                                <th className="w flex w-20 items-center justify-end ">
+                                    Giá (VND)
+                                </th>
+                                <th className="flex w-14 items-center justify-end ">
+                                    Số lượng
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody className=" over flex h-[300px] w-full flex-col overflow-y-scroll">
+                            {selectedProducts?.map((selectedProduct, index) => (
+                                <tr
+                                    key={selectedProduct.id}
+                                    className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                                    onClick={() =>
+                                        linkToDetail(selectedProduct.id)
+                                    }
+                                >
+                                    <td className="flex w-12 items-center justify-center px-1">
+                                        {index + 1}
+                                    </td>
+                                    <td className="w-22 flex items-center justify-center px-1 py-1">
+                                        <img
+                                            src={
+                                                selectedProduct.image ||
+                                                '/placeholder.png'
+                                            }
+                                            className="h-10 w-10 rounded-full object-cover object-center"
+                                        />
+                                    </td>
+                                    <td className=" flex w-36   items-center justify-start  px-1 py-1">
+                                        {selectedProduct?.name || '-'}
+                                    </td>
+                                    <td className="flex w-28   items-center justify-center px-1 py-1">
+                                        {selectedProduct.type?.name || '-'}
+                                    </td>
+                                    <td className="flex w-20 items-center justify-end px-1 py-1">
+                                        {selectedProduct.price}
+                                    </td>
+                                    <td className="flex w-12 items-center justify-end px-1 py-1">
+                                        {selectedProduct.quantity}
+                                    </td>
+                                    <td className="flex w-12 flex-grow items-center justify-center px-1 py-1">
+                                        <button className="btn btn-sm btn-red float-right w-14">
+                                            <span className="pr-1">
+                                                <i className="fa-solid fa-circle-xmark"></i>
+                                            </span>
+                                            <span>Xoá</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
 
                     <div className="float-right ml-[3%]  flex  justify-center pr-[5%]">
                         <button className="btn btn-blue btn-md w-1/2 ">
