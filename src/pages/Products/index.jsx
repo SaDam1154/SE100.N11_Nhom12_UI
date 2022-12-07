@@ -201,7 +201,7 @@ function Products() {
                 </thead>
 
                 <tbody
-                    className="flex h-[80vh] w-full flex-col"
+                    className="flex h-[75vh] w-full flex-col"
                     style={{ overflowY: 'overlay' }}
                 >
                     {products

@@ -154,41 +154,46 @@ function ProductsView() {
                     </Link>
                 </div>
             </div>
-            <div className="grid grid-cols-5 gap-4">
-                {products?.map((product) => (
-                    <div
-                        key={product.id}
-                        className=" cursor-pointer select-none  rounded border "
-                    >
-                        <img
-                            className=" w-[300px] py-2 text-center"
-                            src={product.image}
-                        />
-                        <h1 className="py-2 text-center">
-                            {product.type?.name || '-'}
-                        </h1>
-                        <h1 className="py-2 text-center">{product.name}</h1>
-                        <h1 className="py-2 text-center">
-                            {product.price
-                                .toFixed(0)
-                                .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
-                        </h1>
-                        <div className="flex justify-center">
-                            <button className="btn btn-sm btn-blue">
-                                <span className="pr-1">
-                                    <i className="fa-solid fa-pen-to-square"></i>
-                                </span>
-                                <span>Sửa</span>
-                            </button>
-                            <button className="btn btn-sm btn-red">
-                                <span className="pr-1">
-                                    <i className="fa-solid fa-circle-xmark"></i>
-                                </span>
-                                <span>Xoá</span>
-                            </button>
+            <div className="flex h-[85vh] flex-col overflow-scroll">
+                {' '}
+                <div className="grid grid-cols-4 gap-4">
+                    {products?.map((product) => (
+                        <div
+                            key={product.id}
+                            className=" cursor-pointer select-none  rounded border "
+                        >
+                            <img
+                                className=" w-[300px] py-2 text-center"
+                                src={product.image}
+                            />
+                            <h1 className="py-2 text-center">
+                                {product.type?.name || '-'}
+                            </h1>
+                            <h1 className="h-[64px] py-2 text-center">
+                                {product.name}
+                            </h1>
+                            <h1 className="py-2 text-center">
+                                {product.price
+                                    .toFixed(0)
+                                    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
+                            </h1>
+                            <div className="flex justify-center">
+                                <button className="btn btn-sm btn-blue">
+                                    <span className="pr-1">
+                                        <i className="fa-solid fa-pen-to-square"></i>
+                                    </span>
+                                    <span>Sửa</span>
+                                </button>
+                                <button className="btn btn-sm btn-red">
+                                    <span className="pr-1">
+                                        <i className="fa-solid fa-circle-xmark"></i>
+                                    </span>
+                                    <span>Xoá</span>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     );
