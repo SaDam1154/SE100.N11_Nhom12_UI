@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import { useEffect } from 'react';
 import TimeNow from '../../components/TimeNow';
 
+
 import 'react-toastify/dist/ReactToastify.css';
 
 const validationSchema = Yup.object({
@@ -77,14 +78,16 @@ function Addroduct() {
         })
             .then((res) => res.json())
             .then((resJson) => {
-                setLoading(false);
                 if (resJson.success) {
+                    setLoading(false);
                     showSuccessNoti();
                 } else {
+                    setLoading(false);
                     showErorrNoti();
                 }
             })
             .catch(() => {
+                setLoading(false);
                 showErorrNoti();
             });
     }

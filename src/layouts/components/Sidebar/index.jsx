@@ -44,9 +44,25 @@ const groupMenus = [
                 text: 'Thêm',
                 link: '/add',
             },
+        ],
+    },
+
+    {
+        main: {
+            iconClassname: 'fa-solid fa-box-open',
+            text: 'Loại sản phẩm',
+            link: '/product-type',
+        },
+        children: [
             {
-                text: 'detail',
-                link: '/detail/:id',
+                iconClassname: 'fa-solid fa-list',
+                text: 'Danh sách',
+                link: '/',
+            },
+            {
+                iconClassname: 'fa-solid fa-circle-plus',
+                text: 'Thêm',
+                link: '/',
             },
         ],
     },

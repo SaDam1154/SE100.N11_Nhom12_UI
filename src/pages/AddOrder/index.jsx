@@ -330,7 +330,7 @@ function AddOrder() {
                     </label>
 
                     {/* table */}
-                    <table className="mt-1 w-[550px] max-w-[600px]">
+                    <table className="mt-1 w-[550px] max-w-[600px]  flex-grow">
                         <thead className="w-[500px] rounded border-b bg-gray-700 text-sm font-medium text-white">
                             <tr className="flex h-11 w-fit">
                                 <th className=" max-w-12 flex w-12 items-center justify-center  ">
@@ -354,7 +354,7 @@ function AddOrder() {
                             </tr>
                         </thead>
 
-                        <tbody className=" over flex h-[250px] w-full flex-col overflow-y-scroll">
+                        <tbody className=" over flex h-[290px] w-full  flex-col overflow-y-scroll">
                             {selectedProducts?.map((selectedProduct, index) => (
                                 <tr
                                     key={selectedProduct.id}
@@ -417,6 +417,7 @@ function AddOrder() {
                             <label>Ngày đặt : </label>
                             <TimeNow />
                         </div>
+                        <label className="">Tổng tiền: </label>
                     </div>
                     <div className="flex flex-grow flex-col-reverse">
                         <div className=" ba  ml-[3%] flex justify-center pr-[5%]">

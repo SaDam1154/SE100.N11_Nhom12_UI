@@ -7,6 +7,7 @@ import Order from '../pages/Order';
 import AddOrder from '../pages/AddOrder';
 import Products from '../pages/Products';
 import AddProduct from '../pages/AddProduct';
+import ProductType from '../pages/ProductType';
 import ProductsView from '../pages/ProductsView';
 import Customers from '../pages/Customers';
 import Dashboard from '../pages/Dashboard';
@@ -61,6 +62,13 @@ const publicRoutes = [
         component: AddProduct,
         props: {
             heading: 'Thêm sản phẩm',
+        },
+    },
+    {
+        path: '/product-type',
+        component: ProductType,
+        props: {
+            heading: 'Danh sách loại cây',
         },
     },
     {
