@@ -4,16 +4,38 @@ import { Listbox, Popover } from '@headlessui/react';
 import clsx from 'clsx';
 import { useEffect } from 'react';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function Products() {
     const [search, setSearch] = useState('');
+    const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState([]);
     const [productTypes, setProductTypes] = useState([]);
     const navigate = useNavigate();
-
+    const showDeleteNoti = () => toast.info('Xóa sản phẩm thành công!');
+    const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
+    function deleteProduct(id) {
+        fetch('http://localhost:5000/api/product/' + id, {
+            method: 'DELETE',
+        })
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson) {
+                    showDeleteNoti();
+                    console.log('xóa');
+                    callApi();
+                } else {
+                    showErorrNoti();
+                }
+            })
+            .catch(() => {
+                showErorrNoti();
+            });
+    }
     const [selectedProductTypes, setSelectedProductTypes] = useState([]);
     useEffect(() => {
         callApi();
-        console.log(products);
         callApiPeople();
     }, []);
 
@@ -179,7 +201,7 @@ function Products() {
                 </thead>
 
                 <tbody
-                    className="flex h-[400px] w-full flex-col"
+                    className="flex h-[80vh] w-full flex-col"
                     style={{ overflowY: 'overlay' }}
                 >
                     {products
@@ -195,12 +217,17 @@ function Products() {
                             <tr
                                 key={product.id}
                                 className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
-                                onClick={() => linkToDetail(product.id)}
                             >
-                                <td className="flex w-14 items-center justify-end px-2 py-2">
+                                <td
+                                    className="flex w-14 items-center justify-end px-2 py-2"
+                                    onClick={() => linkToDetail(product.id)}
+                                >
                                     {index + 1}
                                 </td>
-                                <td className="flex w-24 items-center justify-center px-2 py-2">
+                                <td
+                                    className="flex w-24 items-center justify-center px-2 py-2"
+                                    onClick={() => linkToDetail(product.id)}
+                                >
                                     <img
                                         src={
                                             product.image || '/placeholder.png'
@@ -208,13 +235,22 @@ function Products() {
                                         className="h-10 w-10 rounded-full object-cover object-center"
                                     />
                                 </td>
-                                <td className="flex flex-[2] items-center justify-start px-2 py-2">
+                                <td
+                                    className="flex flex-[2] items-center justify-start px-2 py-2"
+                                    onClick={() => linkToDetail(product.id)}
+                                >
                                     {product.name}
                                 </td>
-                                <td className="flex flex-[1] items-center justify-start px-2 py-2">
+                                <td
+                                    className="flex flex-[1] items-center justify-start px-2 py-2"
+                                    onClick={() => linkToDetail(product.id)}
+                                >
                                     {product.type?.name || '-'}
                                 </td>
-                                <td className="flex w-28 items-center justify-end px-2 py-2">
+                                <td
+                                    className="flex w-28 items-center justify-end px-2 py-2"
+                                    onClick={() => linkToDetail(product.id)}
+                                >
                                     {product.price
                                         .toFixed(0)
                                         .replace(
@@ -222,7 +258,10 @@ function Products() {
                                             '$1,'
                                         )}
                                 </td>
-                                <td className="flex w-24 items-center justify-end px-2 py-2">
+                                <td
+                                    className="flex w-24 items-center justify-end px-2 py-2"
+                                    onClick={() => linkToDetail(product.id)}
+                                >
                                     {product.quantity}
                                 </td>
                                 <td className="flex w-[200px] items-center justify-center px-2 py-2">
@@ -233,7 +272,12 @@ function Products() {
                                             </span>
                                             <span>Sửa</span>
                                         </button>
-                                        <button className="btn btn-sm btn-red">
+                                        <button
+                                            className="btn btn-sm btn-red"
+                                            onClick={() =>
+                                                deleteProduct(product.id)
+                                            }
+                                        >
                                             <span className="pr-1">
                                                 <i className="fa-solid fa-circle-xmark"></i>
                                             </span>
@@ -245,6 +289,7 @@ function Products() {
                         ))}
                 </tbody>
             </table>
+            <ToastContainer />
         </div>
     );
 }

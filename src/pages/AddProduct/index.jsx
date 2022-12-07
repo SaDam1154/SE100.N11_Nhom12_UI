@@ -12,8 +12,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const validationSchema = Yup.object({
     name: Yup.string().required('Trường này bắt buộc'),
-    price: Yup.number().required('Trường này bắt buộc').min(1, 'Giá phải lớn hơn 0'),
-    quantity: Yup.number().required('Trường này bắt buộc').min(1, 'Số lượng phải lớn hơn 0'),
+    price: Yup.number()
+        .required('Trường này bắt buộc')
+        .min(1, 'Giá phải lớn hơn 0'),
+    quantity: Yup.number()
+        .required('Trường này bắt buộc')
+        .min(1, 'Số lượng phải lớn hơn 0'),
     type: Yup.string().required('Trường này bắt buộc'),
 });
 
@@ -95,7 +99,10 @@ function Addroduct() {
                             {/* NAME AND TYPE*/}
                             <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
                                 <div className="form-group flex flex-col ">
-                                    <label className="mb-1 font-semibold" htmlFor="name">
+                                    <label
+                                        className="mb-1 font-semibold"
+                                        htmlFor="name"
+                                    >
                                         Tên cây
                                     </label>
                                     <input
@@ -103,7 +110,8 @@ function Addroduct() {
                                         id="name"
                                         className={clsx('text-input py-[5px]', {
                                             invalid:
-                                                bacsicForm.touched.name && bacsicForm.errors.name,
+                                                bacsicForm.touched.name &&
+                                                bacsicForm.errors.name,
                                         })}
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
@@ -111,16 +119,23 @@ function Addroduct() {
                                         name="name"
                                     />
                                     <span
-                                        className={clsx('text-sm text-red-500 opacity-0', {
-                                            'opacity-100':
-                                                bacsicForm.touched.name && bacsicForm.errors.name,
-                                        })}
+                                        className={clsx(
+                                            'text-sm text-red-500 opacity-0',
+                                            {
+                                                'opacity-100':
+                                                    bacsicForm.touched.name &&
+                                                    bacsicForm.errors.name,
+                                            }
+                                        )}
                                     >
                                         {bacsicForm.errors.name || 'No message'}
                                     </span>
                                 </div>
                                 <div className="form-group flex flex-col">
-                                    <label className="mb-1 font-semibold" htmlFor="type">
+                                    <label
+                                        className="mb-1 font-semibold"
+                                        htmlFor="type"
+                                    >
                                         Loại cây
                                     </label>
                                     <div
@@ -132,33 +147,45 @@ function Addroduct() {
                                             key="fadsfas"
                                             onChange={handleChangeProductType}
                                             invalid={
-                                                bacsicForm.touched.type && bacsicForm.errors.type
+                                                bacsicForm.touched.type &&
+                                                bacsicForm.errors.type
                                             }
                                         />
                                     </div>
 
                                     <span
-                                        className={clsx('text-sm text-red-500 opacity-0', {
-                                            'opacity-100':
-                                                bacsicForm.touched.type && bacsicForm.errors.type,
-                                        })}
+                                        className={clsx(
+                                            'text-sm text-red-500 opacity-0',
+                                            {
+                                                'opacity-100':
+                                                    bacsicForm.touched.type &&
+                                                    bacsicForm.errors.type,
+                                            }
+                                        )}
                                     >
                                         {bacsicForm.errors.type || 'No message'}
                                     </span>
                                 </div>
 
                                 <div className="form-group flex flex-col">
-                                    <label className="mb-1 font-semibold" htmlFor="quantity">
+                                    <label
+                                        className="mb-1 font-semibold"
+                                        htmlFor="quantity"
+                                    >
                                         Số lượng
                                     </label>
                                     <input
                                         type="number"
                                         id="quantity"
-                                        className={clsx('text-input w-full py-[5px]', {
-                                            invalid:
-                                                bacsicForm.touched.quantity &&
-                                                bacsicForm.errors.quantity,
-                                        })}
+                                        className={clsx(
+                                            'text-input w-full py-[5px]',
+                                            {
+                                                invalid:
+                                                    bacsicForm.touched
+                                                        .quantity &&
+                                                    bacsicForm.errors.quantity,
+                                            }
+                                        )}
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
                                         value={bacsicForm.values.quantity}
@@ -166,13 +193,18 @@ function Addroduct() {
                                         placeholder="Nhập số lượng"
                                     />
                                     <span
-                                        className={clsx('text-sm text-red-500 opacity-0', {
-                                            'opacity-100':
-                                                bacsicForm.touched.quantity &&
-                                                bacsicForm.errors.quantity,
-                                        })}
+                                        className={clsx(
+                                            'text-sm text-red-500 opacity-0',
+                                            {
+                                                'opacity-100':
+                                                    bacsicForm.touched
+                                                        .quantity &&
+                                                    bacsicForm.errors.quantity,
+                                            }
+                                        )}
                                     >
-                                        {bacsicForm.errors.quantity || 'No message'}
+                                        {bacsicForm.errors.quantity ||
+                                            'No message'}
                                     </span>
                                 </div>
                             </div>
@@ -193,7 +225,7 @@ function Addroduct() {
                                     <input
                                         type="file"
                                         id="imageFile"
-                                        accept="image/gif, image/ipeg, image/png"
+                                        accept="image/gif, image/ipeg, image/png, image/*"
                                         className="absolute top-0 left-0 w-full cursor-pointer opacity-0"
                                         // onChange={handleInput}
                                         onChangeCapture={chooseFile}
@@ -214,17 +246,24 @@ function Addroduct() {
                             </div>
 
                             <div className="ml-4 mt-3 flex basis-1/2 flex-col">
-                                <label className="mb-1 text-lg font-semibold" htmlFor="price">
+                                <label
+                                    className="mb-1 text-lg font-semibold"
+                                    htmlFor="price"
+                                >
                                     Giá
                                 </label>
                                 <div className="relative">
                                     <input
                                         type="number"
                                         id="price"
-                                        className={clsx('text-input w-full py-[5px]', {
-                                            invalid:
-                                                bacsicForm.touched.price && bacsicForm.errors.price,
-                                        })}
+                                        className={clsx(
+                                            'text-input w-full py-[5px]',
+                                            {
+                                                invalid:
+                                                    bacsicForm.touched.price &&
+                                                    bacsicForm.errors.price,
+                                            }
+                                        )}
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
                                         value={bacsicForm.values.price}
@@ -236,10 +275,14 @@ function Addroduct() {
                                     </label>
                                 </div>
                                 <span
-                                    className={clsx('text-sm text-red-500 opacity-0', {
-                                        'opacity-100':
-                                            bacsicForm.touched.price && bacsicForm.errors.price,
-                                    })}
+                                    className={clsx(
+                                        'text-sm text-red-500 opacity-0',
+                                        {
+                                            'opacity-100':
+                                                bacsicForm.touched.price &&
+                                                bacsicForm.errors.price,
+                                        }
+                                    )}
                                 >
                                     {bacsicForm.errors.price || 'No message'}
                                 </span>
@@ -248,15 +291,23 @@ function Addroduct() {
 
                         <div className="mt-6 flex items-center justify-between border-t pt-6">
                             <div
-                                className={clsx('flex items-center text-blue-500', {
-                                    invisible: !loading,
-                                })}
+                                className={clsx(
+                                    'flex items-center text-blue-500',
+                                    {
+                                        invisible: !loading,
+                                    }
+                                )}
                             >
                                 <i className="fa-solid fa-spinner animate-spin text-xl"></i>
-                                <span className="text-lx pl-3 font-medium">Đang tạo sản phẩm</span>
+                                <span className="text-lx pl-3 font-medium">
+                                    Đang tạo sản phẩm
+                                </span>
                             </div>
                             <div className="flex">
-                                <Link to={'/product'} className="btn btn-red btn-md">
+                                <Link
+                                    to={'/product'}
+                                    className="btn btn-red btn-md"
+                                >
                                     <span className="pr-2">
                                         <i className="fa-solid fa-circle-xmark"></i>
                                     </span>
