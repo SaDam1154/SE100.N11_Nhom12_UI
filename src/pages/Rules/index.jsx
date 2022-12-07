@@ -1,26 +1,29 @@
-import { Fragment } from "react";
-import { Link } from "react-router-dom";
-import { Popover } from "@headlessui/react";
+import { Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { Popover } from '@headlessui/react';
+import { useState } from 'react';
 
 const rules = [
     {
         num: 1,
-        id: "AD",
-        name: "Quản trị viên",
+        id: 'AD',
+        name: 'Quản trị viên',
     },
     {
         num: 2,
-        id: "CH",
-        name: "Chủ cửa hàng",
+        id: 'CH',
+        name: 'Chủ cửa hàng',
     },
     {
         num: 3,
-        id: "NV",
-        name: "Nhân viên",
+        id: 'NV',
+        name: 'Nhân viên',
     },
 ];
 
 function Rules() {
+    const [search, setSearch] = useState('');
+
     return (
         <div>
             <div className="flex space-x-4">
@@ -43,6 +46,9 @@ function Rules() {
                     <div className="mr-2 flex grow">
                         <input
                             type="text"
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                            }}
                             className="text-input grow"
                             placeholder="Tìm kiếm chức vụ"
                         />
@@ -69,10 +75,10 @@ function Rules() {
             </div>
             <table className="mt-4 w-full">
                 <colgroup>
-                    <col span="1" style={{ width: "10%" }} />
-                    <col span="1" style={{ width: "10%" }} />
-                    <col span="1" style={{ width: "30%" }} />
-                    <col span="1" style={{ width: "10%" }} />
+                    <col span="1" style={{ width: '10%' }} />
+                    <col span="1" style={{ width: '10%' }} />
+                    <col span="1" style={{ width: '30%' }} />
+                    <col span="1" style={{ width: '10%' }} />
                 </colgroup>
 
                 <thead className="h-11 rounded bg-blue-500 text-white">
@@ -85,32 +91,44 @@ function Rules() {
                 </thead>
 
                 <tbody>
-                    {rules.map((rule) => (
-                        <tr
-                            key={rule.id}
-                            className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
-                        >
-                            <td className="py-2 text-center">{rule.num}</td>
-                            <td className="py-2 text-center">{rule.id}</td>
-                            <td className="py-2 text-center">{rule.name}</td>
-                            <td className="py-2 text-center">
-                                <div className="flex justify-end">
-                                    <Link to="/rules/updaterule" className="btn btn-sm bg-blue-500 hover:bg-blue-400">
-                                        <span className="pr-1">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </span>
-                                        <span>Sửa</span>
-                                    </Link>
-                                    <button className="btn btn-sm bg-red-500 hover:bg-red-400">
-                                        <span className="pr-1">
-                                            <i className="fa-solid fa-circle-xmark"></i>
-                                        </span>
-                                        <span>Xoá</span>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
+                    {rules
+                        .filter((rule) => {
+                            return search.toLowerCase() === ''
+                                ? rule
+                                : rule.name.toLowerCase().includes(search) ||
+                                      rule.id.toLowerCase().includes(search);
+                        })
+                        .map((rule) => (
+                            <tr
+                                key={rule.id}
+                                className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                            >
+                                <td className="py-2 text-center">{rule.num}</td>
+                                <td className="py-2 text-center">{rule.id}</td>
+                                <td className="py-2 text-center">
+                                    {rule.name}
+                                </td>
+                                <td className="py-2 text-center">
+                                    <div className="flex justify-end">
+                                        <Link
+                                            to="/rules/updaterule"
+                                            className="btn btn-sm bg-blue-500 hover:bg-blue-400"
+                                        >
+                                            <span className="pr-1">
+                                                <i className="fa-solid fa-pen-to-square"></i>
+                                            </span>
+                                            <span>Sửa</span>
+                                        </Link>
+                                        <button className="btn btn-sm bg-red-500 hover:bg-red-400">
+                                            <span className="pr-1">
+                                                <i className="fa-solid fa-circle-xmark"></i>
+                                            </span>
+                                            <span>Xoá</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
                 </tbody>
             </table>
         </div>

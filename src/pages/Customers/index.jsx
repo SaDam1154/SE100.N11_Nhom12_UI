@@ -18,7 +18,21 @@ const customers2 = [
 ];
 
 function Customers() {
-    // fake api
+    // const [search, setSearch] = useState('');
+    // onChange={(e) => {
+    //     setSearch(e.target.value);
+    // }}
+    // .filter((product) => {
+    //     return search.toLowerCase() === ''
+    //         ? product
+    //         : product.name
+    //               .toLowerCase()
+    //               .includes(search) ||
+    //               product?.type.name
+    //                   .toLowerCase()
+    //                   .includes(search);
+    // })
+    const [search, setSearch] = useState('');
     const [customers, setCustomers] = useState([]);
 
     useEffect(() => {
@@ -58,6 +72,9 @@ function Customers() {
                         <input
                             type="text"
                             className="text-input grow"
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                            }}
                             placeholder="Tìm kiếm khách hàng"
                         />
 
@@ -103,43 +120,58 @@ function Customers() {
                 </thead>
 
                 <tbody>
-                    {customers?.map((customer) => (
-                        <tr
-                            key={customer._id}
-                            className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
-                        >
-                            <td className="py-2 text-center">{customer.id}</td>
-                            <td className="py-2 text-center">{customer._id}</td>
-                            <td className="py-2 text-center">
-                                {customer.name}
-                            </td>
-                            <td className="py-2 text-center">
-                                {customer.phone}
-                            </td>
-                            <td className="py-2 text-center">
-                                {customer.address}
-                            </td>
-                            <td className="py-2 text-center">
-                                <div className="flex justify-end">
-                                    <Link
-                                        to="/customers/detailcus"
-                                        className="btn btn-sm bg-blue-500 hover:bg-blue-400"
-                                    >
-                                        <span className="pr-1">
-                                            <i className="fa-solid fa-pen-to-square"></i>
-                                        </span>
-                                        <span>Sửa</span>
-                                    </Link>
-                                    <button className="btn btn-sm bg-red-500 hover:bg-red-400">
-                                        <span className="pr-1">
-                                            <i className="fa-solid fa-circle-xmark"></i>
-                                        </span>
-                                        <span>Xoá</span>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
+                    {customers
+                        .filter((customer) => {
+                            return search.toLowerCase() === ''
+                                ? customer
+                                : customer.name
+                                      .toLowerCase()
+                                      .includes(search) ||
+                                      customer.phone
+                                          .toLowerCase()
+                                          .includes(search);
+                        })
+                        ?.map((customer) => (
+                            <tr
+                                key={customer._id}
+                                className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                            >
+                                <td className="py-2 text-center">
+                                    {customer.id}
+                                </td>
+                                <td className="py-2 text-center">
+                                    {customer._id}
+                                </td>
+                                <td className="py-2 text-center">
+                                    {customer.name}
+                                </td>
+                                <td className="py-2 text-center">
+                                    {customer.phone}
+                                </td>
+                                <td className="py-2 text-center">
+                                    {customer.address}
+                                </td>
+                                <td className="py-2 text-center">
+                                    <div className="flex justify-end">
+                                        <Link
+                                            to="/customers/detailcus"
+                                            className="btn btn-sm bg-blue-500 hover:bg-blue-400"
+                                        >
+                                            <span className="pr-1">
+                                                <i className="fa-solid fa-pen-to-square"></i>
+                                            </span>
+                                            <span>Sửa</span>
+                                        </Link>
+                                        <button className="btn btn-sm bg-red-500 hover:bg-red-400">
+                                            <span className="pr-1">
+                                                <i className="fa-solid fa-circle-xmark"></i>
+                                            </span>
+                                            <span>Xoá</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
                 </tbody>
             </table>
         </div>
