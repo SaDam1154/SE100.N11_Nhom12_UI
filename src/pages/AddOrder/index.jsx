@@ -88,9 +88,6 @@ function AddOrder() {
                 if (resJson.success && resJson.customers[0]) {
                     setCustomerName(resJson.customers[0].name);
                     setCustomerAddress(resJson.customers[0].address);
-                } else {
-                    setCustomerName('');
-                    setCustomerAddress('');
                 }
             });
     }
