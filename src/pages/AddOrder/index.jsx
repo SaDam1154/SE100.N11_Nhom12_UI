@@ -238,13 +238,13 @@ function AddOrder() {
                     <div className="flex h-[70vh] flex-col overflow-scroll">
                         <div className=" grid max-h-[100] min-h-[50] grid-cols-3 gap-4  ">
                             {products
-                                .filter((item) => {
+                                .filter((product) => {
                                     return search.toLowerCase() === ''
-                                        ? item
-                                        : item.name
+                                        ? product
+                                        : product.name
                                               .toLowerCase()
                                               .includes(search) ||
-                                              item?.type.name
+                                              product?.type.name
                                                   .toLowerCase()
                                                   .includes(search);
                                 })
