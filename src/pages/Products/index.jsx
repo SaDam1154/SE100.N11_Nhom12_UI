@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { useEffect } from 'react';
 
 function Products() {
+    const [search, setSearch] = useState('');
     const [products, setProducts] = useState([]);
     const [productTypes, setProductTypes] = useState([]);
     const navigate = useNavigate();
@@ -48,7 +49,9 @@ function Products() {
             <div className="flex space-x-4">
                 {/* tite + reload btn */}
                 <div className="flex">
-                    <label className="text-2xl font-bold text-slate-800">Danh sách cây</label>
+                    <label className="text-2xl font-bold text-slate-800">
+                        Danh sách cây
+                    </label>
                     <button
                         type="button"
                         className="ml-3 text-gray-800 hover:underline"
@@ -68,6 +71,9 @@ function Products() {
                         <input
                             type="text"
                             className="text-input grow"
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                            }}
                             placeholder="Tìm kiếm sản phẩm"
                         />
                     </div>
@@ -81,7 +87,9 @@ function Products() {
                             as="div"
                             className="absolute right-0 z-10 min-w-[280px] max-w-[320px] rounded border bg-white px-4 py-3 shadow"
                         >
-                            <h2 className="mb-2 text-lg font-semibold">Lọc sản phẩm</h2>
+                            <h2 className="mb-2 text-lg font-semibold">
+                                Lọc sản phẩm
+                            </h2>
 
                             <hr />
                             <div className="mt-3 space-x-2">
@@ -111,11 +119,14 @@ function Products() {
                                                                 className={clsx(
                                                                     'fa-solid fa-check pr-2',
                                                                     {
-                                                                        'opacity-0': !selected,
+                                                                        'opacity-0':
+                                                                            !selected,
                                                                     }
                                                                 )}
                                                             ></i>
-                                                            <span>{type.name}</span>
+                                                            <span>
+                                                                {type.name}
+                                                            </span>
                                                         </div>
                                                     )}
                                                 </Listbox.Option>
@@ -145,62 +156,88 @@ function Products() {
             <table className="mt-8 w-full">
                 <thead className="w-full rounded bg-blue-500 text-white">
                     <tr className="flex h-11 w-full">
-                        <th className="flex w-14 items-center justify-end px-2">STT</th>
-                        <th className="flex w-24 items-center justify-center px-2">Ảnh</th>
-                        <th className="flex flex-[2] items-center justify-start px-2">Tên cây</th>
-                        <th className="flex flex-[1] items-center justify-start px-2">Loại cây</th>
-                        <th className="flex w-28 items-center justify-end px-2">Giá (VND)</th>
-                        <th className="flex w-24 items-center justify-end px-2">Số lượng</th>
+                        <th className="flex w-14 items-center justify-end px-2">
+                            STT
+                        </th>
+                        <th className="flex w-24 items-center justify-center px-2">
+                            Ảnh
+                        </th>
+                        <th className="flex flex-[2] items-center justify-start px-2">
+                            Tên cây
+                        </th>
+                        <th className="flex flex-[1] items-center justify-start px-2">
+                            Loại cây
+                        </th>
+                        <th className="flex w-28 items-center justify-end px-2">
+                            Giá (VND)
+                        </th>
+                        <th className="flex w-24 items-center justify-end px-2">
+                            Số lượng
+                        </th>
                         <th className="flex w-[200px] items-center justify-center px-2"></th>
                     </tr>
                 </thead>
 
-                <tbody className="flex h-[400px] w-full flex-col" style={{ overflowY: 'overlay' }}>
-                    {products?.map((product, index) => (
-                        <tr
-                            key={product.id}
-                            className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
-                            onClick={() => linkToDetail(product.id)}
-                        >
-                            <td className="flex w-14 items-center justify-end px-2 py-2">
-                                {index + 1}
-                            </td>
-                            <td className="flex w-24 items-center justify-center px-2 py-2">
-                                <img
-                                    src={product.image || '/placeholder.png'}
-                                    className="h-10 w-10 rounded-full object-cover object-center"
-                                />
-                            </td>
-                            <td className="flex flex-[2] items-center justify-start px-2 py-2">
-                                {product.name}
-                            </td>
-                            <td className="flex flex-[1] items-center justify-start px-2 py-2">
-                                {product.type?.name || '-'}
-                            </td>
-                            <td className="flex w-28 items-center justify-end px-2 py-2">
-                                {product.price}
-                            </td>
-                            <td className="flex w-24 items-center justify-end px-2 py-2">
-                                {product.quantity}
-                            </td>
-                            <td className="flex w-[200px] items-center justify-center px-2 py-2">
-                                <div className="flex justify-end">
-                                    <button className="btn btn-sm btn-blue">
-                                        <span className="pr-1">
-                                            <i className="fa-solid fa-pen-to-square"></i>
-                                        </span>
-                                        <span>Sửa</span>
-                                    </button>
-                                    <button className="btn btn-sm btn-red">
-                                        <span className="pr-1">
-                                            <i className="fa-solid fa-circle-xmark"></i>
-                                        </span>
-                                        <span>Xoá</span>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
+                <tbody
+                    className="flex h-[400px] w-full flex-col"
+                    style={{ overflowY: 'overlay' }}
+                >
+                    {products
+                        .filter((product) => {
+                            return search.toLowerCase() === ''
+                                ? product
+                                : product.name.toLowerCase().includes(search) ||
+                                      product?.type.name
+                                          .toLowerCase()
+                                          .includes(search);
+                        })
+                        ?.map((product, index) => (
+                            <tr
+                                key={product.id}
+                                className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                                onClick={() => linkToDetail(product.id)}
+                            >
+                                <td className="flex w-14 items-center justify-end px-2 py-2">
+                                    {index + 1}
+                                </td>
+                                <td className="flex w-24 items-center justify-center px-2 py-2">
+                                    <img
+                                        src={
+                                            product.image || '/placeholder.png'
+                                        }
+                                        className="h-10 w-10 rounded-full object-cover object-center"
+                                    />
+                                </td>
+                                <td className="flex flex-[2] items-center justify-start px-2 py-2">
+                                    {product.name}
+                                </td>
+                                <td className="flex flex-[1] items-center justify-start px-2 py-2">
+                                    {product.type?.name || '-'}
+                                </td>
+                                <td className="flex w-28 items-center justify-end px-2 py-2">
+                                    {product.price}
+                                </td>
+                                <td className="flex w-24 items-center justify-end px-2 py-2">
+                                    {product.quantity}
+                                </td>
+                                <td className="flex w-[200px] items-center justify-center px-2 py-2">
+                                    <div className="flex justify-end">
+                                        <button className="btn btn-sm btn-blue">
+                                            <span className="pr-1">
+                                                <i className="fa-solid fa-pen-to-square"></i>
+                                            </span>
+                                            <span>Sửa</span>
+                                        </button>
+                                        <button className="btn btn-sm btn-red">
+                                            <span className="pr-1">
+                                                <i className="fa-solid fa-circle-xmark"></i>
+                                            </span>
+                                            <span>Xoá</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
                 </tbody>
             </table>
         </div>
