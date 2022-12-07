@@ -4,7 +4,7 @@
 
 @layer components {
     .btn {
-        @apply flex items-center justify-center rounded text-white hover:text-black;
+        @apply flex items-center justify-center rounded text-white;
     }
     .btn + .btn {
         @apply ml-2;

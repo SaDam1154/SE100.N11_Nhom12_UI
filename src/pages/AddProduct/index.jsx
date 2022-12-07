@@ -64,7 +64,6 @@ function Addroduct() {
         onSubmit: handleFormsubmit,
     });
 
-    const API_URL = 'http://localhost:5173/product';
     function handleFormsubmit(values) {
         const finalReq = { ...formdata, ...values };
         console.log(finalReq);
@@ -76,7 +75,7 @@ function Addroduct() {
             },
             body: JSON.stringify(finalReq),
         });
-    };
+    }
 
     return (
         <div className="container">
@@ -108,11 +107,8 @@ function Addroduct() {
                                 </span>
                             </div>
                             <div className="form-group flex flex-col">
-                                <label
-                                    className="mb-1 font-semibold"
-                                    htmlFor="type"
-                                >
-                                    Loại cây 
+                                <label className="mb-1 font-semibold" htmlFor="type">
+                                    Loại cây
                                 </label>
                                 <TypeProduct
                                     onChange={(selectedProductType) => {

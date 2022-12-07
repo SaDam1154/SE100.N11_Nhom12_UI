@@ -48,9 +48,7 @@ function Products() {
             <div className="flex space-x-4">
                 {/* tite + reload btn */}
                 <div className="flex">
-                    <label className="text-2xl font-bold text-slate-800">
-                        Danh sách cây
-                    </label>
+                    <label className="text-2xl font-bold text-slate-800">Danh sách cây</label>
                     <button
                         type="button"
                         className="ml-3 text-gray-800 hover:underline"
@@ -83,9 +81,7 @@ function Products() {
                             as="div"
                             className="absolute right-0 z-10 min-w-[280px] max-w-[320px] rounded border bg-white px-4 py-3 shadow"
                         >
-                            <h2 className="mb-2 text-lg font-semibold">
-                                Lọc sản phẩm
-                            </h2>
+                            <h2 className="mb-2 text-lg font-semibold">Lọc sản phẩm</h2>
 
                             <hr />
                             <div className="mt-3 space-x-2">
@@ -99,7 +95,7 @@ function Products() {
                                             as="div"
                                             className="text-input flex min-h-[36px] cursor-pointer items-center"
                                         >
-                                            <div className="mr-2 flex-1">{`Loại cây (${selectedProductTypes.length})`}</div>
+                                            <div className="mr-2 flex-[1]">{`Loại cây (${selectedProductTypes.length})`}</div>
                                             <i className="fa-solid fa-chevron-down"></i>
                                         </Listbox.Button>
                                         <Listbox.Options>
@@ -115,14 +111,11 @@ function Products() {
                                                                 className={clsx(
                                                                     'fa-solid fa-check pr-2',
                                                                     {
-                                                                        'opacity-0':
-                                                                            !selected,
+                                                                        'opacity-0': !selected,
                                                                     }
                                                                 )}
                                                             ></i>
-                                                            <span>
-                                                                {type.name}
-                                                            </span>
+                                                            <span>{type.name}</span>
                                                         </div>
                                                     )}
                                                 </Listbox.Option>
@@ -147,46 +140,43 @@ function Products() {
                     </Link>
                 </div>
             </div>
-            <table className="mt-4 w-full">
-                <colgroup>
-                    <col span="1" style={{ width: '8%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '10%' }} />
-                </colgroup>
 
-                <thead className="h-11 rounded bg-blue-500 text-white">
-                    <tr>
-                        <th scope="col">STT</th>
-                        <th scope="col">Loại cây</th>
-                        <th scope="col">Tên cây</th>
-                        <th scope="col">Giá (VND)</th>
-                        <th scope="col">Số lượng tồn kho</th>
-                        <th scope="col"></th>
+            {/* LIST */}
+            <table className="mt-8 w-full">
+                <thead className="w-full rounded bg-blue-500 text-white">
+                    <tr className="flex h-11 w-full">
+                        <th className="flex w-14 items-center justify-end px-2">STT</th>
+                        <th className="flex flex-[1] items-center justify-start px-2">Loại cây</th>
+                        <th className="flex flex-[2] items-center justify-start px-2">Tên cây</th>
+                        <th className="flex w-28 items-center justify-end px-2">Giá (VND)</th>
+                        <th className="flex w-24 items-center justify-end px-2">Số lượng</th>
+                        <th className="flex w-[200px] items-center justify-center px-2"></th>
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody className="flex h-[400px] w-full flex-col" style={{ overflowY: 'overlay' }}>
                     {products?.map((product, index) => (
                         <tr
                             key={product.id}
-                            className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                            className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
                             onClick={() => linkToDetail(product.id)}
                         >
-                            <td className="py-2 text-center">{index + 1}</td>
-                            <td className="py-2 text-center">
+                            <td className="flex w-14 items-center justify-end px-2 py-2">
+                                {index + 1}
+                            </td>
+                            <td className="flex flex-[1] items-center justify-start px-2 py-2">
                                 {product.type?.name || '-'}
                             </td>
-                            <td className="py-2 text-center">{product.name}</td>
-                            <td className="py-2 text-center">
+                            <td className="flex flex-[2] items-center justify-start px-2 py-2">
+                                {product.name}
+                            </td>
+                            <td className="flex w-28 items-center justify-end px-2 py-2">
                                 {product.price}
                             </td>
-                            <td className="py-2 text-center">
+                            <td className="flex w-24 items-center justify-end px-2 py-2">
                                 {product.quantity}
                             </td>
-                            <td className="py-2 text-center">
+                            <td className="flex w-[200px] items-center justify-center px-2 py-2">
                                 <div className="flex justify-end">
                                     <button className="btn btn-sm btn-blue">
                                         <span className="pr-1">
