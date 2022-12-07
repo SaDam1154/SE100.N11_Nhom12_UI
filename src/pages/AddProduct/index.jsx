@@ -61,7 +61,7 @@ function Addroduct() {
         bacsicForm.setFieldValue('type', productType._id || '');
     }
     function handleBlurProductType() {
-        // bacsicForm.setFieldTouched('type', true);
+        bacsicForm.setFieldTouched('type', true);
     }
 
     console.log(bacsicForm);
@@ -116,7 +116,11 @@ function Addroduct() {
                                     tabIndex="1"
                                     onBlur={handleBlurProductType}
                                 >
-                                    <TypeProduct key="fadsfas" onChange={handleChangeProductType} />
+                                    <TypeProduct
+                                        key="fadsfas"
+                                        onChange={handleChangeProductType}
+                                        invalid={bacsicForm.touched.type && bacsicForm.errors.type}
+                                    />
                                 </div>
 
                                 <span
