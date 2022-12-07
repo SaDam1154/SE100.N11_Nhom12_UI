@@ -126,11 +126,6 @@ function Products() {
                             className="text-input grow"
                             onChange={(e) => {
                                 setSearch(e.target.value);
-                                console.log(
-                                    removeVietnameseTones(
-                                        e.target.value
-                                    ).toLowerCase()
-                                );
                             }}
                             placeholder="Tìm kiếm sản phẩm"
                         />
@@ -248,6 +243,13 @@ function Products() {
                                 if (
                                     removeVietnameseTones(
                                         product.name.toLowerCase()
+                                    ).includes(
+                                        removeVietnameseTones(
+                                            search.toLowerCase()
+                                        )
+                                    ) ||
+                                    removeVietnameseTones(
+                                        product?.type.name.toLowerCase()
                                     ).includes(
                                         removeVietnameseTones(
                                             search.toLowerCase()
