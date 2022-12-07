@@ -146,8 +146,9 @@ function Products() {
                 <thead className="w-full rounded bg-blue-500 text-white">
                     <tr className="flex h-11 w-full">
                         <th className="flex w-14 items-center justify-end px-2">STT</th>
-                        <th className="flex flex-[1] items-center justify-start px-2">Loại cây</th>
+                        <th className="flex w-24 items-center justify-center px-2">Ảnh</th>
                         <th className="flex flex-[2] items-center justify-start px-2">Tên cây</th>
+                        <th className="flex flex-[1] items-center justify-start px-2">Loại cây</th>
                         <th className="flex w-28 items-center justify-end px-2">Giá (VND)</th>
                         <th className="flex w-24 items-center justify-end px-2">Số lượng</th>
                         <th className="flex w-[200px] items-center justify-center px-2"></th>
@@ -164,11 +165,17 @@ function Products() {
                             <td className="flex w-14 items-center justify-end px-2 py-2">
                                 {index + 1}
                             </td>
-                            <td className="flex flex-[1] items-center justify-start px-2 py-2">
-                                {product.type?.name || '-'}
+                            <td className="flex w-24 items-center justify-center px-2 py-2">
+                                <img
+                                    src={product.image || '/placeholder.png'}
+                                    className="h-10 w-10 rounded-full object-cover object-center"
+                                />
                             </td>
                             <td className="flex flex-[2] items-center justify-start px-2 py-2">
                                 {product.name}
+                            </td>
+                            <td className="flex flex-[1] items-center justify-start px-2 py-2">
+                                {product.type?.name || '-'}
                             </td>
                             <td className="flex w-28 items-center justify-end px-2 py-2">
                                 {product.price}
