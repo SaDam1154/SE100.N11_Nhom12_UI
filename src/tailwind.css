@@ -25,9 +25,12 @@
     .btn.btn-green {
         @apply bg-green-600 hover:bg-green-500;
     }
+    .btn:disabled {
+        @apply pointer-events-none opacity-50;
+    }
 
     .text-input {
-        @apply rounded border border-slate-300 px-2 outline-none focus:border-blue-500;
+        @apply rounded border border-slate-300 px-2 text-lg outline-none focus:border-blue-500;
     }
 
     .text-input.invalid {
