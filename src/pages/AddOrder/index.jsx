@@ -3,37 +3,23 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Listbox, Popover } from '@headlessui/react';
 import clsx from 'clsx';
-import TypeProduct from '../../components/TypeProduct';
 import TimeNow from '../../components/TimeNow';
 function AddOrder() {
-    // const [customers, setCustomers] = useState([]);
+    const [search, setSearch] = useState('');
 
-    // useEffect(() => {
-    //     fetch('http://localhost:5000/api/customer')
-    //         .then((res) => res.json())
-    //         .then((resJson) => {
-    //             if (resJson.success) {
-    //                 setCustomers(resJson.customers);
-    //             } else {
-    //                 setCustomers([]);
-    //             }
-    //         });
-    // }, []);
-    // const [productType, setProductType] = useState([]);
-    // const [productName, setProductName] = useState([]);
-    // const [productQuanity, setProductQuanity] = useState([]);
-    // const [productPrice, setProductPrice] = useState([]);
-    // const [selectedProduct, setSelectedProduct] = useState([
-    //     {
-    //         name: '',
-    //         price: '',
-    //         type: '',
-    //         quantity: '',
-    //         imageFile: '',
-    //         date: '',
-    //     },
-    // ]);
-    // const [selectedProducts, setSelectedProducts] = useState([]);
+    const [customer, setCustomer] = useState({});
+
+    useEffect(() => {
+        fetch('http://localhost:5000/api/customer')
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success) {
+                    setCustomer(resJson.customers);
+                } else {
+                    setCustomer([]);
+                }
+            });
+    }, []);
 
     const [customerName, setCustomerName] = useState('');
     const [customerPhone, setCustomerPhone] = useState('');
@@ -43,25 +29,15 @@ function AddOrder() {
         const localJobs = JSON.parse(localStorage.getItem('selectedProducts'));
         return localJobs ?? [];
     });
-    function handleSubmit(selectedProduct) {
+    function handleSubmit(Product) {
         setselectedProduct((prev) => {
-            const newSelectedProduct = [
-                ...prev,
-                {
-                    id: selectedProduct._id,
-                    name: selectedProduct.name,
-                    type: selectedProduct.type,
-                    quantity: selectedProduct.quantity,
-                    price: selectedProduct.price,
-                },
-            ];
+            const newSelectedProduct = [...prev, Product];
             // localStorage.setItem(
             //     'selectedProducts',
             //     JSON.stringify(new SelectedProduct())
             // );
             return newSelectedProduct;
         });
-        console.log(selectedProduct);
     }
     function handlClearJobsStorage() {
         setselectedProduct([]);
@@ -183,6 +159,9 @@ function AddOrder() {
                                 <input
                                     type="text"
                                     className="text-input grow"
+                                    onChange={(e) => {
+                                        setSearch(e.target.value);
+                                    }}
                                     placeholder="Tìm kiếm sản phẩm"
                                 />
                             </div>
@@ -258,53 +237,51 @@ function AddOrder() {
                     </div>
                     <div className="flex h-[70vh] flex-col overflow-scroll">
                         <div className=" grid max-h-[100] min-h-[50] grid-cols-3 gap-4  ">
-                            {products?.map((product) => (
-                                <div
-                                    key={product.id}
-                                    className="  cursor-pointer select-none  overflow-hidden rounded border shadow-lg"
-                                    onClick={() => handleSubmit(product)}
-                                >
-                                    <h1 className="py-2 text-center">
-                                        {product.num}
-                                    </h1>
-                                    <h1 className="py-2 text-center">
-                                        {product.id}
-                                    </h1>
-                                    <h1 className="py-2 text-center">
-                                        {product.type?.name || '-'}
-                                    </h1>
-                                    <h1 className="py-2 text-center">
-                                        {product.name}
-                                    </h1>
-                                    <h1 className="py-2 text-center">
-                                        {product.price}
-                                    </h1>
-                                </div>
-                            ))}
+                            {products
+                                .filter((item) => {
+                                    return search.toLowerCase() === ''
+                                        ? item
+                                        : item.name
+                                              .toLowerCase()
+                                              .includes(search) ||
+                                              item?.type.name
+                                                  .toLowerCase()
+                                                  .includes(search);
+                                })
+                                ?.map((product) => (
+                                    <div
+                                        key={product.id}
+                                        className="  cursor-pointer select-none  overflow-hidden rounded border shadow-lg"
+                                        onClick={() => handleSubmit(product)}
+                                    >
+                                        <h1 className="py-2 text-center">
+                                            {product.num}
+                                        </h1>
+                                        <h1 className="py-2 text-center">
+                                            {product.id}
+                                        </h1>
+                                        <h1 className="py-2 text-center">
+                                            {product.type?.name || '-'}
+                                        </h1>
+                                        <h1 className="py-2 text-center">
+                                            {product.name}
+                                        </h1>
+                                        <h1 className="py-2 text-center">
+                                            {product.price}
+                                        </h1>
+                                    </div>
+                                ))}
                         </div>
                     </div>
                 </div>
 
-                <div className="ml-4 mt-1 flex   flex-col  border-2 border-solid py-4  px-4 shadow-xl">
+                <div className="ml-4 mt-1 flex   flex-col  border-2 border-solid py-1  px-2 shadow-xl">
                     <label className="text-center align-middle text-2xl font-bold text-blue-800">
                         Hóa đơn
                     </label>
-                    <div className="flex flex-col">
-                        <label className="">
-                            Tên khách hàng : {customerName}
-                        </label>
-                        <label className="">
-                            Số điện thoại : {customerPhone}
-                        </label>
-                        <label className="">Địa chỉ : {customerAddress}</label>
-                        <div className=" flex">
-                            <label>Ngày đặt : </label>
-                            <TimeNow />
-                        </div>
-                    </div>
 
                     {/* table */}
-                    <table className="mt-8 w-[550px] max-w-[600px]">
+                    <table className="mt-1 w-[550px] max-w-[600px]">
                         <thead className="w-[500px] rounded border-b bg-gray-700 text-sm font-medium text-white">
                             <tr className="flex h-11 w-fit">
                                 <th className=" max-w-12 flex w-12 items-center justify-center  ">
@@ -328,7 +305,7 @@ function AddOrder() {
                             </tr>
                         </thead>
 
-                        <tbody className=" over flex h-[300px] w-full flex-col overflow-y-scroll">
+                        <tbody className=" over flex h-[250px] w-full flex-col overflow-y-scroll">
                             {selectedProducts?.map((selectedProduct, index) => (
                                 <tr
                                     key={selectedProduct.id}
@@ -359,7 +336,7 @@ function AddOrder() {
                                         {selectedProduct.price}
                                     </td>
                                     <td className="flex w-12 items-center justify-end px-1 py-1">
-                                        {selectedProduct.quantity}
+                                        {/* {selectedProduct.quantity} */}1
                                     </td>
                                     <td className="flex w-12 flex-grow items-center justify-center px-1 py-1">
                                         <button className="btn btn-sm btn-red float-right w-14">
@@ -374,13 +351,34 @@ function AddOrder() {
                         </tbody>
                     </table>
 
-                    <div className="float-right ml-[3%]  flex  justify-center pr-[5%]">
-                        <button className="btn btn-blue btn-md w-1/2 ">
-                            <span className="pr-2">
-                                <i className="fa-solid fa-circle-plus"></i>
-                            </span>
-                            <span>Thêm</span>
-                        </button>
+                    <div className="flex flex-col">
+                        <label className="">
+                            Tên khách hàng : {customerName}
+                        </label>
+                        <label className="">
+                            Số điện thoại : {customerPhone}
+                        </label>
+                        <label className="">Địa chỉ : {customerAddress}</label>
+                        <div className=" flex">
+                            <label>Ngày đặt : </label>
+                            <TimeNow />
+                        </div>
+                    </div>
+                    <div className="flex flex-grow flex-col-reverse">
+                        <div className=" ba  ml-[3%] flex justify-center pr-[5%]">
+                            <button className="btn btn-blue btn-md w-1/2 ">
+                                <span className="pr-2">
+                                    <i className="fa-solid fa-circle-plus"></i>
+                                </span>
+                                <span>Thêm</span>
+                            </button>
+                            <button className="btn btn-red btn-md w-1/2 ">
+                                <span className="pr-2">
+                                    <i className="fa-solid fa-circle-plus"></i>
+                                </span>
+                                <span>Hủy</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
