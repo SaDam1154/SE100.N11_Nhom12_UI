@@ -154,14 +154,16 @@ function ProductsView() {
                     </Link>
                 </div>
             </div>
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-5 gap-4">
                 {products?.map((product) => (
                     <div
                         key={product.id}
                         className=" cursor-pointer select-none  rounded border "
                     >
-                        <img className="py-2 text-center" src={product.image} />
-                        <h1 className="py-2 text-center">{product.id}</h1>
+                        <img
+                            className=" w-[300px] py-2 text-center"
+                            src={product.image}
+                        />
                         <h1 className="py-2 text-center">
                             {product.type?.name || '-'}
                         </h1>

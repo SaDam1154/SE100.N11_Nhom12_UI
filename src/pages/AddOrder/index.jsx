@@ -254,12 +254,10 @@ function AddOrder() {
                                         className="  cursor-pointer select-none  overflow-hidden rounded border shadow-lg"
                                         onClick={() => handleSubmit(product)}
                                     >
-                                        <h1 className="py-2 text-center">
-                                            {product.num}
-                                        </h1>
-                                        <h1 className="py-2 text-center">
-                                            {product.id}
-                                        </h1>
+                                        <img
+                                            className=" w-[300px] py-2 text-center"
+                                            src={product.image}
+                                        />
                                         <h1 className="py-2 text-center">
                                             {product.type?.name || '-'}
                                         </h1>
