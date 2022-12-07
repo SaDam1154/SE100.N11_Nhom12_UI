@@ -186,7 +186,12 @@ function Orders() {
                                     {order.name}
                                 </td>
                                 <td className="py-2 text-center">
-                                    {order.price}
+                                    {order.price
+                                        .toFixed(0)
+                                        .replace(
+                                            /(\d)(?=(\d{3})+(?!\d))/g,
+                                            '$1,'
+                                        )}
                                 </td>
                                 <td className="py-2 text-center">
                                     <div className="flex justify-end">

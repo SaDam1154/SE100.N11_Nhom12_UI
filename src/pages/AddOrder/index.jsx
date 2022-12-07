@@ -267,7 +267,12 @@ function AddOrder() {
                                             {product.name}
                                         </h1>
                                         <h1 className="py-2 text-center">
-                                            {product.price}
+                                            {product.price
+                                                .toFixed(0)
+                                                .replace(
+                                                    /(\d)(?=(\d{3})+(?!\d))/g,
+                                                    '$1,'
+                                                )}
                                         </h1>
                                     </div>
                                 ))}
@@ -333,7 +338,12 @@ function AddOrder() {
                                         {selectedProduct.type?.name || '-'}
                                     </td>
                                     <td className="flex w-20 items-center justify-end px-1 py-1">
-                                        {selectedProduct.price}
+                                        {selectedProduct.price
+                                            .toFixed(0)
+                                            .replace(
+                                                /(\d)(?=(\d{3})+(?!\d))/g,
+                                                '$1,'
+                                            )}
                                     </td>
                                     <td className="flex w-12 items-center justify-end px-1 py-1">
                                         {/* {selectedProduct.quantity} */}1

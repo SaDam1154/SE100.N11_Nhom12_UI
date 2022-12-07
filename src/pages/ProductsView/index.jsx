@@ -166,7 +166,11 @@ function ProductsView() {
                             {product.type?.name || '-'}
                         </h1>
                         <h1 className="py-2 text-center">{product.name}</h1>
-                        <h1 className="py-2 text-center">{product.price}</h1>
+                        <h1 className="py-2 text-center">
+                            {product.price
+                                .toFixed(0)
+                                .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
+                        </h1>
                         <div className="flex justify-center">
                             <button className="btn btn-sm btn-blue">
                                 <span className="pr-1">

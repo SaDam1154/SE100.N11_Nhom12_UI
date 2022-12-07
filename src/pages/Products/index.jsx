@@ -215,7 +215,12 @@ function Products() {
                                     {product.type?.name || '-'}
                                 </td>
                                 <td className="flex w-28 items-center justify-end px-2 py-2">
-                                    {product.price}
+                                    {product.price
+                                        .toFixed(0)
+                                        .replace(
+                                            /(\d)(?=(\d{3})+(?!\d))/g,
+                                            '$1,'
+                                        )}
                                 </td>
                                 <td className="flex w-24 items-center justify-end px-2 py-2">
                                     {product.quantity}
