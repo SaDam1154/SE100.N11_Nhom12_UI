@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import * as Yup from 'yup';
-import { useFormik } from 'formik';
+import { Formik, useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import TypeProduct from '../../components/TypeProduct';
 import clsx from 'clsx';
@@ -8,18 +8,10 @@ import { useEffect } from 'react';
 import TimeNow from '../../components/TimeNow';
 
 const validationSchema = Yup.object({
-    // id: Yup.string().required('Trường này bắt buộc'),
-    // moneyDeposit: Yup.number()
-    //     .typeError('Tiền gởi phải là số')
-    //     .min(minMoney, `Tiền gởi tối thiểu là ${minMoney}`)
-    //     .required('Trường này bắt buộc'),
     name: Yup.string().required('Trường này bắt buộc'),
-    price: Yup.number()
-        .required('Trường này bắt buộc')
-        .min(1, 'Giá phải lớn hơn 0'),
-    quantity: Yup.number()
-        .required('Trường này bắt buộc')
-        .min(1, 'Số lượng phải lớn hơn 0'),
+    price: Yup.number().required('Trường này bắt buộc').min(1, 'Giá phải lớn hơn 0'),
+    quantity: Yup.number().required('Trường này bắt buộc').min(1, 'Số lượng phải lớn hơn 0'),
+    type: Yup.string().required('Trường này bắt buộc'),
 });
 
 function Addroduct() {
@@ -50,34 +42,36 @@ function Addroduct() {
         price: '',
         quantity: '',
         image: '',
+        type: '',
     });
-
-    const handleInput = (e) => {
-        const { name, value } = e.target;
-        setFormdata({ ...formdata, [name]: value });
-        //console.log(formdata);
-    };
 
     const bacsicForm = useFormik({
         initialValues: {
             name: '',
             price: '',
             quantity: '',
+            type: '',
+            image: '',
         },
         validationSchema,
         onSubmit: handleFormsubmit,
     });
 
-    function handleFormsubmit(values) {
-        const finalReq = { ...formdata, ...values };
-        console.log(finalReq);
+    function handleChangeProductType(productType) {
+        bacsicForm.setFieldValue('type', productType._id || '');
+    }
+    function handleBlurProductType() {
+        bacsicForm.setFieldTouched('type', true);
+    }
 
+    console.log(bacsicForm);
+    function handleFormsubmit(values) {
         fetch('http://localhost:5000/api/product', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(finalReq),
+            body: JSON.stringify(values),
         });
     }
 
@@ -85,8 +79,10 @@ function Addroduct() {
         <div className="container">
             <div className="w-full">
                 <form onSubmit={bacsicForm.handleSubmit}>
-                    <div className="mt-4 flex flex-row">
-                        <div className="mr-8 mt-3 flex w-1/2 flex-col space-y-2 text-lg">
+                    {/* (NAME AND TYPE) AND IMAGE*/}
+                    <div className="mt-4 flex">
+                        {/* NAME AND TYPE*/}
+                        <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
                             <div className="form-group flex flex-col ">
                                 <label
                                     className="mb-1 font-semibold"
@@ -96,6 +92,7 @@ function Addroduct() {
                                 </label>
                                 <input
                                     type="text"
+                                    id="name"
                                     className={clsx('text-input py-[5px]', {
                                         invalid:
                                             bacsicForm.touched.name &&
@@ -126,14 +123,26 @@ function Addroduct() {
                                 >
                                     Loại cây
                                 </label>
-                                <TypeProduct
-                                    onChange={(selectedProductType) => {
-                                        setFormdata({
-                                            ...formdata,
-                                            type: selectedProductType._id,
-                                        });
-                                    }}
-                                />
+                                <div
+                                    onMouseDown={(e) => e.preventDefault()}
+                                    tabIndex="1"
+                                    onBlur={handleBlurProductType}
+                                >
+                                    <TypeProduct
+                                        key="fadsfas"
+                                        onChange={handleChangeProductType}
+                                        invalid={bacsicForm.touched.type && bacsicForm.errors.type}
+                                    />
+                                </div>
+
+                                <span
+                                    className={clsx('text-sm text-red-500 opacity-0', {
+                                        'opacity-100':
+                                            bacsicForm.touched.type && bacsicForm.errors.type,
+                                    })}
+                                >
+                                    {bacsicForm.errors.type || 'No message'}
+                                </span>
                             </div>
 
                             <div className="form-group flex flex-col">
@@ -145,14 +154,12 @@ function Addroduct() {
                                 </label>
                                 <input
                                     type="number"
-                                    className={clsx(
-                                        'text-input w-full py-[5px]',
-                                        {
-                                            invalid:
-                                                bacsicForm.touched.quantity &&
-                                                bacsicForm.errors.quantity,
-                                        }
-                                    )}
+                                    id="quantity"
+                                    className={clsx('text-input w-full py-[5px]', {
+                                        invalid:
+                                            bacsicForm.touched.quantity &&
+                                            bacsicForm.errors.quantity,
+                                    })}
                                     onChange={bacsicForm.handleChange}
                                     onBlur={bacsicForm.handleBlur}
                                     value={bacsicForm.values.quantity}
@@ -174,8 +181,9 @@ function Addroduct() {
                             </div>
                         </div>
 
+                        {/* IMAGE */}
                         <div className="form-group w-1/2 flex-col items-center justify-items-center ">
-                            <div className="h-60 w-full rounded-xl border-2 border-dashed border-cyan-300 bg-gray-100">
+                            <div className="h-60 w-full rounded-xl border-2 border-dashed border-blue-500 bg-gray-100">
                                 {img && (
                                     <img
                                         src={img.preview}
@@ -189,23 +197,19 @@ function Addroduct() {
                                 <input
                                     type="file"
                                     id="imageFile"
-                                    // name="imageFile"
-                                    // value={formdata.imageFile}
                                     accept="image/gif, image/ipeg, image/png"
-                                    className="form-control absolute top-0 left-0 w-full cursor-pointer opacity-0"
-                                    onChange={handleInput}
+                                    className="absolute top-0 left-0 w-full cursor-pointer opacity-0"
+                                    // onChange={handleInput}
                                     onChangeCapture={chooseFile}
                                 />
                             </div>
                         </div>
                     </div>
 
-                    <div className="mt-4 flex flex-row">
+                    {/* DATE AND PRICE */}
+                    <div className="mt-4 flex">
                         <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col ">
-                            <label
-                                className="mb-1 text-xl font-semibold"
-                                htmlFor="date"
-                            >
+                            <label className="mb-1 cursor-default text-lg font-semibold">
                                 Ngày thêm
                             </label>
                             <div className="rounded border border-slate-300 bg-slate-50 px-2 outline-none">
@@ -214,33 +218,24 @@ function Addroduct() {
                         </div>
 
                         <div className="ml-4 mt-3 flex basis-1/2 flex-col">
-                            <label
-                                className="mb-1 text-xl font-semibold"
-                                htmlFor="price"
-                            >
+                            <label className="mb-1 text-lg font-semibold" htmlFor="price">
                                 Giá
                             </label>
                             <div className="relative">
                                 <input
                                     type="number"
-                                    className={clsx(
-                                        'text-input w-full py-[5px]',
-                                        {
-                                            invalid:
-                                                bacsicForm.touched.price &&
-                                                bacsicForm.errors.price,
-                                        }
-                                    )}
+                                    id="price"
+                                    className={clsx('text-input w-full py-[5px]', {
+                                        invalid:
+                                            bacsicForm.touched.price && bacsicForm.errors.price,
+                                    })}
                                     onChange={bacsicForm.handleChange}
                                     onBlur={bacsicForm.handleBlur}
                                     value={bacsicForm.values.price}
                                     name="price"
                                     placeholder="Nhập giá mỗi cây"
                                 />
-                                <label
-                                    htmlFor="price"
-                                    className="lb-value absolute top-0 right-0 select-none px-[6%] py-1 text-lg text-gray-600"
-                                >
+                                <label className="lb-value absolute top-0 right-0 select-none px-[6%] py-1 text-lg text-gray-600">
                                     VNĐ
                                 </label>
                             </div>
@@ -259,29 +254,23 @@ function Addroduct() {
                         </div>
                     </div>
 
-                    <div className="ml-4px float-right mt-8 flex w-1/2 flex-row pl-4">
-                        <div className="mr-[3%] flex basis-1/2 flex-col pl-[5%]">
-                            <Link
-                                to={'/product'}
-                                className="btn btn-red btn-md w-full"
-                            >
-                                <span className="pr-2">
-                                    <i className="fa-solid fa-circle-xmark"></i>
-                                </span>
-                                <span>Hủy</span>
-                            </Link>
-                        </div>
-                        <div className="ml-[3%] flex basis-1/2 flex-col pr-[5%]">
-                            <button
-                                type="submit"
-                                className="btn btn-blue btn-md w-full"
-                            >
-                                <span className="pr-2">
-                                    <i className="fa-solid fa-circle-plus"></i>
-                                </span>
-                                <span>Thêm</span>
-                            </button>
-                        </div>
+                    <div className="mt-6 flex justify-end border-t pt-6">
+                        <Link to={'/product'} className="btn btn-red btn-md">
+                            <span className="pr-2">
+                                <i className="fa-solid fa-circle-xmark"></i>
+                            </span>
+                            <span>Hủy</span>
+                        </Link>
+                        <button
+                            type="submit"
+                            className="btn btn-blue btn-md"
+                            disabled={!bacsicForm.dirty}
+                        >
+                            <span className="pr-2">
+                                <i className="fa-solid fa-circle-plus"></i>
+                            </span>
+                            <span>Thêm</span>
+                        </button>
                     </div>
                 </form>
             </div>
