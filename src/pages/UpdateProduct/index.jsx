@@ -6,26 +6,6 @@ import clsx from 'clsx';
 import { useEffect } from 'react';
 import TimeNow from '../../components/TimeNow';
 function UpdateProduct() {
-    const [img, setImg] = useState();
-    useEffect(() => {
-        //cleanup
-        return () => {
-            img && URL.revokeObjectURL(img.preview);
-        };
-    }, [img]);
-
-    const chooseFile = (e) => {
-        const file = e.target.files[0];
-
-        var fileReader = new FileReader()
-        fileReader.readAsDataURL(file)
-        fileReader.onloadend= function(e) {
-            const imageFile = e.target.result;
-            setFormdata({...formdata, image: imageFile});
-        }  
-        file.preview = URL.createObjectURL(file);
-        setImg(file);
-    };
 
     const posturl = 'http://localhost:5173/product';
 
@@ -46,38 +26,54 @@ function UpdateProduct() {
                 }
             });
     }
+    const [img, setImg] = useState();
+    useEffect(() => {
+        //cleanup
+        return () => {
+            img && URL.revokeObjectURL(img.preview);
+        };
+    }, [img]);
+
+    const chooseFile = (e) => {
+        const file = e.target.files[0];
+
+        var fileReader = new FileReader()
+        fileReader.readAsDataURL(file)
+        fileReader.onloadend= function(e) {
+            const imageFile = e.target.result;
+            setProduct({...product, image: imageFile});
+            // console.log(product.image)
+        }  
+        file.preview = URL.createObjectURL(file);
+        setImg(file);
+    };
     const [formdata, setFormdata] = useState({
-        name: '',
-        price: '',
-        quantity: '',
-        image: '',
-        date: '',
     });
     const handleInput = (e) => {
         const { name, value } = e.target;
-        setFormdata({ ...formdata, [name]: value }); 
-        console.log(formdata);
+        setProduct({ ...product, [name]: value });
+        // console.log(formdata);
     };
-    const handleSubmitForm = (e) => {
-        e.preventDefault();
-        //product.name = document.querySelector('[name="name"]').value;
-        //product.price = document.querySelector('[name="price"]').value;
-        // //type
-        //product.image = document.querySelector('[name="image"]').value;
-        //product.quantity = document.querySelector('[name="quantity"]').value;
-        // //const date = document.querySelector('[name="date"]').innerHTML;
-        // const formdata = {
-        //     name: name,
-        //     price: price,
-        //     //type:,
-        //     image: imageFile,
-        //     quantity: quantity,
-        //     //date: date
-        // };
+    const handleSubmitForm = (e) => {  
+        e.preventDefault();  
+        const link = 'http://localhost:5000/api/product'+'/'+ id;
+        fetch(link, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(
+               // product
+               {
+                "name": product.name, 
+                "quantity": product.quantity,
+                //"image": product.image,
+                "price": product.price,
+               }
+            ),
+        });
         console.log(product)
-        //console.log(document.querySelector('[name="name"]').value);
     };
-    const imgpr = product.image;
     return (
         <div className="container">      
             <div className="wrapper text-lg">
@@ -92,18 +88,13 @@ function UpdateProduct() {
 
                         <div className="basis-1/2 flex-col items-center justify-items-center ">
                             <div className="h-60 w-full rounded-xl border-2 border-dashed border-cyan-300 bg-gray-100">
-                                <img
-                                        src={imgpr}
-                                        alt=""
-                                        className="h-full w-full rounded-xl object-contain py-[1.5px]"
-                                />
-                                {/* {img && ( 
+                                {img && ( 
                                     <img
                                         src={img.preview}
                                         alt=""
                                         className="h-full w-full rounded-xl object-contain py-[1.5px]"
                                     />
-                                )}  */}
+                                )} 
                             </div>
                             <div className="btn btn-green btn-md relative inset-x-1/4 mt-4 h-10 w-1/2 text-center hover:bg-green-400">
                                     <p className="tezt w-full">Chọn ảnh</p>
@@ -111,12 +102,12 @@ function UpdateProduct() {
                                         type="file"
                                         id="imageFile"
                                         name="image"
-                                        defaultValue={product.image}
+                                        //value={product.image}
                                         accept="image/gif, image/ipeg, image/png"
                                         className="form-control absolute top-0 left-0 w-full cursor-pointer opacity-0"
                                         //onChange={handleInput}
                                         onChange={chooseFile}
-                                        required
+                                        //required
                                     />
                             </div>
                         </div>
@@ -146,8 +137,7 @@ function UpdateProduct() {
                                 type="text"
                                 id="name"
                                 name="name"
-                                defaultValue={product.name}
-                                //value={product.name}
+                                value={product.name}
                                 onChange={handleInput}
                                 className="text-input py-[5px]"
                                 required
@@ -167,7 +157,7 @@ function UpdateProduct() {
                                 <input
                                     type="number"
                                     name="quantity"
-                                    defaultValue={product.quantity}
+                                    value={product.quantity}
                                     onChange={handleInput}
                                     className="text-input w-full py-[5px]"
                                     id="quantity"
@@ -193,7 +183,8 @@ function UpdateProduct() {
                                 <input
                                     type="number"
                                     id="value"
-                                    defaultValue={product.price}
+                                    name="price"
+                                    value={product.price}
                                     onChange={handleInput}
                                     className="text-input w-full py-[5px]"
                                     required

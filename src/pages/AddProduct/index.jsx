@@ -67,7 +67,6 @@ function Addroduct() {
     function handleFormsubmit(values) {
         const finalReq = { ...formdata, ...values };
         console.log(finalReq);
-
         fetch('http://localhost:5000/api/product', {
             method: 'POST',
             headers: {
