@@ -96,6 +96,9 @@ function Products() {
     function linkToDetail(id) {
         navigate('/product/detail/' + id);
     }
+    function linkToUpdate(id) {
+        navigate('/product/update/' + id);
+    }
 
     return (
         <div className="container">
@@ -314,12 +317,14 @@ function Products() {
                                 </td>
                                 <td className="flex w-[200px] items-center justify-center px-2 py-2">
                                     <div className="flex justify-end">
-                                        <button className="btn btn-sm btn-blue">
+                                        <Link to={'/product/update/'+product.id}
+                                        className="btn btn-sm btn-blue">
+                                            
                                             <span className="pr-1">
                                                 <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                             <span>Sửa</span>
-                                        </button>
+                                        </Link>
                                         <button
                                             className="btn btn-sm btn-red"
                                             onClick={() =>
