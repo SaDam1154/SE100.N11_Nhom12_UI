@@ -59,7 +59,7 @@ function DetailTree() {
                                 id="name"
                                 name="name"
                                 value={product.name}
-                                className="text-input form-control invalid select-none py-[5px]"
+                                className="text-input form-control select-none py-[5px]"
                             />
                         </div>
                         <div className="form-group flex flex-col">
@@ -74,7 +74,7 @@ function DetailTree() {
                                 id="name"
                                 name="name"
                                 value={product?.type?.name}
-                                className="text-input form-control invalid select-none py-[5px]"
+                                className="text-input form-control  select-none py-[5px]"
                             />
                         </div>
 
