@@ -66,10 +66,10 @@ function UpdateProduct() {
             body: JSON.stringify(
                 //product
                {
-                // "name": product.name, 
-                // "quantity": product.quantity,
-                // "image": product.image,
-                // "price": product.price,
+                "name": product.name, 
+                "quantity": product.quantity,
+                //"image": product.image,
+                "price": product.price,
                }
             ),
         });
@@ -88,22 +88,13 @@ function UpdateProduct() {
                         </div>
 
                         <div className="basis-1/2 flex-col items-center justify-items-center ">
-                            <div className="h-60 w-full rounded-xl border-2 border-dashed border-cyan-300 bg-gray-100">
-                                {img && ( 
-                                    <img
-                                        src={img.preview}
-                                        alt=""
-                                        className="h-full w-full rounded-xl object-contain py-[1.5px]"
-                                    />
-                                )} 
-                                {/* {img *&& (  <img
+                            <div className="h-60 w-full rounded-xl border-2 border-dashed border-cyan-300 bg-gray-100">                   
+                                <img
                                     src={product.image}
                                     alt=""
                                     className="h-full w-full rounded-xl object-contain py-[1.5px]"
                                  />
-                                 )} */}
                                    
-
                             </div>
                             <div className="btn btn-green btn-md relative inset-x-1/4 mt-4 h-10 w-1/2 text-center hover:bg-green-400">
                                     <p className="tezt w-full">Chọn ảnh</p>
