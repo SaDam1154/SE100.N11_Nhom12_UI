@@ -88,7 +88,7 @@ function Customers() {
                     </button>
 
                     <Link
-                        to="/"
+                        to="/customers/addcustomer"
                         className="btn btn-md bg-green-600 hover:bg-green-500"
                     >
                         <span className="pr-1">
@@ -131,13 +131,13 @@ function Customers() {
                                           .toLowerCase()
                                           .includes(search);
                         })
-                        ?.map((customer) => (
+                        ?.map((customer, index) => (
                             <tr
                                 key={customer._id}
                                 className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
                             >
                                 <td className="py-2 text-center">
-                                    {customer.id}
+                                    {index+1}
                                 </td>
                                 <td className="py-2 text-center">
                                     {customer._id}

@@ -5,6 +5,7 @@ import TypeProduct from '../../components/TypeProduct';
 import clsx from 'clsx';
 import { useEffect } from 'react';
 import TimeNow from '../../components/TimeNow';
+import PriceInput from '../../components/PriceInput';
 function UpdateProduct() {
 
     const posturl = 'http://localhost:5173/product';
@@ -33,7 +34,6 @@ function UpdateProduct() {
             img && URL.revokeObjectURL(img.preview);
         };
     }, [img]);
-
     const chooseFile = (e) => {
         const file = e.target.files[0];
 
@@ -42,26 +42,21 @@ function UpdateProduct() {
         fileReader.onloadend= function(e) {
             const imageFile = e.target.result;
         
-            //setProduct({...product, image: imageFile});
+            setProduct({...product, image: imageFile});
             formdata.image = imageFile;
-            console.log(formdata)
+            //console.log(formdata)
         }  
         file.preview = URL.createObjectURL(file);
         setImg(file);
     };
     const [formdata, setFormdata] = useState({
-    
-        price: '',
-        image: '',
     });
     const handleInput = (e) => {
         const { name, value } = e.target;
         setProduct({ ...product, [name]: value });      
     };
     const handleSubmitForm = (e) => { 
-        e.preventDefault();
-        product.image = formdata.image; 
-        //console.log(product.image)  
+        e.preventDefault(); 
         const link = 'http://localhost:5000/api/product'+'/'+ id;
         fetch(link, {
             method: 'PUT',
@@ -69,15 +64,16 @@ function UpdateProduct() {
                 'Content-type': 'application/json',
             },
             body: JSON.stringify(
-               // product
+                //product
                {
-                "name": product.name, 
-                "quantity": product.quantity,
-                "price": product.price,
+                // "name": product.name, 
+                // "quantity": product.quantity,
+                // "image": product.image,
+                // "price": product.price,
                }
             ),
         });
-        console.log(product.image)
+        console.log(product)
     };
     return (
         <div className="container">      
@@ -93,18 +89,20 @@ function UpdateProduct() {
 
                         <div className="basis-1/2 flex-col items-center justify-items-center ">
                             <div className="h-60 w-full rounded-xl border-2 border-dashed border-cyan-300 bg-gray-100">
-                                {/* {img && ( 
+                                {img && ( 
                                     <img
                                         src={img.preview}
                                         alt=""
                                         className="h-full w-full rounded-xl object-contain py-[1.5px]"
                                     />
-                                )}  */}
-                                    <img
-                                        src={product.image}
-                                        alt=""
-                                        className="h-full w-full rounded-xl object-contain py-[1.5px]"
-                                    />
+                                )} 
+                                {/* {img *&& (  <img
+                                    src={product.image}
+                                    alt=""
+                                    className="h-full w-full rounded-xl object-contain py-[1.5px]"
+                                 />
+                                 )} */}
+                                   
 
                             </div>
                             <div className="btn btn-green btn-md relative inset-x-1/4 mt-4 h-10 w-1/2 text-center hover:bg-green-400">
@@ -130,6 +128,7 @@ function UpdateProduct() {
                                 Loại cây
                             </label>
                             <TypeProduct
+                                //value = {product.type.name}
                                 onChange={(selectedProductType) => {
                                     setFormdata({
                                         ...formdata,
@@ -192,11 +191,12 @@ function UpdateProduct() {
                             </label>
                             <div className="relative">
                                 <input
-                                    type="number"
+                                    type="text"
                                     id="value"
                                     name="price"
                                     value={product.price}
                                     onChange={handleInput}
+                                    
                                     className="text-input w-full py-[5px]"
                                     required
                                 />
@@ -232,15 +232,15 @@ function UpdateProduct() {
                                     Giá tổng
                                 </label>
                                 <div className="relative">
-                                    <div
-                                        type="number"
-                                        placeholder="Nhập giá mỗi cây"
-                                        id="priceall"
-                                        name="priceall"
-                                        className="text-input form-control w-full py-[5px]"
-                                    >
-                                        {product.quantity*product.price}
-                                    </div>
+                                    <PriceInput
+                                        id="price_AddProduct_page"
+                                        // onChange={bacsicForm.handleChange}
+                                        // onBlur={bacsicForm.handleBlur}
+                                        value={product.quantity*product.price}
+                                        name="price"
+                                        placeholder="Nhập giá mỗi sản phẩm"
+                                    />
+                                        
                                     <label
                                         htmlFor="price"
                                         className="lb-value absolute top-0 right-0 select-none px-[6%] py-1 text-lg text-gray-600"

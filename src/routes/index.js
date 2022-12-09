@@ -18,6 +18,7 @@ import Login from '../pages/Login';
 import AddRule from '../pages/AddRule';
 import UpdateRule from '../pages/UpdateRule';
 import UpdateProduct from '../pages/UpdateProduct';
+import AddCustomer from '../pages/AddCustomer';
 
 // Public routes
 const publicRoutes = [
@@ -97,6 +98,13 @@ const publicRoutes = [
         component: DetailCustomer,
         props: {
             heading: 'Chi tiết khách hàng',
+        },
+    },
+    {
+        path: '/customers/addcustomer',
+        component: AddCustomer,
+        props: {
+            heading: 'Thêm khách hàng',
         },
     },
     ,

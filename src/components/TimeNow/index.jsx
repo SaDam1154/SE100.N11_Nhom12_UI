@@ -14,7 +14,7 @@ function TimeNow() {
     }, []);
     ///end time
     return (
-        <div>
+        <div className='text-xl py-[5px]'>
             &ensp;
             {moment(dt).format('HH:mm:ss DD/MM/YYYY ')}
         </div>
