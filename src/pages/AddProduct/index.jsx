@@ -211,41 +211,13 @@ function Addroduct() {
                                 <label className="mb-1 text-lg font-semibold" htmlFor="price">
                                     Giá
                                 </label>
-                                {/* <div className="relative">
-                                    <input
-                                        type="number"
-                                        id="price"
-                                        className="peer absolute opacity-0"
-                                        onChange={bacsicForm.handleChange}
-                                        onBlur={bacsicForm.handleBlur}
-                                        value={bacsicForm.values.price}
-                                        name="price"
-                                    />
-                                    <label
-                                        htmlFor="price"
-                                        className={clsx(
-                                            'text-input relative z-30 block w-full cursor-text py-[5px] peer-focus:border-blue-500',
-                                            {
-                                                invalid: bacsicForm.touched.price && bacsicForm.errors.price,
-                                                'text-gray-400': !bacsicForm.values.price,
-                                            }
-                                        )}
-                                    >
-                                        {bacsicForm.values.price ? (
-                                            <PriceFormat>{bacsicForm.values.price}</PriceFormat>
-                                        ) : (
-                                            'Nhập giá'
-                                        )}
-                                    </label>
-                                    <label className="lb-value absolute top-0 right-0 select-none px-[6%] py-1 text-lg text-gray-600">
-                                        VNĐ
-                                    </label>
-                                </div> */}
                                 <PriceInput
                                     id="price_AddProduct_page"
                                     onChange={bacsicForm.handleChange}
                                     onBlur={bacsicForm.handleBlur}
                                     value={bacsicForm.values.price}
+                                    error={bacsicForm.errors.price}
+                                    touched={bacsicForm.touched.price}
                                     name="price"
                                     placeholder="Nhập giá mỗi sản phẩm"
                                 />
