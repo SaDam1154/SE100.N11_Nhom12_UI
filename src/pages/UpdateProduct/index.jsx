@@ -191,7 +191,7 @@ function UpdateProduct() {
                             </label>
                             <div className="relative">
                                 <input
-                                    type="text"
+                                    type="number"
                                     id="value"
                                     name="price"
                                     value={product.price}
