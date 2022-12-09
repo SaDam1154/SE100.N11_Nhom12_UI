@@ -30,7 +30,7 @@
     }
 
     .text-input {
-        @apply rounded border border-slate-300 px-2 text-lg outline-none focus:border-blue-500;
+        @apply rounded border border-slate-300 px-2 text-lg outline-none hover:border-slate-500 focus:border-blue-500;
     }
 
     .text-input.invalid {
