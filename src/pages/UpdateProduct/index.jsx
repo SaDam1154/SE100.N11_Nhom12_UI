@@ -36,7 +36,6 @@ function UpdateProduct() {
     }, [img]);
     const chooseFile = (e) => {
         const file = e.target.files[0];
-
         var fileReader = new FileReader()
         fileReader.readAsDataURL(file)
         fileReader.onloadend= function(e) {
@@ -68,7 +67,7 @@ function UpdateProduct() {
                {
                 "name": product.name, 
                 "quantity": product.quantity,
-                //"image": product.image,
+                "image": product.image,
                 "price": product.price,
                }
             ),
@@ -218,22 +217,23 @@ function UpdateProduct() {
                             <div className="mt-3 flex basis-1/2 flex-col">
                                 <label
                                     className="mb-1 text-xl font-semibold"
-                                    htmlFor="price"
+                                    htmlFor="priceall"
                                 >
                                     Giá tổng
                                 </label>
                                 <div className="relative">
                                     <PriceInput
-                                        id="price_AddProduct_page"
+                                        id="priceall"
                                         // onChange={bacsicForm.handleChange}
                                         // onBlur={bacsicForm.handleBlur}
                                         value={product.quantity*product.price}
+                                        onChange={handleInput}
                                         name="price"
                                         placeholder="Nhập giá mỗi sản phẩm"
                                     />
                                         
                                     <label
-                                        htmlFor="price"
+                                        htmlFor="priceall"
                                         className="lb-value absolute top-0 right-0 select-none px-[6%] py-1 text-lg text-gray-600"
                                     >
                                         VNĐ

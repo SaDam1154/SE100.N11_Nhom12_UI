@@ -154,7 +154,7 @@ function Customers() {
                                 <td className="py-2 text-center">
                                     <div className="flex justify-end">
                                         <Link
-                                            to="/customers/detailcus"
+                                            to={"/customers/updatecustomer/"+customer.id}
                                             className="btn btn-sm bg-blue-500 hover:bg-blue-400"
                                         >
                                             <span className="pr-1">
