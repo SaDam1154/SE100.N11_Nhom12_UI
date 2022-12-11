@@ -95,7 +95,7 @@ const publicRoutes = [
         },
     },
     {
-        path: '/customers/detailcus',
+        path: '/customers/detail/:id',
         component: DetailCustomer,
         props: {
             heading: 'Chi tiết khách hàng',

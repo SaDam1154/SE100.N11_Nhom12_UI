@@ -24,7 +24,6 @@ function UpdateCustomer() {
     const [loading, setLoading] = useState(false);
     const showSuccessNoti = () => toast.info('Thêm thông tin khách hàng thành công  !');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
-
     const { id } = useParams();
     const [customer, setCustomer] = useState({});
     useEffect(() => {
@@ -53,7 +52,6 @@ function UpdateCustomer() {
         validationSchema,
         onSubmit: handleFormsubmit,
     });
-    console.log(bacsicForm)
     function handleFormsubmit(values) {
         console.log(values);
         setLoading(true);
@@ -171,10 +169,10 @@ function UpdateCustomer() {
                                 </div>
 
                                 <div className="form-group flex basis-1/2 flex-col ">
-                                <label className="mb-1 cursor-default text-lg font-semibold">
-                                    Ngày thêm
+                                <label htmlFor='date' className="mb-1 cursor-default text-lg font-semibold">
+                                    Ngày chỉnh sửa
                                 </label>
-                                <div className="rounded border border-slate-300 bg-slate-50 px-2 outline-none">
+                                <div className="text-input">
                                     <TimeNow />
                                 </div>
                             </div>

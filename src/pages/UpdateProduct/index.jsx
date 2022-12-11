@@ -67,7 +67,7 @@ function UpdateProduct() {
                {
                 "name": product.name, 
                 "quantity": product.quantity,
-                "image": product.image,
+                //"image": product.image,
                 "price": product.price,
                }
             ),

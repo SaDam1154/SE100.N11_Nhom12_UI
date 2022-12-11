@@ -34,6 +34,7 @@ function Customers() {
     // })
     const [search, setSearch] = useState('');
     const [customers, setCustomers] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch('http://localhost:5000/api/customer')
@@ -46,6 +47,9 @@ function Customers() {
                 }
             });
     }, []);
+    function LinkToDetail (id) {
+        navigate('/customers/detail/' + id);
+    }
     return (
         <div>
             <div className="flex space-x-4">
@@ -136,22 +140,33 @@ function Customers() {
                                 key={customer._id}
                                 className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
                             >
-                                <td className="py-2 text-center">
+                                <td className="py-2 text-center"
+                                    onClick={() => LinkToDetail(customer.id)}
+                                >
                                     {index+1}
                                 </td>
-                                <td className="py-2 text-center">
+                                <td className="py-2 text-center"
+                                    onClick={() => LinkToDetail(customer.id)}
+                                >
                                     {customer._id}
                                 </td>
-                                <td className="py-2 text-center">
+                                <td className="py-2 text-center"
+                                    onClick={() => LinkToDetail(customer.id)}
+                                >
                                     {customer.name}
                                 </td>
-                                <td className="py-2 text-center">
+                                <td className="py-2 text-center"
+                                    onClick={() => LinkToDetail(customer.id)}
+                                >
                                     {customer.phone}
                                 </td>
-                                <td className="py-2 text-center">
+                                <td className="py-2 text-center"
+                                    onClick={() => LinkToDetail(customer.id)}
+                                >
                                     {customer.address}
                                 </td>
-                                <td className="py-2 text-center">
+                                <td className="py-2 text-center"
+                                >
                                     <div className="flex justify-end">
                                         <Link
                                             to={"/customers/updatecustomer/"+customer.id}
