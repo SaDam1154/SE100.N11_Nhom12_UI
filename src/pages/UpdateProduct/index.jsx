@@ -10,6 +10,7 @@ import TimeNow from '../../components/TimeNow';
 import { useParams } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import PriceInput from '../../components/PriceInput';
+import PriceFormat from '../../components/PriceFormat';
 
 const validationSchema = Yup.object({
     name: Yup.string().required('Trường này bắt buộc'),
@@ -108,6 +109,8 @@ function UpdateProduct() {
                 showErorrNoti();
             });
     }
+
+    const calc = bacsicForm.values.price * bacsicForm.values.quantity
 
     return (
         <div>
@@ -274,7 +277,7 @@ function UpdateProduct() {
                                 </label>
                                 <div className="relative">
                                     <div className='text-input py-[5px]'>
-                                        {bacsicForm.values.price * bacsicForm.values.quantity}
+                                        <PriceFormat>{calc}</PriceFormat>
                                     </div>
                                         
                                     <label
