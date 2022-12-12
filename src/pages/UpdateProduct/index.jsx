@@ -118,7 +118,7 @@ function UpdateProduct() {
                                 Loại cây
                             </label>
                             <TypeProduct
-                                //value = {product.type.name}
+                                //value={product?.type?.name}
                                 onChange={(selectedProductType) => {
                                     setFormdata({
                                         ...formdata,

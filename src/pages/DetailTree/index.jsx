@@ -5,7 +5,7 @@ import TypeProduct from '../../components/TypeProduct';
 import clsx from 'clsx';
 import { useEffect } from 'react';
 
-//import moment from 'moment';
+import moment from 'moment';
 import TimeNow from '../../components/TimeNow';
 
 function DetailTree() {
@@ -54,13 +54,12 @@ function DetailTree() {
                             >
                                 Tên cây{' '}
                             </label>
-                            <input
-                                type="text"
+                            <div
                                 id="name"
-                                name="name"
-                                value={product.name}
                                 className="text-input form-control select-none py-[5px]"
-                            />
+                            >
+                                {product.name}
+                            </div>
                         </div>
                         <div className="form-group flex flex-col">
                             <label
@@ -69,13 +68,12 @@ function DetailTree() {
                             >
                                 Loại cây
                             </label>
-                            <input
-                                type="text"
+                            <div
                                 id="name"
-                                name="name"
-                                value={product?.type?.name}
                                 className="text-input form-control  select-none py-[5px]"
-                            />
+                            >
+                                {product?.type?.name}
+                            </div>
                         </div>
 
                         <div className="form-group flex flex-col">
@@ -85,15 +83,12 @@ function DetailTree() {
                             >
                                 Số lượng
                             </label>
-                            <input
-                                type="number"
-                                placeholder="Nhập số lượng"
+                            <div
                                 id="quantity"
-                                name="quantity"
-                                value={product.quantity}
                                 className="text-input form-control py-[5px]"
-                                required
-                            />
+                            >
+                                {product.quantity}
+                            </div>
                         </div>
                     </div>
 
@@ -124,11 +119,11 @@ function DetailTree() {
                         >
                             Ngày nhập cây
                         </label>
-                        {/* <div>
+                        <div className='text-xl text-input py-[5px]'>
                             {moment(product.createdAt).format(
                                 'HH:mm:ss DD/MM/YYYY '
                             )}
-                        </div> */}
+                        </div>
                     </div>
 
                     <div className="ml-4 mt-3 flex basis-1/2 flex-col">
@@ -139,15 +134,12 @@ function DetailTree() {
                             Giá
                         </label>
                         <div className="relative">
-                            <input
-                                type="number"
-                                placeholder="Nhập giá mỗi cây"
-                                id="price"
-                                name="price"
-                                value={product.price}
+                            <div
+                                id="price"                  
                                 className="text-input form-control w-full py-[5px]"
-                                required
-                            />
+                            >
+                                {product.price}
+                            </div>
                             <label
                                 htmlFor="price"
                                 className="lb-value absolute top-0 right-0 select-none px-[6%] py-1 text-lg text-gray-600"
@@ -158,11 +150,11 @@ function DetailTree() {
                     </div>
                 </div>
 
-                <div className="ml-4px float-right mt-8 flex  flex-row pl-4">
-                    <div className="float-right mr-[3%] flex basis-1 flex-col pl-[5%]">
+                <div className="float-right mt-8 flex  flex-row">
+                    <div className="float-right flex basis-1 flex-col">
                         <Link
                             to={'/product'}
-                            className="btn btn-md w-full bg-blue-400"
+                            className="btn btn-blue btn-md w-ful"
                         >
                             <span className="pr-2">
                                 <i className="fa-solid fa-circle-xmark"></i>
