@@ -25,6 +25,7 @@ function UpdateProduct() {
     const showSuccessNoti = () => toast.info('Chỉnh sửa phẩm thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
     const { id } = useParams();
+    const navigate = useNavigate()
     useEffect(() => {
         callApi();
     }, []);
@@ -83,7 +84,11 @@ function UpdateProduct() {
         file.preview = URL.createObjectURL(file);
         setImg(file);
     };
-
+    const currentPromise = new Promise((resolve, reject) => {
+        setTimeout (() => {
+            resolve('/product')
+        },5000)
+    })
     function handleFormsubmit(values) {
         setLoading(true);
         console.log(values)
@@ -99,6 +104,10 @@ function UpdateProduct() {
                 if (resJson.success) {
                     setLoading(false);
                     showSuccessNoti();
+                    currentPromise.then((data) => {
+                        navigate(data)
+                    })
+                    //navigate('/product')
                 } else {
                     setLoading(false);
                     showErorrNoti();

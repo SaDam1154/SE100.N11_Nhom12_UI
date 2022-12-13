@@ -10,6 +10,7 @@ import TimeNow from '../../components/TimeNow';
 
 import 'react-toastify/dist/ReactToastify.css';
 import PriceInput from '../../components/PriceInput';
+import Condition from 'yup/lib/Condition';
 
 const validationSchema = Yup.object({
     name: Yup.string().required('Trường này bắt buộc'),
@@ -62,9 +63,14 @@ function Addroduct() {
         file.preview = URL.createObjectURL(file);
         setImg(file);
     };
-
+    const navigate = useNavigate();
+    const currentPromise = new Promise((resolve, reject) => {
+        setTimeout (() => {
+            resolve('/product')
+        },5000)
+    })
     function handleFormsubmit(values) {
-        setLoading(true);
+        setLoading(true);  
         fetch('http://localhost:5000/api/product', {
             method: 'POST',
             headers: {
@@ -77,6 +83,10 @@ function Addroduct() {
                 if (resJson.success) {
                     setLoading(false);
                     showSuccessNoti();
+                    currentPromise.then((data) => {
+                        navigate(data)
+                    })
+                    // navigate('/product');
                 } else {
                     setLoading(false);
                     showErorrNoti();

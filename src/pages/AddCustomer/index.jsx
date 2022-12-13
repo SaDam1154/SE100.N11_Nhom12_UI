@@ -20,7 +20,7 @@ const validationSchema = Yup.object({
 
 function AddCustomer() {
     const [loading, setLoading] = useState(false);
-    const showSuccessNoti = () => toast.info('Thêm thông tin khách hàng thành công  !');
+    const showSuccessNoti = () => toast.info('Thêm thông tin khách hàng thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
     const bacsicForm = useFormik({
@@ -33,6 +33,12 @@ function AddCustomer() {
         onSubmit: handleFormsubmit,
     });
 
+    const navigate = useNavigate();
+    const currentPromise = new Promise((resolve, reject) => {
+        setTimeout (() => {
+            resolve('/customers')
+        },5000)
+    })
     function handleFormsubmit(values) {
         console.log(values);
         setLoading(true);
@@ -48,6 +54,9 @@ function AddCustomer() {
                 if (resJson.success) {
                     setLoading(false);
                     showSuccessNoti();
+                    currentPromise.then((data) => {
+                        navigate(data)
+                    })
                 } else {
                     setLoading(false);
                     showErorrNoti();
