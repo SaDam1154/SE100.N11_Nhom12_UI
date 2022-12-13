@@ -263,7 +263,7 @@ function UpdateCustomer() {
                                     <span className="pr-2">
                                         <i className="fa-solid fa-circle-plus"></i>
                                     </span>
-                                    <span>Thêm</span>
+                                    <span>Lưu</span>
                                 </button>
                             </div>
                         </div>
