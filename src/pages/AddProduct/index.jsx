@@ -64,11 +64,6 @@ function Addroduct() {
         setImg(file);
     };
     const navigate = useNavigate();
-    const currentPromise = new Promise((resolve, reject) => {
-        setTimeout (() => {
-            resolve('/product')
-        },5000)
-    })
     function handleFormsubmit(values) {
         setLoading(true);  
         fetch('http://localhost:5000/api/product', {
@@ -83,9 +78,9 @@ function Addroduct() {
                 if (resJson.success) {
                     setLoading(false);
                     showSuccessNoti();
-                    currentPromise.then((data) => {
-                        navigate(data)
-                    })
+                    setTimeout(() => {
+                        navigate('/product')
+                    }, 4000);
                     // navigate('/product');
                 } else {
                     setLoading(false);

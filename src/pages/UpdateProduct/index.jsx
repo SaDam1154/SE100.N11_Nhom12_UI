@@ -84,11 +84,11 @@ function UpdateProduct() {
         file.preview = URL.createObjectURL(file);
         setImg(file);
     };
-    const currentPromise = new Promise((resolve, reject) => {
-        setTimeout (() => {
-            resolve('/product')
-        },5000)
-    })
+    // const currentPromise = new Promise((resolve, reject) => {
+    //     setTimeout (() => {
+    //         resolve('/product')
+    //     },5000)
+    // })
     function handleFormsubmit(values) {
         setLoading(true);
         console.log(values)
@@ -104,9 +104,9 @@ function UpdateProduct() {
                 if (resJson.success) {
                     setLoading(false);
                     showSuccessNoti();
-                    currentPromise.then((data) => {
-                        navigate(data)
-                    })
+                    setTimeout(() => {
+                        navigate('/product')
+                    }, 4000);
                     //navigate('/product')
                 } else {
                     setLoading(false);

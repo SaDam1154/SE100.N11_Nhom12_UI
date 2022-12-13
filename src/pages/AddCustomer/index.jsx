@@ -34,11 +34,11 @@ function AddCustomer() {
     });
 
     const navigate = useNavigate();
-    const currentPromise = new Promise((resolve, reject) => {
-        setTimeout (() => {
-            resolve('/customers')
-        },5000)
-    })
+    // const currentPromise = new Promise((resolve, reject) => {
+    //     setTimeout (() => {
+    //         resolve('/customers')
+    //     },5000)
+    // })
     function handleFormsubmit(values) {
         console.log(values);
         setLoading(true);
@@ -54,9 +54,9 @@ function AddCustomer() {
                 if (resJson.success) {
                     setLoading(false);
                     showSuccessNoti();
-                    currentPromise.then((data) => {
-                        navigate(data)
-                    })
+                    setTimeout(() => {
+                        navigate('/customers')
+                    }, 4000);
                 } else {
                     setLoading(false);
                     showErorrNoti();
