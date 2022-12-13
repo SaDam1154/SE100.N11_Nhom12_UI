@@ -41,6 +41,10 @@
         @apply my-0 mx-auto max-w-[1200px];
     }
 
+    .text-input.disabled {
+        @apply !border-slate-300 !bg-slate-100;
+    }
+
     label {
         cursor: pointer;
     }

@@ -48,55 +48,34 @@ function DetailTree() {
                 <div className="mt-4 flex flex-row">
                     <div className="mr-8 mt-3 flex w-1/2 flex-col space-y-4 text-lg">
                         <div className="form-group flex flex-col ">
-                            <label
-                                className="mb-1 font-semibold"
-                                htmlFor="name"
-                            >
+                            <label className="mb-1 font-semibold" htmlFor="name">
                                 Tên cây{' '}
                             </label>
-                            <div
-                                id="name"
-                                className="text-input form-control select-none py-[5px]"
-                            >
+                            <div id="name" className="text-input disabled select-none py-[5px]">
                                 {product.name}
                             </div>
                         </div>
                         <div className="form-group flex flex-col">
-                            <label
-                                className="mb-1 font-semibold"
-                                htmlFor="type"
-                            >
+                            <label className="mb-1 font-semibold" htmlFor="type">
                                 Loại cây
                             </label>
-                            <div
-                                id="name"
-                                className="text-input form-control  select-none py-[5px]"
-                            >
+                            <div id="name" className="text-input disabled  select-none py-[5px]">
                                 {product?.type?.name}
                             </div>
                         </div>
 
                         <div className="form-group flex flex-col">
-                            <label
-                                className="mb-1 font-semibold"
-                                htmlFor="quantity"
-                            >
+                            <label className="mb-1 font-semibold" htmlFor="quantity">
                                 Số lượng
                             </label>
-                            <div
-                                id="quantity"
-                                className="text-input form-control py-[5px]"
-                            >
+                            <div id="quantity" className="text-input disabled py-[5px]">
                                 {product.quantity}
                             </div>
                         </div>
                     </div>
 
                     <div className="form-group w-1/2 flex-col items-center justify-items-center ">
-                        <label
-                            className="mb-1 font-semibold"
-                            htmlFor="quantity"
-                        >
+                        <label className="mb-1 font-semibold" htmlFor="quantity">
                             Hình ảnh
                         </label>
                         <div className="h-60 w-full rounded-xl border-2 border-dashed border-cyan-300 bg-gray-100">
@@ -113,31 +92,20 @@ function DetailTree() {
 
                 <div className="mt-4 flex flex-row">
                     <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col">
-                        <label
-                            className="mb-1 text-xl font-semibold"
-                            htmlFor="date"
-                        >
+                        <label className="mb-1 text-xl font-semibold" htmlFor="date">
                             Ngày nhập cây
                         </label>
-                        <div className='text-xl text-input py-[5px]'>
-                            {moment(product.createdAt).format(
-                                'HH:mm:ss DD/MM/YYYY '
-                            )}
+                        <div className="text-input py-[5px] text-xl">
+                            {moment(product.createdAt).format('HH:mm:ss DD/MM/YYYY ')}
                         </div>
                     </div>
 
                     <div className="ml-4 mt-3 flex basis-1/2 flex-col">
-                        <label
-                            className="mb-1 text-xl font-semibold"
-                            htmlFor="price"
-                        >
+                        <label className="mb-1 text-xl font-semibold" htmlFor="price">
                             Giá
                         </label>
                         <div className="relative">
-                            <div
-                                id="price"                  
-                                className="text-input form-control w-full py-[5px]"
-                            >
+                            <div id="price" className="text-input disabled w-full py-[5px]">
                                 {product.price}
                             </div>
                             <label
@@ -152,10 +120,7 @@ function DetailTree() {
 
                 <div className="float-right mt-8 flex  flex-row">
                     <div className="float-right flex basis-1 flex-col">
-                        <Link
-                            to={'/product'}
-                            className="btn btn-blue btn-md w-ful"
-                        >
+                        <Link to={'/product'} className="btn btn-blue btn-md w-ful">
                             <span className="pr-2">
                                 <i className="fa-solid fa-circle-xmark"></i>
                             </span>
