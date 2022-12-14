@@ -38,13 +38,14 @@ function removeVietnameseTones(stra) {
     str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, ' ');
     return str;
 }
+
 const validationSchema = Yup.object({
     name: Yup.string().required('Trường này bắt buộc'),
     price: Yup.number().required('Trường này bắt buộc').min(1, 'Giá phải lớn hơn 0'),
-    quantity: Yup.number().required('Trường này bắt buộc').min(1, 'Số lượng phải lớn hơn 0'),
+    quantityStart: Yup.number().required('Trường này bắt buộc').min(1, 'Số lượng phải lớn hơn 0'),
+    quantityEnd: Yup.number().required('Trường này bắt buộc').min(0, 'Số lượng phải lớn hơn '),
     type: Yup.string().required('Trường này bắt buộc'),
 });
-
 function Products() {
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
@@ -64,6 +65,7 @@ function Products() {
         validationSchema,
         onSubmit: handleFormsubmit,
     });
+
     function deleteProduct(id) {
         fetch('http://localhost:5000/api/product/' + id, {
             method: 'DELETE',
@@ -222,7 +224,7 @@ function Products() {
                             </div>
                             <div className="mt-2 ">
                                 <div>
-                                    <label className=" font-semibold" htmlFor="quantity">
+                                    <label className=" font-semibold" htmlFor="quantityStart">
                                         Khoảng giá
                                     </label>
                                     <div className="mt-1 ml-1 flex ">
@@ -273,46 +275,48 @@ function Products() {
                                             type="number"
                                             id="quantityStart"
                                             className={clsx('text-input w-full py-[5px]', {
-                                                invalid: bacsicForm.touched.quantity && bacsicForm.errors.quantity,
+                                                invalid:
+                                                    bacsicForm.touched.quantityStart && bacsicForm.errors.quantityStart,
                                             })}
                                             onChange={bacsicForm.handleChange}
                                             onBlur={bacsicForm.handleBlur}
                                             value={bacsicForm.values.quantityStart}
-                                            name="quantity"
+                                            name="quantityStart"
                                             placeholder="từ"
                                         />
                                         <span
                                             className={clsx('text-sm text-red-500 opacity-0', {
                                                 'opacity-100':
-                                                    bacsicForm.touched.quantity && bacsicForm.errors.quantity,
+                                                    bacsicForm.touched.quantityStart && bacsicForm.errors.quantityStart,
                                             })}
                                         >
-                                            {bacsicForm.errors.quantity || 'No message'}
+                                            {bacsicForm.errors.quantityStart || 'No message'}
                                         </span>
                                     </div>
                                     <div className="flex basis-1/2 flex-col px-1">
-                                        <label className=" text-sm font-thin" htmlFor="priceStart">
+                                        <label className=" text-sm font-thin" htmlFor="quantityEnd">
                                             đến
                                         </label>
                                         <input
                                             type="number"
                                             id="quantityEnd"
                                             className={clsx('text-input w-full py-[5px]', {
-                                                invalid: bacsicForm.touched.quantity && bacsicForm.errors.quantity,
+                                                invalid:
+                                                    bacsicForm.touched.quantityEnd && bacsicForm.errors.quantityEnd,
                                             })}
                                             onChange={bacsicForm.handleChange}
                                             onBlur={bacsicForm.handleBlur}
                                             value={bacsicForm.values.quantityEnd}
-                                            name="quantity"
+                                            name="quantityEnd"
                                             placeholder="đến"
                                         />
                                         <span
                                             className={clsx('text-sm text-red-500 opacity-0', {
                                                 'opacity-100':
-                                                    bacsicForm.touched.quantity && bacsicForm.errors.quantity,
+                                                    bacsicForm.touched.quantityEnd && bacsicForm.errors.quantityEnd,
                                             })}
                                         >
-                                            {bacsicForm.errors.quantity || 'No message'}
+                                            {bacsicForm.errors.quantityEnd || 'No message'}
                                         </span>
                                     </div>
                                 </div>
