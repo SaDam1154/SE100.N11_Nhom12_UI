@@ -14,7 +14,6 @@ function ImageInput({ formik, forikField }) {
         };
     };
 
-    console.log('rerender');
     useEffect(() => {
         setImg(formik.values[forikField]);
     }, [formik.values[forikField]]);
