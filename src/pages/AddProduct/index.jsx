@@ -11,6 +11,7 @@ import TimeNow from '../../components/TimeNow';
 import 'react-toastify/dist/ReactToastify.css';
 import PriceInput from '../../components/PriceInput';
 import Condition from 'yup/lib/Condition';
+import ProductTypeInput from '../../components/ProductTypeInput';
 
 const validationSchema = Yup.object({
     name: Yup.string().required('Trường này bắt buộc'),
@@ -44,13 +45,6 @@ function Addroduct() {
         onSubmit: handleFormsubmit,
     });
 
-    function handleChangeProductType(productType) {
-        bacsicForm.setFieldValue('type', productType._id || '');
-    }
-    function handleBlurProductType() {
-        bacsicForm.setFieldTouched('type', true);
-    }
-
     const chooseFile = (e) => {
         const file = e.target.files[0];
 
@@ -65,7 +59,7 @@ function Addroduct() {
     };
     const navigate = useNavigate();
     function handleFormsubmit(values) {
-        setLoading(true);  
+        setLoading(true);
         fetch('http://localhost:5000/api/product', {
             method: 'POST',
             headers: {
@@ -79,7 +73,7 @@ function Addroduct() {
                     setLoading(false);
                     showSuccessNoti();
                     setTimeout(() => {
-                        navigate('/product')
+                        navigate('/product');
                     }, 4000);
                     // navigate('/product');
                 } else {
@@ -125,21 +119,21 @@ function Addroduct() {
                                         {bacsicForm.errors.name || 'No message'}
                                     </span>
                                 </div>
+
                                 <div className="form-group flex flex-col">
                                     <label className="mb-1 font-semibold" htmlFor="type">
                                         Loại cây
                                     </label>
-                                    <div
-                                        onMouseDown={(e) => e.preventDefault()}
-                                        tabIndex="1"
-                                        onBlur={handleBlurProductType}
-                                    >
-                                        <TypeProduct
-                                            key="fadsfas"
-                                            onChange={handleChangeProductType}
-                                            invalid={bacsicForm.touched.type && bacsicForm.errors.type}
-                                        />
-                                    </div>
+                                    <ProductTypeInput
+                                        id="type"
+                                        className={clsx('text-input cursor-pointer py-[5px]', {
+                                            invalid: bacsicForm.touched.type && bacsicForm.errors.type,
+                                        })}
+                                        onChange={bacsicForm.handleChange}
+                                        onBlur={bacsicForm.handleBlur}
+                                        value={bacsicForm.values.type}
+                                        name="type"
+                                    />
 
                                     <span
                                         className={clsx('text-sm text-red-500 opacity-0', {
