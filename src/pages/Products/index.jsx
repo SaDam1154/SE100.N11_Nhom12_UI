@@ -1,8 +1,11 @@
 import { Fragment, useState } from 'react';
+import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { Listbox, Popover } from '@headlessui/react';
 import clsx from 'clsx';
 import { useEffect } from 'react';
+import { Formik, useFormik } from 'formik';
+import PriceInput from '../../components/PriceInput';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -32,12 +35,16 @@ function removeVietnameseTones(stra) {
     str = str.trim();
     // Remove punctuations
     // Bỏ dấu câu, kí tự đặc biệt
-    str = str.replace(
-        /!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g,
-        ' '
-    );
+    str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, ' ');
     return str;
 }
+const validationSchema = Yup.object({
+    name: Yup.string().required('Trường này bắt buộc'),
+    price: Yup.number().required('Trường này bắt buộc').min(1, 'Giá phải lớn hơn 0'),
+    quantity: Yup.number().required('Trường này bắt buộc').min(1, 'Số lượng phải lớn hơn 0'),
+    type: Yup.string().required('Trường này bắt buộc'),
+});
+
 function Products() {
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
@@ -46,6 +53,17 @@ function Products() {
     const navigate = useNavigate();
     const showDeleteNoti = () => toast.info('Xóa sản phẩm thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
+    const bacsicForm = useFormik({
+        initialValues: {
+            name: '',
+            priceStart: '',
+            priceEnd: '',
+            quantityStart: '',
+            quantityEnd: '',
+        },
+        validationSchema,
+        onSubmit: handleFormsubmit,
+    });
     function deleteProduct(id) {
         fetch('http://localhost:5000/api/product/' + id, {
             method: 'DELETE',
@@ -99,20 +117,42 @@ function Products() {
     function linkToUpdate(id) {
         navigate('/product/update/' + id);
     }
+    function handleFormsubmit(values) {
+        setLoading(true);
+        fetch('http://localhost:5000/api/product', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values),
+        })
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success) {
+                    setLoading(false);
+                    showSuccessNoti();
+                    setTimeout(() => {
+                        navigate('/product');
+                    }, 4000);
+                    // navigate('/product');
+                } else {
+                    setLoading(false);
+                    showErorrNoti();
+                }
+            })
+            .catch(() => {
+                setLoading(false);
+                showErorrNoti();
+            });
+    }
 
     return (
         <div className="container">
             <div className="flex space-x-4">
                 {/* tite + reload btn */}
                 <div className="flex">
-                    <label className="text-2xl font-bold text-slate-800">
-                        Danh sách cây
-                    </label>
-                    <button
-                        type="button"
-                        className="ml-3 text-gray-800 hover:underline"
-                        onClick={() => callApi()}
-                    >
+                    <label className="text-2xl font-bold text-slate-800">Danh sách cây</label>
+                    <button type="button" className="ml-3 text-gray-800 hover:underline" onClick={() => callApi()}>
                         <span className="font-sm pr-1">
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </span>
@@ -143,18 +183,13 @@ function Products() {
                             as="div"
                             className="absolute right-0 z-10 min-w-[280px] max-w-[320px] rounded border bg-white px-4 py-3 shadow"
                         >
-                            <h2 className="mb-2 text-lg font-semibold">
-                                Lọc sản phẩm
-                            </h2>
+                            <h2 className="mb-2 text-lg font-semibold">Lọc sản phẩm</h2>
 
                             <hr />
                             <div className="mt-3 space-x-2">
                                 <div>
-                                    <Listbox
-                                        value={selectedProductTypes}
-                                        onChange={setSelectedProductTypes}
-                                        multiple
-                                    >
+                                    <label className="mb-1 font-semibold">Loại cây</label>
+                                    <Listbox value={selectedProductTypes} onChange={setSelectedProductTypes} multiple>
                                         <Listbox.Button
                                             as="div"
                                             className="text-input flex min-h-[36px] cursor-pointer items-center"
@@ -172,17 +207,11 @@ function Products() {
                                                     {({ selected }) => (
                                                         <div className="flex items-center">
                                                             <i
-                                                                className={clsx(
-                                                                    'fa-solid fa-check pr-2',
-                                                                    {
-                                                                        'opacity-0':
-                                                                            !selected,
-                                                                    }
-                                                                )}
+                                                                className={clsx('fa-solid fa-check pr-2', {
+                                                                    'opacity-0': !selected,
+                                                                })}
                                                             ></i>
-                                                            <span>
-                                                                {type.name}
-                                                            </span>
+                                                            <span>{type.name}</span>
                                                         </div>
                                                     )}
                                                 </Listbox.Option>
@@ -190,6 +219,117 @@ function Products() {
                                         </Listbox.Options>
                                     </Listbox>
                                 </div>
+                            </div>
+                            <div className="mt-2 ">
+                                <div>
+                                    <label className=" font-semibold" htmlFor="quantity">
+                                        Khoảng giá
+                                    </label>
+                                    <div className="mt-1 ml-1 flex ">
+                                        <div className="flex basis-1/2 flex-col px-1">
+                                            <label className=" text-sm font-thin" htmlFor="priceStart">
+                                                từ
+                                            </label>
+                                            <PriceInput
+                                                id="priceStart"
+                                                onChange={bacsicForm.handleChange}
+                                                onBlur={bacsicForm.handleBlur}
+                                                value={bacsicForm.values.priceStart}
+                                                error={bacsicForm.errors.priceStart}
+                                                touched={bacsicForm.touched.priceStart}
+                                                name="priceStart"
+                                                placeholder="Từ"
+                                            />
+                                        </div>
+
+                                        <div className="flex basis-1/2 flex-col px-1">
+                                            <label className=" text-sm font-thin" htmlFor="priceEnd">
+                                                đến
+                                            </label>
+                                            <PriceInput
+                                                id="priceEnd"
+                                                onChange={bacsicForm.handleChange}
+                                                onBlur={bacsicForm.handleBlur}
+                                                value={bacsicForm.values.priceEnd}
+                                                error={bacsicForm.errors.priceEnd}
+                                                touched={bacsicForm.touched.priceEnd}
+                                                name="priceEnd"
+                                                placeholder="Đến"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="mt-3 ">
+                                <label className=" font-semibold" htmlFor="quantity">
+                                    Số lượng
+                                </label>
+                                <div className="mt-1 ml-1 flex ">
+                                    <div className="flex basis-1/2 flex-col px-1">
+                                        <label className=" text-sm font-thin" htmlFor="priceStart">
+                                            từ
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="quantityStart"
+                                            className={clsx('text-input w-full py-[5px]', {
+                                                invalid: bacsicForm.touched.quantity && bacsicForm.errors.quantity,
+                                            })}
+                                            onChange={bacsicForm.handleChange}
+                                            onBlur={bacsicForm.handleBlur}
+                                            value={bacsicForm.values.quantityStart}
+                                            name="quantity"
+                                            placeholder="từ"
+                                        />
+                                        <span
+                                            className={clsx('text-sm text-red-500 opacity-0', {
+                                                'opacity-100':
+                                                    bacsicForm.touched.quantity && bacsicForm.errors.quantity,
+                                            })}
+                                        >
+                                            {bacsicForm.errors.quantity || 'No message'}
+                                        </span>
+                                    </div>
+                                    <div className="flex basis-1/2 flex-col px-1">
+                                        <label className=" text-sm font-thin" htmlFor="priceStart">
+                                            đến
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="quantityEnd"
+                                            className={clsx('text-input w-full py-[5px]', {
+                                                invalid: bacsicForm.touched.quantity && bacsicForm.errors.quantity,
+                                            })}
+                                            onChange={bacsicForm.handleChange}
+                                            onBlur={bacsicForm.handleBlur}
+                                            value={bacsicForm.values.quantityEnd}
+                                            name="quantity"
+                                            placeholder="đến"
+                                        />
+                                        <span
+                                            className={clsx('text-sm text-red-500 opacity-0', {
+                                                'opacity-100':
+                                                    bacsicForm.touched.quantity && bacsicForm.errors.quantity,
+                                            })}
+                                        >
+                                            {bacsicForm.errors.quantity || 'No message'}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex">
+                                <Link to={'/product'} className="btn btn-red min-w-[100px]   basis-1/2 py-2">
+                                    <span className="pr-2">
+                                        <i className="fa-solid fa-circle-xmark"></i>
+                                    </span>
+                                    <span>Hủy </span>
+                                </Link>
+                                <button type="submit" className="btn btn-blue   min-w-[100px]  basis-1/2  py-2">
+                                    <span className="pr-2">
+                                        <i className="fa-solid fa-circle-plus"></i>
+                                    </span>
+                                    <span>Lọc</span>
+                                </button>
                             </div>
                         </Popover.Panel>
                     </Popover>
@@ -212,51 +352,28 @@ function Products() {
             <table className="mt-8 w-full">
                 <thead className="w-full rounded bg-blue-500 text-white">
                     <tr className="flex h-11 w-full">
-                        <th className="flex w-14 items-center justify-end px-2">
-                            STT
-                        </th>
-                        <th className="flex w-24 items-center justify-center px-2">
-                            Ảnh
-                        </th>
-                        <th className="flex flex-[2] items-center justify-start px-2">
-                            Tên cây
-                        </th>
-                        <th className="flex flex-[1] items-center justify-start px-2">
-                            Loại cây
-                        </th>
-                        <th className="flex w-28 items-center justify-end px-2">
-                            Giá (VND)
-                        </th>
-                        <th className="flex w-24 items-center justify-end px-2">
-                            Số lượng
-                        </th>
+                        <th className="flex w-16 items-center justify-end px-2">Mã số</th>
+                        <th className="flex w-24 items-center justify-center px-2">Ảnh</th>
+                        <th className="flex flex-[2] items-center justify-start px-2">Tên cây</th>
+                        <th className="flex flex-[1] items-center justify-start px-2">Loại cây</th>
+                        <th className="flex w-28 items-center justify-end px-2">Giá (VND)</th>
+                        <th className="flex w-24 items-center justify-end px-2">Số lượng</th>
                         <th className="flex w-[200px] items-center justify-center px-2"></th>
                     </tr>
                 </thead>
 
-                <tbody
-                    className="flex h-[75vh] w-full flex-col"
-                    style={{ overflowY: 'overlay' }}
-                >
+                <tbody className="flex h-[75vh] w-full flex-col" style={{ overflowY: 'overlay' }}>
                     {products
                         .filter((product) => {
                             if (search === '') {
                                 return product;
                             } else {
                                 if (
-                                    removeVietnameseTones(
-                                        product.name.toLowerCase()
-                                    ).includes(
-                                        removeVietnameseTones(
-                                            search.toLowerCase()
-                                        )
+                                    removeVietnameseTones(product.name.toLowerCase()).includes(
+                                        removeVietnameseTones(search.toLowerCase())
                                     ) ||
-                                    removeVietnameseTones(
-                                        product?.type.name.toLowerCase()
-                                    ).includes(
-                                        removeVietnameseTones(
-                                            search.toLowerCase()
-                                        )
+                                    removeVietnameseTones(product?.type.name.toLowerCase()).includes(
+                                        removeVietnameseTones(search.toLowerCase())
                                     )
                                 ) {
                                     var id = product.id.toString();
@@ -270,19 +387,17 @@ function Products() {
                                 className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
                             >
                                 <td
-                                    className="flex w-14 items-center justify-end px-2 py-2"
+                                    className="flex w-16 items-center justify-end px-2 py-2"
                                     onClick={() => linkToDetail(product.id)}
                                 >
-                                    {index + 1}
+                                    {product.id}
                                 </td>
                                 <td
                                     className="flex w-24 items-center justify-center px-2 py-2"
                                     onClick={() => linkToDetail(product.id)}
                                 >
                                     <img
-                                        src={
-                                            product.image || '/placeholder.png'
-                                        }
+                                        src={product.image || '/placeholder.png'}
                                         className="h-10 w-10 rounded-full object-cover object-center"
                                     />
                                 </td>
@@ -302,12 +417,7 @@ function Products() {
                                     className="flex w-28 items-center justify-end px-2 py-2"
                                     onClick={() => linkToDetail(product.id)}
                                 >
-                                    {product.price
-                                        .toFixed(0)
-                                        .replace(
-                                            /(\d)(?=(\d{3})+(?!\d))/g,
-                                            '$1,'
-                                        )}
+                                    {product.price.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
                                 </td>
                                 <td
                                     className="flex w-24 items-center justify-end px-2 py-2"
@@ -317,9 +427,7 @@ function Products() {
                                 </td>
                                 <td className="flex w-[200px] items-center justify-center px-2 py-2">
                                     <div className="flex justify-end">
-                                        <Link to={'/product/update/'+product.id}
-                                        className="btn btn-sm btn-blue">
-                                            
+                                        <Link to={'/product/update/' + product.id} className="btn btn-sm btn-blue">
                                             <span className="pr-1">
                                                 <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
@@ -327,9 +435,7 @@ function Products() {
                                         </Link>
                                         <button
                                             className="btn btn-sm btn-red"
-                                            onClick={() =>
-                                                deleteProduct(product.id)
-                                            }
+                                            onClick={() => deleteProduct(product.id)}
                                         >
                                             <span className="pr-1">
                                                 <i className="fa-solid fa-circle-xmark"></i>
