@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PriceInput from '../../components/PriceInput';
 import Condition from 'yup/lib/Condition';
 import ProductTypeInput from '../../components/ProductTypeInput';
+import ImageInput from '../../components/ImageInput';
 
 const validationSchema = Yup.object({
     name: Yup.string().required('Trường này bắt buộc'),
@@ -21,17 +22,9 @@ const validationSchema = Yup.object({
 });
 
 function Addroduct() {
-    const [img, setImg] = useState();
     const [loading, setLoading] = useState(false);
     const showSuccessNoti = () => toast.info('Tạo sản phẩm thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
-
-    useEffect(() => {
-        //cleanup
-        return () => {
-            img && URL.revokeObjectURL(img.preview);
-        };
-    }, [img]);
 
     const bacsicForm = useFormik({
         initialValues: {
@@ -45,18 +38,6 @@ function Addroduct() {
         onSubmit: handleFormsubmit,
     });
 
-    const chooseFile = (e) => {
-        const file = e.target.files[0];
-
-        var fileReader = new FileReader();
-        fileReader.readAsDataURL(file);
-        fileReader.onloadend = function (e) {
-            const imageFile = e.target.result;
-            bacsicForm.setFieldValue('image', imageFile);
-        };
-        file.preview = URL.createObjectURL(file);
-        setImg(file);
-    };
     const navigate = useNavigate();
     function handleFormsubmit(values) {
         setLoading(true);
@@ -172,26 +153,7 @@ function Addroduct() {
 
                             {/* IMAGE */}
                             <div className="form-group w-1/2 flex-col items-center justify-items-center ">
-                                <div className="h-60 w-full rounded-xl border-2 border-dashed border-blue-500 bg-gray-100">
-                                    {img && (
-                                        <img
-                                            src={img.preview}
-                                            alt=""
-                                            className="h-full w-full rounded-xl object-contain py-[1.5px]"
-                                        />
-                                    )}
-                                </div>
-                                <div className="btn btn-green btn-md relative inset-x-1/4 mt-4 h-10 w-1/2 text-center hover:bg-green-400">
-                                    <p className="tezt w-full">Chọn ảnh</p>
-                                    <input
-                                        type="file"
-                                        id="imageFile"
-                                        accept="image/gif, image/ipeg, image/png, image/*"
-                                        className="absolute top-0 left-0 w-full cursor-pointer opacity-0"
-                                        // onChange={handleInput}
-                                        onChangeCapture={chooseFile}
-                                    />
-                                </div>
+                                <ImageInput formik={bacsicForm} forikField="image" />
                             </div>
                         </div>
 
