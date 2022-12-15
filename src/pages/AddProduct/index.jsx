@@ -37,7 +37,6 @@ function Addroduct() {
         validationSchema,
         onSubmit: handleFormsubmit,
     });
-
     const navigate = useNavigate();
     function handleFormsubmit(values) {
         setLoading(true);
@@ -53,10 +52,11 @@ function Addroduct() {
                 if (resJson.success) {
                     setLoading(false);
                     showSuccessNoti();
-                    setTimeout(() => {
-                        navigate('/product');
-                    }, 4000);
+                    // setTimeout(() => {
+                    //     navigate('/product');
+                    // }, 4000);
                     // navigate('/product');
+                    bacsicForm.resetForm();
                 } else {
                     setLoading(false);
                     showErorrNoti();

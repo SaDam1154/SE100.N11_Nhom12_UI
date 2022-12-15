@@ -54,9 +54,7 @@ function AddCustomer() {
                 if (resJson.success) {
                     setLoading(false);
                     showSuccessNoti();
-                    setTimeout(() => {
-                        navigate('/customers')
-                    }, 4000);
+                    bacsicForm.resetForm();
                 } else {
                     setLoading(false);
                     showErorrNoti();
