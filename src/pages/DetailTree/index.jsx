@@ -66,7 +66,7 @@ function DetailTree() {
                     </div>
 
                     <div className="form-group w-1/2 flex-col items-center justify-items-center ">
-                        <label className="mb-1 font-semibold cursor-default text-lg" htmlFor="quantity">
+                        <label className="mb-1 font-semibold cursor-default" htmlFor="quantity">
                             Hình ảnh
                         </label>
                         <div className="h-60 w-full rounded-xl border-2 border-dashed border-cyan-300 bg-gray-100">
@@ -92,7 +92,7 @@ function DetailTree() {
                     </div>
 
                     <div className="form-group ml-4 mt-3 flex basis-1/2 flex-col">
-                        <label className="font-semibold cursor-default text-lg" htmlFor="quantity">
+                        <label className="mb-1 font-semibold cursor-default text-lg" htmlFor="quantity">
                             Số lượng
                         </label>
                         <div id="quantity" className="ml-lg text-input disabled py-[5px]">

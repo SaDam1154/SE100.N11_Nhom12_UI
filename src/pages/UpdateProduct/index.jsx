@@ -3,14 +3,14 @@ import * as Yup from 'yup';
 import { Formik, useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import TypeProduct from '../../components/TypeProduct';
+import ProductTypeInput from '../../components/ProductTypeInput';
 import clsx from 'clsx';
 import { useEffect } from 'react';
 import TimeNow from '../../components/TimeNow';
 import { useParams } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import PriceInput from '../../components/PriceInput';
-import PriceFormat from '../../components/PriceFormat';
+import ImageInput from '../../components/ImageInput';
 
 const validationSchema = Yup.object({
     name: Yup.string().required('Trường này bắt buộc'),
@@ -56,20 +56,13 @@ function UpdateProduct() {
             name: product.name,
             price: product.price,
             quantity: product.quantity,
-            //type: product?.type?.name,
-            //image: product?.image,
+            //type: product.type,
+            image: product.image,
         },
         enableReinitialize: true,
         validationSchema,
         onSubmit: handleFormsubmit,
     });
-
-    function handleChangeProductType(productType) {
-        bacsicForm.setFieldValue('type', productType._id || '');
-    }
-    function handleBlurProductType() {
-        bacsicForm.setFieldTouched('type', true);
-    }
 
     const chooseFile = (e) => {
         const file = e.target.files[0];
@@ -119,77 +112,64 @@ function UpdateProduct() {
             });
     }
 
-    const calc = bacsicForm.values.price * bacsicForm.values.quantity
+    //const calc = bacsicForm.values.price * bacsicForm.values.quantity
 
     return (
         <div>
             <div className="container">
                 <div className="w-full">
                     <form onSubmit={bacsicForm.handleSubmit}>
-                        {/* Id ang image */}
+                        {/* Id, Date ang image */}
                         <div className="flex flex-row">
-                            {/* ID */}
+                            {/* ID   and date*/}
                             <div className="mr-12 mt-[4%] flex basis-1/2 flex-col">
-                                <label className="mb-1 font-semibold text-xl">Mã số</label>
-                                <div className="h-10 text-xl rounded-lg border border-gray-300 bg-gray-400 px-2 py-1 opacity-70">
+                                <label className="mb-1 font-semibold text-lg cursor-default">Mã số</label>
+
+                                <div id="name" className="text-input disabled select-none py-[5px]">
                                     {product.id}
                                 </div>
-                            </div>
 
+                                <label className="mt-10 mb-1 cursor-default text-lg font-semibold">Ngày chỉnh sửa</label>
+                                <div className="text-input disabled select-none">
+                                    <TimeNow />
+                                </div>
+                            </div>
                             {/* Image */}
                             <div className="form-group w-1/2 flex-col items-center justify-items-center ">
-                                <div className="h-60 w-full rounded-xl border-2 border-dashed border-blue-500 bg-gray-100">
-                                    <img
-                                        src={product.image}
-                                        alt=""
-                                        className="h-full w-full rounded-xl object-contain py-[1.5px]"
-                                    />
-                                </div>
-
-                                <div className="btn btn-green btn-md relative inset-x-1/4 mt-4 h-10 w-1/2 text-center hover:bg-green-400">
-                                    <p className="tezt w-full">Chọn ảnh</p>
-                                    <input
-                                        type="file"
-                                        id="imageFile"
-                                        accept="image/gif, image/ipeg, image/png, image/*"
-                                        className="absolute top-0 left-0 w-full cursor-pointer opacity-0"
-                                        onChangeCapture={chooseFile}
-                                    />
-                                </div>
+                                <ImageInput formik={bacsicForm} forikField="image" />
                             </div>
                         </div>
 
                         {/* type and name */}
-                        <div className="flex flex-row">
+                        <div className="flex flex-row mt-10">
                             {/* Type */}
                             <div className="mr-12 mt-2 flex basis-1/2 flex-col">
-                            <label className="mb-1 font-semibold" htmlFor="type">
-                                Loại cây
-                            </label>
-                                <div
-                                    onMouseDown={(e) => e.preventDefault()}
-                                    tabIndex="1"
-                                    onBlur={handleBlurProductType}
-                                >
-                                    <TypeProduct
-                                        key="fadsfas"
-                                        onChange={handleChangeProductType}
-                                        invalid={bacsicForm.touched.type && bacsicForm.errors.type}
-                                    />
-                                </div>
+                                <label className="mb-1 font-semibold text-lg" htmlFor="type">
+                                    Loại cây
+                                </label>
+                                <ProductTypeInput
+                                    id="type"
+                                    className={clsx('text-input cursor-pointer py-[5px]', {
+                                        invalid: bacsicForm.touched.type && bacsicForm.errors.type,
+                                    })}
+                                    onChange={bacsicForm.handleChange}
+                                    onBlur={bacsicForm.handleBlur}
+                                    value={bacsicForm.values.type}
+                                    name="type"
+                                />
 
                                 <span
                                     className={clsx('text-sm text-red-500 opacity-0', {
                                         'opacity-100': bacsicForm.touched.type && bacsicForm.errors.type,
                                     })}
-                                >
+                                    >
                                     {bacsicForm.errors.type || 'No message'}
                                 </span>
                             </div>
 
                             {/* Name */}
                             <div className="mt-2 flex basis-1/2 flex-col">
-                                <label className="mb-1 font-semibold text-xl" htmlFor="name">
+                                <label className="mb-1 font-semibold text-lg" htmlFor="name">
                                     Tên cây
                                 </label>
                                 <input
@@ -217,7 +197,7 @@ function UpdateProduct() {
                         <div className="flex flex-row">
                             {/* Quantity */}
                             <div className="mr-12 mt-2 flex basis-1/2 flex-col">
-                                <label className="mb-1 font-semibold text-xl" htmlFor="quantity">
+                                <label className="mb-1 font-semibold text-lg" htmlFor="quantity">
                                     Số lượng
                                 </label>
                                 <input
@@ -243,7 +223,7 @@ function UpdateProduct() {
 
                             {/* PRICE */}
                             <div className="mt-2 flex basis-1/2 flex-col">
-                                <label className="mb-1 text-xl font-semibold" htmlFor="price">
+                                <label className="mb-1 text-lg font-semibold" htmlFor="price">
                                     Giá mỗi cây
                                 </label>
                                 <PriceInput
@@ -266,47 +246,14 @@ function UpdateProduct() {
                             </div>
                         </div>
 
-                        {/* Date and Priceall */}
-                        <div className="flex flex-row">
-                            {/* DATE */}
-                            <div className="mr-12 mt-2 flex basis-1/2 flex-col ">
-                                <label className="mb-1 cursor-default text-xl font-semibold">Ngày chỉnh sửa</label>
-                                <div className="text-input">
-                                    <TimeNow />
-                                </div>
-                            </div>
-
-                            {/* Priceall */}
-                            <div className="mt-3 flex basis-1/2 flex-col">
-                                <label
-                                    className="mb-1 text-xl font-semibold"
-                                    htmlFor="priceall"
-                                >
-                                    Giá tổng
-                                </label>
-                                <div className="relative">
-                                    <div className='text-input py-[5px]'>
-                                        <PriceFormat>{calc}</PriceFormat>
-                                    </div>
-                                        
-                                    <label
-                                        htmlFor="priceall"
-                                        className="lb-value absolute top-0 right-0 select-none px-[6%] py-1 text-lg text-gray-600"
-                                    >
-                                        VNĐ
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="mt-6 flex items-center justify-between border-t pt-6">
+                        <div className=" flex items-center justify-between border-t pt-6">
                             <div
                                 className={clsx('flex items-center text-blue-500', {
                                     invisible: !loading,
                                 })}
                             >
-                                <i className="fa-solid fa-spinner animate-spin text-xl"></i>
-                                <span className="text-lx pl-3 font-medium">Đang tạo sản phẩm</span>
+                                <i className="fa-solid fa-spinner animate-spin text-lg"></i>
+                                <span className="text-lx pl-3 font-medium">Đang chỉnh sửa sản phẩm</span>
                             </div>
                             <div className="flex">
                                 <Link to={'/product'} className="btn btn-red btn-md">
