@@ -93,8 +93,8 @@ function UpdateCustomer() {
                     <form onSubmit={bacsicForm.handleSubmit}>
                     <div className="flex flex-row mt-4">
                         <div className="basis-1/2 flex flex-col mt-[4%]" >
-                            <label className="font-semibold mb-1">Mã khách hàng</label>
-                            <div className="border h-10  border-gray-300 bg-gray-400 px-2 py-1 opacity-70 rounded-lg text-xl">
+                            <label className="font-semibold mb-1 text-lg cursor-default">Mã khách hàng</label>
+                            <div className="text-input disabled select-none py-[5px]">
                                 {customer._id}
                             </div>
                         </div>
@@ -181,7 +181,7 @@ function UpdateCustomer() {
                                 <label htmlFor='date' className="mb-1 cursor-default text-lg font-semibold">
                                     Ngày chỉnh sửa
                                 </label>
-                                <div className="text-input">
+                                <div className="text-input disabled select-none">
                                     <TimeNow />
                                 </div>
                             </div>

@@ -152,7 +152,7 @@ function AddCustomer() {
                                 <label className="mb-1 cursor-default text-lg font-semibold">
                                     Ngày thêm
                                 </label>
-                                <div className="rounded border border-slate-300 bg-slate-50 px-2 outline-none">
+                                <div className="text-input disabled select-none">
                                     <TimeNow />
                                 </div>
                             </div>

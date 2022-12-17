@@ -27,8 +27,8 @@ function DetailCustomer () {
         <div className="wrapper text-lg">
             <div className="flex flex-row mt-4">
                 <div className="basis-1/2 flex flex-col mt-[4%]" >
-                    <label className="font-semibold mb-1">Mã khách hàng</label>
-                    <div className="border h-10  border-gray-300 bg-gray-400 px-2 py-1 opacity-70 rounded-lg">
+                    <label className="mb-1 font-semibold text-lg cursor-default">Mã khách hàng</label>
+                    <div className="text-input disabled select-none py-[5px]">
                         {customer._id}
                     </div>
                 </div>
@@ -36,8 +36,8 @@ function DetailCustomer () {
 
             <div className="flex flex-row mt-2">
                 <div className="basis-1/2 flex flex-col mt-2" >
-                    <label className="font-semibold mb-1" htmlFor="phone" defaultValue={0}>Số điện thoại</label>
-                    <div className="text-input rounded-lg text-lg py-[5px]">
+                    <label className="mb-1 font-semibold text-lg cursor-default" htmlFor="phone" defaultValue={0}>Số điện thoại</label>
+                    <div className="text-input disabled select-none py-[5px]">
                         {customer.phone}
                     </div>
                 </div>
@@ -45,8 +45,8 @@ function DetailCustomer () {
 
             <div className="flex flex-row mt-2">
                 <div className="basis-1/2 flex flex-col mt-2" >
-                    <label className="font-semibold mb-1" htmlFor="name">Tên khách hàng</label>
-                    <div className="text-input rounded-lg text-lg py-[5px]">
+                    <label className="mb-1 font-semibold text-lg cursor-default" htmlFor="name">Tên khách hàng</label>
+                    <div className="text-input disabled select-none py-[5px]">
                         {customer.name}
                     </div>
                 </div>
@@ -54,8 +54,8 @@ function DetailCustomer () {
 
             <div className="flex flex-row mt-4">
                 <div className="basis-1/2 flex flex-col mr-2 mt-2" >
-                    <label className="font-semibold mb-1" htmlFor="date">Ngày thêm</label>
-                    <div className="text-input rounded-lg text-lg py-[5px]">
+                    <label className="mb-1 font-semibold text-lg cursor-default" htmlFor="date">Ngày thêm</label>
+                    <div className="text-input disabled select-none py-[5px]">
                         {moment(customer.createdAt).format(
                             '(HH:mm:ss)     DD/MM/YYYY'
                         )}
@@ -65,8 +65,8 @@ function DetailCustomer () {
 
             <div className="flex flex-row mt-4">
                 <div className="w-full flex flex-col mr-2 mt-2" >
-                    <label className="font-semibold mb-1" htmlFor="address">Địa chỉ</label>
-                    <div className="text-input rounded-lg text-lg py-[5px]">
+                    <label className="mb-1 font-semibold text-lg cursor-default" htmlFor="address">Địa chỉ</label>
+                    <div className="text-input disabled select-none py-[5px]">
                         {customer.address}
                     </div>
                 </div>
