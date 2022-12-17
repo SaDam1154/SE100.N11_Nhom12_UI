@@ -59,14 +59,23 @@ function UpdateCustomer() {
     //     },5000)
     // })
     function handleFormsubmit(values) {
-        console.log(values);
         setLoading(true);
+
+        // Check values changed
+        let reqValue = {};
+        Object.keys(values).forEach((key) => {
+            if (values[key] !== bacsicForm.initialValues[key]) {
+                reqValue[key] = values[key];
+            }
+        });
+
+        console.log(reqValue);
         fetch('http://localhost:5000/api/customer/'+ id, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(values),
+            body: JSON.stringify(reqValue),
         })
             .then((res) => res.json())
             .then((resJson) => {

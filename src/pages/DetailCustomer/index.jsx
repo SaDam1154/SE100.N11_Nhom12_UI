@@ -27,7 +27,7 @@ function DetailCustomer () {
         <div className="wrapper text-lg">
             <div className="flex flex-row mt-4">
                 <div className="basis-1/2 flex flex-col mt-[4%]" >
-                    <label className="mb-1 font-semibold text-lg cursor-default">Mã khách hàng</label>
+                    <label className="mb-1 text-lg font-semibold cursor-default">Mã khách hàng</label>
                     <div className="text-input disabled select-none py-[5px]">
                         {customer._id}
                     </div>
