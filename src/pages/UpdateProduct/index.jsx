@@ -20,18 +20,17 @@ const validationSchema = Yup.object({
 });
 
 function UpdateProduct() {
-    const [img, setImg] = useState();
     const [loading, setLoading] = useState(false);
     const showSuccessNoti = () => toast.info('Chỉnh sửa phẩm thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
     const { id } = useParams();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
     useEffect(() => {
         callApi();
     }, []);
 
-
-    const [product,setProduct] = useState ({})
+    const [product, setProduct] = useState({});
     function callApi() {
         fetch('http://localhost:5000/api/product' + '/' + id)
             .then((res) => res.json())
@@ -44,19 +43,12 @@ function UpdateProduct() {
             });
     }
 
-    useEffect(() => {
-        //cleanup
-        return () => {
-            img && URL.revokeObjectURL(img.preview);
-        };
-    }, [img]);
-
     const bacsicForm = useFormik({
         initialValues: {
             name: product.name,
             price: product.price,
             quantity: product.quantity,
-            //type: product.type,
+            type: product.type?._id,
             image: product.image,
         },
         enableReinitialize: true,
@@ -64,33 +56,25 @@ function UpdateProduct() {
         onSubmit: handleFormsubmit,
     });
 
-    const chooseFile = (e) => {
-        const file = e.target.files[0];
-
-        var fileReader = new FileReader();
-        fileReader.readAsDataURL(file);
-        fileReader.onloadend = function (e) {
-            const imageFile = e.target.result;
-            bacsicForm.setFieldValue('image', imageFile);
-            setProduct({...product, image: imageFile});
-        };
-        file.preview = URL.createObjectURL(file);
-        setImg(file);
-    };
-    // const currentPromise = new Promise((resolve, reject) => {
-    //     setTimeout (() => {
-    //         resolve('/product')
-    //     },5000)
-    // })
     function handleFormsubmit(values) {
         setLoading(true);
-        console.log(values)
+
+        // Check values changed
+        let reqValue = {};
+        Object.keys(values).forEach((key) => {
+            if (values[key] !== bacsicForm.initialValues[key]) {
+                reqValue[key] = values[key];
+            }
+        });
+
+        console.log(reqValue);
+
         fetch('http://localhost:5000/api/product' + '/' + id, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(values),
+            body: JSON.stringify(reqValue),
         })
             .then((res) => res.json())
             .then((resJson) => {
@@ -98,7 +82,7 @@ function UpdateProduct() {
                     setLoading(false);
                     showSuccessNoti();
                     setTimeout(() => {
-                        navigate('/product')
+                        navigate('/product');
                     }, 4000);
                     //navigate('/product')
                 } else {
@@ -123,13 +107,15 @@ function UpdateProduct() {
                         <div className="flex flex-row">
                             {/* ID   and date*/}
                             <div className="mr-12 mt-[4%] flex basis-1/2 flex-col">
-                                <label className="mb-1 font-semibold text-lg cursor-default">Mã số</label>
+                                <label className="mb-1 cursor-default text-lg font-semibold">Mã số</label>
 
                                 <div id="name" className="text-input disabled select-none py-[5px]">
                                     {product.id}
                                 </div>
 
-                                <label className="mt-10 mb-1 cursor-default text-lg font-semibold">Ngày chỉnh sửa</label>
+                                <label className="mt-10 mb-1 cursor-default text-lg font-semibold">
+                                    Ngày chỉnh sửa
+                                </label>
                                 <div className="text-input disabled select-none">
                                     <TimeNow />
                                 </div>
@@ -141,10 +127,10 @@ function UpdateProduct() {
                         </div>
 
                         {/* type and name */}
-                        <div className="flex flex-row mt-10">
+                        <div className="mt-10 flex flex-row">
                             {/* Type */}
                             <div className="mr-12 mt-2 flex basis-1/2 flex-col">
-                                <label className="mb-1 font-semibold text-lg" htmlFor="type">
+                                <label className="mb-1 text-lg font-semibold" htmlFor="type">
                                     Loại cây
                                 </label>
                                 <ProductTypeInput
@@ -162,14 +148,14 @@ function UpdateProduct() {
                                     className={clsx('text-sm text-red-500 opacity-0', {
                                         'opacity-100': bacsicForm.touched.type && bacsicForm.errors.type,
                                     })}
-                                    >
+                                >
                                     {bacsicForm.errors.type || 'No message'}
                                 </span>
                             </div>
 
                             {/* Name */}
                             <div className="mt-2 flex basis-1/2 flex-col">
-                                <label className="mb-1 font-semibold text-lg" htmlFor="name">
+                                <label className="mb-1 text-lg font-semibold" htmlFor="name">
                                     Tên cây
                                 </label>
                                 <input
@@ -197,7 +183,7 @@ function UpdateProduct() {
                         <div className="flex flex-row">
                             {/* Quantity */}
                             <div className="mr-12 mt-2 flex basis-1/2 flex-col">
-                                <label className="mb-1 font-semibold text-lg" htmlFor="quantity">
+                                <label className="mb-1 text-lg font-semibold" htmlFor="quantity">
                                     Số lượng
                                 </label>
                                 <input
