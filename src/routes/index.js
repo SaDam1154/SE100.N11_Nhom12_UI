@@ -20,6 +20,9 @@ import UpdateRule from '../pages/UpdateRule';
 import UpdateProduct from '../pages/UpdateProduct';
 import AddCustomer from '../pages/AddCustomer';
 import UpdateCustomer from '../pages/UpdateCustomer';
+import AddProductType from '../pages/AddProductType';
+import DetailTypeProduct from '../pages/DetailTypeProduct';
+import UpdateProductType from '../pages/UpdateProductType';
 
 // Public routes
 const publicRoutes = [
@@ -71,6 +74,27 @@ const publicRoutes = [
         component: ProductType,
         props: {
             heading: 'Danh sách loại cây',
+        },
+    },
+    {
+        path: '/product-type/add',
+        component: AddProductType,
+        props: {
+            heading: 'Thêm mới loại sản phẩm',
+        },
+    },
+    {
+        path: '/product-type/detail/:id',
+        component: DetailTypeProduct,
+        props: {
+            heading: 'Chi tiết loại sản phẩm',
+        },
+    },
+    {
+        path: '/product-type/update/:id',
+        component: UpdateProductType,
+        props: {
+            heading: 'Chỉnh sửa loại sản phẩm',
         },
     },
     {

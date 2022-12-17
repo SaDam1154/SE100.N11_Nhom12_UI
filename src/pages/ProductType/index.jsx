@@ -45,27 +45,26 @@ function ProductType() {
     const [products, setProducts] = useState([]);
     const [productTypes, setProductTypes] = useState([]);
     const navigate = useNavigate();
-    const showDeleteNoti = () => toast.info('Xóa sản phẩm thành công!');
-    const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
-    function deleteProduct(id) {
-        fetch('http://localhost:5000/api/product/' + id, {
-            method: 'DELETE',
-        })
-            .then((res) => res.json())
-            .then((resJson) => {
-                if (resJson) {
-                    showDeleteNoti();
-                    console.log('xóa');
-                    callApi();
-                } else {
-                    showErorrNoti();
-                }
-            })
-            .catch(() => {
-                showErorrNoti();
-            });
-    }
-    const [selectedProductTypes, setSelectedProductTypes] = useState([]);
+    // const showDeleteNoti = () => toast.info('Xóa sản phẩm thành công!');
+    // const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
+    // function deleteProduct(id) {
+    //     fetch('http://localhost:5000/api/product/' + id, {
+    //         method: 'DELETE',
+    //     })
+    //         .then((res) => res.json())
+    //         .then((resJson) => {
+    //             if (resJson) {
+    //                 showDeleteNoti();
+    //                 console.log('xóa');
+    //                 callApi();
+    //             } else {
+    //                 showErorrNoti();
+    //             }
+    //         })
+    //         .catch(() => {
+    //             showErorrNoti();
+    //         });
+    // }
     useEffect(() => {
         callApi();
         callApiPeople();
@@ -95,7 +94,7 @@ function ProductType() {
     }
 
     function linkToDetail(id) {
-        navigate('/product/detail/' + id);
+        navigate('/product-type/detail/' + id);
     }
 
     return (
@@ -128,11 +127,11 @@ function ProductType() {
                             onChange={(e) => {
                                 setSearch(e.target.value);
                             }}
-                            placeholder="Tìm kiếm sản phẩm"
+                            placeholder="Tìm kiếm loại sản phẩm"
                         />
                     </div>
 
-                    <Link to="/product-type" className="btn btn-md btn-green">
+                    <Link to="/product-type/add" className="btn btn-md btn-green">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
@@ -197,14 +196,14 @@ function ProductType() {
 
                                 <td
                                     className="flex flex-[2] items-center justify-start px-2 py-2"
-                                    // onClick={() => linkToDetail(product.id)}
+                                    onClick={() => linkToDetail(product.id)}
                                 >
                                     {product.name}
                                 </td>
 
                                 <td
                                     className="flex w-48 items-center justify-end px-2 py-2"
-                                    // onClick={() => linkToDetail(product.id)}
+                                    onClick={() => linkToDetail(product.id)}
                                 >
                                     {moment(product.createdAt).format(
                                         'HH:mm:ss DD/MM/YYYY '
@@ -212,17 +211,17 @@ function ProductType() {
                                 </td>
                                 <td className="flex w-[200px] items-center justify-center px-2 py-2">
                                     <div className="flex justify-end">
-                                        <button className="btn btn-sm btn-blue">
+                                        <Link to={'/product-type/update/'+ product.id} className="btn btn-sm btn-blue">
                                             <span className="pr-1">
                                                 <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
                                             <span>Sửa</span>
-                                        </button>
+                                        </Link>
                                         <button
                                             className="btn btn-sm btn-red"
-                                            onClick={() =>
-                                                deleteProduct(product.id)
-                                            }
+                                            // onClick={() =>
+                                            //     deleteProduct(product.id)
+                                            // }
                                         >
                                             <span className="pr-1">
                                                 <i className="fa-solid fa-circle-xmark"></i>

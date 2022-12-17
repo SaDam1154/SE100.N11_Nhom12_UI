@@ -72,14 +72,24 @@ function DetailCustomer () {
                 </div>
             </div>
 
-            <div className="w-1/2 flex float-right flex-row mt-5 px-2">
-                    <div className="w-full  ">                
-                        <Link to={'/customers'} className="!float-right btn btn-blue btn-md w-[70%]">
+            <div className="float-right mt-8 flex flex-row mr-2">
+                    <div className="float-left flex basis-1 flex-col mr-5">                
+                        <Link to={'/customers'} className="btn btn-blue btn-md">
                             <span className="pr-1">
                                     <i className="fa-solid fa-circle-xmark"></i>
                             </span>
                             <span>Quay lại</span>
                         </Link >
+                    </div>
+
+                    <div className="float-right flex basis-1 flex-col">
+                        <Link to={'/customers/updatecustomer/' + customer.id} className="btn btn-md btn-green">
+                            <span className="pr-2">
+                                <i className="fa fa-share" aria-hidden="true"></i>
+                            </span>
+                            <span>Chỉnh sửa</span>
+                        </Link>
+
                     </div>
                 </div>
         </div>
