@@ -44,26 +44,11 @@ function Products() {
     const showDeleteNoti = () => toast.info('Xóa sản phẩm thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
-    function deleteProduct(id) {
-        fetch('http://localhost:5000/api/product/' + id, {
-            method: 'DELETE',
-        })
-            .then((res) => res.json())
-            .then((resJson) => {
-                if (resJson) {
-                    showDeleteNoti();
-                    console.log('xóa');
-                    callApi();
-                } else {
-                    showErorrNoti();
-                }
-            })
-            .catch(() => {
-                showErorrNoti();
-            });
-    }
-
     useEffect(() => {
+        getProducts();
+    }, [filters]);
+
+    function getProducts() {
         fetch('http://localhost:5000/api/product?' + `filters=${JSON.stringify(filters)}`)
             .then((res) => res.json())
             .then((resJson) => {
@@ -73,7 +58,26 @@ function Products() {
                     setProducts([]);
                 }
             });
-    }, [filters]);
+    }
+
+    function deleteProduct(id) {
+        fetch('http://localhost:5000/api/product/' + id, {
+            method: 'DELETE',
+        })
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson) {
+                    showDeleteNoti();
+                    console.log('xóa');
+                    getProducts();
+                } else {
+                    showErorrNoti();
+                }
+            })
+            .catch(() => {
+                showErorrNoti();
+            });
+    }
 
     function linkToDetail(id) {
         navigate('/product/detail/' + id);
