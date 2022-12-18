@@ -29,7 +29,7 @@ function DetailTypeProduct () {
                 <div className="w-full flex flex-col mt-[4%]" >
                     <label className="mb-1 text-lg font-semibold cursor-default">Mã loại sản phẩm</label>
                     <div className="text-input disabled select-none py-[5px]">
-                        {productType._id}
+                        {productType.id}
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@ function DetailTypeProduct () {
                 </div>
             </div>
 
-            <div className="flex flex-row mt-4">
+            <div className="flex flex-row mt-4 mb-4">
                 <div className="w-full flex flex-col mt-2" >
                     <label className="mb-1 font-semibold text-lg cursor-default" htmlFor="date">Ngày thêm</label>
                     <div className="text-input disabled select-none py-[5px]">

@@ -64,7 +64,7 @@ function UpdateProductType() {
                     showSuccessNoti();
                     setTimeout(() => {
                         navigate('/product-type');
-                    }, 4000);
+                    }, 3000);
                 } else {
                     setLoading(false);
                     showErorrNoti();
@@ -80,7 +80,7 @@ function UpdateProductType() {
         <>
             <div className="container min-w-[650px]">
                 <div className="w-full">
-                    <form onSubmit={bacsicForm.handleSubmit} className="mx-[15%]  rounded-xl border border-slate-300 p-5" >
+                    <form onSubmit={bacsicForm.handleSubmit} className="mx-[10%]  rounded-xl border border-slate-300 p-5" >
                         <div className="mt-10 flex justify-center items-center">
                             <div className="mr-8 flex w-full flex-col space-y-2 text-lg">
                                 <div className="form-group flex flex-col">
@@ -88,7 +88,7 @@ function UpdateProductType() {
                                         Mã loại sản phẩm
                                     </label>
                                     <div className="text-input disabled select-none py-[5px]">
-                                        {productType._id}
+                                        {productType.id}
                                     </div>
                                 </div>
 
@@ -152,7 +152,7 @@ function UpdateProductType() {
                                     Đang chỉnh sửa thông tin loại sản phẩm
                                 </span>
                             </div>
-                            <div className="flex pr-[7%]">
+                            <div className="flex justify-end pr-9">
                                 <Link
                                     to={'/product-type'}
                                     className="btn btn-red btn-md"

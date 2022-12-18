@@ -1,21 +1,5 @@
 import { Fragment, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-const customers2 = [
-    {
-        num: 1,
-        id: 1000001,
-        name: 'Nguyễn Văn A',
-        phone: '0917823923',
-        address: 'Số 34, đường Gì Đó, phường Ngẫu Nhiên....',
-    },
-    {
-        num: 2,
-        id: 1000002,
-        name: 'Nguyễn Văn A',
-        phone: '0917823923',
-        address: 'Số 34, đường Gì Đó, phường Ngẫu Nhiên....',
-    },
-];
 
 function Customers() {
     // const [search, setSearch] = useState('');
@@ -145,12 +129,12 @@ function Customers() {
                                 >
                                     {index+1}
                                 </td>
-                                <td className="py-2 text-center"
+                                <td className="py-2 text-left"
                                     onClick={() => LinkToDetail(customer.id)}
                                 >
                                     {customer._id}
                                 </td>
-                                <td className="py-2 text-center"
+                                <td className="py-2 text-left pl-[4%]"
                                     onClick={() => LinkToDetail(customer.id)}
                                 >
                                     {customer.name}
@@ -160,7 +144,7 @@ function Customers() {
                                 >
                                     {customer.phone}
                                 </td>
-                                <td className="py-2 text-center"
+                                <td className="py-2 text-left pl-4"
                                     onClick={() => LinkToDetail(customer.id)}
                                 >
                                     {customer.address}
