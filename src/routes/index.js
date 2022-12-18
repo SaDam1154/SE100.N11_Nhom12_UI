@@ -108,7 +108,7 @@ const publicRoutes = [
         path: '/product/views',
         component: ProductsView,
         props: {
-            heading: 'Thêm sản phẩm',
+            heading: 'Danh sách sản phẩm dạng lưới',
         },
     },
     {

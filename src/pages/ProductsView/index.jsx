@@ -29,10 +29,7 @@ function removeVietnameseTones(stra) {
     str = str.trim();
     // Remove punctuations
     // Bỏ dấu câu, kí tự đặc biệt
-    str = str.replace(
-        /!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g,
-        ' '
-    );
+    str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, ' ');
     return str;
 }
 function ProductsView() {
@@ -87,14 +84,8 @@ function ProductsView() {
             <div className="flex space-x-4">
                 {/* tite + reload btn */}
                 <div className="flex">
-                    <label className="text-2xl font-bold text-slate-800">
-                        Danh sách cây
-                    </label>
-                    <button
-                        type="button"
-                        className="ml-3 text-gray-800 hover:underline"
-                        onClick={() => callApi()}
-                    >
+                    <label className="text-2xl font-bold text-slate-800">Danh sách cây</label>
+                    <button type="button" className="ml-3 text-gray-800 hover:underline" onClick={() => callApi()}>
                         <span className="font-sm pr-1">
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </span>
@@ -125,18 +116,12 @@ function ProductsView() {
                             as="div"
                             className="absolute right-0 z-10 min-w-[280px] max-w-[320px] rounded border bg-white px-4 py-3 shadow"
                         >
-                            <h2 className="mb-2 text-lg font-semibold">
-                                Lọc sản phẩm
-                            </h2>
+                            <h2 className="mb-2 text-lg font-semibold">Lọc sản phẩm</h2>
 
                             <hr />
                             <div className="mt-3 space-x-2">
                                 <div>
-                                    <Listbox
-                                        value={selectedProductTypes}
-                                        onChange={setSelectedProductTypes}
-                                        multiple
-                                    >
+                                    <Listbox value={selectedProductTypes} onChange={setSelectedProductTypes} multiple>
                                         <Listbox.Button
                                             as="div"
                                             className="text-input flex min-h-[36px] cursor-pointer items-center"
@@ -154,17 +139,11 @@ function ProductsView() {
                                                     {({ selected }) => (
                                                         <div className="flex items-center">
                                                             <i
-                                                                className={clsx(
-                                                                    'fa-solid fa-check pr-2',
-                                                                    {
-                                                                        'opacity-0':
-                                                                            !selected,
-                                                                    }
-                                                                )}
+                                                                className={clsx('fa-solid fa-check pr-2', {
+                                                                    'opacity-0': !selected,
+                                                                })}
                                                             ></i>
-                                                            <span>
-                                                                {type.name}
-                                                            </span>
+                                                            <span>{type.name}</span>
                                                         </div>
                                                     )}
                                                 </Listbox.Option>
@@ -179,7 +158,7 @@ function ProductsView() {
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
-                        <span>Views</span>
+                        <span>Chuyển sang dạng danh sách</span>
                     </Link>
                     <Link to="/product/add" className="btn btn-md btn-green">
                         <span className="pr-1">
@@ -198,19 +177,11 @@ function ProductsView() {
                                 return product;
                             } else {
                                 if (
-                                    removeVietnameseTones(
-                                        product.name.toLowerCase()
-                                    ).includes(
-                                        removeVietnameseTones(
-                                            search.toLowerCase()
-                                        )
+                                    removeVietnameseTones(product.name.toLowerCase()).includes(
+                                        removeVietnameseTones(search.toLowerCase())
                                     ) ||
-                                    removeVietnameseTones(
-                                        product?.type.name.toLowerCase()
-                                    ).includes(
-                                        removeVietnameseTones(
-                                            search.toLowerCase()
-                                        )
+                                    removeVietnameseTones(product?.type.name.toLowerCase()).includes(
+                                        removeVietnameseTones(search.toLowerCase())
                                     )
                                 ) {
                                     var id = product.id.toString();
@@ -219,27 +190,12 @@ function ProductsView() {
                             }
                         })
                         ?.map((product) => (
-                            <div
-                                key={product.id}
-                                className=" cursor-pointer select-none  rounded border "
-                            >
-                                <img
-                                    className=" w-[300px] py-2 text-center"
-                                    src={product.image}
-                                />
+                            <div key={product.id} className=" cursor-pointer select-none  rounded border ">
+                                <img className=" w-[300px] py-2 text-center" src={product.image} />
+                                <h1 className="py-2 text-center">{product.type?.name || '-'}</h1>
+                                <h1 className="h-[64px] py-2 text-center">{product.name}</h1>
                                 <h1 className="py-2 text-center">
-                                    {product.type?.name || '-'}
-                                </h1>
-                                <h1 className="h-[64px] py-2 text-center">
-                                    {product.name}
-                                </h1>
-                                <h1 className="py-2 text-center">
-                                    {product.price
-                                        .toFixed(0)
-                                        .replace(
-                                            /(\d)(?=(\d{3})+(?!\d))/g,
-                                            '$1,'
-                                        )}
+                                    {product.price.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
                                 </h1>
                                 <div className="flex justify-center">
                                     <button className="btn btn-sm btn-blue">
