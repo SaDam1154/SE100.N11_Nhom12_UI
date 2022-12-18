@@ -114,7 +114,7 @@ function Products() {
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
-                        <span>Views</span>
+                        <span>Chuyển sang dạng lưới</span>
                     </Link>
                     <Link to="/product/add" className="btn btn-md btn-green">
                         <span className="pr-1">
