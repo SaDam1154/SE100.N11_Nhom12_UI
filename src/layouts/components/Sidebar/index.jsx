@@ -11,7 +11,7 @@ const groupMenus = [
     {
         main: {
             iconClassname: 'fa-solid fa-house',
-            text: 'Đặt hàng',
+            text: 'Đơn hàng',
             link: '/order',
         },
         children: [
