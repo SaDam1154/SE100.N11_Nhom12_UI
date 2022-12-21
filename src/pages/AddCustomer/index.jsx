@@ -15,7 +15,9 @@ const validationSchema = Yup.object({
     address: Yup.string().required('Trường này bắt buộc'),
     phone: Yup.string()
         .required('Trường này bắt buộc')
-        .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, 'Số điện thoại phải là số từ 10 số'),
+        .matches(/^[\+|0]([0-9]{1,15})/, 'Số điện thoại không hợp lệ')
+        .min(10, 'Số điện thoại phải từ 10 kí tự')
+        .max(15, 'Số điện không được quá 15 kí tự'),
 });
 
 function AddCustomer() {
@@ -75,58 +77,40 @@ function AddCustomer() {
                             {/* Name */}
                             <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
                                 <div className="form-group flex flex-col ">
-                                    <label
-                                        className="mb-1 font-semibold"
-                                        htmlFor="name"
-                                    >
+                                    <label className="mb-1 font-semibold" htmlFor="name">
                                         Tên khách hàng
                                     </label>
                                     <input
                                         type="text"
                                         id="name"
                                         className={clsx('text-input py-[5px]', {
-                                            invalid:
-                                                bacsicForm.touched.name &&
-                                                bacsicForm.errors.name,
+                                            invalid: bacsicForm.touched.name && bacsicForm.errors.name,
                                         })}
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
                                         value={bacsicForm.values.name}
                                         name="name"
-                                        placeholder='Nguyễn Văn A'
+                                        placeholder="Nguyễn Văn A"
                                     />
                                     <span
-                                        className={clsx(
-                                            'text-sm text-red-500 opacity-0',
-                                            {
-                                                'opacity-100':
-                                                    bacsicForm.touched.name &&
-                                                    bacsicForm.errors.name,
-                                            }
-                                        )}
+                                        className={clsx('text-sm text-red-500 opacity-0', {
+                                            'opacity-100': bacsicForm.touched.name && bacsicForm.errors.name,
+                                        })}
                                     >
                                         {bacsicForm.errors.name || 'No message'}
                                     </span>
                                 </div>
 
                                 <div className="form-group flex flex-col">
-                                    <label
-                                        className="mb-1 font-semibold"
-                                        htmlFor="phone"
-                                    >
+                                    <label className="mb-1 font-semibold" htmlFor="phone">
                                         Số điện thoại
                                     </label>
                                     <input
                                         type="text"
                                         id="phone"
-                                        className={clsx(
-                                            'text-input w-full py-[5px]',
-                                            {
-                                                invalid:
-                                                    bacsicForm.touched.phone &&
-                                                    bacsicForm.errors.phone,
-                                            }
-                                        )}
+                                        className={clsx('text-input w-full py-[5px]', {
+                                            invalid: bacsicForm.touched.phone && bacsicForm.errors.phone,
+                                        })}
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
                                         value={bacsicForm.values.phone}
@@ -134,52 +118,36 @@ function AddCustomer() {
                                         placeholder="0987654321"
                                     />
                                     <span
-                                        className={clsx(
-                                            'text-sm text-red-500 opacity-0',
-                                            {
-                                                'opacity-100':
-                                                    bacsicForm.touched.phone &&
-                                                    bacsicForm.errors.phone,
-                                            }
-                                        )}
+                                        className={clsx('text-sm text-red-500 opacity-0', {
+                                            'opacity-100': bacsicForm.touched.phone && bacsicForm.errors.phone,
+                                        })}
                                     >
-                                        {bacsicForm.errors.phone ||
-                                            'No message'}
+                                        {bacsicForm.errors.phone || 'No message'}
                                     </span>
                                 </div>
 
                                 <div className="form-group flex basis-1/2 flex-col ">
-                                <label className="mb-1 cursor-default text-lg font-semibold">
-                                    Ngày thêm
-                                </label>
-                                <div className="text-input disabled select-none">
-                                    <TimeNow />
+                                    <label className="mb-1 cursor-default text-lg font-semibold">Ngày thêm</label>
+                                    <div className="text-input disabled select-none">
+                                        <TimeNow />
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
 
                         {/* DATE AND PRICE */}
                         <div className="mt-4 flex">
                             <div className="mt-3 flex w-full flex-col">
-                                <label
-                                    className="mb-1 text-lg font-semibold"
-                                    htmlFor="address"
-                                >
+                                <label className="mb-1 text-lg font-semibold" htmlFor="address">
                                     Địa chỉ
                                 </label>
                                 <div className="relative">
                                     <input
                                         type="text"
                                         id="address"
-                                        className={clsx(
-                                            'text-input w-full py-[5px]',
-                                            {
-                                                invalid:
-                                                    bacsicForm.touched.address &&
-                                                    bacsicForm.errors.address,
-                                            }
-                                        )}
+                                        className={clsx('text-input w-full py-[5px]', {
+                                            invalid: bacsicForm.touched.address && bacsicForm.errors.address,
+                                        })}
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
                                         value={bacsicForm.values.address}
@@ -188,14 +156,9 @@ function AddCustomer() {
                                     />
                                 </div>
                                 <span
-                                    className={clsx(
-                                        'text-sm text-red-500 opacity-0',
-                                        {
-                                            'opacity-100':
-                                                bacsicForm.touched.address &&
-                                                bacsicForm.errors.address,
-                                        }
-                                    )}
+                                    className={clsx('text-sm text-red-500 opacity-0', {
+                                        'opacity-100': bacsicForm.touched.address && bacsicForm.errors.address,
+                                    })}
                                 >
                                     {bacsicForm.errors.address || 'No message'}
                                 </span>
@@ -204,23 +167,15 @@ function AddCustomer() {
 
                         <div className="mt-6 flex items-center justify-between border-t pt-6">
                             <div
-                                className={clsx(
-                                    'flex items-center text-blue-500',
-                                    {
-                                        invisible: !loading,
-                                    }
-                                )}
+                                className={clsx('flex items-center text-blue-500', {
+                                    invisible: !loading,
+                                })}
                             >
                                 <i className="fa-solid fa-spinner animate-spin text-xl"></i>
-                                <span className="text-lx pl-3 font-medium">
-                                    Đang tạo thông tin khách hàng
-                                </span>
+                                <span className="text-lx pl-3 font-medium">Đang tạo thông tin khách hàng</span>
                             </div>
                             <div className="flex">
-                                <Link
-                                    to={'/customers'}
-                                    className="btn btn-red btn-md"
-                                >
+                                <Link to={'/customers'} className="btn btn-red btn-md">
                                     <span className="pr-2">
                                         <i className="fa-solid fa-circle-xmark"></i>
                                     </span>
