@@ -130,7 +130,7 @@ function AddOrder() {
                 </div>
 
                 {/* RIGHT ORDER */}
-                <div className="ml-3 flex flex-1 flex-col rounded-md border py-1 px-2 shadow-xl shadow">
+                <div className="ml-3 flex flex-1 flex-col rounded-md border py-1 px-2 shadow">
                     <p className="text-center text-lg font-semibold">Hóa đơn</p>
 
                     {/* LIST PRODUCT */}
