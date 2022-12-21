@@ -30,11 +30,9 @@ function CustomerInput({ setIsValid }) {
             address: customer.address,
         },
         validationSchema,
+        validateOnMount: true,
     });
 
-    useEffect(() => {
-        formik.validateForm();
-    }, []);
     useEffect(() => {
         fetch('http://localhost:5000/api/customer?' + `filters={"phone": "${formik.values.phone}"}`)
             .then((res) => res.json())
