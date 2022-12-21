@@ -107,7 +107,7 @@ function Sidebar() {
         <div className="flex h-full min-w-[240px] flex-col bg-blue-500">
             <header className="mb-8 flex h-16 w-full flex-col items-center justify-center text-white">
                 <div className="text-lg font-extrabold">QUẢN LÝ</div>
-                <div className="font-bold">CỬA HÀNG CÂY CẢNH</div>
+                <div className="font-bold">CỬA HÀNG CÂY XANH</div>
             </header>
 
             <ul className="flex flex-col space-y-0.5 overflow-y-auto p-2">
