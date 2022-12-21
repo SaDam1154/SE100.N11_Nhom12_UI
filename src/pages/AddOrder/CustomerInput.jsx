@@ -114,7 +114,7 @@ function CustomerInput({ setIsValid }) {
                     id="name"
                     className={clsx('text-input py-1', {
                         invalid: formik.touched.name && formik.errors.name,
-                        disabled: isExistCustomer,
+                        'disabled pointer-events-none': isExistCustomer,
                     })}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -139,7 +139,7 @@ function CustomerInput({ setIsValid }) {
                     id="address"
                     className={clsx('text-input py-1', {
                         invalid: formik.touched.address && formik.errors.address,
-                        disabled: isExistCustomer,
+                        'disabled pointer-events-none': isExistCustomer,
                     })}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
