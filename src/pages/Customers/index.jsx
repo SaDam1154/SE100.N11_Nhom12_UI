@@ -1,26 +1,24 @@
+import clsx from 'clsx';
 import { Fragment, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 function Customers() {
-    // const [search, setSearch] = useState('');
-    // onChange={(e) => {
-    //     setSearch(e.target.value);
-    // }}
-    // .filter((product) => {
-    //     return search.toLowerCase() === ''
-    //         ? product
-    //         : product.name
-    //               .toLowerCase()
-    //               .includes(search) ||
-    //               product?.type.name
-    //                   .toLowerCase()
-    //                   .includes(search);
-    // })
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+    const [deletingCustomerId, setDeletingCustomerId] = useState(null);
+
     const [search, setSearch] = useState('');
     const [customers, setCustomers] = useState([]);
     const navigate = useNavigate();
 
+    const showDeleteNoti = () => toast.info('Xóa khách hàng thành công!');
+    const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
+
     useEffect(() => {
+        getCustomers();
+    }, []);
+
+    function getCustomers() {
         fetch('http://localhost:5000/api/customer')
             .then((res) => res.json())
             .then((resJson) => {
@@ -29,120 +27,188 @@ function Customers() {
                 } else {
                     setCustomers([]);
                 }
+            })
+            .catch((error) => {
+                console.log(error);
+                setCustomers([]);
             });
-    }, []);
+    }
+
+    function deleteCustomer(id) {
+        fetch('http://localhost:5000/api/customer/' + id, {
+            method: 'DELETE',
+        })
+            .then((res) => res.json())
+            .then((resJson) => {
+                setShowDeleteDialog(false);
+                if (resJson) {
+                    showDeleteNoti();
+                    console.log('xóa');
+                    getCustomers();
+                } else {
+                    showErorrNoti();
+                }
+            })
+            .catch(() => {
+                showErorrNoti();
+                setShowDeleteDialog(false);
+            });
+    }
+
     function LinkToDetail(id) {
         navigate('/customer/detail/' + id);
     }
     return (
-        <div>
-            <div className="flex space-x-4">
-                {/* tite + reload btn */}
-                <div className="flex">
-                    <label className="text-2xl font-bold text-slate-800">Danh sách khách hàng</label>
-                    <button type="button" className="ml-3 text-gray-800 hover:underline">
-                        <span className="font-sm pr-1">
-                            <i className="fa fa-refresh" aria-hidden="true"></i>
-                        </span>
-                        <span className="">Tải lại</span>
-                    </button>
-                </div>
-
-                {/* Action group */}
-                <div className="flex grow">
-                    {/* Search */}
-                    <div className="mr-2 flex grow">
-                        <input
-                            type="text"
-                            className="text-input grow"
-                            onChange={(e) => {
-                                setSearch(e.target.value);
-                            }}
-                            placeholder="Tìm kiếm khách hàng"
-                        />
+        <>
+            <div className="container w-full">
+                <div className="flex space-x-4">
+                    {/* tite + reload btn */}
+                    <div className="flex">
+                        <label className="text-2xl font-bold text-slate-800">Danh sách khách hàng</label>
+                        <button type="button" className="ml-3 text-gray-800 hover:underline">
+                            <span className="font-sm pr-1">
+                                <i className="fa fa-refresh" aria-hidden="true"></i>
+                            </span>
+                            <span className="">Tải lại</span>
+                        </button>
                     </div>
 
-                    <Link to="/customer/add" className="btn btn-md bg-green-600 hover:bg-green-500">
-                        <span className="pr-1">
-                            <i className="fa-solid fa-circle-plus"></i>
-                        </span>
-                        <span>Thêm khách hàng</span>
-                    </Link>
+                    {/* Action group */}
+                    <div className="flex grow">
+                        {/* Search */}
+                        <div className="mr-2 flex grow">
+                            <input
+                                type="text"
+                                className="text-input grow"
+                                onChange={(e) => {
+                                    setSearch(e.target.value);
+                                }}
+                                placeholder="Tìm kiếm khách hàng"
+                            />
+                        </div>
+
+                        <Link to="/customer/add" className="btn btn-md bg-green-600 hover:bg-green-500">
+                            <span className="pr-1">
+                                <i className="fa-solid fa-circle-plus"></i>
+                            </span>
+                            <span>Thêm khách hàng</span>
+                        </Link>
+                    </div>
+                </div>
+                <table className="mt-8 w-full">
+                    <thead className="w-full rounded bg-blue-500 text-white">
+                        <tr className="flex h-11 w-full">
+                            <th className="flex w-20 items-center justify-end px-2">Mã KH</th>
+                            <th className="flex w-56 items-center justify-start px-2">Tên khách hàng</th>
+                            <th className="flex w-36 items-center justify-center px-2">Số điện thoại</th>
+                            <th className="flex flex-1 items-center justify-start px-2">Địa chỉ </th>
+                            <th className="flex w-[200px] items-center justify-center px-2"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody className="flex h-[75vh] w-full flex-col" style={{ overflowY: 'overlay' }}>
+                        {customers
+                            .filter((customer) => {
+                                return search.toLowerCase() === ''
+                                    ? customer
+                                    : customer.name.toLowerCase().includes(search) ||
+                                          customer.phone.toLowerCase().includes(search);
+                            })
+                            ?.map((customer, index) => (
+                                <tr
+                                    key={customer._id}
+                                    className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                                >
+                                    <td
+                                        className="flex w-20 items-center justify-end px-2"
+                                        onClick={() => LinkToDetail(customer.id)}
+                                    >
+                                        {customer.id}
+                                    </td>
+                                    <td
+                                        className="flex w-56 items-center justify-start px-2"
+                                        onClick={() => LinkToDetail(customer.id)}
+                                    >
+                                        {customer.name}
+                                    </td>
+                                    <td
+                                        className="flex w-36 items-center justify-center px-2"
+                                        onClick={() => LinkToDetail(customer.id)}
+                                    >
+                                        {customer.phone}
+                                    </td>
+                                    <td
+                                        className="flex flex-1 items-center justify-start px-2"
+                                        onClick={() => LinkToDetail(customer.id)}
+                                    >
+                                        {customer.address}
+                                    </td>
+                                    <td className="flex w-[200px] items-center justify-center px-2 py-2">
+                                        <div className="flex justify-end">
+                                            <Link
+                                                to={'/customer/update/' + customer.id}
+                                                className="btn btn-sm btn-blue"
+                                            >
+                                                <span className="pr-1">
+                                                    <i className="fa-solid fa-pen-to-square"></i>
+                                                </span>
+                                                <span>Sửa</span>
+                                            </Link>
+                                            <button
+                                                className="btn btn-sm btn-red"
+                                                onClick={() => {
+                                                    {
+                                                        setShowDeleteDialog(true);
+                                                        setDeletingCustomerId(customer.id);
+                                                    }
+                                                }}
+                                            >
+                                                <span className="pr-1">
+                                                    <i className="fa-solid fa-circle-xmark"></i>
+                                                </span>
+                                                <span>Xoá</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                    </tbody>
+                </table>
+
+                <ToastContainer />
+            </div>
+
+            {/* DELETE DIALOG */}
+            <div
+                className={clsx(
+                    'fixed inset-0 z-[99999] hidden items-center justify-center bg-black/20 opacity-0 transition-opacity',
+                    {
+                        '!flex !opacity-100': showDeleteDialog,
+                    }
+                )}
+            >
+                <div className="">
+                    <div className="min-w-[160px] max-w-[400px] rounded-lg bg-white p-6">
+                        <div className="text-clr-text-dark font-bold">Bạn có chắc chắn muốn xoá không?</div>
+                        <p className="mt-4">Lưu ý: Bạn không thể không phục lại sau khi xoá!</p>
+                        <div className="mt-4 flex">
+                            <button
+                                className="btn btn-blue btn-md"
+                                onClick={() => {
+                                    setDeletingCustomerId(null);
+                                    setShowDeleteDialog(false);
+                                }}
+                            >
+                                Quay lại
+                            </button>
+                            <button className="btn btn-md btn-red" onClick={() => deleteCustomer(deletingCustomerId)}>
+                                Xoá
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <table className="mt-4 w-full">
-                <colgroup>
-                    <col span="1" style={{ width: '10%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '10%' }} />
-                </colgroup>
-
-                <thead className="h-11 rounded bg-blue-500 text-white">
-                    <tr>
-                        <th scope="col">STT</th>
-                        <th scope="col">Mã KH</th>
-                        <th scope="col">Tên khách hàng</th>
-                        <th scope="col">Số điện thoại</th>
-                        <th scope="col">Địa chỉ </th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {customers
-                        .filter((customer) => {
-                            return search.toLowerCase() === ''
-                                ? customer
-                                : customer.name.toLowerCase().includes(search) ||
-                                      customer.phone.toLowerCase().includes(search);
-                        })
-                        ?.map((customer, index) => (
-                            <tr
-                                key={customer._id}
-                                className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
-                            >
-                                <td className="py-2 text-center" onClick={() => LinkToDetail(customer.id)}>
-                                    {index + 1}
-                                </td>
-                                <td className="py-2 text-left" onClick={() => LinkToDetail(customer.id)}>
-                                    {customer.id}
-                                </td>
-                                <td className="py-2 pl-[4%] text-left" onClick={() => LinkToDetail(customer.id)}>
-                                    {customer.name}
-                                </td>
-                                <td className="py-2 text-center" onClick={() => LinkToDetail(customer.id)}>
-                                    {customer.phone}
-                                </td>
-                                <td className="py-2 pl-4 text-left" onClick={() => LinkToDetail(customer.id)}>
-                                    {customer.address}
-                                </td>
-                                <td className="py-2 text-center">
-                                    <div className="flex justify-end">
-                                        <Link
-                                            to={'/customer/update/' + customer.id}
-                                            className="btn btn-sm bg-blue-500 hover:bg-blue-400"
-                                        >
-                                            <span className="pr-1">
-                                                <i className="fa-solid fa-pen-to-square"></i>
-                                            </span>
-                                            <span>Sửa</span>
-                                        </Link>
-                                        <button className="btn btn-sm bg-red-500 hover:bg-red-400">
-                                            <span className="pr-1">
-                                                <i className="fa-solid fa-circle-xmark"></i>
-                                            </span>
-                                            <span>Xoá</span>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                </tbody>
-            </table>
-        </div>
+        </>
     );
 }
 
