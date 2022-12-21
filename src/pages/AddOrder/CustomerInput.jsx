@@ -49,12 +49,15 @@ function CustomerInput({ setIsValid }) {
                     formik.setFieldValue('address', parseCustomer.address);
                 } else {
                     console.log(formik.values.phone);
+
                     dispatch(
                         orderActions.updateCustomer({
                             ...formik.values,
                         })
                     );
                     setIsExistCustomer(false);
+                    formik.values.name = '';
+                    formik.values.address = '';
                 }
             })
             .catch((err) => {
