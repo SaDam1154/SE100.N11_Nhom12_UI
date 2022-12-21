@@ -2,6 +2,9 @@ import clsx from 'clsx';
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { cartActions } from '../../redux/slices/cartSlice';
+import { cartSelector } from '../../redux/selectors';
 
 const validationSchema = Yup.object({
     name: Yup.string()
@@ -11,17 +14,20 @@ const validationSchema = Yup.object({
     address: Yup.string().required('Trường này bắt buộc'),
     phone: Yup.string()
         .required('Trường này bắt buộc')
-        .matches(/^[\+|0]([0-9]{10,14})\b/, 'Số điện thoại không hợp lệ'),
+        .matches(/^[\+|0]([0-9]{9,14})\b/, 'Số điện thoại không hợp lệ'),
 });
 
 function CustomerInput() {
-    const [customer, setCustomer] = useState(false);
+    const [isExistCustomer, setIsExistCustomer] = useState(false);
+
+    const dispatch = useDispatch();
+    const customer = useSelector(cartSelector)?.customer;
 
     const formik = useFormik({
         initialValues: {
-            name: '',
-            phone: '',
-            address: '',
+            name: customer.name,
+            phone: customer.phone,
+            address: customer.address,
         },
         validationSchema,
     });
@@ -31,24 +37,43 @@ function CustomerInput() {
             .then((res) => res.json())
             .then((resJson) => {
                 if (resJson.success && resJson.customers?.length !== 0) {
-                    setCustomer(resJson.customers[0]);
+                    const parseCustomer = {
+                        _id: resJson.customers[0]._id,
+                        phone: resJson.customers[0].phone,
+                        name: resJson.customers[0].name,
+                        address: resJson.customers[0].address,
+                    };
+                    dispatch(cartActions.updateCustomer(parseCustomer));
+                    setIsExistCustomer(true);
+                    formik.setFieldValue('name', parseCustomer.name);
+                    formik.setFieldValue('address', parseCustomer.address);
                 } else {
-                    setCustomer(false);
+                    dispatch(
+                        cartActions.updateCustomer({
+                            ...formik.values,
+                        })
+                    );
+                    setIsExistCustomer(false);
                 }
             })
             .catch((err) => {
                 console.log(err);
-                setCustomer(false);
+                dispatch(
+                    cartActions.updateCustomer({
+                        ...formik.values,
+                    })
+                );
+                setIsExistCustomer(false);
             });
     }, [formik.values.phone]);
 
     useEffect(() => {
-        if (!customer) {
-            return;
-        }
-        formik.setFieldValue('name', customer.name);
-        formik.setFieldValue('address', customer.address);
-    }, [customer]);
+        dispatch(
+            cartActions.updateCustomer({
+                ...formik.values,
+            })
+        );
+    }, [formik.values]);
 
     return (
         <form className="flex space-x-4 rounded-md border px-2 pt-2 shadow">
@@ -85,7 +110,7 @@ function CustomerInput() {
                     id="name"
                     className={clsx('text-input py-1', {
                         invalid: formik.touched.name && formik.errors.name,
-                        disabled: customer,
+                        disabled: isExistCustomer,
                     })}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -110,7 +135,7 @@ function CustomerInput() {
                     id="address"
                     className={clsx('text-input py-1', {
                         invalid: formik.touched.address && formik.errors.address,
-                        disabled: customer,
+                        disabled: isExistCustomer,
                     })}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}

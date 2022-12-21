@@ -15,7 +15,7 @@ const validationSchema = Yup.object({
     address: Yup.string().required('Trường này bắt buộc'),
     phone: Yup.string()
         .required('Trường này bắt buộc')
-        .matches(/^[\+|0]([0-9]{10,14})\b/, 'Số điện thoại không hợp lệ'),
+        .matches(/^[\+|0]([0-9]{9,14})\b/, 'Số điện thoại không hợp lệ'),
 });
 
 function AddCustomer() {
