@@ -6,6 +6,11 @@ import clsx from 'clsx';
 import TimeNow from '../../components/TimeNow';
 import PriceFormat from '../../components/PriceFormat';
 import CustomerInput from './CustomerInput';
+import { useDispatch, useSelector } from 'react-redux';
+import { orderSelector } from '../../redux/selectors';
+import { orderActions } from '../../redux/slices/orderSlice';
+import { useMemo } from 'react';
+
 function removeVietnameseTones(stra) {
     var str = stra;
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
@@ -36,24 +41,98 @@ function removeVietnameseTones(stra) {
     return str;
 }
 function AddOrder() {
+    const order = useSelector(orderSelector);
+    const dispatch = useDispatch();
+
     const [search, setSearch] = useState('');
+    const [idFilter, setIdFilter] = useState('');
 
     const [products, setProducts] = useState([]);
+    const [selectedProducts, setSelectedProducts] = useState([]);
+    const [renderProduct, setRenderProduct] = useState([]);
     useEffect(() => {
         fetch('http://localhost:5000/api/product')
             .then((res) => res.json())
             .then((resJson) => {
                 if (resJson.success) {
                     setProducts(resJson.products);
+                    setRenderProduct(resJson.products);
                 } else {
                     setProducts([]);
+                    setRenderProduct([]);
                 }
             })
             .catch((error) => {
                 console.log(error);
                 setProducts([]);
+                setRenderProduct([]);
             });
     }, []);
+
+    useEffect(() => {
+        setRenderProduct(
+            products
+                .filter((product) => {
+                    if (search === '') {
+                        return product;
+                    } else {
+                        if (
+                            removeVietnameseTones(product.name.toLowerCase()).includes(
+                                removeVietnameseTones(search.toLowerCase())
+                            ) ||
+                            removeVietnameseTones(product?.type.name.toLowerCase()).includes(
+                                removeVietnameseTones(search.toLowerCase())
+                            )
+                        ) {
+                            var id = product.id.toString();
+                            return product.id.toString().includes(id);
+                        }
+                    }
+                })
+                .filter((product) => {
+                    if (!idFilter) {
+                        return true;
+                    }
+                    return product.id == idFilter;
+                })
+        );
+    }, [search, idFilter]);
+
+    useEffect(() => {
+        setSelectedProducts(
+            order.details.map((detail) => {
+                const matchedProduct = products.find((product) => product._id === detail.product);
+                if (!matchedProduct) {
+                    return {
+                        id: '',
+                        image: '',
+                        name: '',
+                        price: 0,
+                        quantity: 0,
+                    };
+                }
+                return {
+                    _id: matchedProduct._id,
+                    id: matchedProduct.id,
+                    image: matchedProduct.image,
+                    name: matchedProduct.name,
+                    price: detail.price,
+                    quantity: matchedProduct.quantity,
+                    orderQuantity: detail.quantity,
+                };
+            })
+        );
+    }, [order, products]);
+
+    function handleAddProduct(product) {
+        dispatch(orderActions.add(product));
+    }
+    function handleDeleteProduct(_id) {
+        dispatch(orderActions.remove(_id));
+    }
+    function handleUpdateQuantityProduct(product, quantity) {
+        dispatch(orderActions.updateQuantity({ product, quantity }));
+    }
 
     return (
         <div className="container w-full">
@@ -67,8 +146,9 @@ function AddOrder() {
                         <input
                             type="text"
                             className="text-input w-16 py-1"
+                            value={idFilter}
                             onChange={(e) => {
-                                setSearch(e.target.value);
+                                setIdFilter(e.target.value);
                             }}
                             placeholder="Mã"
                         />
@@ -77,6 +157,7 @@ function AddOrder() {
                         <input
                             type="text"
                             className="text-input flex-1 py-1"
+                            value={search}
                             onChange={(e) => {
                                 setSearch(e.target.value);
                             }}
@@ -87,44 +168,26 @@ function AddOrder() {
                     {/* LIST PRODUCT */}
                     <div className="flex h-[68vh] flex-col overflow-scroll">
                         <div className=" grid max-h-[100] min-h-[50] grid-cols-3 gap-2">
-                            {products
-                                .filter((product) => {
-                                    if (search === '') {
-                                        return product;
-                                    } else {
-                                        if (
-                                            removeVietnameseTones(product.name.toLowerCase()).includes(
-                                                removeVietnameseTones(search.toLowerCase())
-                                            ) ||
-                                            removeVietnameseTones(product?.type.name.toLowerCase()).includes(
-                                                removeVietnameseTones(search.toLowerCase())
-                                            )
-                                        ) {
-                                            var id = product.id.toString();
-                                            return product.id.toString().includes(id);
-                                        }
-                                    }
-                                })
-                                ?.map((product) => (
-                                    <div
-                                        key={product.id}
-                                        className="cursor-pointer select-none overflow-hidden rounded-md border shadow"
-                                        onClick={() => handleSubmit(product)}
-                                    >
-                                        <img
-                                            className="aspect-[5/3] w-full object-cover"
-                                            src={product.image || '/placeholder.png'}
-                                        />
-                                        <div className="space-y-1 p-2">
-                                            <p className="font-semibold text-blue-600">{product.name}</p>
-                                            <p className="text-sm font-semibold">{product.type?.name || '-'}</p>
-                                            <p className="">
-                                                <PriceFormat>{product.price}</PriceFormat>
-                                                <span className="ml-1">VNĐ</span>
-                                            </p>
-                                        </div>
+                            {renderProduct?.map((product) => (
+                                <div
+                                    key={product.id}
+                                    className="cursor-pointer select-none overflow-hidden rounded-md border shadow hover:shadow-md"
+                                    onClick={() => handleAddProduct(product)}
+                                >
+                                    <img
+                                        className="aspect-[5/3] w-full object-cover"
+                                        src={product.image || '/placeholder.png'}
+                                    />
+                                    <div className="space-y-1 p-2">
+                                        <p className="font-semibold text-blue-600">{product.name}</p>
+                                        <p className="text-sm font-semibold">{product.type?.name || '-'}</p>
+                                        <p className="">
+                                            <PriceFormat>{product.price}</PriceFormat>
+                                            <span className="ml-1">VNĐ</span>
+                                        </p>
                                     </div>
-                                ))}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -139,7 +202,7 @@ function AddOrder() {
                             <tr className="flex h-11 w-full">
                                 <th className="flex w-10 items-center justify-end px-2 text-center">Mã</th>
                                 <th className="flex w-16 items-center justify-center px-2">Ảnh</th>
-                                <th className="flex flex-1 items-center justify-start px-2">Tên cây</th>
+                                <th className="flex flex-1 items-center justify-start px-2">Tên sản phẩm</th>
                                 <th className="flex w-28 items-center justify-end px-2">Giá (VND)</th>
                                 <th className="flex w-24 items-center justify-end px-2">Số lượng</th>
                                 <th className="flex w-20 items-center justify-center px-2"></th>
@@ -147,43 +210,59 @@ function AddOrder() {
                         </thead>
 
                         <tbody className="flex h-[400px] w-full flex-col" style={{ overflowY: 'overlay' }}>
-                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8].map((product, index) => (
-                                <tr key={index} className="flex border-b border-slate-200 hover:bg-slate-100">
-                                    <td className="flex w-10 items-center justify-end px-2 py-2">1</td>
-                                    <td className="flex w-16 items-center justify-center px-2 py-2">
-                                        <img
-                                            src={'' || '/placeholder.png'}
-                                            className="h-10 w-10 rounded-full object-cover object-center"
-                                        />
-                                    </td>
-                                    <td className="flex flex-[2] items-center justify-start px-2 py-2">
-                                        Cay xuong roong
-                                    </td>
-                                    <td className="flex w-28 items-center justify-end px-2 py-2">
-                                        <PriceFormat>{50000}</PriceFormat>
-                                    </td>
-                                    <td className="flex w-24 items-center justify-end px-2 py-2">
-                                        <input
-                                            type="number"
-                                            min="1"
-                                            className={clsx('text-input w-16 py-1 text-right text-base')}
-                                        />
-                                    </td>
-                                    <td className="flex w-20 items-center justify-center px-2 py-2">
-                                        <button
-                                            className="btn btn-sm btn-red"
-                                            // onClick={() => deleteProduct(product.id)}
-                                        >
-                                            <span>Xoá</span>
-                                        </button>
-                                    </td>
+                            {selectedProducts?.length === 0 ? (
+                                <tr className="mt-3 text-lg font-semibold">
+                                    <td className="flex w-full justify-center">Chưa có sản phẩm trong hoá đơn</td>
                                 </tr>
-                            ))}
+                            ) : (
+                                selectedProducts?.map((product, index) => (
+                                    <tr key={index} className="flex border-b border-slate-200 hover:bg-slate-100">
+                                        <td className="flex w-10 items-center justify-end px-2 py-2">{product?.id}</td>
+                                        <td className="flex w-16 items-center justify-center px-2 py-2">
+                                            <img
+                                                src={product?.image || '/placeholder.png'}
+                                                className="h-10 w-10 rounded-full object-cover object-center"
+                                            />
+                                        </td>
+                                        <td className="flex flex-[2] items-center justify-start px-2 py-2">
+                                            {product?.name}
+                                        </td>
+                                        <td className="flex w-28 items-center justify-end px-2 py-2">
+                                            <PriceFormat>{product?.price}</PriceFormat>
+                                        </td>
+                                        <td className="flex w-24 items-center justify-end px-2 py-2">
+                                            <input
+                                                type="number"
+                                                min="1"
+                                                value={product?.orderQuantity || ''}
+                                                onChange={(e) => handleUpdateQuantityProduct(product, e.target.value)}
+                                                className={clsx('text-input w-16 py-1 text-right text-base')}
+                                            />
+                                        </td>
+                                        <td className="flex w-20 items-center justify-center px-2 py-2">
+                                            <button
+                                                className="btn btn-sm btn-red"
+                                                onClick={() => handleDeleteProduct(product._id)}
+                                            >
+                                                <span>Xoá</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                     <div className="flex grow items-center justify-between">
                         <div className="flex items-center">
-                            <p className="">Tổng tiền: </p>
+                            <p className="font-semibold">
+                                <span>Tổng tiền: </span>
+                                <span className="text-xl text-blue-600">
+                                    <span>
+                                        <PriceFormat>{order.totalPrice}</PriceFormat>
+                                    </span>
+                                    <span> VNĐ</span>
+                                </span>
+                            </p>
                         </div>
                         <button className="btn btn-blue btn-md ">
                             <span className="pr-2">

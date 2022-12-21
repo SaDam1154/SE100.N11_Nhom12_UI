@@ -3,8 +3,8 @@ import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { cartActions } from '../../redux/slices/cartSlice';
-import { cartSelector } from '../../redux/selectors';
+import { orderActions } from '../../redux/slices/orderSlice';
+import { orderSelector } from '../../redux/selectors';
 
 const validationSchema = Yup.object({
     name: Yup.string()
@@ -21,7 +21,7 @@ function CustomerInput() {
     const [isExistCustomer, setIsExistCustomer] = useState(false);
 
     const dispatch = useDispatch();
-    const customer = useSelector(cartSelector)?.customer;
+    const customer = useSelector(orderSelector)?.customer;
 
     const formik = useFormik({
         initialValues: {
@@ -43,13 +43,13 @@ function CustomerInput() {
                         name: resJson.customers[0].name,
                         address: resJson.customers[0].address,
                     };
-                    dispatch(cartActions.updateCustomer(parseCustomer));
+                    dispatch(orderActions.updateCustomer(parseCustomer));
                     setIsExistCustomer(true);
                     formik.setFieldValue('name', parseCustomer.name);
                     formik.setFieldValue('address', parseCustomer.address);
                 } else {
                     dispatch(
-                        cartActions.updateCustomer({
+                        orderActions.updateCustomer({
                             ...formik.values,
                         })
                     );
@@ -59,7 +59,7 @@ function CustomerInput() {
             .catch((err) => {
                 console.log(err);
                 dispatch(
-                    cartActions.updateCustomer({
+                    orderActions.updateCustomer({
                         ...formik.values,
                     })
                 );
@@ -69,7 +69,7 @@ function CustomerInput() {
 
     useEffect(() => {
         dispatch(
-            cartActions.updateCustomer({
+            orderActions.updateCustomer({
                 ...formik.values,
             })
         );

@@ -16,22 +16,30 @@ function updateTotalPrice(state) {
     }, 0);
 }
 
-export const cartSlice = createSlice({
-    name: 'cart',
+export const orderSlice = createSlice({
+    name: 'order',
     initialState,
     reducers: {
         add: (state, action) => {
-            // UPDATE PRODUCT
-            const indexDetail = state.details.findIndex((detail) => detail.product === action.payload.product);
+            //add
+            const indexDetail = state.details.findIndex((detail) => detail.product === action.payload._id);
             if (indexDetail !== -1) {
-                state.details[indexDetail].quantity += action.payload.quantity;
+                if (state.details[indexDetail].quantity === action.payload.quantity) {
+                    return state;
+                } else {
+                    state.details[indexDetail].quantity += 1;
+                }
             } else {
-                state.details.push(action.payload);
+                state.details.push({
+                    product: action.payload._id,
+                    price: action.payload.price,
+                    quantity: 1,
+                });
             }
             updateTotalPrice(state);
         },
 
-        // action: product
+        // action: _id
         remove: (state, action) => {
             state.details = state.details.filter((detail) => detail.product !== action.payload);
             updateTotalPrice(state);
@@ -39,9 +47,12 @@ export const cartSlice = createSlice({
 
         // action: {product, quantity}
         updateQuantity: (state, action) => {
-            const indexDetail = state.details.findIndex((detail) => detail.product === action.payload.product);
+            const indexDetail = state.details.findIndex((detail) => detail.product === action.payload.product._id);
             if (indexDetail !== -1) {
-                state.details[indexDetail].quantity = action.payload.quantity;
+                if (action.payload.product.quantity < Number(action.payload.quantity)) {
+                    return state;
+                }
+                state.details[indexDetail].quantity = Number(action.payload.quantity);
             }
             updateTotalPrice(state);
         },
@@ -53,8 +64,8 @@ export const cartSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-const cartReducer = cartSlice.reducer;
-const cartActions = cartSlice.actions;
+const orderReducer = orderSlice.reducer;
+const orderActions = orderSlice.actions;
 
-export default cartReducer;
-export { cartActions };
+export default orderReducer;
+export { orderActions };
