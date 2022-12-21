@@ -230,7 +230,10 @@ function AddOrder() {
                                         />
                                         <div className="space-y-1 p-2">
                                             <p className="font-semibold text-blue-600">{product.name}</p>
-                                            <p className="text-sm font-semibold">{product.type?.name || '-'}</p>
+                                            <p className="text-sm font-semibold">{'Mã: ' + product.id}</p>
+                                            <p className="text-sm font-semibold">
+                                                {'Loại: ' + product.type?.name || '-'}
+                                            </p>
                                             <p className="">
                                                 <PriceFormat>{product.price}</PriceFormat>
                                                 <span className="ml-1">VNĐ</span>
