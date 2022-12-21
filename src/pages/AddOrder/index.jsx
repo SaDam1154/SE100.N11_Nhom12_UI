@@ -38,36 +38,8 @@ function removeVietnameseTones(stra) {
 function AddOrder() {
     const [search, setSearch] = useState('');
 
-    const [selectedProducts, setselectedProduct] = useState(() => {
-        const localJobs = JSON.parse(localStorage.getItem('selectedProducts'));
-        return localJobs ?? [];
-    });
-    function handleSubmit(Product) {
-        setselectedProduct((prev) => {
-            const newSelectedProduct = [...prev, Product];
-            // localStorage.setItem(
-            //     'selectedProducts',
-            //     JSON.stringify(new SelectedProduct())
-            // );
-            return newSelectedProduct;
-        });
-    }
-    function handlClearJobsStorage() {
-        setselectedProduct([]);
-        return localStorage.clear('selectedProducts');
-    }
-    //Views
     const [products, setProducts] = useState([]);
-    const [productTypes, setProductTypes] = useState([]);
-    const navigate = useNavigate();
-
-    const [selectedProductTypes, setSelectedProductTypes] = useState([]);
     useEffect(() => {
-        callApi();
-        callApiProductTypes();
-    }, []);
-
-    function callApi() {
         fetch('http://localhost:5000/api/product')
             .then((res) => res.json())
             .then((resJson) => {
@@ -76,32 +48,19 @@ function AddOrder() {
                 } else {
                     setProducts([]);
                 }
+            })
+            .catch((error) => {
+                console.log(error);
+                setProducts([]);
             });
-    }
-    function callApiProductTypes() {
-        fetch('http://localhost:5000/api/product-type')
-            .then((res) => res.json())
-            .then((resJson) => {
-                if (resJson.success) {
-                    setProductTypes(resJson.productTypes);
-                } else {
-                    setProductTypes([]);
-                }
-            });
-    }
-
-    function linkToDetail(id) {
-        navigate('/product/detail/' + id);
-    }
-
-    //end
+    }, []);
 
     return (
         <div className="container w-full">
             <CustomerInput />
             <div className="mt-2 flex">
                 {/* LEFT VIEW */}
-                <div className="flex flex-grow flex-col rounded-md border py-3 px-2 shadow">
+                <div className="flex flex-1 flex-col rounded-md border py-3 px-2 shadow">
                     {/* HEADER ACTION GROUP */}
                     <div className="flex space-x-2 pb-2">
                         {/* ID */}
@@ -170,53 +129,51 @@ function AddOrder() {
                     </div>
                 </div>
 
-                <div className="ml-4 mt-1 flex   flex-col  border-2 border-solid py-1  px-2 shadow-xl">
-                    <label className="text-center align-middle text-2xl font-bold text-blue-800">Hóa đơn</label>
+                {/* RIGHT ORDER */}
+                <div className="ml-3 flex flex-1 flex-col rounded-md border py-1 px-2 shadow-xl shadow">
+                    <p className="text-center text-lg font-semibold">Hóa đơn</p>
 
-                    {/* table */}
-                    <table className="mt-1 w-[550px] max-w-[600px]  flex-grow">
-                        <thead className="w-[500px] rounded border-b bg-gray-700 text-sm font-medium text-white">
-                            <tr className="flex h-11 w-fit">
-                                <th className=" max-w-12 flex w-12 items-center justify-center  ">#</th>
-                                <th className="flex w-12 items-center justify-center ">Ảnh</th>
-                                <th className="  flex w-36   items-center justify-center ">Tên cây</th>
-                                <th className="flex w-28  items-center justify-center ">Loại cây</th>
-                                <th className="w flex w-20 items-center justify-end ">Giá (VND)</th>
-                                <th className="flex w-14 items-center justify-end ">Số lượng</th>
+                    {/* LIST PRODUCT */}
+                    <table className="mt-2 w-full">
+                        <thead className="w-full rounded bg-blue-500 text-white">
+                            <tr className="flex h-11 w-full">
+                                <th className="flex w-10 items-center justify-end px-2 text-center">Mã</th>
+                                <th className="flex w-16 items-center justify-center px-2">Ảnh</th>
+                                <th className="flex flex-1 items-center justify-start px-2">Tên cây</th>
+                                <th className="flex w-28 items-center justify-end px-2">Giá (VND)</th>
+                                <th className="flex w-24 items-center justify-end px-2">Số lượng</th>
+                                <th className="flex w-20 items-center justify-center px-2"></th>
                             </tr>
                         </thead>
 
-                        <tbody className=" over flex h-[200px] w-full  flex-col overflow-y-scroll">
-                            {selectedProducts?.map((selectedProduct, index) => (
-                                <tr
-                                    key={selectedProduct.id}
-                                    className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
-                                    onClick={() => linkToDetail(selectedProduct.id)}
-                                >
-                                    <td className="flex w-12 items-center justify-center px-1">{index + 1}</td>
-                                    <td className="w-22 flex items-center justify-center px-1 py-1">
+                        <tbody className="flex h-[400px] w-full flex-col" style={{ overflowY: 'overlay' }}>
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8].map((product, index) => (
+                                <tr key={index} className="flex border-b border-slate-200 hover:bg-slate-100">
+                                    <td className="flex w-10 items-center justify-end px-2 py-2">1</td>
+                                    <td className="flex w-16 items-center justify-center px-2 py-2">
                                         <img
-                                            src={selectedProduct.image || '/placeholder.png'}
+                                            src={'' || '/placeholder.png'}
                                             className="h-10 w-10 rounded-full object-cover object-center"
                                         />
                                     </td>
-                                    <td className=" flex w-36   items-center justify-start  px-1 py-1">
-                                        {selectedProduct?.name || '-'}
+                                    <td className="flex flex-[2] items-center justify-start px-2 py-2">
+                                        Cay xuong roong
                                     </td>
-                                    <td className="flex w-28   items-center justify-center px-1 py-1">
-                                        {selectedProduct.type?.name || '-'}
+                                    <td className="flex w-28 items-center justify-end px-2 py-2">
+                                        <PriceFormat>{50000}</PriceFormat>
                                     </td>
-                                    <td className="flex w-20 items-center justify-end px-1 py-1">
-                                        {selectedProduct.price.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
+                                    <td className="flex w-24 items-center justify-end px-2 py-2">
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            className={clsx('text-input w-16 py-1 text-right text-base')}
+                                        />
                                     </td>
-                                    <td className="flex w-12 items-center justify-end px-1 py-1">
-                                        {/* {selectedProduct.quantity} */}1
-                                    </td>
-                                    <td className="flex w-12 flex-grow items-center justify-center px-1 py-1">
-                                        <button className="btn btn-sm btn-red float-right w-14">
-                                            <span className="pr-1">
-                                                <i className="fa-solid fa-circle-xmark"></i>
-                                            </span>
+                                    <td className="flex w-20 items-center justify-center px-2 py-2">
+                                        <button
+                                            className="btn btn-sm btn-red"
+                                            // onClick={() => deleteProduct(product.id)}
+                                        >
                                             <span>Xoá</span>
                                         </button>
                                     </td>
@@ -224,29 +181,16 @@ function AddOrder() {
                             ))}
                         </tbody>
                     </table>
-
-                    <div className="flex flex-col">
-                        <div className=" flex">
-                            <label>Ngày đặt : </label>
-                            <TimeNow />
+                    <div className="flex grow items-center justify-between">
+                        <div className="flex items-center">
+                            <p className="">Tổng tiền: </p>
                         </div>
-                        <label className="">Tổng tiền: </label>
-                    </div>
-                    <div className="flex flex-grow flex-col-reverse">
-                        <div className=" ba  ml-[3%] flex justify-center pr-[5%]">
-                            <button className="btn btn-blue btn-md w-1/2 ">
-                                <span className="pr-2">
-                                    <i className="fa-solid fa-circle-plus"></i>
-                                </span>
-                                <span>Thêm</span>
-                            </button>
-                            <button className="btn btn-red btn-md w-1/2 ">
-                                <span className="pr-2">
-                                    <i className="fa-solid fa-circle-plus"></i>
-                                </span>
-                                <span>Hủy</span>
-                            </button>
-                        </div>
+                        <button className="btn btn-blue btn-md ">
+                            <span className="pr-2">
+                                <i className="fa-solid fa-circle-plus"></i>
+                            </span>
+                            <span>Tạo hoá đơn</span>
+                        </button>
                     </div>
                 </div>
             </div>
