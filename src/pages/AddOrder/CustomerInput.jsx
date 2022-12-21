@@ -56,8 +56,6 @@ function CustomerInput({ setIsValid }) {
                         })
                     );
                     setIsExistCustomer(false);
-                    formik.values.name = '';
-                    formik.values.address = '';
                 }
             })
             .catch((err) => {
@@ -69,7 +67,7 @@ function CustomerInput({ setIsValid }) {
                 );
                 setIsExistCustomer(false);
             });
-    }, [formik.values.phone]);
+    }, [formik.values]);
 
     useEffect(() => {
         if (!formik.dirty) {
