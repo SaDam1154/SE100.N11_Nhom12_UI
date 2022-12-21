@@ -48,8 +48,6 @@ function CustomerInput({ setIsValid }) {
                     formik.setFieldValue('name', parseCustomer.name);
                     formik.setFieldValue('address', parseCustomer.address);
                 } else {
-                    console.log(formik.values.phone);
-
                     dispatch(
                         orderActions.updateCustomer({
                             ...formik.values,
