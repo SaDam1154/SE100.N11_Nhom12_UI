@@ -8,25 +8,7 @@ const groupMenus = [
             link: '/',
         },
     },
-    {
-        main: {
-            iconClassname: 'fa-solid fa-house',
-            text: 'Đơn hàng',
-            link: '/order',
-        },
-        children: [
-            {
-                iconClassname: 'fa-solid fa-list',
-                text: 'Danh sách',
-                link: '/',
-            },
-            {
-                iconClassname: 'fa-solid fa-circle-plus',
-                text: 'Thêm',
-                link: '/add',
-            },
-        ],
-    },
+
     {
         main: {
             iconClassname: 'fa-solid fa-box-open',
@@ -49,7 +31,7 @@ const groupMenus = [
 
     {
         main: {
-            iconClassname: 'fa-solid fa-box-open',
+            iconClassname: 'fa-solid fa-boxes-stacked',
             text: 'Loại sản phẩm',
             link: '/product-type',
         },
@@ -70,23 +52,54 @@ const groupMenus = [
         main: {
             iconClassname: 'fa-solid fa-users',
             text: 'Khách hàng',
-            link: '/customers',
+            link: '/customer',
         },
+        children: [
+            {
+                iconClassname: 'fa-solid fa-list',
+                text: 'Danh sách',
+                link: '/',
+            },
+            {
+                iconClassname: 'fa-solid fa-circle-plus',
+                text: 'Thêm',
+                link: '/add',
+            },
+        ],
     },
     {
         main: {
-            iconClassname: 'fa-solid fa-users',
-            text: 'Báo cáo',
-            link: '/dashboard',
+            iconClassname: 'fa-solid fa-clipboard',
+            text: 'Hoá đơn',
+            link: '/order',
         },
+        children: [
+            {
+                iconClassname: 'fa-solid fa-list',
+                text: 'Danh sách',
+                link: '/',
+            },
+            {
+                iconClassname: 'fa-solid fa-circle-plus',
+                text: 'Thêm',
+                link: '/add',
+            },
+        ],
     },
-    {
-        main: {
-            iconClassname: 'fa-solid fa-users',
-            text: 'Quy định',
-            link: '/rules',
-        },
-    },
+    // {
+    //     main: {
+    //         iconClassname: 'fa-solid fa-users',
+    //         text: 'Báo cáo',
+    //         link: '/dashboard',
+    //     },
+    // },
+    // {
+    //     main: {
+    //         iconClassname: 'fa-solid fa-users',
+    //         text: 'Quy định',
+    //         link: '/rules',
+    //     },
+    // },
 ];
 
 function Sidebar() {

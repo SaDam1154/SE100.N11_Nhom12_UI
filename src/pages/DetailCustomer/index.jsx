@@ -72,7 +72,7 @@ function DetailCustomer() {
 
                 <div className="float-right mt-8 mr-2 flex flex-row">
                     <div className="float-left mr-5 flex basis-1 flex-col">
-                        <Link to={'/customers'} className="btn btn-blue btn-md">
+                        <Link to={'/customer'} className="btn btn-blue btn-md">
                             <span className="pr-1">
                                 <i className="fa-solid fa-circle-xmark"></i>
                             </span>
@@ -81,7 +81,7 @@ function DetailCustomer() {
                     </div>
 
                     <div className="float-right flex basis-1 flex-col">
-                        <Link to={'/customers/updatecustomer/' + customer.id} className="btn btn-md btn-green">
+                        <Link to={'/customer/update/' + customer.id} className="btn btn-md btn-green">
                             <span className="pr-2">
                                 <i className="fa fa-share" aria-hidden="true"></i>
                             </span>

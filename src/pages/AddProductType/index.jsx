@@ -25,11 +25,6 @@ function AddProductType() {
     });
 
     const navigate = useNavigate();
-    // const currentPromise = new Promise((resolve, reject) => {
-    //     setTimeout (() => {
-    //         resolve('/customers')
-    //     },5000)
-    // })
     function handleFormsubmit(values) {
         console.log(values);
         setLoading(true);

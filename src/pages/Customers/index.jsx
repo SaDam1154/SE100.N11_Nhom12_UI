@@ -32,7 +32,7 @@ function Customers() {
             });
     }, []);
     function LinkToDetail(id) {
-        navigate('/customers/detail/' + id);
+        navigate('/customer/detail/' + id);
     }
     return (
         <div>
@@ -62,7 +62,7 @@ function Customers() {
                         />
                     </div>
 
-                    <Link to="/customers/addcustomer" className="btn btn-md bg-green-600 hover:bg-green-500">
+                    <Link to="/customer/add" className="btn btn-md bg-green-600 hover:bg-green-500">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
@@ -122,7 +122,7 @@ function Customers() {
                                 <td className="py-2 text-center">
                                     <div className="flex justify-end">
                                         <Link
-                                            to={'/customers/updatecustomer/' + customer.id}
+                                            to={'/customer/update/' + customer.id}
                                             className="btn btn-sm bg-blue-500 hover:bg-blue-400"
                                         >
                                             <span className="pr-1">

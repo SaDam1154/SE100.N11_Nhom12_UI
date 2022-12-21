@@ -34,6 +34,8 @@ const publicRoutes = [
             heading: 'Trang chủ',
         },
     },
+
+    // ORDER
     {
         path: '/order',
         component: Order,
@@ -56,6 +58,8 @@ const publicRoutes = [
             heading: 'Chi tiết hoá đơn',
         },
     },
+
+    // PRODUCT
     {
         path: '/product',
         component: Products,
@@ -77,6 +81,22 @@ const publicRoutes = [
             heading: 'Thêm sản phẩm',
         },
     },
+    {
+        path: '/product/update/:id',
+        component: UpdateProduct,
+        props: {
+            heading: 'Chỉnh sửa sản phẩm',
+        },
+    },
+    {
+        path: '/product/views',
+        component: ProductsView,
+        props: {
+            heading: 'Danh sách sản phẩm dạng lưới',
+        },
+    },
+
+    // PRODUCT TYPE
     {
         path: '/product-type',
         component: ProductType,
@@ -105,49 +125,38 @@ const publicRoutes = [
             heading: 'Chỉnh sửa loại sản phẩm',
         },
     },
+
+    // CUSTOMER
     {
-        path: '/product/update/:id',
-        component: UpdateProduct,
-        props: {
-            heading: 'Chỉnh sửa sản phẩm',
-        },
-    },
-    {
-        path: '/product/views',
-        component: ProductsView,
-        props: {
-            heading: 'Danh sách sản phẩm dạng lưới',
-        },
-    },
-    {
-        path: '/customers',
+        path: '/customer',
         component: Customers,
         props: {
             heading: 'Khách hàng',
         },
     },
     {
-        path: '/customers/detail/:id',
+        path: '/customer/detail/:id',
         component: DetailCustomer,
         props: {
             heading: 'Chi tiết khách hàng',
         },
     },
     {
-        path: '/customers/addcustomer',
+        path: '/customer/add',
         component: AddCustomer,
         props: {
             heading: 'Thêm khách hàng',
         },
     },
     {
-        path: '/customers/updatecustomer/:id',
+        path: '/customer/update/:id',
         component: UpdateCustomer,
         props: {
             heading: 'Chỉnh sửa khách hàng',
         },
     },
-    ,
+
+    // *****
     {
         path: '/dashboard',
         component: Dashboard,

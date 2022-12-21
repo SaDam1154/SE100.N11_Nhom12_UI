@@ -34,11 +34,7 @@ function AddCustomer() {
     });
 
     const navigate = useNavigate();
-    // const currentPromise = new Promise((resolve, reject) => {
-    //     setTimeout (() => {
-    //         resolve('/customers')
-    //     },5000)
-    // })
+
     function handleFormsubmit(values) {
         console.log(values);
         setLoading(true);
@@ -173,7 +169,7 @@ function AddCustomer() {
                                 <span className="text-lx pl-3 font-medium">Đang tạo thông tin khách hàng</span>
                             </div>
                             <div className="flex">
-                                <Link to={'/customers'} className="btn btn-red btn-md">
+                                <Link to={'/customer'} className="btn btn-red btn-md">
                                     <span className="pr-2">
                                         <i className="fa-solid fa-circle-xmark"></i>
                                     </span>
