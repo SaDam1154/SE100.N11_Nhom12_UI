@@ -108,7 +108,7 @@ function Customers() {
                                     {index + 1}
                                 </td>
                                 <td className="py-2 text-left" onClick={() => LinkToDetail(customer.id)}>
-                                    {customer._id}
+                                    {customer.id}
                                 </td>
                                 <td className="py-2 pl-[4%] text-left" onClick={() => LinkToDetail(customer.id)}>
                                     {customer.name}
