@@ -10,9 +10,7 @@ import { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
 const validationSchema = Yup.object({
-    name: Yup.string()
-        .required('Trường này bắt buộc')
-        .max(30, 'Tên loại cây dài tối đa 30 kí tự'),
+    name: Yup.string().required('Trường này bắt buộc').max(30, 'Tên loại cây dài tối đa 30 kí tự'),
 });
 
 function UpdateProductType() {
@@ -43,7 +41,7 @@ function UpdateProductType() {
         },
         enableReinitialize: true,
         validationSchema,
-        onSubmit: handleFormsubmit, 
+        onSubmit: handleFormsubmit,
     });
 
     const navigate = useNavigate();
@@ -80,83 +78,64 @@ function UpdateProductType() {
         <>
             <div className="container min-w-[650px]">
                 <div className="w-full">
-                    <form onSubmit={bacsicForm.handleSubmit} className="mx-[10%]  rounded-xl border border-slate-300 p-5" >
-                        <div className="mt-10 flex justify-center items-center">
-                            <div className="mr-8 flex w-full flex-col space-y-2 text-lg">
+                    <form
+                        onSubmit={bacsicForm.handleSubmit}
+                        className="mx-[10%]  rounded-xl border border-slate-300 p-5"
+                    >
+                        <div className="mt-10 flex items-center justify-center">
+                            <div className="flex w-full flex-col space-y-2 text-lg">
                                 <div className="form-group flex flex-col">
-                                    <label className="mb-1 text-lg font-semibold cursor-default">
+                                    <label className="mb-1 cursor-default text-lg font-semibold">
                                         Mã loại sản phẩm
                                     </label>
-                                    <div className="text-input disabled select-none py-[5px]">
-                                        {productType.id}
-                                    </div>
+                                    <div className="text-input disabled select-none py-[5px]">{productType.id}</div>
                                 </div>
 
                                 <div className="form-group flex flex-col">
-                                    <label
-                                        className="mb-1 mt-3 font-semibold"
-                                        htmlFor="name"
-                                    >
+                                    <label className="mb-1 mt-3 font-semibold" htmlFor="name">
                                         Tên loại sản phẩm
                                     </label>
                                     <input
                                         type="text"
                                         id="name"
                                         className={clsx('text-input py-[5px]', {
-                                            invalid:
-                                                bacsicForm.touched.name &&
-                                                bacsicForm.errors.name,
+                                            invalid: bacsicForm.touched.name && bacsicForm.errors.name,
                                         })}
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
                                         value={bacsicForm.values.name}
                                         name="name"
-                                        placeholder='Sen đá'
+                                        placeholder="Sen đá"
                                     />
                                     <span
-                                        className={clsx(
-                                            'text-sm text-red-500 opacity-0',
-                                            {
-                                                'opacity-100':
-                                                    bacsicForm.touched.name &&
-                                                    bacsicForm.errors.name,
-                                            }
-                                        )}
+                                        className={clsx('text-sm text-red-500 opacity-0', {
+                                            'opacity-100': bacsicForm.touched.name && bacsicForm.errors.name,
+                                        })}
                                     >
                                         {bacsicForm.errors.name || 'No message'}
                                     </span>
                                 </div>
 
                                 <div className="form-group flex w-full flex-col ">
-                                <label className="mb-1 cursor-default text-lg font-semibold">
-                                    Ngày thêm
-                                </label>
-                                <div className="text-input disabled select-none">
-                                    <TimeNow />
+                                    <label className="mb-1 cursor-default text-lg font-semibold">Ngày thêm</label>
+                                    <div className="text-input disabled select-none">
+                                        <TimeNow />
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
 
                         <div className="mt-6 flex items-center justify-between border-t pt-6">
                             <div
-                                className={clsx(
-                                    'flex items-center text-blue-500',
-                                    {
-                                        invisible: !loading,
-                                    }
-                                )}
+                                className={clsx('flex items-center text-blue-500', {
+                                    invisible: !loading,
+                                })}
                             >
                                 <i className="fa-solid fa-spinner animate-spin text-xl"></i>
-                                <span className="text-lx pl-3 font-medium">
-                                    Đang chỉnh sửa thông tin loại sản phẩm
-                                </span>
+                                <span className="text-lx pl-3 font-medium">Đang chỉnh sửa thông tin loại sản phẩm</span>
                             </div>
-                            <div className="flex justify-end pr-9">
-                                <Link
-                                    to={'/product-type'}
-                                    className="btn btn-red btn-md"
-                                >
+                            <div className="flex justify-end">
+                                <Link to={'/product-type'} className="btn btn-red btn-md">
                                     <span className="pr-2">
                                         <i className="fa-solid fa-circle-xmark"></i>
                                     </span>

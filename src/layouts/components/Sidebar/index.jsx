@@ -62,7 +62,7 @@ const groupMenus = [
             {
                 iconClassname: 'fa-solid fa-circle-plus',
                 text: 'Thêm',
-                link: '/',
+                link: '/add',
             },
         ],
     },

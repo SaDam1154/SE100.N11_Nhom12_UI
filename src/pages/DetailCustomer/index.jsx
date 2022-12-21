@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import moment from "moment";
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 
-function DetailCustomer () {
+function DetailCustomer() {
     const { id } = useParams();
     const [customer, setCustomer] = useState({});
     useEffect(() => {
@@ -23,63 +23,61 @@ function DetailCustomer () {
             });
     }
     return (
-    <div className="container">
-        <div className="wrapper text-lg">
-            <div className="flex flex-row mt-4">
-                <div className="basis-1/2 flex flex-col mt-[4%]" >
-                    <label className="mb-1 text-lg font-semibold cursor-default">Mã khách hàng</label>
-                    <div className="text-input disabled select-none py-[5px]">
-                        {customer._id}
+        <div className="container">
+            <div className="wrapper">
+                <div className="mt-4 flex flex-row">
+                    <div className="mt-[4%] flex basis-1/2 flex-col">
+                        <label className="mb-1 cursor-default text-lg font-semibold">Mã khách hàng</label>
+                        <div className="text-input disabled select-none py-[5px]">{customer._id}</div>
                     </div>
                 </div>
-            </div>
 
-            <div className="flex flex-row mt-2">
-                <div className="basis-1/2 flex flex-col mt-2" >
-                    <label className="mb-1 font-semibold text-lg cursor-default" htmlFor="phone" defaultValue={0}>Số điện thoại</label>
-                    <div className="text-input disabled select-none py-[5px]">
-                        {customer.phone}
+                <div className="mt-2 flex flex-row">
+                    <div className="mt-2 flex basis-1/2 flex-col">
+                        <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="phone" defaultValue={0}>
+                            Số điện thoại
+                        </label>
+                        <div className="text-input disabled select-none py-[5px]">{customer.phone}</div>
                     </div>
                 </div>
-            </div>
 
-            <div className="flex flex-row mt-2">
-                <div className="basis-1/2 flex flex-col mt-2" >
-                    <label className="mb-1 font-semibold text-lg cursor-default" htmlFor="name">Tên khách hàng</label>
-                    <div className="text-input disabled select-none py-[5px]">
-                        {customer.name}
+                <div className="mt-2 flex flex-row">
+                    <div className="mt-2 flex basis-1/2 flex-col">
+                        <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="name">
+                            Tên khách hàng
+                        </label>
+                        <div className="text-input disabled select-none py-[5px]">{customer.name}</div>
                     </div>
                 </div>
-            </div>
 
-            <div className="flex flex-row mt-4">
-                <div className="basis-1/2 flex flex-col mr-2 mt-2" >
-                    <label className="mb-1 font-semibold text-lg cursor-default" htmlFor="date">Ngày thêm</label>
-                    <div className="text-input disabled select-none py-[5px]">
-                        {moment(customer.createdAt).format(
-                            '(HH:mm:ss)     DD/MM/YYYY'
-                        )}
+                <div className="mt-4 flex flex-row">
+                    <div className="mr-2 mt-2 flex basis-1/2 flex-col">
+                        <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="date">
+                            Ngày thêm
+                        </label>
+                        <div className="text-input disabled select-none py-[5px]">
+                            {moment(customer.createdAt).format('(HH:mm:ss)     DD/MM/YYYY')}
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="flex flex-row mt-4">
-                <div className="w-full flex flex-col mr-2 mt-2" >
-                    <label className="mb-1 font-semibold text-lg cursor-default" htmlFor="address">Địa chỉ</label>
-                    <div className="text-input disabled select-none py-[5px]">
-                        {customer.address}
+                <div className="mt-4 flex flex-row">
+                    <div className="mr-2 mt-2 flex w-full flex-col">
+                        <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="address">
+                            Địa chỉ
+                        </label>
+                        <div className="text-input disabled select-none py-[5px]">{customer.address}</div>
                     </div>
                 </div>
-            </div>
 
-            <div className="float-right mt-8 flex flex-row mr-2">
-                    <div className="float-left flex basis-1 flex-col mr-5">                
+                <div className="float-right mt-8 mr-2 flex flex-row">
+                    <div className="float-left mr-5 flex basis-1 flex-col">
                         <Link to={'/customers'} className="btn btn-blue btn-md">
                             <span className="pr-1">
-                                    <i className="fa-solid fa-circle-xmark"></i>
+                                <i className="fa-solid fa-circle-xmark"></i>
                             </span>
                             <span>Quay lại</span>
-                        </Link >
+                        </Link>
                     </div>
 
                     <div className="float-right flex basis-1 flex-col">
@@ -89,11 +87,10 @@ function DetailCustomer () {
                             </span>
                             <span>Chỉnh sửa</span>
                         </Link>
-
                     </div>
                 </div>
+            </div>
         </div>
-    </div>
     );
 }
 //

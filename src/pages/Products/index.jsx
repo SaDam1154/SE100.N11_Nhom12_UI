@@ -89,7 +89,7 @@ function Products() {
                 {/* tite + reload btn */}
                 <div className="flex">
                     <label className="text-2xl font-bold text-slate-800">Danh sách cây</label>
-                    <button type="button" className="ml-3 text-gray-800 hover:underline" onClick={() => callApi()}>
+                    <button type="button" className="ml-3 text-gray-800 hover:underline" onClick={() => getProducts()}>
                         <span className="font-sm pr-1">
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </span>
