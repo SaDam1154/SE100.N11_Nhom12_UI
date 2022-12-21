@@ -60,6 +60,7 @@ export const orderSlice = createSlice({
         updateCustomer: (state, action) => {
             state.customer = action.payload;
         },
+        reset: () => initialState,
     },
 });
 

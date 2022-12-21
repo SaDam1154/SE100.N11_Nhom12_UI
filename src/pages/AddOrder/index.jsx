@@ -167,8 +167,9 @@ function AddOrder() {
                 setShowPaymentDialog(false);
                 if (resJson.success) {
                     setLoading(false);
-
                     showSuccessNoti();
+                    dispatch(orderActions.reset());
+                    setReceivedMoney(0);
                 } else {
                     setLoading(false);
                     showErorrNoti();
@@ -459,17 +460,30 @@ function AddOrder() {
                                     </div>
                                 </div>
 
-                                <div className="mt-3 flex justify-end">
-                                    <button className="btn btn-blue btn-md" onClick={() => setShowPaymentDialog(false)}>
-                                        Quay lại
-                                    </button>
-                                    <button
-                                        className="btn btn-green btn-md"
-                                        disabled={exchangeMoney < 0}
-                                        onClick={() => createOrder()}
+                                <div className="mt-3 flex justify-between">
+                                    <div
+                                        className={clsx('flex items-center text-blue-500', {
+                                            invisible: !loading,
+                                        })}
                                     >
-                                        Thanh toán hoá đơn
-                                    </button>
+                                        <i className="fa-solid fa-spinner animate-spin text-xl"></i>
+                                        <span className="text-lx pl-3 font-medium">Đang tạo hoá đơn</span>
+                                    </div>
+                                    <div className="flex justify-end">
+                                        <button
+                                            className="btn btn-blue btn-md"
+                                            onClick={() => setShowPaymentDialog(false)}
+                                        >
+                                            Quay lại
+                                        </button>
+                                        <button
+                                            className="btn btn-green btn-md"
+                                            disabled={exchangeMoney < 0}
+                                            onClick={() => createOrder()}
+                                        >
+                                            Thanh toán hoá đơn
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

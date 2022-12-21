@@ -82,6 +82,18 @@ function CustomerInput({ setIsValid }) {
         setIsValid(formik.isValid);
     }, [formik.isValid]);
 
+    useEffect(() => {
+        if (customer.name !== formik.values.name) {
+            formik.setFieldValue('name', customer.name);
+        }
+        if (customer.phone !== formik.values.phone) {
+            formik.setFieldValue('phone', customer.phone);
+        }
+        if (customer.address !== formik.values.address) {
+            formik.setFieldValue('address', customer.address);
+        }
+    }, [customer]);
+
     return (
         <form className="flex space-x-4 rounded-md border px-2 pt-2 shadow">
             <div className="flex w-56 flex-col">
