@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { orderSelector } from '../../redux/selectors';
 import { orderActions } from '../../redux/slices/orderSlice';
 import { useMemo } from 'react';
+import PriceInput from '../../components/PriceInput';
 
 function removeVietnameseTones(stra) {
     var str = stra;
@@ -43,6 +44,12 @@ function removeVietnameseTones(stra) {
 function AddOrder() {
     const order = useSelector(orderSelector);
     const dispatch = useDispatch();
+
+    const [showPaymentDialog, setShowPaymentDialog] = useState(false);
+    const [isValidCustomer, setIsValidCustomer] = useState(false);
+
+    const [receivedMoney, setReceivedMoney] = useState(0);
+    const [exchangeMoney, setExchangeMoney] = useState(0);
 
     const [search, setSearch] = useState('');
     const [idFilter, setIdFilter] = useState('');
@@ -124,6 +131,10 @@ function AddOrder() {
         );
     }, [order, products]);
 
+    useEffect(() => {
+        setExchangeMoney(receivedMoney - order?.totalPrice);
+    }, [order.totalPrice, receivedMoney]);
+
     function handleAddProduct(product) {
         dispatch(orderActions.add(product));
     }
@@ -135,145 +146,296 @@ function AddOrder() {
     }
 
     return (
-        <div className="container w-full">
-            <CustomerInput />
-            <div className="mt-2 flex">
-                {/* LEFT VIEW */}
-                <div className="flex flex-1 flex-col rounded-md border py-3 px-2 shadow">
-                    {/* HEADER ACTION GROUP */}
-                    <div className="flex space-x-2 pb-2">
-                        {/* ID */}
-                        <input
-                            type="text"
-                            className="text-input w-16 py-1"
-                            value={idFilter}
-                            onChange={(e) => {
-                                setIdFilter(e.target.value);
-                            }}
-                            placeholder="Mã"
-                        />
+        <>
+            <div className="container w-full">
+                <CustomerInput setIsValid={setIsValidCustomer} />
+                <div className="mt-2 flex">
+                    {/* LEFT VIEW */}
+                    <div className="flex flex-1 flex-col rounded-md border py-3 px-2 shadow">
+                        {/* HEADER ACTION GROUP */}
+                        <div className="flex space-x-2 pb-2">
+                            {/* ID */}
+                            <input
+                                type="text"
+                                className="text-input w-16 py-1"
+                                value={idFilter}
+                                onChange={(e) => {
+                                    setIdFilter(e.target.value);
+                                }}
+                                placeholder="Mã"
+                            />
 
-                        {/* Search */}
-                        <input
-                            type="text"
-                            className="text-input flex-1 py-1"
-                            value={search}
-                            onChange={(e) => {
-                                setSearch(e.target.value);
-                            }}
-                            placeholder="Tìm kiếm sản phẩm"
-                        />
-                    </div>
+                            {/* Search */}
+                            <input
+                                type="text"
+                                className="text-input flex-1 py-1"
+                                value={search}
+                                onChange={(e) => {
+                                    setSearch(e.target.value);
+                                }}
+                                placeholder="Tìm kiếm sản phẩm"
+                            />
+                        </div>
 
-                    {/* LIST PRODUCT */}
-                    <div className="flex h-[68vh] flex-col overflow-scroll">
-                        <div className=" grid max-h-[100] min-h-[50] grid-cols-3 gap-2">
-                            {renderProduct?.map((product) => (
-                                <div
-                                    key={product.id}
-                                    className="cursor-pointer select-none overflow-hidden rounded-md border shadow hover:shadow-md"
-                                    onClick={() => handleAddProduct(product)}
-                                >
-                                    <img
-                                        className="aspect-[5/3] w-full object-cover"
-                                        src={product.image || '/placeholder.png'}
-                                    />
-                                    <div className="space-y-1 p-2">
-                                        <p className="font-semibold text-blue-600">{product.name}</p>
-                                        <p className="text-sm font-semibold">{product.type?.name || '-'}</p>
-                                        <p className="">
-                                            <PriceFormat>{product.price}</PriceFormat>
-                                            <span className="ml-1">VNĐ</span>
-                                        </p>
+                        {/* LIST PRODUCT */}
+                        <div className="flex h-[68vh] flex-col overflow-scroll">
+                            <div className=" grid max-h-[100] min-h-[50] grid-cols-3 gap-2">
+                                {renderProduct?.map((product) => (
+                                    <div
+                                        key={product.id}
+                                        className="cursor-pointer select-none overflow-hidden rounded-md border shadow hover:shadow-md"
+                                        onClick={() => handleAddProduct(product)}
+                                    >
+                                        <img
+                                            className="aspect-[5/3] w-full object-cover"
+                                            src={product.image || '/placeholder.png'}
+                                        />
+                                        <div className="space-y-1 p-2">
+                                            <p className="font-semibold text-blue-600">{product.name}</p>
+                                            <p className="text-sm font-semibold">{product.type?.name || '-'}</p>
+                                            <p className="">
+                                                <PriceFormat>{product.price}</PriceFormat>
+                                                <span className="ml-1">VNĐ</span>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {/* RIGHT ORDER */}
-                <div className="ml-3 flex flex-1 flex-col rounded-md border py-1 px-2 shadow">
-                    <p className="text-center text-lg font-semibold">Hóa đơn</p>
+                    {/* RIGHT ORDER */}
+                    <div className="ml-3 flex flex-1 flex-col rounded-md border py-1 px-2 shadow">
+                        <p className="text-center text-lg font-semibold">Hóa đơn</p>
 
-                    {/* LIST PRODUCT */}
-                    <table className="mt-2 w-full">
-                        <thead className="w-full rounded bg-blue-500 text-white">
-                            <tr className="flex h-11 w-full">
-                                <th className="flex w-10 items-center justify-end px-2 text-center">Mã</th>
-                                <th className="flex w-16 items-center justify-center px-2">Ảnh</th>
-                                <th className="flex flex-1 items-center justify-start px-2">Tên sản phẩm</th>
-                                <th className="flex w-28 items-center justify-end px-2">Giá (VND)</th>
-                                <th className="flex w-24 items-center justify-end px-2">Số lượng</th>
-                                <th className="flex w-20 items-center justify-center px-2"></th>
-                            </tr>
-                        </thead>
-
-                        <tbody className="flex h-[400px] w-full flex-col" style={{ overflowY: 'overlay' }}>
-                            {selectedProducts?.length === 0 ? (
-                                <tr className="mt-3 text-lg font-semibold">
-                                    <td className="flex w-full justify-center">Chưa có sản phẩm trong hoá đơn</td>
+                        {/* LIST PRODUCT */}
+                        <table className="mt-2 w-full">
+                            <thead className="w-full rounded bg-blue-500 text-white">
+                                <tr className="flex h-11 w-full">
+                                    <th className="flex w-10 items-center justify-end px-2 text-center">Mã</th>
+                                    <th className="flex w-16 items-center justify-center px-2">Ảnh</th>
+                                    <th className="flex flex-1 items-center justify-start px-2">Tên sản phẩm</th>
+                                    <th className="flex w-28 items-center justify-end px-2">Giá (VND)</th>
+                                    <th className="flex w-24 items-center justify-end px-2">Số lượng</th>
+                                    <th className="flex w-20 items-center justify-center px-2"></th>
                                 </tr>
-                            ) : (
-                                selectedProducts?.map((product, index) => (
-                                    <tr key={index} className="flex border-b border-slate-200 hover:bg-slate-100">
-                                        <td className="flex w-10 items-center justify-end px-2 py-2">{product?.id}</td>
-                                        <td className="flex w-16 items-center justify-center px-2 py-2">
-                                            <img
-                                                src={product?.image || '/placeholder.png'}
-                                                className="h-10 w-10 rounded-full object-cover object-center"
-                                            />
-                                        </td>
-                                        <td className="flex flex-[2] items-center justify-start px-2 py-2">
-                                            {product?.name}
-                                        </td>
-                                        <td className="flex w-28 items-center justify-end px-2 py-2">
-                                            <PriceFormat>{product?.price}</PriceFormat>
-                                        </td>
-                                        <td className="flex w-24 items-center justify-end px-2 py-2">
-                                            <input
-                                                type="number"
-                                                min="1"
-                                                value={product?.orderQuantity || ''}
-                                                onChange={(e) => handleUpdateQuantityProduct(product, e.target.value)}
-                                                className={clsx('text-input w-16 py-1 text-right text-base')}
-                                            />
-                                        </td>
-                                        <td className="flex w-20 items-center justify-center px-2 py-2">
-                                            <button
-                                                className="btn btn-sm btn-red"
-                                                onClick={() => handleDeleteProduct(product._id)}
-                                            >
-                                                <span>Xoá</span>
-                                            </button>
-                                        </td>
+                            </thead>
+
+                            <tbody className="flex h-[400px] w-full flex-col" style={{ overflowY: 'overlay' }}>
+                                {selectedProducts?.length === 0 ? (
+                                    <tr className="mt-3 text-lg font-semibold">
+                                        <td className="flex w-full justify-center">Chưa có sản phẩm trong hoá đơn</td>
                                     </tr>
-                                ))
-                            )}
-                        </tbody>
-                    </table>
-                    <div className="flex grow items-center justify-between">
-                        <div className="flex items-center">
-                            <p className="font-semibold">
-                                <span>Tổng tiền: </span>
-                                <span className="text-xl text-blue-600">
-                                    <span>
-                                        <PriceFormat>{order.totalPrice}</PriceFormat>
+                                ) : (
+                                    selectedProducts?.map((product, index) => (
+                                        <tr key={index} className="flex border-b border-slate-200 hover:bg-slate-100">
+                                            <td className="flex w-10 items-center justify-end px-2 py-2">
+                                                {product?.id}
+                                            </td>
+                                            <td className="flex w-16 items-center justify-center px-2 py-2">
+                                                <img
+                                                    src={product?.image || '/placeholder.png'}
+                                                    className="h-10 w-10 rounded-full object-cover object-center"
+                                                />
+                                            </td>
+                                            <td className="flex flex-[2] items-center justify-start px-2 py-2">
+                                                {product?.name}
+                                            </td>
+                                            <td className="flex w-28 items-center justify-end px-2 py-2">
+                                                <PriceFormat>{product?.price}</PriceFormat>
+                                            </td>
+                                            <td className="flex w-24 items-center justify-end px-2 py-2">
+                                                <input
+                                                    type="number"
+                                                    min="1"
+                                                    value={product?.orderQuantity || ''}
+                                                    onChange={(e) =>
+                                                        handleUpdateQuantityProduct(product, e.target.value)
+                                                    }
+                                                    className={clsx('text-input w-16 py-1 text-right text-base')}
+                                                />
+                                            </td>
+                                            <td className="flex w-20 items-center justify-center px-2 py-2">
+                                                <button
+                                                    className="btn btn-sm btn-red"
+                                                    onClick={() => handleDeleteProduct(product._id)}
+                                                >
+                                                    <span>Xoá</span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                        <div className="flex grow items-center justify-between">
+                            <div className="flex items-center">
+                                <p className="font-semibold">
+                                    <span>Tổng tiền: </span>
+                                    <span className="text-xl text-blue-600">
+                                        <span>
+                                            <PriceFormat>{order.totalPrice}</PriceFormat>
+                                        </span>
+                                        <span> VNĐ</span>
                                     </span>
-                                    <span> VNĐ</span>
+                                </p>
+                            </div>
+                            <button
+                                className={clsx('btn btn-blue btn-md')}
+                                disabled={!isValidCustomer || !order.totalPrice}
+                                onClick={() => setShowPaymentDialog(true)}
+                            >
+                                <span className="pr-2">
+                                    <i className="fa-solid fa-circle-plus"></i>
                                 </span>
-                            </p>
+                                <span>Tạo hoá đơn</span>
+                            </button>
                         </div>
-                        <button className="btn btn-blue btn-md ">
-                            <span className="pr-2">
-                                <i className="fa-solid fa-circle-plus"></i>
-                            </span>
-                            <span>Tạo hoá đơn</span>
-                        </button>
                     </div>
                 </div>
             </div>
-        </div>
+
+            {/* PAYMENT DIALOG */}
+            <div
+                className={clsx(
+                    'fixed inset-0 z-[99999] hidden items-center justify-center bg-black/20 opacity-0 transition-opacity',
+                    {
+                        '!flex !opacity-100': showPaymentDialog,
+                    }
+                )}
+            >
+                <div className="">
+                    <div className="w-[80vw] rounded-lg bg-white p-6">
+                        <div className=" text-center text-lg font-bold text-slate-900">Thanh toán hoá đơn</div>
+                        <div className="mt-5 flex space-x-6">
+                            {/* PRODUCT */}
+                            <div className="flex-1">
+                                <table className="mt-2 w-full">
+                                    <thead className="w-full rounded bg-blue-500 text-white">
+                                        <tr className="flex h-11 w-full">
+                                            <th className="flex w-10 items-center justify-end px-2 text-center">Mã</th>
+                                            <th className="flex w-16 items-center justify-center px-2">Ảnh</th>
+                                            <th className="flex flex-1 items-center justify-start px-2">
+                                                Tên sản phẩm
+                                            </th>
+                                            <th className="flex w-28 items-center justify-end px-2">Giá (VND)</th>
+                                            <th className="mr-2 flex w-24 items-center justify-end px-2">Số lượng</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody className="flex h-[400px] w-full flex-col" style={{ overflowY: 'overlay' }}>
+                                        {selectedProducts?.length === 0 ? (
+                                            <tr className="mt-3 text-lg font-semibold">
+                                                <td className="flex w-full justify-center">
+                                                    Chưa có sản phẩm trong hoá đơn
+                                                </td>
+                                            </tr>
+                                        ) : (
+                                            selectedProducts?.map((product, index) => (
+                                                <tr
+                                                    key={index}
+                                                    className="flex border-b border-slate-200 hover:bg-slate-100"
+                                                >
+                                                    <td className="flex w-10 items-center justify-end px-2 py-2">
+                                                        {product?.id}
+                                                    </td>
+                                                    <td className="flex w-16 items-center justify-center px-2 py-2">
+                                                        <img
+                                                            src={product?.image || '/placeholder.png'}
+                                                            className="h-10 w-10 rounded-full object-cover object-center"
+                                                        />
+                                                    </td>
+                                                    <td className="flex flex-[2] items-center justify-start px-2 py-2">
+                                                        {product?.name}
+                                                    </td>
+                                                    <td className="flex w-28 items-center justify-end px-2 py-2">
+                                                        <PriceFormat>{product?.price}</PriceFormat>
+                                                    </td>
+                                                    <td className="mr-2 flex w-24 items-center justify-end px-2 py-2">
+                                                        {product?.orderQuantity}
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {/* INFOR */}
+                            <div className="flex-1">
+                                <div className="space-y-2 border-b pb-2">
+                                    <div className="text-lg">
+                                        <span>Tên khách hàng: </span>
+                                        <span className="font-semibold">{order?.customer?.name || ''}</span>
+                                    </div>
+                                    <div className="text-lg">
+                                        <span>Số điện thoại: </span>
+                                        <span className="font-semibold">{order?.customer?.phone || ''}</span>
+                                    </div>
+                                    <div className="text-lg">
+                                        <span>Địa chỉ: </span>
+                                        <span className="font-semibold">{order?.customer?.address || ''}</span>
+                                    </div>
+                                    <div className="text-lg">
+                                        <span>Ngày lập hoá đơn: </span>
+                                        <span className="font-semibold">
+                                            <TimeNow className="inline font-semibold" />
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="mt-3 space-y-3 border-b pb-3">
+                                    <div className="text-lg">
+                                        <span>Thành tiền: </span>
+                                        <span className="text-xl font-semibold text-blue-600">
+                                            <span>
+                                                <PriceFormat>{order?.totalPrice}</PriceFormat>
+                                            </span>
+                                            <span> VNĐ</span>
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center text-lg">
+                                        <label className="mr-2" htmlFor="price">
+                                            Tiền nhận:
+                                        </label>
+                                        <PriceInput
+                                            id="price_AddProduct_page"
+                                            name="price"
+                                            value={receivedMoney}
+                                            onChange={(e) => setReceivedMoney(e.target.value)}
+                                            className="w-56"
+                                            placeholder="Tiền nhận"
+                                        />
+                                    </div>
+                                    <div className="text-lg">
+                                        <span>Tiền thừa: </span>
+                                        <span
+                                            className={clsx('text-xl font-semibold text-blue-600', {
+                                                'text-red-600': exchangeMoney < 0,
+                                            })}
+                                        >
+                                            <span>
+                                                <PriceFormat>{exchangeMoney}</PriceFormat>
+                                            </span>
+                                            <span> VNĐ</span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="mt-3 flex justify-end">
+                                    <button className="btn btn-blue btn-md" onClick={() => setShowPaymentDialog(false)}>
+                                        Quay lại
+                                    </button>
+                                    <button className="btn btn-green btn-md" disabled={exchangeMoney < 0}>
+                                        Thanh toán hoá đơn
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
     );
 }
 //

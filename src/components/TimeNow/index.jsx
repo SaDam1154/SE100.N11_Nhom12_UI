@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import moment from 'moment';
-function TimeNow() {
+function TimeNow({ className }) {
     //SaDam Time.Now
     const [dt, setDt] = useState(new Date().toLocaleString());
 
@@ -14,7 +14,7 @@ function TimeNow() {
     }, []);
     ///end time
     return (
-        <div className='text-xl py-[5px]'>
+        <div className={className || 'py-[5px] text-xl'}>
             &ensp;
             {moment(dt).format('HH:mm:ss DD/MM/YYYY ')}
         </div>

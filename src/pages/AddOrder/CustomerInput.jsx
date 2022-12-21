@@ -17,7 +17,7 @@ const validationSchema = Yup.object({
         .matches(/^[\+|0]([0-9]{9,14})\b/, 'Số điện thoại không hợp lệ'),
 });
 
-function CustomerInput() {
+function CustomerInput({ setIsValid }) {
     const [isExistCustomer, setIsExistCustomer] = useState(false);
 
     const dispatch = useDispatch();
@@ -74,6 +74,10 @@ function CustomerInput() {
             })
         );
     }, [formik.values]);
+
+    useEffect(() => {
+        setIsValid(formik.isValid && formik.dirty);
+    }, [formik.isValid, formik.dirty]);
 
     return (
         <form className="flex space-x-4 rounded-md border px-2 pt-2 shadow">

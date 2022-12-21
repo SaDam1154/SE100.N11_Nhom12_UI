@@ -256,10 +256,10 @@ function Products() {
                     }
                 )}
             >
-                <div className="p-body">
+                <div className="">
                     <div className="min-w-[160px] max-w-[400px] rounded-lg bg-white p-6">
                         <div className="text-clr-text-dark font-bold">Bạn có chắc chắn muốn xoá không?</div>
-                        <p className="mt-4 text-sm">Lưu ý: Bạn không thể không phục lại sau khi xoá!</p>
+                        <p className="mt-4">Lưu ý: Bạn không thể không phục lại sau khi xoá!</p>
                         <div className="mt-4 flex">
                             <button
                                 className="btn btn-blue btn-md"
