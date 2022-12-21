@@ -60,11 +60,11 @@ function AddProductType() {
                         onSubmit={bacsicForm.handleSubmit}
                         className="mx-[15%]  rounded-xl border border-slate-300 p-5"
                     >
-                        <div className="mt-10 flex items-center justify-center">
+                        <div className="mt-10 flex select-none  items-center justify-center">
                             {/* Name */}
                             <div className="flex w-full flex-col space-y-2 text-lg">
                                 <div className="form-group flex flex-col ">
-                                    <label className="mb-1 font-semibold" htmlFor="name">
+                                    <label className="mb-1 select-none  font-semibold" htmlFor="name">
                                         Tên loại sản phẩm
                                     </label>
                                     <input
@@ -89,7 +89,9 @@ function AddProductType() {
                                 </div>
 
                                 <div className="form-group flex w-full flex-col ">
-                                    <label className="mb-1 cursor-default text-lg font-semibold">Ngày thêm</label>
+                                    <label className="mb-1 cursor-default select-none text-lg font-semibold ">
+                                        Ngày thêm
+                                    </label>
                                     <div className="text-input disabled w-full select-none">
                                         <TimeNow />
                                     </div>

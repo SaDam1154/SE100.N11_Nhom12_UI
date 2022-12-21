@@ -78,7 +78,7 @@ function Addroduct() {
                             {/* NAME AND TYPE*/}
                             <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
                                 <div className="form-group flex flex-col ">
-                                    <label className="mb-1 font-semibold" htmlFor="name">
+                                    <label className="mb-1 select-none font-semibold " htmlFor="name">
                                         Tên cây
                                     </label>
                                     <input
@@ -102,7 +102,7 @@ function Addroduct() {
                                 </div>
 
                                 <div className="form-group flex flex-col">
-                                    <label className="mb-1 font-semibold" htmlFor="type">
+                                    <label className="mb-1 select-none font-semibold " htmlFor="type">
                                         Loại cây
                                     </label>
                                     <ProductTypeInput
@@ -126,7 +126,7 @@ function Addroduct() {
                                 </div>
 
                                 <div className="form-group flex flex-col">
-                                    <label className="mb-1 font-semibold" htmlFor="quantity">
+                                    <label className="mb-1 select-none font-semibold " htmlFor="quantity">
                                         Số lượng
                                     </label>
                                     <input
@@ -161,7 +161,9 @@ function Addroduct() {
                         <div className="mt-4 flex">
                             {/* DATE */}
                             <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col ">
-                                <label className="mb-1 cursor-default text-lg font-semibold">Ngày thêm</label>
+                                <label className="mb-1 cursor-default select-none text-lg font-semibold">
+                                    Ngày thêm
+                                </label>
                                 <div className="rounded border border-slate-300 bg-slate-50 px-2 outline-none">
                                     <TimeNow />
                                 </div>

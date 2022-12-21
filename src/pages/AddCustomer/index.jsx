@@ -71,7 +71,7 @@ function AddCustomer() {
                             {/* Name */}
                             <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
                                 <div className="form-group flex flex-col ">
-                                    <label className="mb-1 font-semibold" htmlFor="name">
+                                    <label className="mb-1 select-none font-semibold " htmlFor="name">
                                         Tên khách hàng
                                     </label>
                                     <input
@@ -96,7 +96,7 @@ function AddCustomer() {
                                 </div>
 
                                 <div className="form-group flex flex-col">
-                                    <label className="mb-1 font-semibold" htmlFor="phone">
+                                    <label className="mb-1 select-none font-semibold " htmlFor="phone">
                                         Số điện thoại
                                     </label>
                                     <input
@@ -121,7 +121,9 @@ function AddCustomer() {
                                 </div>
 
                                 <div className="form-group flex basis-1/2 flex-col ">
-                                    <label className="mb-1 cursor-default text-lg font-semibold">Ngày thêm</label>
+                                    <label className="mb-1 cursor-default select-none text-lg font-semibold ">
+                                        Ngày thêm
+                                    </label>
                                     <div className="text-input disabled select-none">
                                         <TimeNow />
                                     </div>
@@ -132,7 +134,7 @@ function AddCustomer() {
                         {/* DATE AND PRICE */}
                         <div className="mt-4 flex">
                             <div className="mt-3 flex w-full flex-col">
-                                <label className="mb-1 text-lg font-semibold" htmlFor="address">
+                                <label className="mb-1 select-none text-lg font-semibold " htmlFor="address">
                                     Địa chỉ
                                 </label>
                                 <div className="relative">
