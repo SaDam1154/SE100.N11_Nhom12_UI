@@ -126,7 +126,7 @@ function AddOrder() {
                     </div>
 
                     {/* LIST PRODUCT */}
-                    <div className="flex h-[70vh] flex-col overflow-scroll">
+                    <div className="flex h-[68vh] flex-col overflow-scroll">
                         <div className=" grid max-h-[100] min-h-[50] grid-cols-3 gap-2">
                             {products
                                 .filter((product) => {
@@ -186,7 +186,7 @@ function AddOrder() {
                             </tr>
                         </thead>
 
-                        <tbody className=" over flex h-[290px] w-full  flex-col overflow-y-scroll">
+                        <tbody className=" over flex h-[200px] w-full  flex-col overflow-y-scroll">
                             {selectedProducts?.map((selectedProduct, index) => (
                                 <tr
                                     key={selectedProduct.id}
