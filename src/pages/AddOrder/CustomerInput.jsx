@@ -33,6 +33,9 @@ function CustomerInput({ setIsValid }) {
     });
 
     useEffect(() => {
+        formik.validateForm();
+    }, []);
+    useEffect(() => {
         fetch('http://localhost:5000/api/customer?' + `filters={"phone": "${formik.values.phone}"}`)
             .then((res) => res.json())
             .then((resJson) => {
@@ -76,8 +79,8 @@ function CustomerInput({ setIsValid }) {
     }, [formik.values]);
 
     useEffect(() => {
-        setIsValid(formik.isValid && formik.dirty);
-    }, [formik.isValid, formik.dirty]);
+        setIsValid(formik.isValid);
+    }, [formik.isValid]);
 
     return (
         <form className="flex space-x-4 rounded-md border px-2 pt-2 shadow">

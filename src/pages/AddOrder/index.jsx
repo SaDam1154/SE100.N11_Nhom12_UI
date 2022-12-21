@@ -11,6 +11,7 @@ import { orderSelector } from '../../redux/selectors';
 import { orderActions } from '../../redux/slices/orderSlice';
 import { useMemo } from 'react';
 import PriceInput from '../../components/PriceInput';
+import { toast, ToastContainer } from 'react-toastify';
 
 function removeVietnameseTones(stra) {
     var str = stra;
@@ -44,6 +45,10 @@ function removeVietnameseTones(stra) {
 function AddOrder() {
     const order = useSelector(orderSelector);
     const dispatch = useDispatch();
+
+    const [loading, setLoading] = useState(false);
+    const showSuccessNoti = () => toast.info('Tạo hoá đơn thành công!');
+    const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
     const [showPaymentDialog, setShowPaymentDialog] = useState(false);
     const [isValidCustomer, setIsValidCustomer] = useState(false);
@@ -143,6 +148,38 @@ function AddOrder() {
     }
     function handleUpdateQuantityProduct(product, quantity) {
         dispatch(orderActions.updateQuantity({ product, quantity }));
+    }
+
+    function createOrder() {
+        setLoading(true);
+        fetch('http://localhost:5000/api/order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ...order,
+                receivedMoney,
+            }),
+        })
+            .then((res) => res.json())
+            .then((resJson) => {
+                setShowPaymentDialog(false);
+                if (resJson.success) {
+                    setLoading(false);
+
+                    showSuccessNoti();
+                } else {
+                    setLoading(false);
+                    showErorrNoti();
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                setShowPaymentDialog(false);
+                setLoading(false);
+                showErorrNoti();
+            });
     }
 
     return (
@@ -426,7 +463,11 @@ function AddOrder() {
                                     <button className="btn btn-blue btn-md" onClick={() => setShowPaymentDialog(false)}>
                                         Quay lại
                                     </button>
-                                    <button className="btn btn-green btn-md" disabled={exchangeMoney < 0}>
+                                    <button
+                                        className="btn btn-green btn-md"
+                                        disabled={exchangeMoney < 0}
+                                        onClick={() => createOrder()}
+                                    >
                                         Thanh toán hoá đơn
                                     </button>
                                 </div>
@@ -435,6 +476,7 @@ function AddOrder() {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </>
     );
 }
