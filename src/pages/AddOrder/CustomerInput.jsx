@@ -30,7 +30,6 @@ function CustomerInput({ setIsValid }) {
             address: customer.address,
         },
         validationSchema,
-        validateOnMount: true,
     });
 
     useEffect(() => {
@@ -77,18 +76,15 @@ function CustomerInput({ setIsValid }) {
     }, [formik.values]);
 
     useEffect(() => {
+        if (!formik.dirty) {
+            formik.validateForm();
+        }
         setIsValid(formik.isValid);
     }, [formik.isValid]);
 
     useEffect(() => {
-        if (customer.name !== formik.values.name) {
-            formik.setFieldValue('name', customer.name);
-        }
-        if (customer.phone !== formik.values.phone) {
-            formik.setFieldValue('phone', customer.phone);
-        }
-        if (customer.address !== formik.values.address) {
-            formik.setFieldValue('address', customer.address);
+        if (!customer.name && !customer.phone && !customer.address) {
+            formik.resetForm();
         }
     }, [customer]);
 
