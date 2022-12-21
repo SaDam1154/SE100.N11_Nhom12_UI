@@ -40,7 +40,7 @@ const publicRoutes = [
         path: '/order',
         component: Order,
         props: {
-            heading: 'Order',
+            heading: 'Danh sách hoá đơn',
         },
     },
 

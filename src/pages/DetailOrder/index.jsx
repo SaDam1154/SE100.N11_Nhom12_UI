@@ -137,6 +137,12 @@ function DetailOrder() {
                             </span>
                         </div>
                     </div>
+
+                    <div className="mt-3 flex">
+                        <Link to="/order" className="btn btn-blue btn-md">
+                            Quay lại
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
