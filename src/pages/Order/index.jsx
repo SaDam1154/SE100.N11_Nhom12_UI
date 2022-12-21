@@ -3,16 +3,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Listbox, Popover } from '@headlessui/react';
 import clsx from 'clsx';
 import { useEffect } from 'react';
+import moment from 'moment';
+import PriceFormat from '../../components/PriceFormat';
 function Orders() {
     const [search, setSearch] = useState('');
     const [orders, setOrders] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        callApi();
+        getOrders();
     }, []);
 
-    function callApi() {
+    function getOrders() {
         fetch('http://localhost:5000/api/order')
             .then((res) => res.json())
             .then((resJson) => {
@@ -21,11 +23,15 @@ function Orders() {
                 } else {
                     setOrders([]);
                 }
+            })
+            .catch((error) => {
+                console.log(error);
+                setOrders([]);
             });
     }
 
     function linkToDetail(id) {
-        // navigate('/order/detail/' + id);
+        navigate('/order/detail/' + id);
     }
 
     return (
@@ -34,7 +40,7 @@ function Orders() {
                 {/* tite + reload btn */}
                 <div className="flex">
                     <label className="text-2xl font-bold text-slate-800">Danh sách hóa đơn</label>
-                    <button type="button" className="ml-3 text-gray-800 hover:underline" onClick={() => callApi()}>
+                    <button type="button" className="ml-3 text-gray-800 hover:underline" onClick={() => getOrders()}>
                         <span className="font-sm pr-1">
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </span>
@@ -46,78 +52,68 @@ function Orders() {
                 <div className="flex grow">
                     {/* Search */}
                     <div className="mr-2 flex grow">
-                        <input
+                        {/* <input
                             type="text"
                             className="text-input grow"
                             onChange={(e) => {
                                 setSearch(e.target.value);
                             }}
                             placeholder="Tìm kiếm sản phẩm"
-                        />
+                        /> */}
                     </div>
 
                     <Link to="/order/add" className="btn btn-md btn-green">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
-                        <span>Đặt hàng</span>
+                        <span>Tạo hoá đơn</span>
                     </Link>
                 </div>
             </div>
-            <table className="mt-4 w-full">
-                <colgroup>
-                    <col span="1" style={{ width: '10%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                </colgroup>
 
-                <thead className="h-11 rounded bg-blue-500 text-white">
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Tên khách hàng</th>
-                        <th scope="col">Tổng tiền (VND)</th>
-                        <th scope="col"></th>
+            {/* LIST */}
+            <table className="mt-8 w-full">
+                <thead className="w-full rounded bg-blue-500 text-white">
+                    <tr className="flex h-11 w-full">
+                        <th className="flex w-16 items-center justify-end px-2">Mã</th>
+                        <th className="flex flex-[2] items-center justify-start px-4">Tên khách hàng</th>
+                        <th className="flex w-60 items-center justify-start px-2">Số điện thoại</th>
+                        <th className="flex w-44 items-center justify-end px-2">Tổng tiền (VNĐ)</th>
+                        <th className="flex w-56 items-center justify-end px-2">Ngày</th>
+                        <th className="flex w-[140px] items-center justify-center px-2"></th>
                     </tr>
                 </thead>
 
-                <tbody>
-                    {orders
-                        ?.filter((order) => {
-                            return search.toLowerCase() === ''
-                                ? order
-                                : order.name.toLowerCase().includes(search) ||
-                                      order?.type.name.toLowerCase().includes(search);
-                        })
-                        ?.map((order, index) => (
-                            <tr
-                                key={order.id}
-                                className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
-                                onClick={(id) => linkToDetail(order.id)}
-                            >
-                                <td className="py-2 text-center">{order.id}</td>
-                                <td className="py-2 text-center">{order.name}</td>
-                                <td className="py-2 text-center">
-                                    {order.price.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
-                                </td>
-                                <td className="py-2 text-center">
-                                    <div className="flex justify-end">
-                                        <button className="btn btn-sm btn-blue">
-                                            <span className="pr-1">
-                                                <i className="fa-solid fa-pen-to-square"></i>
-                                            </span>
-                                            <span>Sửa</span>
-                                        </button>
-                                        <button className="btn btn-sm btn-red">
-                                            <span className="pr-1">
-                                                <i className="fa-solid fa-circle-xmark"></i>
-                                            </span>
-                                            <span>Xoá</span>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
+                <tbody className="flex h-[75vh] w-full flex-col" style={{ overflowY: 'overlay' }}>
+                    {orders?.map((order) => (
+                        <tr
+                            key={order.id}
+                            className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                            onClick={() => linkToDetail(order.id)}
+                        >
+                            <td className="flex w-16 items-center justify-end px-2 py-2">{order.id}</td>
+                            <td className="flex flex-[2] items-center justify-start px-4 py-2">
+                                {order.customer?.name}
+                            </td>
+                            <td className="flex w-60 items-center justify-start px-2 py-2">{order.customer?.phone}</td>
+                            <td className="flex w-44 items-center justify-end px-2 py-2">
+                                <PriceFormat>{order.totalPrice}</PriceFormat>
+                            </td>
+                            <td className="flex w-56 items-center justify-end px-2 py-2">
+                                {moment(order.createdAt).format('HH:mm:ss DD/MM/YYYY ')}
+                            </td>
+                            <td className="flex w-[140px] items-center justify-center px-2 py-2">
+                                <div className="flex justify-end">
+                                    <button className="btn btn-sm btn-red">
+                                        <span className="pr-1">
+                                            <i className="fa-solid fa-circle-xmark"></i>
+                                        </span>
+                                        <span>Xoá</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>

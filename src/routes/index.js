@@ -23,6 +23,7 @@ import UpdateCustomer from '../pages/UpdateCustomer';
 import AddProductType from '../pages/AddProductType';
 import DetailTypeProduct from '../pages/DetailTypeProduct';
 import UpdateProductType from '../pages/UpdateProductType';
+import DetailOrder from '../pages/DetailOrder';
 
 // Public routes
 const publicRoutes = [
@@ -46,6 +47,13 @@ const publicRoutes = [
         component: AddOrder,
         props: {
             heading: 'Đặt thêm sản phẩm',
+        },
+    },
+    {
+        path: '/order/detail/:id',
+        component: DetailOrder,
+        props: {
+            heading: 'Chi tiết hoá đơn',
         },
     },
     {
