@@ -31,7 +31,7 @@ function Customers() {
                 }
             });
     }, []);
-    function LinkToDetail (id) {
+    function LinkToDetail(id) {
         navigate('/customers/detail/' + id);
     }
     return (
@@ -39,13 +39,8 @@ function Customers() {
             <div className="flex space-x-4">
                 {/* tite + reload btn */}
                 <div className="flex">
-                    <label className="text-2xl font-bold text-slate-800">
-                        Danh sách khách hàng
-                    </label>
-                    <button
-                        type="button"
-                        className="ml-3 text-gray-800 hover:underline"
-                    >
+                    <label className="text-2xl font-bold text-slate-800">Danh sách khách hàng</label>
+                    <button type="button" className="ml-3 text-gray-800 hover:underline">
                         <span className="font-sm pr-1">
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </span>
@@ -65,20 +60,9 @@ function Customers() {
                             }}
                             placeholder="Tìm kiếm khách hàng"
                         />
-
-                        <button className="btn btn-md bg-slate-200 !px-3 text-slate-600 hover:bg-slate-300">
-                            <i className="fa fa-search" aria-hidden="true"></i>
-                        </button>
                     </div>
 
-                    <button className="btn btn-md bg-slate-200 !px-3 text-slate-600 hover:bg-slate-300">
-                        <i className="fas fa-filter"></i>
-                    </button>
-
-                    <Link
-                        to="/customers/addcustomer"
-                        className="btn btn-md bg-green-600 hover:bg-green-500"
-                    >
+                    <Link to="/customers/addcustomer" className="btn btn-md bg-green-600 hover:bg-green-500">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
@@ -112,48 +96,33 @@ function Customers() {
                         .filter((customer) => {
                             return search.toLowerCase() === ''
                                 ? customer
-                                : customer.name
-                                      .toLowerCase()
-                                      .includes(search) ||
-                                      customer.phone
-                                          .toLowerCase()
-                                          .includes(search);
+                                : customer.name.toLowerCase().includes(search) ||
+                                      customer.phone.toLowerCase().includes(search);
                         })
                         ?.map((customer, index) => (
                             <tr
                                 key={customer._id}
                                 className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
                             >
-                                <td className="py-2 text-center"
-                                    onClick={() => LinkToDetail(customer.id)}
-                                >
-                                    {index+1}
+                                <td className="py-2 text-center" onClick={() => LinkToDetail(customer.id)}>
+                                    {index + 1}
                                 </td>
-                                <td className="py-2 text-left"
-                                    onClick={() => LinkToDetail(customer.id)}
-                                >
+                                <td className="py-2 text-left" onClick={() => LinkToDetail(customer.id)}>
                                     {customer._id}
                                 </td>
-                                <td className="py-2 text-left pl-[4%]"
-                                    onClick={() => LinkToDetail(customer.id)}
-                                >
+                                <td className="py-2 pl-[4%] text-left" onClick={() => LinkToDetail(customer.id)}>
                                     {customer.name}
                                 </td>
-                                <td className="py-2 text-center"
-                                    onClick={() => LinkToDetail(customer.id)}
-                                >
+                                <td className="py-2 text-center" onClick={() => LinkToDetail(customer.id)}>
                                     {customer.phone}
                                 </td>
-                                <td className="py-2 text-left pl-4"
-                                    onClick={() => LinkToDetail(customer.id)}
-                                >
+                                <td className="py-2 pl-4 text-left" onClick={() => LinkToDetail(customer.id)}>
                                     {customer.address}
                                 </td>
-                                <td className="py-2 text-center"
-                                >
+                                <td className="py-2 text-center">
                                     <div className="flex justify-end">
                                         <Link
-                                            to={"/customers/updatecustomer/"+customer.id}
+                                            to={'/customers/updatecustomer/' + customer.id}
                                             className="btn btn-sm bg-blue-500 hover:bg-blue-400"
                                         >
                                             <span className="pr-1">
