@@ -69,7 +69,7 @@ function CustomerInput({ setIsValid }) {
                 );
                 setIsExistCustomer(false);
             });
-    }, [formik.values]);
+    }, [formik.values.phone]);
 
     useEffect(() => {
         if (!formik.dirty) {
