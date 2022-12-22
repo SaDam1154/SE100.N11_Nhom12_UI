@@ -156,7 +156,7 @@ function UpdateProductType() {
                     </form>
                 </div>
             </div>
-            <ToastContainer />
+            <ToastContainer hideProgressBar />
         </>
     );
 }

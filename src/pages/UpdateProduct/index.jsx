@@ -263,7 +263,7 @@ function UpdateProduct() {
                     </form>
                 </div>
             </div>
-            <ToastContainer />
+            <ToastContainer hideProgressBar />
         </div>
     );
 }

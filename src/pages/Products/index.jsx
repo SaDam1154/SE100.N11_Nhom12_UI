@@ -244,7 +244,7 @@ function Products() {
                             ))}
                     </tbody>
                 </table>
-                <ToastContainer />
+                <ToastContainer hideProgressBar />
             </div>
 
             {/* DELETE DIALOG */}

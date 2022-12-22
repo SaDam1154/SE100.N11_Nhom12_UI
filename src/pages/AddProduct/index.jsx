@@ -225,7 +225,7 @@ function Addroduct() {
                     </form>
                 </div>
             </div>
-            <ToastContainer />
+            <ToastContainer hideProgressBar />
         </>
     );
 }

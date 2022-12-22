@@ -194,7 +194,7 @@ function ProductType() {
                         ))}
                 </tbody>
             </table>
-            <ToastContainer />
+            <ToastContainer hideProgressBar />
         </div>
     );
 }

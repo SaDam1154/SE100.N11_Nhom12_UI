@@ -192,7 +192,7 @@ function AddCustomer() {
                     </form>
                 </div>
             </div>
-            <ToastContainer />
+            <ToastContainer hideProgressBar />
         </>
     );
 }
