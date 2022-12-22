@@ -156,7 +156,7 @@ function ProductsView() {
                     </Popover>
                     <Link to="/product/" className="btn btn-md btn-green">
                         <span className="pr-1">
-                            <i className="fa-solid fa-circle-plus"></i>
+                            <i className="fa fa-share"></i>
                         </span>
                         <span>Chuyển sang dạng danh sách</span>
                     </Link>

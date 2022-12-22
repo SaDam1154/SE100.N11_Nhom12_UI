@@ -126,7 +126,7 @@ function Products() {
 
                         <Link to="/product/views" className="btn btn-md btn-green">
                             <span className="pr-1">
-                                <i className="fa-solid fa-circle-plus"></i>
+                                <i className="fa fa-share"></i>
                             </span>
                             <span>Chuyển sang dạng lưới</span>
                         </Link>
