@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { Link, useNavigate } from 'react-router-dom';
+
 function Home() {
     return (
         <div className="container flex h-full w-full items-center justify-center space-x-11">
@@ -24,6 +26,12 @@ function Home() {
                     <span className="underline">0523011333</span>
                     {'.'}
                 </p>
+                <Link to="/login" className="btn btn-md btn-green">
+                    <span className="pr-1">
+                        <i className="fa fa-share"></i>
+                    </span>
+                    <span>Đăng nhập</span>
+                </Link>
             </div>
             <img className="w-[40vw] " src="/home-img.jpg" />
         </div>
