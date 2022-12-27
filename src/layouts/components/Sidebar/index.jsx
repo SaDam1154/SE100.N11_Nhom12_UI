@@ -86,6 +86,25 @@ const groupMenus = [
             },
         ],
     },
+    {
+        main: {
+            iconClassname: ' fa-solid fa-user',
+            text: 'Tài khoản',
+            link: '/account',
+        },
+        children: [
+            {
+                iconClassname: 'fa-solid fa-list',
+                text: 'Danh sách',
+                link: '/',
+            },
+            {
+                iconClassname: 'fa-solid fa-circle-plus',
+                text: 'Thêm',
+                link: '/add',
+            },
+        ],
+    },
     // {
     //     main: {
     //         iconClassname: 'fa-solid fa-users',

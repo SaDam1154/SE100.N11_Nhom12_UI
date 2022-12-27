@@ -4,9 +4,13 @@ import FullLayout from '../layouts/FullLayout';
 // Pages
 import Home from '../pages/Home';
 import Order from '../pages/Order';
+import Accounts from '../pages/Account';
+import AddAccount from '../pages/AddAccount';
+import DetailAccount from '../pages/DetailAccount';
+import UpdateAccount from '../pages/UpdateAccount';
 import AddOrder from '../pages/AddOrder';
 import Products from '../pages/Products';
-import AddProduct from '../pages/AddProduct';
+import AddProduct from '../pages/AddProduct';   
 import ProductType from '../pages/ProductType';
 import ProductsView from '../pages/ProductsView';
 import Customers from '../pages/Customers';
@@ -153,6 +157,35 @@ const publicRoutes = [
         component: UpdateCustomer,
         props: {
             heading: 'Chỉnh sửa khách hàng',
+        },
+    },
+    // Account
+    {
+        path: '/account',
+        component: Accounts,
+        props: {
+            heading: 'Tài khoản',
+        },
+    },
+    {
+        path: '/account/detail/:id',
+        component: DetailAccount,
+        props: {
+            heading: 'Chi tiết tài khoản',
+        },
+    },
+    {
+        path: '/account/add',
+        component: AddAccount,
+        props: {
+            heading: 'Thêm tài khoản',
+        },
+    },
+    {
+        path: '/account/update/:id',
+        component: UpdateAccount,
+        props: {
+            heading: 'Chỉnh sửa tài khoản',
         },
     },
 
