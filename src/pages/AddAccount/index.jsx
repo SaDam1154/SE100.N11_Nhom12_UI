@@ -7,6 +7,8 @@ import clsx from 'clsx';
 import TimeNow from '../../components/TimeNow';
 import 'react-toastify/dist/ReactToastify.css';
 
+import AccountRule from '../../components/AccountRule';
+
 const validationSchema = Yup.object({
     account: Yup.string().required('Vui lòng nhập tên tài tài khoản!'),
     password: Yup.string().required('Vui lòng nhập nhập mật khẩu!'),
@@ -61,149 +63,221 @@ function AddCustomer() {
 
     return (
         <>
-            <div className="    flex  flex-col items-center justify-center md:h-screen lg:py-0">
-                <div className="w-full rounded-lg bg-white shadow    sm:max-w-md md:mt-0 xl:p-0">
-                    <div className="space-y-2 p-3 sm:p-4 md:space-y-3">
-                        <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-gray-900  md:text-2xl">
+            <div className="container">
+                <div className="w-full">
+                    <form onSubmit={bacsicForm.handleSubmit}>
+                        {/* <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-gray-900  md:text-2xl">
                             ĐĂNG KÝ TÀI KHOẢN
-                        </h1>
-                        <form className="space-y-1 md:space-y-2" onSubmit={bacsicForm.handleSubmit}>
-                            <div>
-                                <label htmlFor="name" className="mb-2 block text-sm font-medium text-gray-900 ">
-                                    Tên nhân viên
-                                </label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    id="name"
-                                    className={clsx(
-                                        'focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900    sm:text-sm',
-                                        {
-                                            invalid: bacsicForm.touched.name && bacsicForm.errors.name,
-                                        }
-                                    )}
-                                    onChange={bacsicForm.handleChange}
-                                    onBlur={bacsicForm.handleBlur}
-                                    value={bacsicForm.values.name}
-                                    placeholder="Tên tài khoản"
-                                />
-                                <span
-                                    className={clsx('text-sm text-red-500 opacity-0', {
-                                        'opacity-100': bacsicForm.touched.name && bacsicForm.errors.name,
-                                    })}
-                                >
-                                    {bacsicForm.errors.name || 'No message'}
-                                </span>
-                            </div>
-                            <div>
-                                <label htmlFor="email" className="mb-2 block text-sm font-medium text-gray-900 ">
-                                    Địa chỉ email
-                                </label>
-                                <input
-                                    type="text"
-                                    name="email"
-                                    id="email"
-                                    className={clsx(
-                                        'focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900    sm:text-sm',
-                                        {
-                                            invalid: bacsicForm.touched.email && bacsicForm.errors.email,
-                                        }
-                                    )}
-                                    onChange={bacsicForm.handleChange}
-                                    onBlur={bacsicForm.handleBlur}
-                                    value={bacsicForm.values.email}
-                                    placeholder="Tên tài khoản"
-                                />
-                                <span
-                                    className={clsx('text-sm text-red-500 opacity-0', {
-                                        'opacity-100': bacsicForm.touched.email && bacsicForm.errors.email,
-                                    })}
-                                >
-                                    {bacsicForm.errors.email || 'No message'}
-                                </span>
-                            </div>
-                            <div>
-                                <label htmlFor="account" className="mb-2 block text-sm font-medium text-gray-900 ">
-                                    Tài khoản
-                                </label>
-                                <input
-                                    type="text"
-                                    name="account"
-                                    id="account"
-                                    className={clsx(
-                                        'focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900    sm:text-sm',
-                                        {
-                                            invalid: bacsicForm.touched.account && bacsicForm.errors.account,
-                                        }
-                                    )}
-                                    onChange={bacsicForm.handleChange}
-                                    onBlur={bacsicForm.handleBlur}
-                                    value={bacsicForm.values.account}
-                                    placeholder="Tên tài khoản"
-                                />
-                                <span
-                                    className={clsx('text-sm text-red-500 opacity-0', {
-                                        'opacity-100': bacsicForm.touched.account && bacsicForm.errors.account,
-                                    })}
-                                >
-                                    {bacsicForm.errors.account || 'No message'}
-                                </span>
-                            </div>
+                        </h1> */}
+                        <div className="mt-4 flex">
+                            <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
+                                <div className="form-group flex flex-col ">
+                                    <label htmlFor="name" className="mb-1 select-none  font-semibold text-gray-900  ">
+                                        Tên nhân viên
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        id="name"
+                                        className={clsx(
+                                            'focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900    sm:text-sm',
+                                            {
+                                                invalid: bacsicForm.touched.name && bacsicForm.errors.name,
+                                            }
+                                        )}
+                                        onChange={bacsicForm.handleChange}
+                                        onBlur={bacsicForm.handleBlur}
+                                        value={bacsicForm.values.name}
+                                        placeholder="Tên tài khoản"
+                                    />
+                                    <span
+                                        className={clsx('text-sm text-red-500 opacity-0', {
+                                            'opacity-100': bacsicForm.touched.name && bacsicForm.errors.name,
+                                        })}
+                                    >
+                                        {bacsicForm.errors.name || 'No message'}
+                                    </span>
+                                </div>
+                                <div className="form-group flex flex-col">
+                                    <label htmlFor="email" className="mb-1 select-none  font-semibold text-gray-900  ">
+                                        Địa chỉ email
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="email"
+                                        id="email"
+                                        className={clsx(
+                                            'focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900    sm:text-sm',
+                                            {
+                                                invalid: bacsicForm.touched.email && bacsicForm.errors.email,
+                                            }
+                                        )}
+                                        onChange={bacsicForm.handleChange}
+                                        onBlur={bacsicForm.handleBlur}
+                                        value={bacsicForm.values.email}
+                                        placeholder="Tên tài khoản"
+                                    />
+                                    <span
+                                        className={clsx('text-sm text-red-500 opacity-0', {
+                                            'opacity-100': bacsicForm.touched.email && bacsicForm.errors.email,
+                                        })}
+                                    >
+                                        {bacsicForm.errors.email || 'No message'}
+                                    </span>
+                                </div>
+                                <div className="form-group flex flex-col">
+                                    <label className="mb-1 select-none  font-semibold text-gray-900 " htmlFor="type">
+                                        Chức vụ
+                                    </label>
 
-                            <div>
-                                <label htmlFor="password" className="mb-2 block text-sm font-medium text-gray-900 ">
-                                    Mật khẩu
-                                </label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    onChange={bacsicForm.handleChange}
-                                    onBlur={bacsicForm.handleBlur}
-                                    value={bacsicForm.values.password}
-                                    placeholder="Mật khẩu của bạn"
-                                    className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900     sm:text-sm"
-                                />
-                                <span
-                                    className={clsx('text-sm text-red-500 opacity-0', {
-                                        'opacity-100': bacsicForm.touched.password && bacsicForm.errors.password,
-                                    })}
-                                >
-                                    {bacsicForm.errors.password || 'No message'}
-                                </span>
+                                    <AccountRule
+                                        id="type"
+                                        className={clsx('text-input cursor-pointer py-[5px]', {
+                                            invalid: bacsicForm.touched.type && bacsicForm.errors.type,
+                                        })}
+                                        onChange={bacsicForm.handleChange}
+                                        onBlur={bacsicForm.handleBlur}
+                                        value={bacsicForm.values.type}
+                                        name="type"
+                                    />
+
+                                    <span
+                                        className={clsx('text-sm text-red-500 opacity-0', {
+                                            'opacity-100': bacsicForm.touched.type && bacsicForm.errors.type,
+                                        })}
+                                    >
+                                        {bacsicForm.errors.type || 'No message'}
+                                    </span>
+                                </div>
                             </div>
-                            <div>
-                                <label htmlFor="RePassword" className="mb-2 block text-sm font-medium text-gray-900 ">
-                                    Nhập lại mật khẩu
-                                </label>
-                                <input
-                                    type="password"
-                                    name="RePassword"
-                                    id="RePassword"
-                                    onChange={bacsicForm.handleChange}
-                                    onBlur={bacsicForm.handleBlur}
-                                    value={bacsicForm.values.RePassword}
-                                    placeholder="Nhập lại mật khẩu của bạn"
-                                    className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900     sm:text-sm"
-                                />
-                                <span
-                                    className={clsx('text-sm text-red-500 opacity-0', {
-                                        'opacity-100': bacsicForm.touched.RePassword && bacsicForm.errors.RePassword,
-                                    })}
-                                >
-                                    {bacsicForm.errors.RePassword || 'No message'}
-                                </span>
+                            <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
+                                <div className="form-group flex flex-col ">
+                                    <label
+                                        htmlFor="account"
+                                        className="mb-1 select-none  font-semibold text-gray-900  "
+                                    >
+                                        Tài khoản
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="account"
+                                        id="account"
+                                        className={clsx(
+                                            'focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900    sm:text-sm',
+                                            {
+                                                invalid: bacsicForm.touched.account && bacsicForm.errors.account,
+                                            }
+                                        )}
+                                        onChange={bacsicForm.handleChange}
+                                        onBlur={bacsicForm.handleBlur}
+                                        value={bacsicForm.values.account}
+                                        placeholder="Tên tài khoản"
+                                    />
+                                    <span
+                                        className={clsx('text-sm text-red-500 opacity-0', {
+                                            'opacity-100': bacsicForm.touched.account && bacsicForm.errors.account,
+                                        })}
+                                    >
+                                        {bacsicForm.errors.account || 'No message'}
+                                    </span>
+                                </div>
+
+                                <div className="form-group flex flex-col ">
+                                    <label
+                                        htmlFor="password"
+                                        className="mb-1 select-none  font-semibold text-gray-900  "
+                                    >
+                                        Mật khẩu
+                                    </label>
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        id="password"
+                                        onChange={bacsicForm.handleChange}
+                                        onBlur={bacsicForm.handleBlur}
+                                        value={bacsicForm.values.password}
+                                        placeholder="Mật khẩu của bạn"
+                                        className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900     sm:text-sm"
+                                    />
+                                    <span
+                                        className={clsx('text-sm text-red-500 opacity-0', {
+                                            'opacity-100': bacsicForm.touched.password && bacsicForm.errors.password,
+                                        })}
+                                    >
+                                        {bacsicForm.errors.password || 'No message'}
+                                    </span>
+                                </div>
+                                <div className="form-group flex flex-col ">
+                                    <label
+                                        htmlFor="RePassword"
+                                        className="mb-1 select-none  font-semibold text-gray-900  "
+                                    >
+                                        Nhập lại mật khẩu
+                                    </label>
+                                    <input
+                                        type="password"
+                                        name="RePassword"
+                                        id="RePassword"
+                                        onChange={bacsicForm.handleChange}
+                                        onBlur={bacsicForm.handleBlur}
+                                        value={bacsicForm.values.RePassword}
+                                        placeholder="Nhập lại mật khẩu của bạn"
+                                        className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900     sm:text-sm"
+                                    />
+                                    <span
+                                        className={clsx('text-sm text-red-500 opacity-0', {
+                                            'opacity-100':
+                                                bacsicForm.touched.RePassword && bacsicForm.errors.RePassword,
+                                        })}
+                                    >
+                                        {bacsicForm.errors.RePassword || 'No message'}
+                                    </span>
+                                </div>
                             </div>
-                            <button
-                                type="submit"
-                                className="btn btn-blue focus:ring-primary-300  w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
+                        </div>
+                        <div className="mt-4 flex">
+                            <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col ">
+                                <label className="mb-1 cursor-default select-none text-lg font-semibold">
+                                    Ngày thêm
+                                </label>
+                                <div className="rounded border border-slate-300 bg-slate-50 px-2 outline-none">
+                                    <TimeNow />
+                                </div>
+                            </div>
+                            {/* PRICE */}
+                        </div>
+                        <div className="mt-6 flex items-center justify-between border-t pt-6">
+                            <div
+                                className={clsx('flex items-center text-blue-500', {
+                                    invisible: !loading,
+                                })}
                             >
-                                Đăng ký
-                            </button>
-                        </form>
-                    </div>
+                                <i className="fa-solid fa-spinner animate-spin text-xl"></i>
+                                <span className="text-lx pl-3 font-medium">Đang tạo sản phẩm</span>
+                            </div>
+                            <div className="flex">
+                                <Link to={'/product'} className="btn btn-red btn-md">
+                                    <span className="pr-2">
+                                        <i className="fa-solid fa-circle-xmark"></i>
+                                    </span>
+                                    <span>Hủy</span>
+                                </Link>
+                                <button
+                                    type="submit"
+                                    className="btn btn-blue btn-md"
+                                    disabled={!bacsicForm.dirty || loading}
+                                >
+                                    <span className="pr-2">
+                                        <i className="fa-solid fa-circle-plus"></i>
+                                    </span>
+                                    <span>Thêm</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
+            <ToastContainer hideProgressBar />
         </>
     );
 }
