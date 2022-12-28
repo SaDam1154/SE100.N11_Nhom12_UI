@@ -95,7 +95,7 @@ function Orders() {
 
                         <Link to="/order/add" className="btn btn-md btn-green">
                             <span className="pr-1">
-                                <i className="fa-solid fa-circle-plus"></i>
+                                <i className="fa fa-share"></i>
                             </span>
                             <span>Tạo hoá đơn</span>
                         </Link>

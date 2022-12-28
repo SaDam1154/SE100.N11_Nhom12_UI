@@ -23,7 +23,7 @@ const validationSchema = Yup.object({
     password: Yup.string()
         .required('Vui lòng nhập nhập mật khẩu!')
         .min(6, 'Mật khẩu quá ngắn! mật khẩu phải có ít nhất 6 kí tự'),
-    RePassword: Yup.string().required('Vui lòng nhập nhập lại mật khẩu!'),
+    rePassword: Yup.string().required('Vui lòng nhập nhập lại mật khẩu!'),
 });
 
 const accounts = [
@@ -33,7 +33,17 @@ const accounts = [
         rule: 'Nhân viên',
         email: 'b',
         account: 'c',
-        password: 'd',
+        password: '123456',
+        rePassword: '123456',
+        createdAt: new Date(),
+    },
+    {
+        _id: 2,
+        name: 'a2',
+        rule: 'Nhân viên',
+        email: 'b2',
+        account: 'c2',
+        password: 'd2',
         createdAt: new Date(),
     },
 ];
@@ -61,13 +71,14 @@ function UpdateAccount() {
     }
     const bacsicForm = useFormik({
         initialValues: {
-            name: '',
-            email: '',
-            rule: '',
-            account: '',
-            password: '',
-            rePassword: '',
+            name: account.name,
+            email: account.email,
+            rule: account.rule,
+            account: account.account,
+            password: account.password,
+            rePassword: account.rePassword,
         },
+        enableReinitialize: true,
         validationSchema,
         onSubmit: handleFormsubmit,
     });
@@ -260,17 +271,17 @@ function UpdateAccount() {
                                         id="RePassword"
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
-                                        value={bacsicForm.values.RePassword}
+                                        value={bacsicForm.values.rePassword}
                                         placeholder="Nhập lại mật khẩu"
                                         className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900     sm:text-sm"
                                     />
                                     <span
                                         className={clsx('text-sm text-red-500 opacity-0', {
                                             'opacity-100':
-                                                bacsicForm.touched.RePassword && bacsicForm.errors.RePassword,
+                                                bacsicForm.touched.rePassword && bacsicForm.errors.rePassword,
                                         })}
                                     >
-                                        {bacsicForm.errors.RePassword || 'No message'}
+                                        {bacsicForm.errors.rePassword || 'No message'}
                                     </span>
                                 </div>
                             </div>
@@ -278,7 +289,7 @@ function UpdateAccount() {
                         <div className="mt-4 flex">
                             <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col ">
                                 <label className="mb-1 cursor-default select-none text-lg font-semibold">
-                                    Ngày thêm
+                                    Ngày chỉnh sửa
                                 </label>
                                 <div className="rounded border border-slate-300 bg-slate-50 px-2 outline-none">
                                     <TimeNow />

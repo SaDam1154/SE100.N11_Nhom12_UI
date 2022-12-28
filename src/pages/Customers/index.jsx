@@ -89,7 +89,7 @@ function Customers() {
 
                         <Link to="/customer/add" className="btn btn-md bg-green-600 hover:bg-green-500">
                             <span className="pr-1">
-                                <i className="fa-solid fa-circle-plus"></i>
+                                <i className="fa fa-share"></i>
                             </span>
                             <span>Thêm khách hàng</span>
                         </Link>

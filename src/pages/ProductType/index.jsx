@@ -110,7 +110,7 @@ function ProductType() {
 
                     <Link to="/product-type/add" className="btn btn-md btn-green">
                         <span className="pr-1">
-                            <i className="fa-solid fa-circle-plus"></i>
+                            <i className="fa fa-share"></i>
                         </span>
                         <span>Thêm loại cây mới</span>
                     </Link>
