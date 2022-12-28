@@ -3,94 +3,132 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import { date } from 'yup/lib/locale';
 
+const accounts = [
+    {
+        _id: 1,
+        name: 'a',
+        rule: 'Nhân viên',
+        email: 'b',
+        account: 'c',
+        password: 'd',
+        createdAt: new Date(),
+    },
+];
 function DetailAccount() {
     const { id } = useParams();
-    const [customer, setCustomer] = useState({});
+    const [account, setAccount] = useState(accounts[0]);
     useEffect(() => {
         callApi();
     }, []);
 
     function callApi() {
-        fetch('http://localhost:5000/api/customer' + '/' + id)
-            .then((res) => res.json())
-            .then((resJson) => {
-                if (resJson.success) {
-                    setCustomer(resJson.customer);
-                } else {
-                    setCustomer({});
-                }
-            });
+        // fetch('http://localhost:5000/api/account' + '/' + id)
+        //     .then((res) => res.json())
+        //     .then((resJson) => {
+        //         if (resJson.success) {
+        //             setAccount(resJson.account);
+        //         } else {
+        //             setAccount({});
+        //         }
+        //     });
     }
     return (
-        <div className="container">
-            <div className="wrapper">
-                <div className="mt-4 flex flex-row">
-                    <div className="mt-[4%] flex basis-1/2 flex-col">
-                        <label className="mb-1 cursor-default text-lg font-semibold">Mã khách hàng</label>
-                        <div className="text-input disabled select-none py-[5px]">{customer.id}</div>
-                    </div>
-                </div>
+        <>
+            <div className="container">
+                <div className="w-full">
+                    <form>
+                        {/* <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-gray-900  md:text-2xl">
+                        ĐĂNG KÝ TÀI KHOẢN
+                    </h1> */}
+                        <div className="mt-4 flex">
+                            <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
+                                <div className="form-group flex flex-col ">
+                                    <label className="mb-1 select-none  font-semibold text-gray-900  ">
+                                        Tên nhân viên
+                                    </label>
+                                    <div className="text-input disabled select-none py-[5px]">{account.name}</div>
+                                </div>
+                                <div className="form-group flex flex-col">
+                                    <label htmlFor="email" className="mb-1 select-none  font-semibold text-gray-900  ">
+                                        Địa chỉ email
+                                    </label>
+                                    <div className="text-input disabled select-none py-[5px]">{account.email}</div>
+                                </div>
+                                <div className="form-group flex flex-col">
+                                    <label className="mb-1 select-none  font-semibold text-gray-900 " htmlFor="type">
+                                        Chức vụ
+                                    </label>
 
-                <div className="mt-2 flex flex-row">
-                    <div className="mt-2 flex basis-1/2 flex-col">
-                        <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="phone" defaultValue={0}>
-                            Số điện thoại
-                        </label>
-                        <div className="text-input disabled select-none py-[5px]">{customer.phone}</div>
-                    </div>
-                </div>
+                                    <div className="text-input disabled select-none py-[5px]">{account.rule}</div>
+                                </div>
+                            </div>
+                            <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
+                                <div className="form-group flex flex-col ">
+                                    <label
+                                        htmlFor="account"
+                                        className="mb-1 select-none  font-semibold text-gray-900  "
+                                    >
+                                        Tài khoản
+                                    </label>
+                                    <div className="text-input disabled select-none py-[5px]">{account.account}</div>
+                                </div>
 
-                <div className="mt-2 flex flex-row">
-                    <div className="mt-2 flex basis-1/2 flex-col">
-                        <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="name">
-                            Tên khách hàng
-                        </label>
-                        <div className="text-input disabled select-none py-[5px]">{customer.name}</div>
-                    </div>
-                </div>
-
-                <div className="mt-4 flex flex-row">
-                    <div className="mr-2 mt-2 flex basis-1/2 flex-col">
-                        <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="date">
-                            Ngày thêm
-                        </label>
-                        <div className="text-input disabled select-none py-[5px]">
-                            {moment(customer.createdAt).format('(HH:mm:ss)     DD/MM/YYYY')}
+                                <div className="form-group flex flex-col ">
+                                    <label
+                                        htmlFor="password"
+                                        className="mb-1 select-none  font-semibold text-gray-900  "
+                                    >
+                                        Mật khẩu
+                                    </label>
+                                    <div className="text-input disabled select-none py-[5px]">******</div>
+                                </div>
+                                <div className="form-group flex flex-col ">
+                                    <label
+                                        htmlFor="password"
+                                        className="mb-1 select-none  font-semibold text-gray-900  "
+                                    >
+                                        Nhập lại mật khẩu
+                                    </label>
+                                    <div className="text-input disabled select-none py-[5px]">******</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                        <div className="mt-4 flex">
+                            <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col ">
+                                <label className="mb-1 cursor-default select-none text-lg font-semibold">
+                                    Ngày thêm
+                                </label>
+                                <div className="text-input disabled select-none py-[5px]">
+                                    {moment(accounts[0].createdAt).format('(HH:mm:ss)     DD/MM/YYYY')}
+                                </div>
+                            </div>
+                            {/* PRICE */}
+                        </div>
+                        <div className="float-right mt-8 mr-2 flex flex-row">
+                            <div className="float-left mr-5 flex basis-1 flex-col">
+                                <Link to={'/account'} className="btn btn-blue btn-md">
+                                    <span className="pr-1">
+                                        <i className="fa-solid fa-circle-xmark"></i>
+                                    </span>
+                                    <span>Quay lại</span>
+                                </Link>
+                            </div>
 
-                <div className="mt-4 flex flex-row">
-                    <div className="mr-2 mt-2 flex w-full flex-col">
-                        <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="address">
-                            Địa chỉ
-                        </label>
-                        <div className="text-input disabled select-none py-[5px]">{customer.address}</div>
-                    </div>
-                </div>
-
-                <div className="float-right mt-8 mr-2 flex flex-row">
-                    <div className="float-left mr-5 flex basis-1 flex-col">
-                        <Link to={'/customer'} className="btn btn-blue btn-md">
-                            <span className="pr-1">
-                                <i className="fa-solid fa-circle-xmark"></i>
-                            </span>
-                            <span>Quay lại</span>
-                        </Link>
-                    </div>
-
-                    <div className="float-right flex basis-1 flex-col">
-                        <Link to={'/customer/update/' + customer.id} className="btn btn-md btn-green">
-                            <span className="pr-2">
-                                <i className="fa fa-share" aria-hidden="true"></i>
-                            </span>
-                            <span>Chỉnh sửa</span>
-                        </Link>
-                    </div>
+                            <div className="float-right flex basis-1 flex-col">
+                                <Link to={'/account/update/' + account._id} className="btn btn-md btn-green">
+                                    <span className="pr-2">
+                                        <i className="fa fa-share" aria-hidden="true"></i>
+                                    </span>
+                                    <span>Chỉnh sửa</span>
+                                </Link>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 //

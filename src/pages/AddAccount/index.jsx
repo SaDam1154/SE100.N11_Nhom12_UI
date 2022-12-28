@@ -10,12 +10,21 @@ import 'react-toastify/dist/ReactToastify.css';
 import AccountRule from '../../components/AccountRule';
 
 const validationSchema = Yup.object({
+    name: Yup.string()
+        .required('Trường này bắt buộc')
+        .min(2, 'Tên phải có độ dài hơn 2 kí tự')
+        .max(30, 'Tên dài tối đa 30 kí tự'),
+    email: Yup.string()
+        .required('Trường này bắt buộc')
+        .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Email sai không đúng định dạng'),
     account: Yup.string().required('Vui lòng nhập tên tài tài khoản!'),
-    password: Yup.string().required('Vui lòng nhập nhập mật khẩu!'),
+    password: Yup.string()
+        .required('Vui lòng nhập nhập mật khẩu!')
+        .min(6, 'Mật khẩu quá ngắn! mật khẩu phải có ít nhất 6 kí tự'),
     RePassword: Yup.string().required('Vui lòng nhập nhập lại mật khẩu!'),
 });
 
-function AddCustomer() {
+function AddAccount() {
     const [loading, setLoading] = useState(false);
     const showSuccessNoti = () => toast.info('Thêm thông tin khách hàng thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
@@ -36,29 +45,29 @@ function AddCustomer() {
 
     function handleFormsubmit(values) {
         console.log(values);
-        setLoading(true);
-        fetch('http://localhost:5000/api/customer', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(values),
-        })
-            .then((res) => res.json())
-            .then((resJson) => {
-                if (resJson.success) {
-                    setLoading(false);
-                    showSuccessNoti();
-                    bacsicForm.resetForm();
-                } else {
-                    setLoading(false);
-                    showErorrNoti();
-                }
-            })
-            .catch(() => {
-                setLoading(false);
-                showErorrNoti();
-            });
+        // setLoading(true);
+        // fetch('http://localhost:5000/api/account', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(values),
+        // })
+        //     .then((res) => res.json())
+        //     .then((resJson) => {
+        //         if (resJson.success) {
+        //             setLoading(false);
+        //             showSuccessNoti();
+        //             bacsicForm.resetForm();
+        //         } else {
+        //             setLoading(false);
+        //             showErorrNoti();
+        //         }
+        //     })
+        //     .catch(() => {
+        //         setLoading(false);
+        //         showErorrNoti();
+        //     });
     }
 
     return (
@@ -88,7 +97,7 @@ function AddCustomer() {
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
                                         value={bacsicForm.values.name}
-                                        placeholder="Tên tài khoản"
+                                        placeholder="Tên nhân viên"
                                     />
                                     <span
                                         className={clsx('text-sm text-red-500 opacity-0', {
@@ -103,7 +112,7 @@ function AddCustomer() {
                                         Địa chỉ email
                                     </label>
                                     <input
-                                        type="text"
+                                        type="email"
                                         name="email"
                                         id="email"
                                         className={clsx(
@@ -115,7 +124,7 @@ function AddCustomer() {
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
                                         value={bacsicForm.values.email}
-                                        placeholder="Tên tài khoản"
+                                        placeholder="Địa chi email"
                                     />
                                     <span
                                         className={clsx('text-sm text-red-500 opacity-0', {
@@ -196,7 +205,7 @@ function AddCustomer() {
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
                                         value={bacsicForm.values.password}
-                                        placeholder="Mật khẩu của bạn"
+                                        placeholder="Mật khẩu"
                                         className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900     sm:text-sm"
                                     />
                                     <span
@@ -221,7 +230,7 @@ function AddCustomer() {
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
                                         value={bacsicForm.values.RePassword}
-                                        placeholder="Nhập lại mật khẩu của bạn"
+                                        placeholder="Nhập lại mật khẩu"
                                         className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900     sm:text-sm"
                                     />
                                     <span
@@ -282,4 +291,4 @@ function AddCustomer() {
     );
 }
 
-export default AddCustomer;
+export default AddAccount;

@@ -2,13 +2,32 @@ import clsx from 'clsx';
 import { Fragment, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-
+const tmp = [
+    {
+        _id: 1,
+        name: 'a',
+        rule: 'Nhân viên',
+        email: 'b',
+        account: 'c',
+        password: 'd',
+        createdAt: new Date(),
+    },
+    {
+        _id: 2,
+        name: 'a2',
+        rule: 'Nhân viên',
+        email: 'b2',
+        account: 'c2',
+        password: 'd2',
+        createdAt: new Date(),
+    },
+];
 function Accounts() {
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [deletingAccountId, setDeletingAccountId] = useState(null);
 
     const [search, setSearch] = useState('');
-    const [accounts, setAccounts] = useState([]);
+    const [accounts, setAccounts] = useState(tmp);
     const navigate = useNavigate();
 
     const showDeleteNoti = () => toast.info('Xóa tài khoản thành công!');
@@ -19,40 +38,40 @@ function Accounts() {
     }, []);
 
     function getAccounts() {
-        fetch('http://localhost:5000/api/account')
-            .then((res) => res.json())
-            .then((resJson) => {
-                if (resJson.success) {
-                    setAccounts(resJson.accounts);
-                } else {
-                    setAccounts([]);
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-                setAccounts([]);
-            });
+        // fetch('http://localhost:5000/api/account')
+        //     .then((res) => res.json())
+        //     .then((resJson) => {
+        //         if (resJson.success) {
+        //             setAccounts(resJson.accounts);
+        //         } else {
+        //             setAccounts([]);
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //         setAccounts([]);
+        //     });
     }
 
     function deleteAccount(id) {
-        fetch('http://localhost:5000/api/account/' + id, {
-            method: 'DELETE',
-        })
-            .then((res) => res.json())
-            .then((resJson) => {
-                setShowDeleteDialog(false);
-                if (resJson) {
-                    showDeleteNoti();
-                    console.log('xóa');
-                    getAccounts();
-                } else {
-                    showErorrNoti();
-                }
-            })
-            .catch(() => {
-                showErorrNoti();
-                setShowDeleteDialog(false);
-            });
+        // fetch('http://localhost:5000/api/account/' + id, {
+        //     method: 'DELETE',
+        // })
+        //     .then((res) => res.json())
+        //     .then((resJson) => {
+        //         setShowDeleteDialog(false);
+        //         if (resJson) {
+        //             showDeleteNoti();
+        //             console.log('xóa');
+        //             getAccounts();
+        //         } else {
+        //             showErorrNoti();
+        //         }
+        //     })
+        //     .catch(() => {
+        //         showErorrNoti();
+        //         setShowDeleteDialog(false);
+        //     });
     }
 
     function LinkToDetail(id) {
@@ -87,14 +106,22 @@ function Accounts() {
                             />
                         </div>
                     </div>
+
+                    <Link to="/account/add" className="btn btn-md bg-green-600 hover:bg-green-500">
+                        <span className="pr-1">
+                            <i className="fa-solid fa-circle-plus"></i>
+                        </span>
+                        <span>Thêm tài khoản</span>
+                    </Link>
                 </div>
                 <table className="mt-8 w-full">
                     <thead className="w-full rounded bg-blue-500 text-white">
                         <tr className="flex h-11 w-full">
-                            <th className="flex w-20 items-center justify-end px-2">#</th>
-                            <th className="flex w-56 items-center justify-start px-2">Tên tài khoản</th>
-                            <th className="flex w-36 items-center justify-center px-2">Tên nhân viên</th>
+                            <th className="flex w-20 items-center justify-center px-2">Mã số</th>
+                            <th className="flex w-36 items-center justify-center px-2">Tên tài khoản</th>
+                            <th className="flex w-56 items-center justify-start px-2">Tên nhân viên</th>
                             <th className="flex flex-1 items-center justify-start px-2">Địa chỉ email </th>
+                            <th className="flex flex-1 items-center justify-start px-2">Chức vụ</th>
                             <th className="flex w-[200px] items-center justify-center px-2"></th>
                         </tr>
                     </thead>
@@ -113,32 +140,38 @@ function Accounts() {
                                     className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
                                 >
                                     <td
-                                        className="flex w-20 items-center justify-end px-2"
-                                        onClick={() => LinkToDetail(account.id)}
+                                        className="flex w-20 items-center justify-center px-2"
+                                        onClick={() => LinkToDetail(account._id)}
                                     >
-                                        {account.id}
+                                        {account._id}
                                     </td>
                                     <td
-                                        className="flex w-56 items-center justify-start px-2"
-                                        onClick={() => LinkToDetail(account.id)}
+                                        className="flex w-36 items-center justify-start px-2"
+                                        onClick={() => LinkToDetail(account._id)}
+                                    >
+                                        {account.account}
+                                    </td>
+                                    <td
+                                        className="flex w-56 items-center justify-center px-2"
+                                        onClick={() => LinkToDetail(account._id)}
                                     >
                                         {account.name}
                                     </td>
                                     <td
-                                        className="flex w-36 items-center justify-center px-2"
-                                        onClick={() => LinkToDetail(account.id)}
+                                        className="flex flex-1 items-center justify-start px-2"
+                                        onClick={() => LinkToDetail(account._id)}
                                     >
-                                        {account.phone}
+                                        {account.email}
                                     </td>
                                     <td
                                         className="flex flex-1 items-center justify-start px-2"
-                                        onClick={() => LinkToDetail(account.id)}
+                                        onClick={() => LinkToDetail(account._id)}
                                     >
-                                        {account.address}
+                                        {account.rule}
                                     </td>
                                     <td className="flex w-[200px] items-center justify-center px-2 py-2">
                                         <div className="flex justify-end">
-                                            <Link to={'/account/update/' + account.id} className="btn btn-sm btn-blue">
+                                            <Link to={'/account/update/' + account._id} className="btn btn-sm btn-blue">
                                                 <span className="pr-1">
                                                     <i className="fa-solid fa-pen-to-square"></i>
                                                 </span>
@@ -149,7 +182,7 @@ function Accounts() {
                                                 onClick={() => {
                                                     {
                                                         setShowDeleteDialog(true);
-                                                        setDeletingAccountId(account.id);
+                                                        setDeletingAccountId(account._id);
                                                     }
                                                 }}
                                             >

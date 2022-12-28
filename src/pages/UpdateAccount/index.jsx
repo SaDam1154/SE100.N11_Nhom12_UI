@@ -9,117 +9,126 @@ import TimeNow from '../../components/TimeNow';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'react-router-dom';
 
+import AccountRule from '../../components/AccountRule';
+
 const validationSchema = Yup.object({
     name: Yup.string()
         .required('Trường này bắt buộc')
         .min(2, 'Tên phải có độ dài hơn 2 kí tự')
         .max(30, 'Tên dài tối đa 30 kí tự'),
-    address: Yup.string().required('Trường này bắt buộc'),
-    phone: Yup.string()
+    email: Yup.string()
         .required('Trường này bắt buộc')
-        .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/, 'Số điện thoại phải là số từ 10 số'),
+        .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Email sai không đúng định dạng'),
+    account: Yup.string().required('Vui lòng nhập tên tài tài khoản!'),
+    password: Yup.string()
+        .required('Vui lòng nhập nhập mật khẩu!')
+        .min(6, 'Mật khẩu quá ngắn! mật khẩu phải có ít nhất 6 kí tự'),
+    RePassword: Yup.string().required('Vui lòng nhập nhập lại mật khẩu!'),
 });
 
+const accounts = [
+    {
+        _id: 1,
+        name: 'a',
+        rule: 'Nhân viên',
+        email: 'b',
+        account: 'c',
+        password: 'd',
+        createdAt: new Date(),
+    },
+];
 function UpdateAccount() {
     const [loading, setLoading] = useState(false);
-    const showSuccessNoti = () => toast.info('Chỉnh sửa thông tin khách hàng thành công!');
+    const showSuccessNoti = () => toast.info('Chỉnh sửa thông tin tài khoản thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
     const { id } = useParams();
-    const [customer, setCustomer] = useState({});
+    const [account, setAccount] = useState({});
     useEffect(() => {
         callApi();
     }, []);
 
     function callApi() {
-        fetch('http://localhost:5000/api/customer' + '/' + id)
-            .then((res) => res.json())
-            .then((resJson) => {
-                if (resJson.success) {
-                    setCustomer(resJson.customer);
-                } else {
-                    setCustomer({});
-                }
-            });
+        setAccount(accounts[0]);
+        // fetch('http://localhost:5000/api/account' + '/' + id)
+        //     .then((res) => res.json())
+        //     .then((resJson) => {
+        //         if (resJson.success) {
+        //             setAccount(resJson.account);
+        //         } else {
+        //             setAccount({});
+        //         }
+        //     });
     }
-    // const hihihaha= customer.name
     const bacsicForm = useFormik({
         initialValues: {
-            name: customer.name,
-            phone: customer.phone,
-            address: customer.address,
+            name: '',
+            email: '',
+            rule: '',
+            account: '',
+            password: '',
+            rePassword: '',
         },
-        enableReinitialize: true,
         validationSchema,
         onSubmit: handleFormsubmit,
     });
+
     const navigate = useNavigate();
+
     function handleFormsubmit(values) {
-        setLoading(true);
-
-        // Check values changed
-        let reqValue = {};
-        Object.keys(values).forEach((key) => {
-            if (values[key] !== bacsicForm.initialValues[key]) {
-                reqValue[key] = values[key];
-            }
-        });
-
-        console.log(reqValue);
-        fetch('http://localhost:5000/api/customer/' + id, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(reqValue),
-        })
-            .then((res) => res.json())
-            .then((resJson) => {
-                if (resJson.success) {
-                    setLoading(false);
-                    showSuccessNoti();
-                    setTimeout(() => {
-                        navigate('/customer');
-                    }, 4000);
-                } else {
-                    setLoading(false);
-                    showErorrNoti();
-                }
-            })
-            .catch(() => {
-                setLoading(false);
-                showErorrNoti();
-            });
+        console.log(values);
+        // setLoading(true);
+        // fetch('http://localhost:5000/api/account', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(values),
+        // })
+        //     .then((res) => res.json())
+        //     .then((resJson) => {
+        //         if (resJson.success) {
+        //             setLoading(false);
+        //             showSuccessNoti();
+        //             bacsicForm.resetForm();
+        //         } else {
+        //             setLoading(false);
+        //             showErorrNoti();
+        //         }
+        //     })
+        //     .catch(() => {
+        //         setLoading(false);
+        //         showErorrNoti();
+        //     });
     }
+
     return (
         <>
             <div className="container">
                 <div className="w-full">
                     <form onSubmit={bacsicForm.handleSubmit}>
-                        <div className="mt-4 flex flex-row">
-                            <div className="mt-[4%] flex basis-1/2 flex-col">
-                                <label className="mb-1 cursor-default text-lg font-semibold">Mã khách hàng</label>
-                                <div className="text-input disabled select-none py-[5px]">{customer.id}</div>
-                            </div>
-                        </div>
-
+                        {/* <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-gray-900  md:text-2xl">
+                            ĐĂNG KÝ TÀI KHOẢN
+                        </h1> */}
                         <div className="mt-4 flex">
-                            {/* Name */}
                             <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
                                 <div className="form-group flex flex-col ">
-                                    <label className="mb-1 font-semibold" htmlFor="name">
-                                        Tên khách hàng
+                                    <label htmlFor="name" className="mb-1 select-none  font-semibold text-gray-900  ">
+                                        Tên nhân viên
                                     </label>
                                     <input
                                         type="text"
+                                        name="name"
                                         id="name"
-                                        className={clsx('text-input py-[5px]', {
-                                            invalid: bacsicForm.touched.name && bacsicForm.errors.name,
-                                        })}
+                                        className={clsx(
+                                            'focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900    sm:text-sm',
+                                            {
+                                                invalid: bacsicForm.touched.name && bacsicForm.errors.name,
+                                            }
+                                        )}
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
                                         value={bacsicForm.values.name}
-                                        name="name"
-                                        placeholder="Nguyễn Văn A"
+                                        placeholder="Tên nhân viên"
                                     />
                                     <span
                                         className={clsx('text-sm text-red-500 opacity-0', {
@@ -129,73 +138,154 @@ function UpdateAccount() {
                                         {bacsicForm.errors.name || 'No message'}
                                     </span>
                                 </div>
-
                                 <div className="form-group flex flex-col">
-                                    <label className="mb-1 font-semibold" htmlFor="phone">
-                                        Số điện thoại
+                                    <label htmlFor="email" className="mb-1 select-none  font-semibold text-gray-900  ">
+                                        Địa chỉ email
                                     </label>
                                     <input
-                                        type="text"
-                                        id="phone"
-                                        className={clsx('text-input w-full py-[5px]', {
-                                            invalid: bacsicForm.touched.phone && bacsicForm.errors.phone,
-                                        })}
+                                        type="email"
+                                        name="email"
+                                        id="email"
+                                        className={clsx(
+                                            'focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900    sm:text-sm',
+                                            {
+                                                invalid: bacsicForm.touched.email && bacsicForm.errors.email,
+                                            }
+                                        )}
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
-                                        value={bacsicForm.values.phone}
-                                        name="phone"
-                                        placeholder="0987654321"
+                                        value={bacsicForm.values.email}
+                                        placeholder="Địa chi email"
                                     />
                                     <span
                                         className={clsx('text-sm text-red-500 opacity-0', {
-                                            'opacity-100': bacsicForm.touched.phone && bacsicForm.errors.phone,
+                                            'opacity-100': bacsicForm.touched.email && bacsicForm.errors.email,
                                         })}
                                     >
-                                        {bacsicForm.errors.phone || 'No message'}
+                                        {bacsicForm.errors.email || 'No message'}
                                     </span>
                                 </div>
-
-                                <div className="form-group flex basis-1/2 flex-col ">
-                                    <label htmlFor="date" className="mb-1 cursor-default text-lg font-semibold">
-                                        Ngày chỉnh sửa
+                                <div className="form-group flex flex-col">
+                                    <label className="mb-1 select-none  font-semibold text-gray-900 " htmlFor="type">
+                                        Chức vụ
                                     </label>
-                                    <div className="text-input disabled select-none">
-                                        <TimeNow />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        {/* DATE AND PRICE */}
-                        <div className="mt-4 flex">
-                            <div className="mt-3 flex w-full flex-col">
-                                <label className="mb-1 text-lg font-semibold" htmlFor="address">
-                                    Địa chỉ
-                                </label>
-                                <div className="relative">
-                                    <input
-                                        type="text"
-                                        id="address"
-                                        className={clsx('text-input w-full py-[5px]', {
-                                            invalid: bacsicForm.touched.address && bacsicForm.errors.address,
+                                    <AccountRule
+                                        id="type"
+                                        className={clsx('text-input cursor-pointer py-[5px]', {
+                                            invalid: bacsicForm.touched.type && bacsicForm.errors.type,
                                         })}
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
-                                        value={bacsicForm.values.address}
-                                        name="address"
-                                        placeholder="Nhập địa chỉ khách hàng"
+                                        value={bacsicForm.values.type}
+                                        name="type"
                                     />
+
+                                    <span
+                                        className={clsx('text-sm text-red-500 opacity-0', {
+                                            'opacity-100': bacsicForm.touched.type && bacsicForm.errors.type,
+                                        })}
+                                    >
+                                        {bacsicForm.errors.type || 'No message'}
+                                    </span>
                                 </div>
-                                <span
-                                    className={clsx('text-sm text-red-500 opacity-0', {
-                                        'opacity-100': bacsicForm.touched.address && bacsicForm.errors.address,
-                                    })}
-                                >
-                                    {bacsicForm.errors.address || 'No message'}
-                                </span>
+                            </div>
+                            <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
+                                <div className="form-group flex flex-col ">
+                                    <label
+                                        htmlFor="account"
+                                        className="mb-1 select-none  font-semibold text-gray-900  "
+                                    >
+                                        Tài khoản
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="account"
+                                        id="account"
+                                        className={clsx(
+                                            'focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900    sm:text-sm',
+                                            {
+                                                invalid: bacsicForm.touched.account && bacsicForm.errors.account,
+                                            }
+                                        )}
+                                        onChange={bacsicForm.handleChange}
+                                        onBlur={bacsicForm.handleBlur}
+                                        value={bacsicForm.values.account}
+                                        placeholder="Tên tài khoản"
+                                    />
+                                    <span
+                                        className={clsx('text-sm text-red-500 opacity-0', {
+                                            'opacity-100': bacsicForm.touched.account && bacsicForm.errors.account,
+                                        })}
+                                    >
+                                        {bacsicForm.errors.account || 'No message'}
+                                    </span>
+                                </div>
+
+                                <div className="form-group flex flex-col ">
+                                    <label
+                                        htmlFor="password"
+                                        className="mb-1 select-none  font-semibold text-gray-900  "
+                                    >
+                                        Mật khẩu
+                                    </label>
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        id="password"
+                                        onChange={bacsicForm.handleChange}
+                                        onBlur={bacsicForm.handleBlur}
+                                        value={bacsicForm.values.password}
+                                        placeholder="Mật khẩu"
+                                        className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900     sm:text-sm"
+                                    />
+                                    <span
+                                        className={clsx('text-sm text-red-500 opacity-0', {
+                                            'opacity-100': bacsicForm.touched.password && bacsicForm.errors.password,
+                                        })}
+                                    >
+                                        {bacsicForm.errors.password || 'No message'}
+                                    </span>
+                                </div>
+                                <div className="form-group flex flex-col ">
+                                    <label
+                                        htmlFor="RePassword"
+                                        className="mb-1 select-none  font-semibold text-gray-900  "
+                                    >
+                                        Nhập lại mật khẩu
+                                    </label>
+                                    <input
+                                        type="password"
+                                        name="RePassword"
+                                        id="RePassword"
+                                        onChange={bacsicForm.handleChange}
+                                        onBlur={bacsicForm.handleBlur}
+                                        value={bacsicForm.values.RePassword}
+                                        placeholder="Nhập lại mật khẩu"
+                                        className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900     sm:text-sm"
+                                    />
+                                    <span
+                                        className={clsx('text-sm text-red-500 opacity-0', {
+                                            'opacity-100':
+                                                bacsicForm.touched.RePassword && bacsicForm.errors.RePassword,
+                                        })}
+                                    >
+                                        {bacsicForm.errors.RePassword || 'No message'}
+                                    </span>
+                                </div>
                             </div>
                         </div>
-
+                        <div className="mt-4 flex">
+                            <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col ">
+                                <label className="mb-1 cursor-default select-none text-lg font-semibold">
+                                    Ngày thêm
+                                </label>
+                                <div className="rounded border border-slate-300 bg-slate-50 px-2 outline-none">
+                                    <TimeNow />
+                                </div>
+                            </div>
+                            {/* PRICE */}
+                        </div>
                         <div className="mt-6 flex items-center justify-between border-t pt-6">
                             <div
                                 className={clsx('flex items-center text-blue-500', {
@@ -203,10 +293,10 @@ function UpdateAccount() {
                                 })}
                             >
                                 <i className="fa-solid fa-spinner animate-spin text-xl"></i>
-                                <span className="text-lx pl-3 font-medium">Đang tạo thông tin khách hàng</span>
+                                <span className="text-lx pl-3 font-medium">Đang tạo sản phẩm</span>
                             </div>
                             <div className="flex">
-                                <Link to={'/customer'} className="btn btn-red btn-md">
+                                <Link to={'/product'} className="btn btn-red btn-md">
                                     <span className="pr-2">
                                         <i className="fa-solid fa-circle-xmark"></i>
                                     </span>
@@ -220,7 +310,7 @@ function UpdateAccount() {
                                     <span className="pr-2">
                                         <i className="fa-solid fa-circle-plus"></i>
                                     </span>
-                                    <span>Lưu</span>
+                                    <span>Chỉnh sửa</span>
                                 </button>
                             </div>
                         </div>
