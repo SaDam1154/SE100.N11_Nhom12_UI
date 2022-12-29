@@ -10,17 +10,17 @@ import DetailAccount from '../pages/DetailAccount';
 import UpdateAccount from '../pages/UpdateAccount';
 import AddOrder from '../pages/AddOrder';
 import Products from '../pages/Products';
-import AddProduct from '../pages/AddProduct';   
+import AddProduct from '../pages/AddProduct';
 import ProductType from '../pages/ProductType';
 import ProductsView from '../pages/ProductsView';
 import Customers from '../pages/Customers';
 import Dashboard from '../pages/Dashboard';
-import Rules from '../pages/Rules';
 import DetailTree from '../pages/DetailTree';
 import DetailCustomer from '../pages/DetailCustomer';
 import Login from '../pages/Login';
-import AddRule from '../pages/AddRule';
-import UpdateRule from '../pages/UpdateRule';
+import Role from '../pages/Role';
+import AddRole from '../pages/AddRole';
+import UpdateRole from '../pages/UpdateRole';
 import UpdateProduct from '../pages/UpdateProduct';
 import AddCustomer from '../pages/AddCustomer';
 import UpdateCustomer from '../pages/UpdateCustomer';
@@ -198,22 +198,22 @@ const publicRoutes = [
         },
     },
     {
-        path: '/rules',
-        component: Rules,
+        path: '/role',
+        component: Role,
         props: {
             heading: 'Quy định',
         },
     },
     {
-        path: '/rules/addrule',
-        component: AddRule,
+        path: '/role/add',
+        component: AddRole,
         props: {
             heading: 'Thêm chức vụ',
         },
     },
     {
-        path: '/rules/updaterule',
-        component: UpdateRule,
+        path: '/role/update',
+        component: UpdateRole,
         props: {
             heading: 'Sửa chức vụ',
         },

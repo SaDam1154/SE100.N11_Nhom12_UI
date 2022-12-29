@@ -3,38 +3,81 @@ import { Link } from 'react-router-dom';
 import { Popover } from '@headlessui/react';
 import { useState } from 'react';
 
-const rules = [
+const roles = [
     {
         num: 1,
         id: 'AD',
         name: 'Quản trị viên',
+        function: [
+            {
+                _id: 1,
+                name: 'product/read',
+                displayName: 'Xem sản phẩm',
+                index: '101',
+            },
+            {
+                _id: 2,
+                name: 'product/add',
+                displayName: 'Thêm sản phẩm',
+                index: '102',
+            },
+            {
+                _id: 1,
+                name: 'product/update',
+                displayName: 'Sửa sản phẩm',
+                index: '103',
+            },
+        ],
     },
     {
         num: 2,
         id: 'CH',
         name: 'Chủ cửa hàng',
+        function: [
+            {
+                _id: 1,
+                name: 'product/read',
+                displayName: 'Xem sản phẩm',
+                index: '101',
+            },
+            {
+                _id: 2,
+                name: 'product/add',
+                displayName: 'Thêm sản phẩm',
+                index: '102',
+            },
+            {
+                _id: 3,
+                name: 'product/update',
+                displayName: 'Sửa sản phẩm',
+                index: '103',
+            },
+        ],
     },
     {
         num: 3,
         id: 'NV',
         name: 'Nhân viên',
+        function: [
+            {
+                _id: 1,
+                name: 'product/read',
+                displayName: 'Xem sản phẩm',
+                index: '101',
+            },
+        ],
     },
 ];
 
-function Rules() {
+function Role() {
     const [search, setSearch] = useState('');
 
     return (
         <div>
             <div className="flex space-x-4">
                 <div className="flex">
-                    <label className="text-2xl font-bold text-slate-800">
-                        Danh sách phân quyền
-                    </label>
-                    <button
-                        type="button"
-                        className="ml-3 text-gray-800 hover:underline"
-                    >
+                    <label className="text-2xl font-bold text-slate-800">Danh sách phân quyền</label>
+                    <button type="button" className="ml-3 text-gray-800 hover:underline">
                         <span className="font-sm pr-1">
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </span>
@@ -62,10 +105,7 @@ function Rules() {
                         <i className="fas fa-filter"></i>
                     </button>
 
-                    <Link
-                        to="/rules/addrule"
-                        className="btn btn-md bg-green-600 hover:bg-green-500"
-                    >
+                    <Link to="/role/add" className="btn btn-md bg-green-600 hover:bg-green-500">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
@@ -91,29 +131,20 @@ function Rules() {
                 </thead>
 
                 <tbody>
-                    {rules
-                        .filter((rule) => {
+                    {roles
+                        .filter((role) => {
                             return search.toLowerCase() === ''
-                                ? rule
-                                : rule.name.toLowerCase().includes(search) ||
-                                      rule.id.toLowerCase().includes(search);
+                                ? role
+                                : role.name.toLowerCase().includes(search) || role.id.toLowerCase().includes(search);
                         })
-                        .map((rule) => (
-                            <tr
-                                key={rule.id}
-                                className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
-                            >
-                                <td className="py-2 text-center">{rule.num}</td>
-                                <td className="py-2 text-center">{rule.id}</td>
-                                <td className="py-2 text-center">
-                                    {rule.name}
-                                </td>
+                        .map((role) => (
+                            <tr key={role.id} className="cursor-pointer border-b border-slate-200 hover:bg-slate-100">
+                                <td className="py-2 text-center">{role.num}</td>
+                                <td className="py-2 text-center">{role.id}</td>
+                                <td className="py-2 text-center">{role.name}</td>
                                 <td className="py-2 text-center">
                                     <div className="flex justify-end">
-                                        <Link
-                                            to="/rules/updaterule"
-                                            className="btn btn-sm bg-blue-500 hover:bg-blue-400"
-                                        >
+                                        <Link to="/role/update" className="btn btn-sm bg-blue-500 hover:bg-blue-400">
                                             <span className="pr-1">
                                                 <i className="fa-solid fa-pen-to-square"></i>
                                             </span>
@@ -135,4 +166,4 @@ function Rules() {
     );
 }
 
-export default Rules;
+export default Role;

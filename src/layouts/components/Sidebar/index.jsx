@@ -112,13 +112,25 @@ const groupMenus = [
     //         link: '/dashboard',
     //     },
     // },
-    // {
-    //     main: {
-    //         iconClassname: 'fa-solid fa-users',
-    //         text: 'Quy định',
-    //         link: '/rules',
-    //     },
-    // },
+    {
+        main: {
+            iconClassname: 'fa-solid fa-clipboard',
+            text: 'Chức vụ',
+            link: '/role',
+        },
+        children: [
+            {
+                iconClassname: 'fa-solid fa-list',
+                text: 'Danh sách',
+                link: '/',
+            },
+            {
+                iconClassname: 'fa-solid fa-circle-plus',
+                text: 'Thêm',
+                link: '/add',
+            },
+        ],
+    },
 ];
 
 function Sidebar() {

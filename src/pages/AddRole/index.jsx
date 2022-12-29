@@ -1,50 +1,51 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const userData = [
+const functions = [
     {
-        id: '1',
-        name: 'Bán hàng',
+        _id: 1,
+        name: 'product/read',
+        displayName: 'Xem sản phẩm',
+        index: '101',
     },
     {
-        id: '2',
-        name: 'Thống kê doanh thu',
+        _id: 2,
+        name: 'product/add',
+        displayName: 'Thêm sản phẩm',
+        index: '102',
     },
     {
-        id: '3',
-        name: 'Thống kê hàng hóa',
+        _id: 3,
+        name: 'product/update',
+        displayName: 'Sửa sản phẩm',
+        index: '103',
+    },
+
+    {
+        _id: 4,
+        name: 'customer/read',
+        displayName: 'Xem khách hàng',
+        index: '101',
     },
     {
-        id: '4',
-        name: 'Quản lý nhân viên',
+        _id: 5,
+        name: 'customer/add',
+        displayName: 'Thêm khách hàng',
+        index: '102',
     },
     {
-        id: '5',
-        name: 'Quản lý khách hàng thân thiết',
-    },
-    {
-        id: '6',
-        name: 'Duyệt đơn hàng',
-    },
-    {
-        id: '7',
-        name: 'Duyệt khách hàng thân thiết',
-    },
-    {
-        id: '8',
-        name: 'In hóa đơn',
-    },
-    {
-        id: '9',
-        name: 'Quản lý quy định',
+        _id: 6,
+        name: 'customer/update',
+        displayName: 'Sửa khách hàng',
+        index: '103',
     },
 ];
 
-function AddRule() {
+function AddRole() {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        setUsers(userData);
+        setUsers(functions);
     }, []);
 
     const handleChange = (e) => {
@@ -55,9 +56,7 @@ function AddRule() {
             });
             setUsers(tempUser);
         } else {
-            let tempUser = users.map((user) =>
-                user.name === name ? { ...user, isChecked: checked } : user
-            );
+            let tempUser = users.map((user) => (user.name === name ? { ...user, isChecked: checked } : user));
             setUsers(tempUser);
         }
     };
@@ -72,14 +71,14 @@ function AddRule() {
 
             <div className="mt-10 flex flex-row items-center justify-center">
                 <div className="flex-col">
-                    <label htmlFor="rule-name" className="pr-5 text-3xl">
+                    <label htmlFor="role-name" className="pr-5 text-3xl">
                         Chức vụ:
                     </label>
                 </div>
                 <div className="border-solib flex-col border-b-[1px] border-stone-900">
                     <input
                         type="text"
-                        id="rule-name"
+                        id="role-name"
                         className="text-input border-none text-2xl text-blue-500 "
                         placeholder="Tên chức vụ"
                     />
@@ -96,17 +95,14 @@ function AddRule() {
                             <input
                                 type="checkbox"
                                 className="form-check-input mr-10"
-                                id={user.id}
-                                name={user.name}
+                                id={user._id}
+                                name={user.displayName}
                                 checked={user?.isChecked || false}
                                 onChange={handleChange}
                             />
 
-                            <label
-                                htmlFor={user.id}
-                                className="form-check-label"
-                            >
-                                {user.name}
+                            <label htmlFor={user._id} className="form-check-label">
+                                {user.displayName}
                             </label>
                         </div>
                     ))}
@@ -125,9 +121,7 @@ function AddRule() {
                         // checked={
                         //   users.filter((user) => user?.isChecked !== true).length < 1
                         // }
-                        checked={
-                            !users.some((user) => user?.isChecked !== true)
-                        }
+                        checked={!users.some((user) => user?.isChecked !== true)}
                         onChange={handleChange}
                     />
                     <label htmlFor="checkall" className="form-check-label">
@@ -136,10 +130,7 @@ function AddRule() {
                 </div>
 
                 <div className="mr-[10%] w-1/2 flex-col">
-                    <Link
-                        to={'/rules'}
-                        className="btn btn-red btn-md float-left w-1/3"
-                    >
+                    <Link to={'/role'} className="btn btn-red btn-md float-left w-1/3">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-xmark"></i>
                         </span>
@@ -158,4 +149,4 @@ function AddRule() {
     );
 }
 
-export default AddRule;
+export default AddRole;
