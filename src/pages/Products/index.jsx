@@ -1,10 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect , useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Filter from './Filter';
 import PriceFormat from '../../components/PriceFormat';
 import clsx from 'clsx';
+
+import { useSelector } from 'react-redux';
+import { accountSelector } from '../../redux/selectors';
 
 function removeVietnameseTones(stra) {
     var str = stra;
@@ -45,6 +48,21 @@ function Products() {
     const navigate = useNavigate();
     const showDeleteNoti = () => toast.info('Xóa sản phẩm thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
+
+    const account = useSelector(accountSelector);
+    function isHiddenItem(functionName) {
+        if (!account) {
+            return true;
+        }
+        if (!functionName) {
+            return false;
+        }
+        const findResult = account?.functions?.find((_func) => _func?.name === functionName);
+        if (findResult) {
+            return false;
+        }
+        return true;
+    }
 
     useEffect(() => {
         getProducts();
@@ -129,7 +147,12 @@ function Products() {
                             </span>
                             <span>Chuyển sang dạng lưới</span>
                         </Link>
-                        <Link to="/product/add" className="btn btn-md btn-green">
+                        <Link
+                            to="/product/add"
+                            className={clsx('btn btn-md btn-green', {
+                                hidden: isHiddenItem('product/create'),
+                            })}
+                        >
                             <span className="pr-1">
                                 <i className="fa fa-share"></i>
                             </span>
