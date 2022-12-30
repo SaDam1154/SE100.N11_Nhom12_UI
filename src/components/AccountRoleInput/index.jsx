@@ -26,7 +26,7 @@ function AccountRoleInput({ ...props }) {
                 -- Chọn chức vụ --
             </option>
             {accountRoles.map((role) => (
-                <option key={role.id} value={role.id}>
+                <option key={role._id} value={role._id}>
                     {role.name}
                 </option>
             ))}

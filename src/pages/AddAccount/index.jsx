@@ -20,9 +20,9 @@ const validationSchema = Yup.object({
     password: Yup.string()
         .required('Vui lòng nhập nhập mật khẩu!')
         .min(6, 'Mật khẩu quá ngắn! mật khẩu phải có ít nhất 6 kí tự'),
-    RePassword: Yup.string()
-        .required('Vui lòng nhập nhập lại mật khẩu!')
-        .oneOf([Yup.ref('password'), null], 'Nhập lại mật khẩu không đúng'),
+    // RePassword: Yup.string()
+    //     .required('Vui lòng nhập nhập lại mật khẩu!')
+    //     .oneOf([Yup.ref('password'), null], 'Nhập lại mật khẩu không đúng'),
 });
 
 function AddAccount() {
@@ -37,7 +37,6 @@ function AddAccount() {
             role: '',
             username: '',
             password: '',
-            rePassword: '',
         },
         validationSchema,
         onSubmit: handleFormsubmit,
@@ -62,11 +61,13 @@ function AddAccount() {
                     bacsicForm.resetForm();
                 } else {
                     setLoading(false);
+                    console.log(values);
                     showErorrNoti();
                 }
             })
             .catch(() => {
                 setLoading(false);
+                console.log(values);
                 showErorrNoti();
             });
     }
