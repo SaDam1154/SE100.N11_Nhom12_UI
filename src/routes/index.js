@@ -198,21 +198,21 @@ const publicRoutes = [
         },
     },
     {
-        path: '/roles',
+        path: '/role',
         component: Roles,
         props: {
             heading: 'Quy định',
         },
     },
     {
-        path: '/roles/add',
+        path: '/role/add',
         component: AddRole,
         props: {
             heading: 'Thêm chức vụ',
         },
     },
     {
-        path: '/roles/update',
+        path: '/role/update',
         component: UpdateRole,
         props: {
             heading: 'Sửa chức vụ',

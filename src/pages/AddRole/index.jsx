@@ -1,49 +1,47 @@
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import clsx from 'clsx';
 
-const FUNCTIONS = [
-    {
-        _id: 1,
-        name: 'product/read',
-        displayName: 'Xem sản phẩm',
-        index: '101',
-    },
-    {
-        _id: 2,
-        name: 'product/add',
-        displayName: 'Thêm sản phẩm',
-        index: '102',
-    },
-    {
-        _id: 3,
-        name: 'product/update',
-        displayName: 'Sửa sản phẩm',
-        index: '103',
-    },
-
-    {
-        _id: 4,
-        name: 'customer/read',
-        displayName: 'Xem khách hàng',
-        index: '101',
-    },
-    {
-        _id: 5,
-        name: 'customer/add',
-        displayName: 'Thêm khách hàng',
-        index: '102',
-    },
-    {
-        _id: 6,
-        name: 'customer/update',
-        displayName: 'Sửa khách hàng',
-        index: '103',
-    },
-];
+const validationSchema = Yup.object({
+    name: Yup.string().required('Trường này bắt buộc'),
+    description: Yup.string().required('Trường này bắt buộc'),
+});
 
 function AddRole() {
-    const [selectedFunctionIds, setSelectedFunctionIds] = useState([1, 3, 5]);
+    const [loading, setLoading] = useState(false);
+    const showSuccessNoti = () => toast.info('Tạo chức vụ thành công!');
+    const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
+
+    const [functions, setFunctions] = useState([]);
+    const [selectedFunctionIds, setSelectedFunctionIds] = useState([]);
     const [checkAll, setCheckAll] = useState(false);
+
+    useEffect(() => {
+        fetch('http://localhost:5000/api/function')
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success) {
+                    setFunctions(resJson.functions);
+                } else {
+                    setFunctions([]);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+    const roleForm = useFormik({
+        initialValues: {
+            name: '',
+            description: '',
+        },
+        validationSchema,
+        onSubmit: createRoles,
+    });
 
     function isChecked(id) {
         return selectedFunctionIds.includes(id);
@@ -52,7 +50,7 @@ function AddRole() {
     function handleToggleCheckAll(e) {
         setCheckAll(e.target.checked);
         if (e.target.checked) {
-            setSelectedFunctionIds(FUNCTIONS.map((func) => func._id));
+            setSelectedFunctionIds(functions.map((func) => func._id));
         } else {
             setSelectedFunctionIds([]);
         }
@@ -70,16 +68,44 @@ function AddRole() {
             setSelectedFunctionIds(tempArray);
         } else {
             // not checked --> checked
-            if (selectedFunctionIds.length === FUNCTIONS.length - 1) {
+            if (selectedFunctionIds.length === functions.length - 1) {
                 setCheckAll(true);
             }
             setSelectedFunctionIds([...selectedFunctionIds, id]);
         }
     }
 
+    function createRoles(values) {
+        setLoading(true);
+        fetch('http://localhost:5000/api/role', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ ...values, functions: selectedFunctionIds }),
+        })
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success) {
+                    setLoading(false);
+                    showSuccessNoti();
+                    roleForm.resetForm();
+                    setSelectedFunctionIds([]);
+                    setCheckAll(false);
+                } else {
+                    setLoading(false);
+                    showErorrNoti();
+                }
+            })
+            .catch(() => {
+                setLoading(false);
+                showErorrNoti();
+            });
+    }
+
     return (
         <div className="container h-[100%] min-w-[790px]">
-            <div className="mx-auto max-w-[800px]">
+            <form className="mx-auto max-w-[800px]" onSubmit={roleForm.handleSubmit}>
                 <div className="mt-5 flex items-center justify-center space-x-4">
                     <div className="w-[300px]">
                         <label htmlFor="role-name" className="mb-2 inline-block font-semibold">
@@ -88,9 +114,22 @@ function AddRole() {
                         <input
                             type="text"
                             id="role-name"
-                            className="text-input w-full py-2"
+                            className={clsx('text-input w-full py-[5px]', {
+                                invalid: roleForm.touched.name && roleForm.errors.name,
+                            })}
                             placeholder="Tên chức vụ"
+                            onChange={roleForm.handleChange}
+                            onBlur={roleForm.handleBlur}
+                            value={roleForm.values.name}
+                            name="name"
                         />
+                        <span
+                            className={clsx('text-sm text-red-500 opacity-0', {
+                                'opacity-100': roleForm.touched.name && roleForm.errors.name,
+                            })}
+                        >
+                            {roleForm.errors.name || 'No message'}
+                        </span>
                     </div>
                     <div className="flex-1">
                         <label htmlFor="role-description" className="mb-2 inline-block font-semibold">
@@ -99,15 +138,28 @@ function AddRole() {
                         <input
                             type="text"
                             id="role-description"
-                            className="text-input w-full py-2"
+                            className={clsx('text-input w-full py-[5px]', {
+                                invalid: roleForm.touched.description && roleForm.errors.description,
+                            })}
                             placeholder="Tên chức vụ"
+                            onChange={roleForm.handleChange}
+                            onBlur={roleForm.handleBlur}
+                            value={roleForm.values.description}
+                            name="description"
                         />
+                        <span
+                            className={clsx('text-sm text-red-500 opacity-0', {
+                                'opacity-100': roleForm.touched.description && roleForm.errors.description,
+                            })}
+                        >
+                            {roleForm.errors.description || 'No message'}
+                        </span>
                     </div>
                 </div>
 
                 <div className="mt-5 flex flex-row justify-center">
                     <div className="m-auto !h-[400px] w-full overflow-y-scroll rounded border border-gray-300 px-5 py-5 text-lg">
-                        {FUNCTIONS.map((func, index) => (
+                        {functions.map((func, index) => (
                             <div
                                 className="flex cursor-pointer items-center border-b border-slate-300 px-2 hover:bg-slate-100"
                                 key={index}
@@ -126,8 +178,6 @@ function AddRole() {
                                 </label>
                             </div>
                         ))}
-
-                        {/* check all */}
                     </div>
                 </div>
 
@@ -146,6 +196,14 @@ function AddRole() {
                     </div>
 
                     <div className="flex">
+                        <div
+                            className={clsx('mr-3 flex items-center text-blue-500', {
+                                invisible: !loading,
+                            })}
+                        >
+                            <i className="fa-solid fa-spinner animate-spin text-xl"></i>
+                            <span className="text-lx pl-3 font-medium">Đang tạo chức vụ</span>
+                        </div>
                         <Link to={'/role'} className="btn btn-red btn-md">
                             <span className="pr-1">
                                 <i className="fa-solid fa-circle-xmark"></i>
@@ -153,7 +211,7 @@ function AddRole() {
                             <span className="">Hủy</span>
                         </Link>
 
-                        <button className="btn btn-green btn-md">
+                        <button type="submit" className="btn btn-green btn-md" disabled={!roleForm.dirty || loading}>
                             <span className="pr-1">
                                 <i className="fa-solid fa-circle-plus"></i>
                             </span>
@@ -161,7 +219,7 @@ function AddRole() {
                         </button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     );
 }
