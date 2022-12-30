@@ -84,17 +84,8 @@ function DetailTree() {
                     </div>
 
                     <div className="form-group w-1/2 flex-col items-center justify-items-center ">
-                        <label className="mb-1 cursor-default font-semibold" htmlFor="quantity">
-                            Hình ảnh
-                        </label>
-                        <div className="h-60 w-full rounded-xl border-2 border-dashed border-cyan-300 bg-gray-100">
-                            {
-                                <img
-                                    src={product.image}
-                                    alt=""
-                                    className="h-full w-full rounded-xl object-contain py-[1.5px]"
-                                />
-                            }
+                        <div className="h-60 w-full select-none overflow-hidden rounded border border-slate-300 bg-slate-50">
+                            <img src={product.image} alt="" className="h-full w-full object-contain" />
                         </div>
                     </div>
                 </div>
