@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import AccountRoleInput from '../../components/AccountRoleInput';
 const validationSchema = Yup.object({
+    role: Yup.string().required('Trường này bắt buộc'),
     name: Yup.string()
         .required('Trường này bắt buộc')
         .min(2, 'Tên phải có độ dài hơn 2 kí tự')
