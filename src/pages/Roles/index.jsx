@@ -2,6 +2,8 @@ import { Fragment } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Popover } from '@headlessui/react';
 import { useEffect, useState } from 'react';
+import clsx from 'clsx';
+import { toast } from 'react-toastify';
 
 function removeVietnameseTones(stra) {
     var str = stra;
@@ -34,13 +36,19 @@ function removeVietnameseTones(stra) {
 }
 
 function Roles() {
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+    const [deletingRoleId, setDeletingRoleId] = useState(null);
+    const showDeleteNoti = () => toast.info('Xóa chức vụ thành công!');
+    const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
+
+    const navigate = useNavigate();
     const [roles, setRoles] = useState([]);
     const [search, setSearch] = useState(' ');
     const [renderRoles, setRenderRoles] = useState([]);
     useEffect(() => {
         getRoles();
     }, []);
-    const navigate = useNavigate();
+
     function getRoles() {
         fetch('http://localhost:5000/api/role')
             .then((res) => res.json())
@@ -82,100 +90,150 @@ function Roles() {
         navigate('/roles/detail/' + id);
     }
 
-    return (
-        <div>
-            <div className="flex space-x-4">
-                <div className="flex">
-                    <label className="text-2xl font-bold text-slate-800">Danh sách chức vụ</label>
-                    <button type="button" className="ml-3 text-gray-800 hover:underline">
-                        <span className="font-sm pr-1">
-                            <i className="fa fa-refresh" aria-hidden="true"></i>
-                        </span>
-                        <span className="" onClick={() => getRoles()}>
-                            Tải lại
-                        </span>
-                    </button>
-                </div>
+    function deleteRole(id) {
+        fetch('http://localhost:5000/api/role/' + id, {
+            method: 'DELETE',
+        })
+            .then((res) => res.json())
+            .then((resJson) => {
+                setShowDeleteDialog(false);
+                if (resJson) {
+                    showDeleteNoti();
+                    console.log('xóa');
+                    getRoles();
+                } else {
+                    showErorrNoti();
+                }
+            })
+            .catch(() => {
+                showErorrNoti();
+                setShowDeleteDialog(false);
+            });
+    }
 
-                <div className="flex grow">
-                    <div className="mr-2 flex grow">
-                        <input
-                            type="text"
-                            onChange={(e) => {
-                                setSearch(e.target.value);
-                            }}
-                            className="text-input grow"
-                            placeholder="Tìm kiếm chức vụ"
-                        />
+    return (
+        <>
+            <div>
+                <div className="flex space-x-4">
+                    <div className="flex">
+                        <label className="text-2xl font-bold text-slate-800">Danh sách chức vụ</label>
+                        <button type="button" className="ml-3 text-gray-800 hover:underline">
+                            <span className="font-sm pr-1">
+                                <i className="fa fa-refresh" aria-hidden="true"></i>
+                            </span>
+                            <span className="" onClick={() => getRoles()}>
+                                Tải lại
+                            </span>
+                        </button>
                     </div>
 
-                    <Link to="/roles/add" className="btn btn-md bg-green-600 hover:bg-green-500">
-                        <span className="pr-1">
-                            <i className="fa-solid fa-circle-plus"></i>
-                        </span>
-                        <span>Thêm chức vụ</span>
-                    </Link>
+                    <div className="flex grow justify-between">
+                        <div></div>
+                        <Link to="/role/add" className="btn btn-md bg-green-600 hover:bg-green-500">
+                            <span className="pr-1">
+                                <i className="fa-solid fa-circle-plus"></i>
+                            </span>
+                            <span>Thêm chức vụ</span>
+                        </Link>
+                    </div>
+                </div>
+                <table className="mt-4 w-full">
+                    <colgroup>
+                        <col span="1" style={{ width: '10%' }} />
+                        <col span="1" style={{ width: '20%' }} />
+                        <col span="1" style={{ width: '40%' }} />
+                        <col span="1" style={{ width: '10%' }} />
+                    </colgroup>
+
+                    <thead className="h-11 rounded bg-blue-500 text-white">
+                        <tr>
+                            <th scope="col" className="text-center">
+                                Mã chức vụ
+                            </th>
+                            <th scope="col" className="text-left">
+                                Tên chức vụ
+                            </th>
+                            <th scope="col" className="text-left">
+                                Chú thích
+                            </th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {roles.map((role) => (
+                            <tr
+                                key={role.id}
+                                className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                                onClick={() => linkToDetail(role.id)}
+                            >
+                                <td className="py-2 text-center">{role.id}</td>
+                                <td className="py-2 text-left">{role.name}</td>
+                                <td className="py-2 text-left">{role.description}</td>
+                                <td className="py-2 text-center">
+                                    <div className="flex justify-end" onClick={(e) => e.stopPropagation()}>
+                                        <Link
+                                            to={'/role/update/' + role.id}
+                                            className="btn btn-sm bg-blue-500 hover:bg-blue-400"
+                                        >
+                                            <span className="pr-1">
+                                                <i className="fa-solid fa-pen-to-square"></i>
+                                            </span>
+                                            <span>Sửa</span>
+                                        </Link>
+                                        <button
+                                            className="btn btn-sm bg-red-500 hover:bg-red-400"
+                                            onClick={() => {
+                                                {
+                                                    setShowDeleteDialog(true);
+                                                    setDeletingRoleId(role.id);
+                                                }
+                                            }}
+                                        >
+                                            <span className="pr-1">
+                                                <i className="fa-solid fa-circle-xmark"></i>
+                                            </span>
+                                            <span>Xoá</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+            {/* DELETE DIALOG */}
+            <div
+                className={clsx(
+                    'fixed inset-0 z-[99999] hidden items-center justify-center bg-black/20 opacity-0 transition-opacity',
+                    {
+                        '!flex !opacity-100': showDeleteDialog,
+                    }
+                )}
+            >
+                <div className="">
+                    <div className="min-w-[160px] max-w-[400px] rounded-lg bg-white p-6">
+                        <div className="text-clr-text-dark font-bold">Bạn có chắc chắn muốn xoá không?</div>
+                        <p className="mt-4">Lưu ý: Bạn không thể không phục lại sau khi xoá!</p>
+                        <div className="mt-4 flex">
+                            <button
+                                className="btn btn-blue btn-md"
+                                onClick={() => {
+                                    setDeletingRoleId(null);
+                                    setShowDeleteDialog(false);
+                                }}
+                            >
+                                Quay lại
+                            </button>
+                            <button className="btn btn-md btn-red" onClick={() => deleteRole(deletingRoleId)}>
+                                Xoá
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <table className="mt-4 w-full">
-                <colgroup>
-                    <col span="1" style={{ width: '10%' }} />
-                    <col span="1" style={{ width: '20%' }} />
-                    <col span="1" style={{ width: '40%' }} />
-                    <col span="1" style={{ width: '10%' }} />
-                </colgroup>
-
-                <thead className="h-11 rounded bg-blue-500 text-white">
-                    <tr>
-                        <th scope="col" className="text-center">
-                            Mã chức vụ
-                        </th>
-                        <th scope="col" className="text-left">
-                            Tên chức vụ
-                        </th>
-                        <th scope="col" className="text-left">
-                            Chú thích
-                        </th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {renderRoles?.map((role) => (
-                        <tr key={role.id} className="cursor-pointer border-b border-slate-200 hover:bg-slate-100">
-                            <td className="py-2 text-center" onClick={() => LinkToDetail(role._id)}>
-                                {role.id}{' '}
-                            </td>
-                            <td className="py-2 text-center" onClick={() => LinkToDetail(role._id)}>
-                                {role.name}
-                            </td>
-                            <td className="py-2 text-center" onClick={() => LinkToDetail(role._id)}>
-                                {role.description}
-                            </td>
-                            <td className="py-2 text-center" onClick={() => LinkToDetail(role._id)}>
-                                <div className="flex justify-end">
-                                    <Link
-                                        to={'/roles/update/' + role._id}
-                                        className="btn btn-sm bg-blue-500 hover:bg-blue-400"
-                                    >
-                                        <span className="pr-1">
-                                            <i className="fa-solid fa-pen-to-square"></i>
-                                        </span>
-                                        <span>Sửa</span>
-                                    </Link>
-                                    <button className="btn btn-sm bg-red-500 hover:bg-red-400">
-                                        <span className="pr-1">
-                                            <i className="fa-solid fa-circle-xmark"></i>
-                                        </span>
-                                        <span>Xoá</span>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+        </>
     );
 }
 
