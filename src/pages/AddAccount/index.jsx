@@ -142,14 +142,15 @@ function AddAccount() {
 
                                     <AccountRoleInput
                                         id="role"
+                                        className={clsx('text-input cursor-pointer py-[5px]', {
+                                            invalid: bacsicForm.touched.role && bacsicForm.errors.role,
+                                        })}
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
                                         value={bacsicForm.values.role}
-                                        error={bacsicForm.errors.role}
-                                        touched={bacsicForm.touched.role}
                                         name="role"
-                                        placeholder="Nhập giá mỗi sản phẩm"
                                     />
+
                                     <span
                                         className={clsx('text-sm text-red-500 opacity-0', {
                                             'opacity-100': bacsicForm.touched.role && bacsicForm.errors.role,
