@@ -60,7 +60,7 @@ function Roles() {
 
     return (
         <>
-            <div>
+            <div className="container">
                 <div className="flex space-x-4">
                     <div className="flex">
                         <label className="text-2xl font-bold text-slate-800">Danh sách chức vụ</label>
