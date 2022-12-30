@@ -19,11 +19,10 @@ const validationSchema = Yup.object({
     email: Yup.string()
         .required('Trường này bắt buộc')
         .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Email sai không đúng định dạng'),
-    username: Yup.string().required('Vui lòng nhập tên tài tài khoản!'),
-    password: Yup.string()
-        .required('Vui lòng nhập nhập mật khẩu!')
-        .min(6, 'Mật khẩu quá ngắn! mật khẩu phải có ít nhất 6 kí tự'),
-    rePassword: Yup.string().required('Vui lòng nhập nhập lại mật khẩu!'),
+    // password: Yup.string()
+    //     .required('Vui lòng nhập nhập mật khẩu!')
+    //     .min(6, 'Mật khẩu quá ngắn! mật khẩu phải có ít nhất 6 kí tự'),
+    // rePassword: Yup.string().required('Vui lòng nhập nhập lại mật khẩu!'),
 });
 
 function UpdateAccount() {
@@ -60,9 +59,6 @@ function UpdateAccount() {
 
     const navigate = useNavigate();
 
-    function handleFormsubmittmp(values) {
-        console.log(values);
-    }
     function handleFormsubmit(values) {
         setLoading(true);
 
@@ -245,13 +241,17 @@ function UpdateAccount() {
                                 <span className="text-lx pl-3 font-medium">Đang tạo sản phẩm</span>
                             </div>
                             <div className="flex">
-                                <Link to={'/product'} className="btn btn-red btn-md">
+                                <Link to={'/account'} className="btn btn-red btn-md">
                                     <span className="pr-2">
                                         <i className="fa-solid fa-circle-xmark"></i>
                                     </span>
                                     <span>Hủy</span>
                                 </Link>
-                                <button type="submit" className="btn btn-blue btn-md" disabled={!bacsicForm || loading}>
+                                <button
+                                    type="submit"
+                                    className="btn btn-blue btn-md"
+                                    disabled={!bacsicForm.dirty || loading}
+                                >
                                     <span className="pr-1">
                                         <i className="fa-solid fa-circle-plus"></i>
                                     </span>
