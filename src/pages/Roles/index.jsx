@@ -81,7 +81,10 @@ function Roles() {
                             <td className="py-2 text-left">{role.description}</td>
                             <td className="py-2 text-center">
                                 <div className="flex justify-end">
-                                    <Link to="/role/update" className="btn btn-sm bg-blue-500 hover:bg-blue-400">
+                                    <Link
+                                        to={'/role/update/' + role.id}
+                                        className="btn btn-sm bg-blue-500 hover:bg-blue-400"
+                                    >
                                         <span className="pr-1">
                                             <i className="fa-solid fa-pen-to-square"></i>
                                         </span>

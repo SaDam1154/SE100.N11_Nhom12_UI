@@ -212,7 +212,7 @@ const publicRoutes = [
         },
     },
     {
-        path: '/role/update',
+        path: '/role/update/:id',
         component: UpdateRole,
         props: {
             heading: 'Sửa chức vụ',
