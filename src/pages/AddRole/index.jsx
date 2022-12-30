@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const functions = [
+const FUNCTIONS = [
     {
         _id: 1,
         name: 'product/read',
@@ -39,120 +39,127 @@ const functions = [
         displayName: 'Sửa khách hàng',
         index: '103',
     },
-    {
-        _id: 5,
-        name: 'customer/add',
-        displayName: 'Thêm khách hàng',
-        index: '102',
-    },
-    {
-        _id: 6,
-        name: 'customer/update',
-        displayName: 'Sửa khách hàng',
-        index: '103',
-    },
 ];
 
 function AddRole() {
-    const [users, setUsers] = useState([]);
+    const [selectedFunctionIds, setSelectedFunctionIds] = useState([1, 3, 5]);
+    const [checkAll, setCheckAll] = useState(false);
 
-    useEffect(() => {
-        setUsers(functions);
-    }, []);
+    function isChecked(id) {
+        return selectedFunctionIds.includes(id);
+    }
 
-    const handleChange = (e) => {
-        const { name, checked } = e.target;
-        if (name === 'allSelect') {
-            let tempUser = users.map((user) => {
-                return { ...user, isChecked: checked };
-            });
-            setUsers(tempUser);
+    function handleToggleCheckAll(e) {
+        setCheckAll(e.target.checked);
+        if (e.target.checked) {
+            setSelectedFunctionIds(FUNCTIONS.map((func) => func._id));
         } else {
-            let tempUser = users.map((user) => (user.name === name ? { ...user, isChecked: checked } : user));
-            setUsers(tempUser);
+            setSelectedFunctionIds([]);
         }
-    };
+    }
+
+    function handleToggleFunc(id) {
+        if (isChecked(id)) {
+            // checked --> not checked
+            setCheckAll(false);
+            const tempArray = [...selectedFunctionIds];
+            const index = tempArray.indexOf(id);
+            if (index > -1) {
+                tempArray.splice(index, 1);
+            }
+            setSelectedFunctionIds(tempArray);
+        } else {
+            // not checked --> checked
+            if (selectedFunctionIds.length === FUNCTIONS.length - 1) {
+                setCheckAll(true);
+            }
+            setSelectedFunctionIds([...selectedFunctionIds, id]);
+        }
+    }
 
     return (
         <div className="container h-[100%] min-w-[790px]">
-            <div className="mt-5 flex items-center justify-center space-x-4">
-                <div className="w-[300px]">
-                    <label htmlFor="role-name" className="mb-2 inline-block font-semibold">
-                        Chức vụ:
-                    </label>
-                    <input type="text" id="role-name" className="text-input w-full py-2" placeholder="Tên chức vụ" />
-                </div>
-                <div className="w-[300px]">
-                    <label htmlFor="role-description" className="mb-2 inline-block font-semibold">
-                        Mô tả chức vụ:
-                    </label>
-                    <input
-                        type="text"
-                        id="role-description"
-                        className="text-input w-full py-2"
-                        placeholder="Tên chức vụ"
-                    />
-                </div>
-            </div>
-
-            <div className="mt-5 flex flex-row justify-center">
-                <form className="form m-auto !h-[400px] w-[80%] overflow-y-scroll rounded-xl border border-gray-300 px-10 py-3 text-lg">
-                    {users.map((user, index) => (
-                        <div
-                            className="check-form cursor-pointer border-b border-slate-300 py-3 text-left hover:bg-slate-100"
-                            key={index}
-                        >
-                            <input
-                                type="checkbox"
-                                className="form-check-input mr-10"
-                                id={user._id}
-                                name={user.displayName}
-                                checked={user?.isChecked || false}
-                                onChange={handleChange}
-                            />
-
-                            <label htmlFor={user._id} className="form-check-label">
-                                {user.displayName}
-                            </label>
-                        </div>
-                    ))}
-
-                    {/* check all */}
-                </form>
-            </div>
-
-            <div className="mt-[5%] flex flex-row text-xl">
-                <div className="ml-[10%] w-1/2 flex-col px-3">
-                    <input
-                        type="checkbox"
-                        className="form-check-input mr-5"
-                        name="allSelect"
-                        id="checkall"
-                        // checked={
-                        //   users.filter((user) => user?.isChecked !== true).length < 1
-                        // }
-                        checked={!users.some((user) => user?.isChecked !== true)}
-                        onChange={handleChange}
-                    />
-                    <label htmlFor="checkall" className="form-check-label">
-                        Chọn tất cả
-                    </label>
+            <div className="mx-auto max-w-[800px]">
+                <div className="mt-5 flex items-center justify-center space-x-4">
+                    <div className="w-[300px]">
+                        <label htmlFor="role-name" className="mb-2 inline-block font-semibold">
+                            Chức vụ:
+                        </label>
+                        <input
+                            type="text"
+                            id="role-name"
+                            className="text-input w-full py-2"
+                            placeholder="Tên chức vụ"
+                        />
+                    </div>
+                    <div className="flex-1">
+                        <label htmlFor="role-description" className="mb-2 inline-block font-semibold">
+                            Mô tả chức vụ:
+                        </label>
+                        <input
+                            type="text"
+                            id="role-description"
+                            className="text-input w-full py-2"
+                            placeholder="Tên chức vụ"
+                        />
+                    </div>
                 </div>
 
-                <div className="mr-[10%] w-1/2 flex-col">
-                    <Link to={'/role'} className="btn btn-red btn-md float-left w-1/3">
-                        <span className="pr-1">
-                            <i className="fa-solid fa-circle-xmark"></i>
-                        </span>
-                        <span className="text-lg">Hủy</span>
-                    </Link>
+                <div className="mt-5 flex flex-row justify-center">
+                    <div className="m-auto !h-[400px] w-full overflow-y-scroll rounded border border-gray-300 px-5 py-5 text-lg">
+                        {FUNCTIONS.map((func, index) => (
+                            <div
+                                className="flex cursor-pointer items-center border-b border-slate-300 px-2 hover:bg-slate-100"
+                                key={index}
+                            >
+                                <input
+                                    type="checkbox"
+                                    className="accent-blue-500"
+                                    id={'function-input-' + func._id}
+                                    name={func.displayName}
+                                    checked={isChecked(func._id)}
+                                    onChange={() => handleToggleFunc(func._id)}
+                                />
 
-                    <button className="btn btn-green btn-md float-right w-1/3">
-                        <span className="pr-1">
-                            <i className="fa-solid fa-circle-plus"></i>
-                        </span>
-                        <span className="text-lg">Thêm</span>
-                    </button>
+                                <label htmlFor={'function-input-' + func._id} className="block flex-1 py-3 pl-8 ">
+                                    {func.displayName}
+                                </label>
+                            </div>
+                        ))}
+
+                        {/* check all */}
+                    </div>
+                </div>
+
+                <div className="mt-5 flex items-center justify-between">
+                    <div className="flex cursor-pointer items-center text-lg">
+                        <input
+                            type="checkbox"
+                            className="accent-blue-500"
+                            id="checkall"
+                            checked={checkAll}
+                            onChange={handleToggleCheckAll}
+                        />
+                        <label htmlFor="checkall" className="inline-block py-3 pl-5">
+                            Chọn tất cả
+                        </label>
+                    </div>
+
+                    <div className="flex">
+                        <Link to={'/role'} className="btn btn-red btn-md">
+                            <span className="pr-1">
+                                <i className="fa-solid fa-circle-xmark"></i>
+                            </span>
+                            <span className="">Hủy</span>
+                        </Link>
+
+                        <button className="btn btn-green btn-md">
+                            <span className="pr-1">
+                                <i className="fa-solid fa-circle-plus"></i>
+                            </span>
+                            <span className="">Thêm</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
