@@ -18,7 +18,7 @@ import Dashboard from '../pages/Dashboard';
 import DetailTree from '../pages/DetailTree';
 import DetailCustomer from '../pages/DetailCustomer';
 import Login from '../pages/Login';
-import Role from '../pages/Role';
+import Roles from '../pages/Roles';
 import AddRole from '../pages/AddRole';
 import UpdateRole from '../pages/UpdateRole';
 import UpdateProduct from '../pages/UpdateProduct';
@@ -198,21 +198,21 @@ const publicRoutes = [
         },
     },
     {
-        path: '/role',
-        component: Role,
+        path: '/roles',
+        component: Roles,
         props: {
             heading: 'Quy định',
         },
     },
     {
-        path: '/role/add',
+        path: '/roles/add',
         component: AddRole,
         props: {
             heading: 'Thêm chức vụ',
         },
     },
     {
-        path: '/role/update',
+        path: '/roles/update',
         component: UpdateRole,
         props: {
             heading: 'Sửa chức vụ',
