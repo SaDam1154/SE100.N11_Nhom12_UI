@@ -169,7 +169,7 @@ function UpdateRole() {
                             className={clsx('text-input w-full py-[5px]', {
                                 invalid: roleForm.touched.description && roleForm.errors.description,
                             })}
-                            placeholder="Tên chức vụ"
+                            placeholder="Mô tả chức vụ"
                             onChange={roleForm.handleChange}
                             onBlur={roleForm.handleBlur}
                             value={roleForm.values.description}
