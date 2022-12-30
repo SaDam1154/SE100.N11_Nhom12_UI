@@ -39,6 +39,18 @@ const functions = [
         displayName: 'Sửa khách hàng',
         index: '103',
     },
+    {
+        _id: 5,
+        name: 'customer/add',
+        displayName: 'Thêm khách hàng',
+        index: '102',
+    },
+    {
+        _id: 6,
+        name: 'customer/update',
+        displayName: 'Sửa khách hàng',
+        index: '103',
+    },
 ];
 
 function AddRole() {
@@ -62,24 +74,22 @@ function AddRole() {
     };
 
     return (
-        <div className="container h-[100%] min-w-[790px]  text-lg">
-            <div className="flex flex-row">
-                <div className="title m-auto">
-                    <label className="text-4xl">Thêm chức vụ</label>
-                </div>
-            </div>
-
-            <div className="mt-10 flex flex-row items-center justify-center">
-                <div className="flex-col">
-                    <label htmlFor="role-name" className="pr-5 text-3xl">
+        <div className="container h-[100%] min-w-[790px]">
+            <div className="mt-5 flex items-center justify-center space-x-4">
+                <div className="w-[300px]">
+                    <label htmlFor="role-name" className="mb-2 inline-block font-semibold">
                         Chức vụ:
                     </label>
+                    <input type="text" id="role-name" className="text-input w-full py-2" placeholder="Tên chức vụ" />
                 </div>
-                <div className="border-solib flex-col border-b-[1px] border-stone-900">
+                <div className="w-[300px]">
+                    <label htmlFor="role-description" className="mb-2 inline-block font-semibold">
+                        Mô tả chức vụ:
+                    </label>
                     <input
                         type="text"
-                        id="role-name"
-                        className="text-input border-none text-2xl text-blue-500 "
+                        id="role-description"
+                        className="text-input w-full py-2"
                         placeholder="Tên chức vụ"
                     />
                 </div>
