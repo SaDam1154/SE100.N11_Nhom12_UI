@@ -47,7 +47,7 @@ function AddOrder() {
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(false);
-    const showSuccessNoti = () => toast.info('Tạo hoá đơn thành công!');
+    const showSuccessNoti = () => toast.success('Tạo hoá đơn thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
     const [showPaymentDialog, setShowPaymentDialog] = useState(false);

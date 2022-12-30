@@ -27,7 +27,7 @@ const validationSchema = Yup.object({
 
 function AddAccount() {
     const [loading, setLoading] = useState(false);
-    const showSuccessNoti = () => toast.info('Thêm thông tin khách hàng thành công!');
+    const showSuccessNoti = () => toast.success('Thêm thông tin khách hàng thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
     const bacsicForm = useFormik({

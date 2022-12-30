@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 function Roles() {
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [deletingRoleId, setDeletingRoleId] = useState(null);
-    const showDeleteNoti = () => toast.info('Xóa chức vụ thành công!');
+    const showDeleteNoti = () => toast.success('Xóa chức vụ thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
     const navigate = useNavigate();

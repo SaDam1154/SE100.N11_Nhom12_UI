@@ -22,7 +22,7 @@ const validationSchema = Yup.object({
 
 function UpdateCustomer() {
     const [loading, setLoading] = useState(false);
-    const showSuccessNoti = () => toast.info('Chỉnh sửa thông tin khách hàng thành công!');
+    const showSuccessNoti = () => toast.success('Chỉnh sửa thông tin khách hàng thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
     const { id } = useParams();
     const [customer, setCustomer] = useState({});

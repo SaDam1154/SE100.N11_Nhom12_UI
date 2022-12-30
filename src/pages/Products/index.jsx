@@ -46,7 +46,7 @@ function Products() {
     const [products, setProducts] = useState([]);
     const [filters, setFilters] = useState({});
     const navigate = useNavigate();
-    const showDeleteNoti = () => toast.info('Xóa sản phẩm thành công!');
+    const showDeleteNoti = () => toast.success('Xóa sản phẩm thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
     const account = useSelector(accountSelector);

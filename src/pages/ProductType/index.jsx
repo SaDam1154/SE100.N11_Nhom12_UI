@@ -43,7 +43,7 @@ function ProductType() {
 
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [deletingProductTypeId, setDeletingProductTypeId] = useState(null);
-    const showDeleteNoti = () => toast.info('Xóa loại sản phẩm thành công!');
+    const showDeleteNoti = () => toast.success('Xóa loại sản phẩm thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
     useEffect(() => {

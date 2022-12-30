@@ -17,7 +17,7 @@ function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const showSuccessNoti = () => toast.info('Đăng nhập thành công!');
+    const showSuccessNoti = () => toast.success('Đăng nhập thành công!');
     const showErorrNoti = () => toast.error('Đăng nhập không thành công!');
 
     const bacsicForm = useFormik({

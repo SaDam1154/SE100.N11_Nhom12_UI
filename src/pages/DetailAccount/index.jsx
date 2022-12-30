@@ -24,15 +24,15 @@ function DetailAccount() {
     }, []);
 
     function callApi() {
-        // fetch('http://localhost:5000/api/account' + '/' + id)
-        //     .then((res) => res.json())
-        //     .then((resJson) => {
-        //         if (resJson.success) {
-        //             setAccount(resJson.account);
-        //         } else {
-        //             setAccount({});
-        //         }
-        //     });
+        fetch('http://localhost:5000/api/account/' + id)
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success) {
+                    setAccount(resJson.account);
+                } else {
+                    setAccount({});
+                }
+            });
     }
     return (
         <>
@@ -61,7 +61,7 @@ function DetailAccount() {
                                         Chức vụ
                                     </label>
 
-                                    <div className="text-input disabled select-none py-[5px]">{account.rule}</div>
+                                    <div className="text-input disabled select-none py-[5px]">{account.role}</div>
                                 </div>
                             </div>
                             <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
@@ -72,7 +72,7 @@ function DetailAccount() {
                                     >
                                         Tài khoản
                                     </label>
-                                    <div className="text-input disabled select-none py-[5px]">{account.account}</div>
+                                    <div className="text-input disabled select-none py-[5px]">{account.username}</div>
                                 </div>
 
                                 <div className="form-group flex flex-col ">
@@ -117,7 +117,7 @@ function DetailAccount() {
                             </div>
 
                             <div className="float-right flex basis-1 flex-col">
-                                <Link to={'/account/update/' + account._id} className="btn btn-md btn-green">
+                                <Link to={'/account/update/' + account.id} className="btn btn-md btn-green">
                                     <span className="pr-2">
                                         <i className="fa fa-share" aria-hidden="true"></i>
                                     </span>

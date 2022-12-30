@@ -11,7 +11,7 @@ function Customers() {
     const [customers, setCustomers] = useState([]);
     const navigate = useNavigate();
 
-    const showDeleteNoti = () => toast.info('Xóa khách hàng thành công!');
+    const showDeleteNoti = () => toast.success('Xóa khách hàng thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
     useEffect(() => {

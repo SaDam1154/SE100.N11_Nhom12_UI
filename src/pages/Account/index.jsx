@@ -41,7 +41,7 @@ function Accounts() {
     const [renderAccounts, setRenderAccounts] = useState([]);
     const navigate = useNavigate();
 
-    const showDeleteNoti = () => toast.info('Xóa tài khoản thành công!');
+    const showDeleteNoti = () => toast.success('Xóa tài khoản thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
     useEffect(() => {
@@ -169,31 +169,31 @@ function Accounts() {
                             >
                                 <td
                                     className="flex w-20 items-center justify-center px-2"
-                                    onClick={() => LinkToDetail(account._id)}
+                                    onClick={() => LinkToDetail(account.id)}
                                 >
                                     {account.id}
                                 </td>
                                 <td
                                     className="flex w-36 items-center justify-start px-2"
-                                    onClick={() => LinkToDetail(account._id)}
+                                    onClick={() => LinkToDetail(account.id)}
                                 >
                                     {account.username}
                                 </td>
                                 <td
                                     className="flex w-56 items-center justify-center px-2"
-                                    onClick={() => LinkToDetail(account._id)}
+                                    onClick={() => LinkToDetail(account.id)}
                                 >
                                     {account.name}
                                 </td>
                                 <td
                                     className="flex flex-1 items-center justify-start px-2"
-                                    onClick={() => LinkToDetail(account._id)}
+                                    onClick={() => LinkToDetail(account.id)}
                                 >
                                     {account.email}
                                 </td>
                                 <td
                                     className="flex flex-1 items-center justify-start px-2"
-                                    onClick={() => LinkToDetail(account._id)}
+                                    onClick={() => LinkToDetail(account.id)}
                                 >
                                     {account.role?.name || '-'}
                                 </td>

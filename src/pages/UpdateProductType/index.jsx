@@ -15,7 +15,7 @@ const validationSchema = Yup.object({
 
 function UpdateProductType() {
     const [loading, setLoading] = useState(false);
-    const showSuccessNoti = () => toast.info('Chỉnh sửa thông tin loại sản phẩm thành công!');
+    const showSuccessNoti = () => toast.success('Chỉnh sửa thông tin loại sản phẩm thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
     const { id } = useParams();

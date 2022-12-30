@@ -12,7 +12,7 @@ const validationSchema = Yup.object({
 
 function AddRole() {
     const [loading, setLoading] = useState(false);
-    const showSuccessNoti = () => toast.info('Tạo chức vụ thành công!');
+    const showSuccessNoti = () => toast.success('Tạo chức vụ thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
     const [functions, setFunctions] = useState([]);

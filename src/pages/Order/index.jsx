@@ -12,7 +12,7 @@ function Orders() {
     const [search, setSearch] = useState('');
     const [orders, setOrders] = useState([]);
     const navigate = useNavigate();
-    const showDeleteNoti = () => toast.info('Xóa hoá đơn thành công!');
+    const showDeleteNoti = () => toast.success('Xóa hoá đơn thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
     useEffect(() => {
