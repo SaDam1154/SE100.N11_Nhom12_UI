@@ -8,7 +8,25 @@ import { useEffect } from 'react';
 import moment from 'moment';
 import TimeNow from '../../components/TimeNow';
 
+import { useSelector } from 'react-redux';
+import { accountSelector } from '../../redux/selectors';
+
 function DetailTree() {
+    const account = useSelector(accountSelector);
+    function isHiddenItem(functionName) {
+        if (!account) {
+            return true;
+        }
+        if (!functionName) {
+            return false;
+        }
+        const findResult = account?.functions?.find((_func) => _func?.name === functionName);
+        if (findResult) {
+            return false;
+        }
+        return true;
+    }
+
     const [img, setImg] = useState();
 
     useEffect(() => {
@@ -45,10 +63,10 @@ function DetailTree() {
     return (
         <div className="container">
             <div className="w-full">
-                <div className=" flex flex-row mt-4">
+                <div className=" mt-4 flex flex-row">
                     <div className="mr-8 mt-3 flex w-1/2 flex-col space-y-4 text-lg">
-                        <div className="form-group flex flex-col mt-10">
-                            <label className="mb-1 font-semibold cursor-default " htmlFor="name">
+                        <div className="form-group mt-10 flex flex-col">
+                            <label className="mb-1 cursor-default font-semibold " htmlFor="name">
                                 Mã sản phẩm
                             </label>
                             <div id="name" className="text-input disabled select-none py-[5px]">
@@ -56,7 +74,7 @@ function DetailTree() {
                             </div>
                         </div>
                         <div className="form-group flex flex-col ">
-                            <label className="mb-1 font-semibold cursor-default " htmlFor="name">
+                            <label className="mb-1 cursor-default font-semibold " htmlFor="name">
                                 Tên cây
                             </label>
                             <div id="name" className="text-input disabled select-none py-[5px]">
@@ -66,24 +84,15 @@ function DetailTree() {
                     </div>
 
                     <div className="form-group w-1/2 flex-col items-center justify-items-center ">
-                        <label className="mb-1 font-semibold cursor-default" htmlFor="quantity">
-                            Hình ảnh
-                        </label>
-                        <div className="h-60 w-full rounded-xl border-2 border-dashed border-cyan-300 bg-gray-100">
-                            {
-                                <img
-                                    src={product.image}
-                                    alt=""
-                                    className="h-full w-full rounded-xl object-contain py-[1.5px]"
-                                />
-                            }
+                        <div className="h-60 w-full select-none overflow-hidden rounded border border-slate-300 bg-slate-50">
+                            <img src={product.image} alt="" className="h-full w-full object-contain" />
                         </div>
                     </div>
                 </div>
 
                 <div className="mt-4 flex flex-row">
                     <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col">
-                        <label className="mb-1 font-semibold cursor-default text-lg" htmlFor="type">
+                        <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="type">
                             Loại cây
                         </label>
                         <div id="name" className="text-input disabled  select-none py-[5px]">
@@ -92,7 +101,7 @@ function DetailTree() {
                     </div>
 
                     <div className="form-group ml-4 mt-3 flex basis-1/2 flex-col">
-                        <label className="mb-1 font-semibold cursor-default text-lg" htmlFor="quantity">
+                        <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="quantity">
                             Số lượng
                         </label>
                         <div id="quantity" className="ml-lg text-input disabled py-[5px]">
@@ -103,20 +112,20 @@ function DetailTree() {
 
                 <div className="mt-2 flex flex-row">
                     <div className="form-group mr-4 mt-3 flex basis-1/2 flex-col">
-                        <label className="mb-1 text-lg font-semibold cursor-default" htmlFor="date">
+                        <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="date">
                             Ngày nhập cây
                         </label>
-                        <div className="text-input py-[5px] text-xl disabled">
+                        <div className="text-input disabled py-[5px] text-xl">
                             {moment(product.createdAt).format('HH:mm:ss DD/MM/YYYY ')}
                         </div>
                     </div>
 
                     <div className="ml-4 mt-3 flex basis-1/2 flex-col">
-                        <label className="mb-1 text-lg font-semibold cursor-default" htmlFor="price">
+                        <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="price">
                             Giá
                         </label>
                         <div className="relative">
-                            <div id="price" className="text-input disabled select-none w-full py-[5px]">
+                            <div id="price" className="text-input disabled w-full select-none py-[5px]">
                                 {product.price}
                             </div>
                             <label
@@ -129,24 +138,25 @@ function DetailTree() {
                     </div>
                 </div>
 
-                <div className="float-right mt-8 flex  flex-row">
-                    <div className="float-left flex basis-1 flex-col">
-                        <Link to={'/product'} className="btn btn-blue btn-md w-ful mr-10">
-                            <span className="pr-2">
-                                <i className="fa-solid fa-circle-xmark"></i>
-                            </span>
-                            <span>Quay lại</span>
-                        </Link>
-                    </div>
-                    <div className="float-right flex basis-1 flex-col">
-                        <Link to={'/product/update/' + product.id} className="btn btn-md btn-green">
-                            <span className="pr-2">
-                                <i className="fa fa-share" aria-hidden="true"></i>
-                            </span>
-                            <span>Chỉnh sửa</span>
-                        </Link>
+                <div className=" mt-8 flex justify-end">
+                    <Link to={'/product'} className="btn btn-blue btn-md w-ful">
+                        <span className="pr-2">
+                            <i className="fa-solid fa-circle-xmark"></i>
+                        </span>
+                        <span>Quay lại</span>
+                    </Link>
 
-                    </div>
+                    <Link
+                        to={'/product/update/' + product.id}
+                        className={clsx('btn btn-md btn-green', {
+                            hidden: isHiddenItem('product/update'),
+                        })}
+                    >
+                        <span className="pr-2">
+                            <i className="fa fa-share" aria-hidden="true"></i>
+                        </span>
+                        <span>Chỉnh sửa</span>
+                    </Link>
                 </div>
             </div>
         </div>
