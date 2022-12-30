@@ -155,7 +155,9 @@ function Roles() {
                 <tbody>
                     {roles
                         .filter((role) => {
-                            return search.toLowerCase() === '' ? role : role.name.toLowerCase().includes(search);
+                            return search.toLowerCase() === ''
+                                ? role
+                                : role.name.toLowerCase().includes(search.toLowerCase());
                         })
                         .map((role) => (
                             <tr key={role.id} className="cursor-pointer border-b border-slate-200 hover:bg-slate-100">

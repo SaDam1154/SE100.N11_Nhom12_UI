@@ -7,8 +7,7 @@ import clsx from 'clsx';
 import TimeNow from '../../components/TimeNow';
 import 'react-toastify/dist/ReactToastify.css';
 
-import AccountRule from '../../components/AccountRule';
-
+import AccountRoleInput from '../../components/AccountRoleInput';
 const validationSchema = Yup.object({
     name: Yup.string()
         .required('Trường này bắt buộc')
@@ -17,7 +16,7 @@ const validationSchema = Yup.object({
     email: Yup.string()
         .required('Trường này bắt buộc')
         .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Email sai không đúng định dạng'),
-    account: Yup.string().required('Vui lòng nhập tên tài tài khoản!'),
+    username: Yup.string().required('Vui lòng nhập tên tài tài khoản!'),
     password: Yup.string()
         .required('Vui lòng nhập nhập mật khẩu!')
         .min(6, 'Mật khẩu quá ngắn! mật khẩu phải có ít nhất 6 kí tự'),
@@ -35,7 +34,8 @@ function AddAccount() {
         initialValues: {
             name: '',
             email: '',
-            account: '',
+            role: '',
+            username: '',
             password: '',
             rePassword: '',
         },
@@ -46,30 +46,29 @@ function AddAccount() {
     const navigate = useNavigate();
 
     function handleFormsubmit(values) {
-        console.log(values);
-        // setLoading(true);
-        // fetch('http://localhost:5000/api/account', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(values),
-        // })
-        //     .then((res) => res.json())
-        //     .then((resJson) => {
-        //         if (resJson.success) {
-        //             setLoading(false);
-        //             showSuccessNoti();
-        //             bacsicForm.resetForm();
-        //         } else {
-        //             setLoading(false);
-        //             showErorrNoti();
-        //         }
-        //     })
-        //     .catch(() => {
-        //         setLoading(false);
-        //         showErorrNoti();
-        //     });
+        setLoading(true);
+        fetch('http://localhost:5000/api/account', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values),
+        })
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success) {
+                    setLoading(false);
+                    showSuccessNoti();
+                    bacsicForm.resetForm();
+                } else {
+                    setLoading(false);
+                    showErorrNoti();
+                }
+            })
+            .catch(() => {
+                setLoading(false);
+                showErorrNoti();
+            });
     }
 
     return (
@@ -137,59 +136,58 @@ function AddAccount() {
                                     </span>
                                 </div>
                                 <div className="form-group flex flex-col">
-                                    <label className="mb-1 select-none  font-semibold text-gray-900 " htmlFor="type">
+                                    <label className="mb-1 select-none  font-semibold text-gray-900 " htmlFor="role">
                                         Chức vụ
                                     </label>
 
-                                    <AccountRule
-                                        id="type"
-                                        className={clsx('text-input cursor-pointer py-[5px]', {
-                                            invalid: bacsicForm.touched.type && bacsicForm.errors.type,
-                                        })}
+                                    <AccountRoleInput
+                                        id="role"
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
-                                        value={bacsicForm.values.type}
-                                        name="type"
+                                        value={bacsicForm.values.role}
+                                        error={bacsicForm.errors.role}
+                                        touched={bacsicForm.touched.role}
+                                        name="role"
+                                        placeholder="Nhập giá mỗi sản phẩm"
                                     />
-
                                     <span
                                         className={clsx('text-sm text-red-500 opacity-0', {
-                                            'opacity-100': bacsicForm.touched.type && bacsicForm.errors.type,
+                                            'opacity-100': bacsicForm.touched.role && bacsicForm.errors.role,
                                         })}
                                     >
-                                        {bacsicForm.errors.type || 'No message'}
+                                        {bacsicForm.errors.role || 'No message'}
                                     </span>
                                 </div>
                             </div>
                             <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
                                 <div className="form-group flex flex-col ">
                                     <label
-                                        htmlFor="account"
+                                        htmlFor="username"
                                         className="mb-1 select-none  font-semibold text-gray-900  "
                                     >
                                         Tài khoản
                                     </label>
                                     <input
                                         type="text"
-                                        name="account"
-                                        id="account"
+                                        name="username"
+                                        id="username"
                                         className={clsx(
                                             'focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900    sm:text-sm',
                                             {
-                                                invalid: bacsicForm.touched.account && bacsicForm.errors.account,
+                                                invalid: bacsicForm.touched.username && bacsicForm.errors.username,
                                             }
                                         )}
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
-                                        value={bacsicForm.values.account}
+                                        value={bacsicForm.values.username}
                                         placeholder="Tên tài khoản"
                                     />
                                     <span
                                         className={clsx('text-sm text-red-500 opacity-0', {
-                                            'opacity-100': bacsicForm.touched.account && bacsicForm.errors.account,
+                                            'opacity-100': bacsicForm.touched.username && bacsicForm.errors.username,
                                         })}
                                     >
-                                        {bacsicForm.errors.account || 'No message'}
+                                        {bacsicForm.errors.username || 'No message'}
                                     </span>
                                 </div>
 

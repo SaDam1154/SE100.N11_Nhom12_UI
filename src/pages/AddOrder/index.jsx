@@ -493,6 +493,7 @@ function AddOrder() {
                     </div>
                 </div>
             </div>
+            <ToastContainer hideProgressBar />
         </>
     );
 }

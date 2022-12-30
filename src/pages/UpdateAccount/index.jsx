@@ -9,7 +9,7 @@ import TimeNow from '../../components/TimeNow';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'react-router-dom';
 
-import AccountRule from '../../components/AccountRule';
+import AccountRule from '../../components/AccountRoleInput';
 
 const validationSchema = Yup.object({
     name: Yup.string()

@@ -2,32 +2,13 @@ import clsx from 'clsx';
 import { Fragment, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-const tmp = [
-    {
-        _id: 1,
-        name: 'a',
-        rule: 'Nhân viên',
-        email: 'b',
-        account: 'c',
-        password: 'd',
-        createdAt: new Date(),
-    },
-    {
-        _id: 2,
-        name: 'a2',
-        rule: 'Nhân viên',
-        email: 'b2',
-        account: 'c2',
-        password: 'd2',
-        createdAt: new Date(),
-    },
-];
+
 function Accounts() {
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [deletingAccountId, setDeletingAccountId] = useState(null);
 
     const [search, setSearch] = useState('');
-    const [accounts, setAccounts] = useState(tmp);
+    const [accounts, setAccounts] = useState([]);
     const navigate = useNavigate();
 
     const showDeleteNoti = () => toast.info('Xóa tài khoản thành công!');
@@ -38,40 +19,39 @@ function Accounts() {
     }, []);
 
     function getAccounts() {
-        // fetch('http://localhost:5000/api/account')
-        //     .then((res) => res.json())
-        //     .then((resJson) => {
-        //         if (resJson.success) {
-        //             setAccounts(resJson.accounts);
-        //         } else {
-        //             setAccounts([]);
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //         setAccounts([]);
-        //     });
+        fetch('http://localhost:5000/api/account')
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success) {
+                    setAccounts(resJson.accounts);
+                } else {
+                    setAccounts([]);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                setAccounts([]);
+            });
     }
 
     function deleteAccount(id) {
-        // fetch('http://localhost:5000/api/account/' + id, {
-        //     method: 'DELETE',
-        // })
-        //     .then((res) => res.json())
-        //     .then((resJson) => {
-        //         setShowDeleteDialog(false);
-        //         if (resJson) {
-        //             showDeleteNoti();
-        //             console.log('xóa');
-        //             getAccounts();
-        //         } else {
-        //             showErorrNoti();
-        //         }
-        //     })
-        //     .catch(() => {
-        //         showErorrNoti();
-        //         setShowDeleteDialog(false);
-        //     });
+        fetch('http://localhost:5000/api/account/' + id, {
+            method: 'DELETE',
+        })
+            .then((res) => res.json())
+            .then((resJson) => {
+                setShowDeleteDialog(false);
+                if (resJson) {
+                    showDeleteNoti();
+                    getAccounts();
+                } else {
+                    showErorrNoti();
+                }
+            })
+            .catch(() => {
+                showErorrNoti();
+                setShowDeleteDialog(false);
+            });
     }
 
     function LinkToDetail(id) {
@@ -143,13 +123,13 @@ function Accounts() {
                                         className="flex w-20 items-center justify-center px-2"
                                         onClick={() => LinkToDetail(account._id)}
                                     >
-                                        {account._id}
+                                        {account.id}
                                     </td>
                                     <td
                                         className="flex w-36 items-center justify-start px-2"
                                         onClick={() => LinkToDetail(account._id)}
                                     >
-                                        {account.account}
+                                        {account.username}
                                     </td>
                                     <td
                                         className="flex w-56 items-center justify-center px-2"
@@ -167,7 +147,7 @@ function Accounts() {
                                         className="flex flex-1 items-center justify-start px-2"
                                         onClick={() => LinkToDetail(account._id)}
                                     >
-                                        {account.rule}
+                                        {account.role?.name || '-'}
                                     </td>
                                     <td className="flex w-[200px] items-center justify-center px-2 py-2">
                                         <div className="flex justify-end">

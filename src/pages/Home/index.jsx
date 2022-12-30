@@ -39,7 +39,7 @@ function Home() {
                     }}
                 >
                     <span className="pr-1">
-                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <i className="fa-solid fa-right-from-bracket"></i>
                     </span>
                     <span>Đăng xuất</span>
                 </button>
