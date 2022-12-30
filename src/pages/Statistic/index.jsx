@@ -137,11 +137,11 @@ function Statistic() {
                 </div>
 
                 {/* LIST */}
-                <div className="flex">
-                    <table className="mt-8 w-full">
+                <div className="flex flex-col">
+                    <table className="my-8  w-full">
                         <thead className="w-full rounded bg-blue-500 text-white">
                             <tr className="flex h-11 w-full">
-                                <th className="flex w-16 items-center justify-end px-2">M1ã</th>
+                                <th className="flex w-16 items-center justify-end px-2">Mã</th>
                                 <th className="flex flex-[2] items-center justify-start px-4">Tên khách hàng</th>
                                 <th className="flex w-60 items-center justify-start px-2">Số điện thoại</th>
                                 <th className="flex w-44 items-center justify-end px-2">Tổng tiền (VNĐ)</th>
@@ -150,7 +150,7 @@ function Statistic() {
                             </tr>
                         </thead>
 
-                        <tbody className="flex h-[75vh] w-full flex-col" style={{ overflowY: 'overlay' }}>
+                        <tbody className="flex h-[60vh] w-full flex-col" style={{ overflowY: 'overlay' }}>
                             {orders
                                 ?.filter((order) => {
                                     if (value.startDate <= order.createdAt)
@@ -214,6 +214,20 @@ function Statistic() {
                                 ))}
                         </tbody>
                     </table>
+                    <div className="flex w-full border border-solid">
+                        <div className="mt-2 flex basis-1/2 flex-col">
+                            <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="name">
+                                Số đơn hàng
+                            </label>
+                            <div className="text-input disabled select-none py-[5px]">{number}</div>
+                        </div>
+                        <div className="mt-2 flex basis-1/2 flex-col">
+                            <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="name">
+                                Tổng doanh thu
+                            </label>
+                            <div className="text-input disabled select-none py-[5px]">{money}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
