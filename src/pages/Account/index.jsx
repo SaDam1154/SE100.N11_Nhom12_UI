@@ -9,6 +9,7 @@ function Accounts() {
 
     const [search, setSearch] = useState('');
     const [accounts, setAccounts] = useState([]);
+    const [renderAccounts, setRenderAccounts] = useState([]);
     const navigate = useNavigate();
 
     const showDeleteNoti = () => toast.info('Xóa tài khoản thành công!');
@@ -24,15 +25,40 @@ function Accounts() {
             .then((resJson) => {
                 if (resJson.success) {
                     setAccounts(resJson.accounts);
+                    setRenderAccounts(resJson.accounts);
                 } else {
+                    setRenderAccounts([]);
                     setAccounts([]);
                 }
             })
             .catch((error) => {
                 console.log(error);
                 setAccounts([]);
+                setRenderAccounts([]);
             });
     }
+
+    useEffect(() => {
+        setRenderAccounts(
+            accounts?.filter((account) => {
+                if (search === '') {
+                    return account;
+                } else {
+                    if (
+                        removeVietnameseTones(account.name.toLowerCase()).includes(
+                            removeVietnameseTones(search.toLowerCase())
+                        ) ||
+                        removeVietnameseTones(account?.phone.toString().toLowerCase()).includes(
+                            removeVietnameseTones(search.toLowerCase())
+                        )
+                    ) {
+                        var id = account.id.toString();
+                        return account.id.toString().includes(id);
+                    }
+                }
+            })
+        );
+    }, [search]);
 
     function deleteAccount(id) {
         fetch('http://localhost:5000/api/account/' + id, {
@@ -107,74 +133,67 @@ function Accounts() {
                     </thead>
 
                     <tbody className="flex h-[75vh] w-full flex-col" style={{ overflowY: 'overlay' }}>
-                        {accounts
-                            .filter((account) => {
-                                return search.toLowerCase() === ''
-                                    ? account
-                                    : account.name.toLowerCase().includes(search) ||
-                                          account.phone.toLowerCase().includes(search);
-                            })
-                            ?.map((account, index) => (
-                                <tr
-                                    key={account._id}
-                                    className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                        {renderAccounts.map((account, index) => (
+                            <tr
+                                key={account._id}
+                                className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                            >
+                                <td
+                                    className="flex w-20 items-center justify-center px-2"
+                                    onClick={() => LinkToDetail(account._id)}
                                 >
-                                    <td
-                                        className="flex w-20 items-center justify-center px-2"
-                                        onClick={() => LinkToDetail(account._id)}
-                                    >
-                                        {account.id}
-                                    </td>
-                                    <td
-                                        className="flex w-36 items-center justify-start px-2"
-                                        onClick={() => LinkToDetail(account._id)}
-                                    >
-                                        {account.username}
-                                    </td>
-                                    <td
-                                        className="flex w-56 items-center justify-center px-2"
-                                        onClick={() => LinkToDetail(account._id)}
-                                    >
-                                        {account.name}
-                                    </td>
-                                    <td
-                                        className="flex flex-1 items-center justify-start px-2"
-                                        onClick={() => LinkToDetail(account._id)}
-                                    >
-                                        {account.email}
-                                    </td>
-                                    <td
-                                        className="flex flex-1 items-center justify-start px-2"
-                                        onClick={() => LinkToDetail(account._id)}
-                                    >
-                                        {account.role?.name || '-'}
-                                    </td>
-                                    <td className="flex w-[200px] items-center justify-center px-2 py-2">
-                                        <div className="flex justify-end">
-                                            <Link to={'/account/update/' + account._id} className="btn btn-sm btn-blue">
-                                                <span className="pr-1">
-                                                    <i className="fa-solid fa-pen-to-square"></i>
-                                                </span>
-                                                <span>Sửa</span>
-                                            </Link>
-                                            <button
-                                                className="btn btn-sm btn-red"
-                                                onClick={() => {
-                                                    {
-                                                        setShowDeleteDialog(true);
-                                                        setDeletingAccountId(account._id);
-                                                    }
-                                                }}
-                                            >
-                                                <span className="pr-1">
-                                                    <i className="fa-solid fa-circle-xmark"></i>
-                                                </span>
-                                                <span>Xoá</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
+                                    {account.id}
+                                </td>
+                                <td
+                                    className="flex w-36 items-center justify-start px-2"
+                                    onClick={() => LinkToDetail(account._id)}
+                                >
+                                    {account.username}
+                                </td>
+                                <td
+                                    className="flex w-56 items-center justify-center px-2"
+                                    onClick={() => LinkToDetail(account._id)}
+                                >
+                                    {account.name}
+                                </td>
+                                <td
+                                    className="flex flex-1 items-center justify-start px-2"
+                                    onClick={() => LinkToDetail(account._id)}
+                                >
+                                    {account.email}
+                                </td>
+                                <td
+                                    className="flex flex-1 items-center justify-start px-2"
+                                    onClick={() => LinkToDetail(account._id)}
+                                >
+                                    {account.role?.name || '-'}
+                                </td>
+                                <td className="flex w-[200px] items-center justify-center px-2 py-2">
+                                    <div className="flex justify-end">
+                                        <Link to={'/account/update/' + account._id} className="btn btn-sm btn-blue">
+                                            <span className="pr-1">
+                                                <i className="fa-solid fa-pen-to-square"></i>
+                                            </span>
+                                            <span>Sửa</span>
+                                        </Link>
+                                        <button
+                                            className="btn btn-sm btn-red"
+                                            onClick={() => {
+                                                {
+                                                    setShowDeleteDialog(true);
+                                                    setDeletingAccountId(account._id);
+                                                }
+                                            }}
+                                        >
+                                            <span className="pr-1">
+                                                <i className="fa-solid fa-circle-xmark"></i>
+                                            </span>
+                                            <span>Xoá</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

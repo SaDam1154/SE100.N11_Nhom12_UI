@@ -35,12 +35,10 @@ function removeVietnameseTones(stra) {
 
 function Roles() {
     const [roles, setRoles] = useState([]);
-    const [search, setSearch] = useState('');
-    const [idFilter, setIdFilter] = useState('');
-    const [renderProduct, setRenderProduct] = useState([]);
+    const [search, setSearch] = useState(' ');
+    const [renderRoles, setRenderRoles] = useState([]);
     useEffect(() => {
         getRoles();
-        console.log(roles);
     }, []);
 
     function getRoles() {
@@ -49,48 +47,33 @@ function Roles() {
             .then((resJson) => {
                 if (resJson.success) {
                     setRoles(resJson.roles);
-                    console.log(roles[0]);
+                    setRenderRoles(resJson.roles);
                 } else {
                     setRoles([]);
+                    setRenderRoles(resJson.roles);
                 }
             });
     }
 
     useEffect(() => {
-        setRenderProduct(
-            roles.filter((role) => {
+        setRenderRoles(
+            roles?.filter((role) => {
                 if (search === '') {
                     return role;
                 } else {
                     if (
                         removeVietnameseTones(role.name.toLowerCase()).includes(
                             removeVietnameseTones(search.toLowerCase())
+                        ) ||
+                        removeVietnameseTones(role?.id.toString().toLowerCase()).includes(
+                            removeVietnameseTones(search.toLowerCase())
                         )
                     ) {
                         var id = role.id.toString();
-                        if (
-                            removeVietnameseTones(role.name.toLowerCase()).includes(
-                                removeVietnameseTones(search.toLowerCase())
-                            )
-                        ) {
-                            console.log(
-                                removeVietnameseTones(role.name.toLowerCase()) +
-                                    '=' +
-                                    removeVietnameseTones(search.toLowerCase()) +
-                                    '=' +
-                                    id
-                            );
-                        }
                         return role.id.toString().includes(id);
                     }
                 }
             })
-            // .filter((role) => {
-            //     if (!search) {
-            //         return true;
-            //     }
-            //     return role.id.toString() = search;
-            // })
         );
     }, [search]);
 
@@ -117,15 +100,7 @@ function Roles() {
                             className="text-input grow"
                             placeholder="Tìm kiếm chức vụ"
                         />
-
-                        <button className="btn btn-md bg-slate-200 !px-3 text-slate-600 hover:bg-slate-300">
-                            <i className="fa fa-search" aria-hidden="true"></i>
-                        </button>
                     </div>
-
-                    <button className="btn btn-md bg-slate-200 !px-3 text-slate-600 hover:bg-slate-300">
-                        <i className="fas fa-filter"></i>
-                    </button>
 
                     <Link to="/role/add" className="btn btn-md bg-green-600 hover:bg-green-500">
                         <span className="pr-1">
@@ -153,35 +128,29 @@ function Roles() {
                 </thead>
 
                 <tbody>
-                    {roles
-                        .filter((role) => {
-                            return search.toLowerCase() === ''
-                                ? role
-                                : role.name.toLowerCase().includes(search.toLowerCase());
-                        })
-                        .map((role) => (
-                            <tr key={role.id} className="cursor-pointer border-b border-slate-200 hover:bg-slate-100">
-                                <td className="py-2 text-center">{role.id}</td>
-                                <td className="py-2 text-center">{role.name}</td>
-                                <td className="py-2 text-center">{role.description}</td>
-                                <td className="py-2 text-center">
-                                    <div className="flex justify-end">
-                                        <Link to="/role/update" className="btn btn-sm bg-blue-500 hover:bg-blue-400">
-                                            <span className="pr-1">
-                                                <i className="fa-solid fa-pen-to-square"></i>
-                                            </span>
-                                            <span>Sửa</span>
-                                        </Link>
-                                        <button className="btn btn-sm bg-red-500 hover:bg-red-400">
-                                            <span className="pr-1">
-                                                <i className="fa-solid fa-circle-xmark"></i>
-                                            </span>
-                                            <span>Xoá</span>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
+                    {renderRoles?.map((role) => (
+                        <tr key={role.id} className="cursor-pointer border-b border-slate-200 hover:bg-slate-100">
+                            <td className="py-2 text-center">{role.id}</td>
+                            <td className="py-2 text-center">{role.name}</td>
+                            <td className="py-2 text-center">{role.description}</td>
+                            <td className="py-2 text-center">
+                                <div className="flex justify-end">
+                                    <Link to="/role/update" className="btn btn-sm bg-blue-500 hover:bg-blue-400">
+                                        <span className="pr-1">
+                                            <i className="fa-solid fa-pen-to-square"></i>
+                                        </span>
+                                        <span>Sửa</span>
+                                    </Link>
+                                    <button className="btn btn-sm bg-red-500 hover:bg-red-400">
+                                        <span className="pr-1">
+                                            <i className="fa-solid fa-circle-xmark"></i>
+                                        </span>
+                                        <span>Xoá</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>
