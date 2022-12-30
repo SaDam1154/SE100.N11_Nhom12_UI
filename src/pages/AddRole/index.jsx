@@ -19,6 +19,30 @@ function AddRole() {
     const [selectedFunctionIds, setSelectedFunctionIds] = useState([]);
     const [checkAll, setCheckAll] = useState(false);
 
+    useEffect(() => {
+        fetch('http://localhost:5000/api/function')
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success) {
+                    setFunctions(resJson.functions);
+                } else {
+                    setFunctions([]);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+    const roleForm = useFormik({
+        initialValues: {
+            name: '',
+            description: '',
+        },
+        validationSchema,
+        onSubmit: createRoles,
+    });
+
     function isChecked(id) {
         return selectedFunctionIds.includes(id);
     }

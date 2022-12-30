@@ -21,7 +21,6 @@ import Login from '../pages/Login';
 import Roles from '../pages/Roles';
 import AddRole from '../pages/AddRole';
 import UpdateRole from '../pages/UpdateRole';
-import DetailRole from '../pages/DetailRole';
 import UpdateProduct from '../pages/UpdateProduct';
 import AddCustomer from '../pages/AddCustomer';
 import UpdateCustomer from '../pages/UpdateCustomer';
