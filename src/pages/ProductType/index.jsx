@@ -91,7 +91,6 @@ function ProductType() {
                 setShowDeleteDialog(false);
                 if (resJson) {
                     showDeleteNoti();
-                    console.log('xóa');
                     getProductTypes();
                 } else {
                     showErorrNoti();
@@ -157,7 +156,7 @@ function ProductType() {
                             <th className="flex w-20 items-center justify-end px-2">Mã số</th>
                             <th className="flex flex-[1] items-center justify-start pl-28">Tên loại sản phẩm</th>
                             <th className="flex flex-[1] items-center justify-start px-2">Ngày thêm</th>
-                            <th className="flex w-[200px] items-center justify-center px-2"></th>
+                            <th className="flex w-[200px] min-w-[200px] max-w-[200px] items-center justify-center px-2"></th>
                         </tr>
                     </thead>
 
@@ -202,11 +201,11 @@ function ProductType() {
                                     >
                                         {moment(productType.createdAt).format('HH:mm:ss DD/MM/YYYY ')}
                                     </td>
-                                    <td className="flex w-[200px] items-center justify-center px-2 py-2">
+                                    <td className="flex w-[200px] min-w-[200px] max-w-[200px] items-center justify-center px-2 py-2">
                                         <div className="flex justify-end">
                                             <Link
                                                 to={'/product-type/update/' + productType.id}
-                                                className={clsx('btn btn-md btn-blue', {
+                                                className={clsx('btn btn-sm btn-blue', {
                                                     hidden: isHiddenItem('product-type/update'),
                                                 })}
                                             >
@@ -216,7 +215,7 @@ function ProductType() {
                                                 <span>Sửa</span>
                                             </Link>
                                             <button
-                                                className={clsx('btn btn-md btn-red', {
+                                                className={clsx('btn btn-sm btn-red', {
                                                     hidden: isHiddenItem('product-type/delete'),
                                                 })}
                                                 onClick={() => {

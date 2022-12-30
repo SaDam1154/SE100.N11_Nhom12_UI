@@ -158,7 +158,7 @@ function Orders() {
                                 <td className="flex w-[140px] items-center justify-center px-2 py-2">
                                     <div className="flex justify-end">
                                         <button
-                                            className={clsx('btn btn-md btn-red', {
+                                            className={clsx('btn btn-sm btn-red', {
                                                 hidden: isHiddenItem('order/delete'),
                                             })}
                                             onClick={(e) => {

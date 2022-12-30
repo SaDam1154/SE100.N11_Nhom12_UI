@@ -79,7 +79,7 @@ function Addroduct() {
                             <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
                                 <div className="form-group flex flex-col ">
                                     <label className="mb-1 select-none font-semibold " htmlFor="name">
-                                        Tên cây
+                                        Tên sản phẩm
                                     </label>
                                     <input
                                         type="text"
@@ -103,7 +103,7 @@ function Addroduct() {
 
                                 <div className="form-group flex flex-col">
                                     <label className="mb-1 select-none font-semibold " htmlFor="type">
-                                        Loại cây
+                                        Loại sản phẩm
                                     </label>
                                     <ProductTypeInput
                                         id="type"

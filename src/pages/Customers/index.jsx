@@ -166,7 +166,7 @@ function Customers() {
                                         <div className="flex justify-end">
                                             <Link
                                                 to={'/customer/update/' + customer.id}
-                                                className={clsx('btn btn-md btn-blue', {
+                                                className={clsx('btn btn-sm btn-blue', {
                                                     hidden: isHiddenItem('customer/update'),
                                                 })}
                                             >
@@ -176,7 +176,7 @@ function Customers() {
                                                 <span>Sửa</span>
                                             </Link>
                                             <button
-                                                className={clsx('btn btn-md btn-red', {
+                                                className={clsx('btn btn-sm btn-red', {
                                                     hidden: isHiddenItem('customer/delete'),
                                                 })}
                                                 onClick={() => {
