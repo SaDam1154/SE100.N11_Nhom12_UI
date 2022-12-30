@@ -153,7 +153,7 @@ function Accounts() {
                     <thead className="w-full rounded bg-blue-500 text-white">
                         <tr className="flex h-11 w-full">
                             <th className="flex w-20 items-center justify-center px-2">Mã số</th>
-                            <th className="flex w-36 items-center justify-center px-2">Tên tài khoản</th>
+                            <th className="flex w-36 items-center justify-start px-2">Tên tài khoản</th>
                             <th className="flex w-56 items-center justify-start px-2">Tên nhân viên</th>
                             <th className="flex flex-1 items-center justify-start px-2">Địa chỉ email </th>
                             <th className="flex flex-1 items-center justify-start px-2">Chức vụ</th>
@@ -180,7 +180,7 @@ function Accounts() {
                                     {account.username}
                                 </td>
                                 <td
-                                    className="flex w-56 items-center justify-center px-2"
+                                    className="flex w-56 items-center justify-start px-2"
                                     onClick={() => LinkToDetail(account.id)}
                                 >
                                     {account.name}
@@ -210,7 +210,7 @@ function Accounts() {
                                             onClick={() => {
                                                 {
                                                     setShowDeleteDialog(true);
-                                                    setDeletingAccountId(account._id);
+                                                    setDeletingAccountId(account.id);
                                                 }
                                             }}
                                         >

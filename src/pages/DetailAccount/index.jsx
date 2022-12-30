@@ -5,20 +5,9 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { date } from 'yup/lib/locale';
 
-const accounts = [
-    {
-        _id: 1,
-        name: 'a',
-        rule: 'Nhân viên',
-        email: 'b',
-        account: 'c',
-        password: 'd',
-        createdAt: new Date(),
-    },
-];
 function DetailAccount() {
     const { id } = useParams();
-    const [account, setAccount] = useState(accounts[0]);
+    const [account, setAccount] = useState([]);
     useEffect(() => {
         callApi();
     }, []);
@@ -29,6 +18,7 @@ function DetailAccount() {
             .then((resJson) => {
                 if (resJson.success) {
                     setAccount(resJson.account);
+                    console.log(account.role?.name);
                 } else {
                     setAccount({});
                 }
@@ -61,7 +51,7 @@ function DetailAccount() {
                                         Chức vụ
                                     </label>
 
-                                    <div className="text-input disabled select-none py-[5px]">{account.role}</div>
+                                    <div className="text-input disabled select-none py-[5px]">{account.role?.name}</div>
                                 </div>
                             </div>
                             <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
@@ -101,7 +91,7 @@ function DetailAccount() {
                                     Ngày thêm
                                 </label>
                                 <div className="text-input disabled select-none py-[5px]">
-                                    {moment(accounts[0].createdAt).format('(HH:mm:ss)     DD/MM/YYYY')}
+                                    {moment(account.createdAt).format('(HH:mm:ss)     DD/MM/YYYY')}
                                 </div>
                             </div>
                             {/* PRICE */}
