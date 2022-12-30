@@ -1,9 +1,10 @@
 import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Popover } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 
 function Roles() {
+    const navigate = useNavigate();
     const [roles, setRoles] = useState([]);
     useEffect(() => {
         getRoles();
@@ -23,6 +24,10 @@ function Roles() {
                 console.log(error);
                 setRoles([]);
             });
+    }
+
+    function linkToDetail(id) {
+        navigate('/role/detail/' + id);
     }
 
     return (
@@ -75,12 +80,16 @@ function Roles() {
 
                 <tbody>
                     {roles.map((role) => (
-                        <tr key={role.id} className="cursor-pointer border-b border-slate-200 hover:bg-slate-100">
+                        <tr
+                            key={role.id}
+                            className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                            onClick={() => linkToDetail(role.id)}
+                        >
                             <td className="py-2 text-center">{role.id}</td>
                             <td className="py-2 text-left">{role.name}</td>
                             <td className="py-2 text-left">{role.description}</td>
                             <td className="py-2 text-center">
-                                <div className="flex justify-end">
+                                <div className="flex justify-end" onClick={(e) => e.stopPropagation()}>
                                     <Link
                                         to={'/role/update/' + role.id}
                                         className="btn btn-sm bg-blue-500 hover:bg-blue-400"

@@ -52,7 +52,7 @@ function UpdateRole() {
     }, []);
 
     useEffect(() => {
-        if (selectedFunctionIds.length === functions.length) {
+        if (selectedFunctionIds.length === functions.length && selectedFunctionIds.length !== 0) {
             setCheckAll(true);
         }
     }, [functions, role]);

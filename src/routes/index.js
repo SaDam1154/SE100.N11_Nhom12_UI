@@ -28,6 +28,7 @@ import AddProductType from '../pages/AddProductType';
 import DetailTypeProduct from '../pages/DetailTypeProduct';
 import UpdateProductType from '../pages/UpdateProductType';
 import DetailOrder from '../pages/DetailOrder';
+import DetailRole from '../pages/DetailRole';
 
 // Public routes
 const publicRoutes = [
@@ -209,6 +210,13 @@ const publicRoutes = [
         component: AddRole,
         props: {
             heading: 'Thêm chức vụ',
+        },
+    },
+    {
+        path: '/role/detail/:id',
+        component: DetailRole,
+        props: {
+            heading: 'Chi tiết chức vụ',
         },
     },
     {
