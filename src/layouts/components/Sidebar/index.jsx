@@ -153,7 +153,7 @@ function Sidebar() {
                 <div className="font-bold">CỬA HÀNG CÂY XANH</div>
             </header>
 
-            <ul className="flex select-none flex-col space-y-0.5 overflow-y-auto p-2 ">
+            <ul className="flex select-none flex-col space-y-0.5 p-2 " style={{ overflowY: 'overlay' }}>
                 {groupMenus.map((groupMenu, index) => (
                     <GroupMenu key={index} groupMenu={groupMenu} />
                 ))}
