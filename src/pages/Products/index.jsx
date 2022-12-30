@@ -240,14 +240,21 @@ function Products() {
                                     </td>
                                     <td className="flex w-[200px] items-center justify-center px-2 py-2">
                                         <div className="flex justify-end">
-                                            <Link to={'/product/update/' + product.id} className="btn btn-sm btn-blue">
+                                            <Link
+                                                to={'/product/update/' + product.id}
+                                                className={clsx('btn btn-sm btn-blue', {
+                                                    hidden: isHiddenItem('product/update'),
+                                                })}
+                                            >
                                                 <span className="pr-1">
                                                     <i className="fa-solid fa-pen-to-square"></i>
                                                 </span>
                                                 <span>Sửa</span>
                                             </Link>
                                             <button
-                                                className="btn btn-sm btn-red"
+                                                className={clsx('btn btn-sm btn-red', {
+                                                    hidden: isHiddenItem('product/delete'),
+                                                })}
                                                 onClick={() => {
                                                     {
                                                         setShowDeleteDialog(true);
