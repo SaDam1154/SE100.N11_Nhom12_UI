@@ -199,7 +199,7 @@ function Accounts() {
                                 </td>
                                 <td className="flex w-[200px] items-center justify-center px-2 py-2">
                                     <div className="flex justify-end">
-                                        <Link to={'/account/update/' + account._id} className="btn btn-sm btn-blue">
+                                        <Link to={'/account/update/' + account.id} className="btn btn-sm btn-blue">
                                             <span className="pr-1">
                                                 <i className="fa-solid fa-pen-to-square"></i>
                                             </span>

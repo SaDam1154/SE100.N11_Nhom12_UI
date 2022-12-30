@@ -239,7 +239,7 @@ function UpdateRole() {
                             <span className="">Hủy</span>
                         </Link>
 
-                        <button type="submit" className="btn btn-green btn-md" disabled={loading}>
+                        <button type="submit" className="btn btn-blue btn-md" disabled={loading}>
                             <span className="pr-1">
                                 <i className="fa-solid fa-circle-plus"></i>
                             </span>

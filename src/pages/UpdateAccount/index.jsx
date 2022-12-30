@@ -19,64 +19,39 @@ const validationSchema = Yup.object({
     email: Yup.string()
         .required('Trường này bắt buộc')
         .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Email sai không đúng định dạng'),
-    account: Yup.string().required('Vui lòng nhập tên tài tài khoản!'),
+    username: Yup.string().required('Vui lòng nhập tên tài tài khoản!'),
     password: Yup.string()
         .required('Vui lòng nhập nhập mật khẩu!')
         .min(6, 'Mật khẩu quá ngắn! mật khẩu phải có ít nhất 6 kí tự'),
     rePassword: Yup.string().required('Vui lòng nhập nhập lại mật khẩu!'),
 });
 
-const accounts = [
-    {
-        _id: 1,
-        name: 'a',
-        rule: 'Nhân viên',
-        email: 'b',
-        account: 'c',
-        password: '123456',
-        rePassword: '123456',
-        createdAt: new Date(),
-    },
-    {
-        _id: 2,
-        name: 'a2',
-        rule: 'Nhân viên',
-        email: 'b2',
-        account: 'c2',
-        password: 'd2',
-        createdAt: new Date(),
-    },
-];
 function UpdateAccount() {
     const [loading, setLoading] = useState(false);
     const showSuccessNoti = () => toast.info('Chỉnh sửa thông tin tài khoản thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
     const { id } = useParams();
-    const [account, setAccount] = useState({});
+    const [account, setAccount] = useState([]);
     useEffect(() => {
         callApi();
     }, []);
 
     function callApi() {
-        setAccount(accounts[0]);
-        // fetch('http://localhost:5000/api/account' + '/' + id)
-        //     .then((res) => res.json())
-        //     .then((resJson) => {
-        //         if (resJson.success) {
-        //             setAccount(resJson.account);
-        //         } else {
-        //             setAccount({});
-        //         }
-        //     });
+        fetch('http://localhost:5000/api/account/' + id)
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success) {
+                    setAccount(resJson.account);
+                } else {
+                    setAccount({});
+                }
+            });
     }
     const bacsicForm = useFormik({
         initialValues: {
             name: account.name,
             email: account.email,
-            rule: account.rule,
-            account: account.account,
-            password: account.password,
-            rePassword: account.rePassword,
+            // role: account.role,
         },
         enableReinitialize: true,
         validationSchema,
@@ -85,31 +60,46 @@ function UpdateAccount() {
 
     const navigate = useNavigate();
 
-    function handleFormsubmit(values) {
+    function handleFormsubmittmp(values) {
         console.log(values);
-        // setLoading(true);
-        // fetch('http://localhost:5000/api/account', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(values),
-        // })
-        //     .then((res) => res.json())
-        //     .then((resJson) => {
-        //         if (resJson.success) {
-        //             setLoading(false);
-        //             showSuccessNoti();
-        //             bacsicForm.resetForm();
-        //         } else {
-        //             setLoading(false);
-        //             showErorrNoti();
-        //         }
-        //     })
-        //     .catch(() => {
-        //         setLoading(false);
-        //         showErorrNoti();
-        //     });
+    }
+    function handleFormsubmit(values) {
+        setLoading(true);
+
+        // Check values changed
+        let reqValue = {};
+        Object.keys(values).forEach((key) => {
+            if (values[key] !== bacsicForm.initialValues[key]) {
+                reqValue[key] = values[key];
+            }
+        });
+
+        console.log(reqValue);
+
+        fetch('http://localhost:5000/api/account' + '/' + id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(reqValue),
+        })
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success) {
+                    setLoading(false);
+                    showSuccessNoti();
+                    setTimeout(() => {
+                        navigate('/account');
+                    }, 4000);
+                } else {
+                    setLoading(false);
+                    showErorrNoti();
+                }
+            })
+            .catch(() => {
+                setLoading(false);
+                showErorrNoti();
+            });
     }
 
     return (
@@ -117,9 +107,6 @@ function UpdateAccount() {
             <div className="container">
                 <div className="w-full">
                     <form onSubmit={bacsicForm.handleSubmit}>
-                        {/* <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-gray-900  md:text-2xl">
-                            ĐĂNG KÝ TÀI KHOẢN
-                        </h1> */}
                         <div className="mt-4 flex">
                             <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
                                 <div className="form-group flex flex-col ">
@@ -182,14 +169,14 @@ function UpdateAccount() {
                                     </label>
 
                                     <AccountRule
-                                        id="type"
+                                        // id="type"
                                         className={clsx('text-input cursor-pointer py-[5px]', {
-                                            invalid: bacsicForm.touched.type && bacsicForm.errors.type,
+                                            // invalid: bacsicForm.touched.type && bacsicForm.errors.type,
                                         })}
-                                        onChange={bacsicForm.handleChange}
-                                        onBlur={bacsicForm.handleBlur}
-                                        value={bacsicForm.values.type}
-                                        name="type"
+                                        // onChange={bacsicForm.handleChange}
+                                        // onBlur={bacsicForm.handleBlur}
+                                        // value={bacsicForm.values.role}
+                                        // name="type"
                                     />
 
                                     <span
@@ -204,33 +191,14 @@ function UpdateAccount() {
                             <div className="mr-8 flex w-1/2 flex-col space-y-2 text-lg">
                                 <div className="form-group flex flex-col ">
                                     <label
-                                        htmlFor="account"
+                                        htmlFor="username"
                                         className="mb-1 select-none  font-semibold text-gray-900  "
                                     >
                                         Tài khoản
                                     </label>
-                                    <input
-                                        type="text"
-                                        name="account"
-                                        id="account"
-                                        className={clsx(
-                                            'focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900    sm:text-sm',
-                                            {
-                                                invalid: bacsicForm.touched.account && bacsicForm.errors.account,
-                                            }
-                                        )}
-                                        onChange={bacsicForm.handleChange}
-                                        onBlur={bacsicForm.handleBlur}
-                                        value={bacsicForm.values.account}
-                                        placeholder="Tên tài khoản"
-                                    />
-                                    <span
-                                        className={clsx('text-sm text-red-500 opacity-0', {
-                                            'opacity-100': bacsicForm.touched.account && bacsicForm.errors.account,
-                                        })}
-                                    >
-                                        {bacsicForm.errors.account || 'No message'}
-                                    </span>
+                                    <div id="username" className="text-input disabled mb-6 select-none py-[5px]">
+                                        {account.username}
+                                    </div>
                                 </div>
 
                                 <div className="form-group flex flex-col ">
@@ -240,23 +208,9 @@ function UpdateAccount() {
                                     >
                                         Mật khẩu
                                     </label>
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        id="password"
-                                        onChange={bacsicForm.handleChange}
-                                        onBlur={bacsicForm.handleBlur}
-                                        value={bacsicForm.values.password}
-                                        placeholder="Mật khẩu"
-                                        className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900     sm:text-sm"
-                                    />
-                                    <span
-                                        className={clsx('text-sm text-red-500 opacity-0', {
-                                            'opacity-100': bacsicForm.touched.password && bacsicForm.errors.password,
-                                        })}
-                                    >
-                                        {bacsicForm.errors.password || 'No message'}
-                                    </span>
+                                    <div id="password" className="text-input disabled  mb-5   select-none py-[5px]">
+                                        *********
+                                    </div>
                                 </div>
                                 <div className="form-group flex flex-col ">
                                     <label
@@ -265,24 +219,9 @@ function UpdateAccount() {
                                     >
                                         Nhập lại mật khẩu
                                     </label>
-                                    <input
-                                        type="password"
-                                        name="RePassword"
-                                        id="RePassword"
-                                        onChange={bacsicForm.handleChange}
-                                        onBlur={bacsicForm.handleBlur}
-                                        value={bacsicForm.values.rePassword}
-                                        placeholder="Nhập lại mật khẩu"
-                                        className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300  p-2.5 text-gray-900     sm:text-sm"
-                                    />
-                                    <span
-                                        className={clsx('text-sm text-red-500 opacity-0', {
-                                            'opacity-100':
-                                                bacsicForm.touched.rePassword && bacsicForm.errors.rePassword,
-                                        })}
-                                    >
-                                        {bacsicForm.errors.rePassword || 'No message'}
-                                    </span>
+                                    <div id="RePassword" className="text-input disabled    select-none py-[5px]">
+                                        *********
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -295,7 +234,6 @@ function UpdateAccount() {
                                     <TimeNow />
                                 </div>
                             </div>
-                            {/* PRICE */}
                         </div>
                         <div className="mt-6 flex items-center justify-between border-t pt-6">
                             <div
@@ -313,15 +251,11 @@ function UpdateAccount() {
                                     </span>
                                     <span>Hủy</span>
                                 </Link>
-                                <button
-                                    type="submit"
-                                    className="btn btn-blue btn-md"
-                                    disabled={!bacsicForm.dirty || loading}
-                                >
-                                    <span className="pr-2">
+                                <button type="submit" className="btn btn-blue btn-md" disabled={!bacsicForm || loading}>
+                                    <span className="pr-1">
                                         <i className="fa-solid fa-circle-plus"></i>
                                     </span>
-                                    <span>Chỉnh sửa</span>
+                                    <span className="">Lưu</span>
                                 </button>
                             </div>
                         </div>
