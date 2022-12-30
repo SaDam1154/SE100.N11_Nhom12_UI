@@ -1,7 +1,9 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoutes } from './routes';
 import DefaultLayout from './layouts/DefaultLayout';
+import AuthLayout from './layouts/AuthLayout';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
     return (
@@ -23,14 +25,17 @@ function App() {
                                 key={index}
                                 path={route.path}
                                 element={
-                                    <Layout {...route.props}>
-                                        <Page />
-                                    </Layout>
+                                    <AuthLayout>
+                                        <Layout {...route.props}>
+                                            <Page />
+                                        </Layout>
+                                    </AuthLayout>
                                 }
                             />
                         );
                     })}
                 </Routes>
+                <ToastContainer hideProgressBar />
             </div>
         </Router>
     );

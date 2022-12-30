@@ -227,7 +227,6 @@ function UpdateCustomer() {
                     </form>
                 </div>
             </div>
-            <ToastContainer hideProgressBar />
         </>
     );
 }

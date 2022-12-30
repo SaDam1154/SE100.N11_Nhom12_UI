@@ -174,8 +174,6 @@ function Customers() {
                             ))}
                     </tbody>
                 </table>
-
-                <ToastContainer hideProgressBar />
             </div>
 
             {/* DELETE DIALOG */}

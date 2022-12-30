@@ -197,8 +197,6 @@ function Accounts() {
                             ))}
                     </tbody>
                 </table>
-
-                <ToastContainer hideProgressBar />
             </div>
 
             {/* DELETE DIALOG */}

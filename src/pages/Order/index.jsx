@@ -158,7 +158,6 @@ function Orders() {
                         ))}
                     </tbody>
                 </table>
-                <ToastContainer hideProgressBar />
             </div>
 
             {/* DELETE DIALOG */}

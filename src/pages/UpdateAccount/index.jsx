@@ -328,7 +328,6 @@ function UpdateAccount() {
                     </form>
                 </div>
             </div>
-            <ToastContainer hideProgressBar />
         </>
     );
 }
