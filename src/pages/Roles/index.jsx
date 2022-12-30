@@ -1,7 +1,7 @@
-import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import { Popover } from '@headlessui/react';
-import { useEffect, useState } from 'react';
+import clsx from 'clsx';
+import { Fragment, useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 function removeVietnameseTones(stra) {
     var str = stra;
@@ -40,7 +40,7 @@ function Roles() {
     useEffect(() => {
         getRoles();
     }, []);
-
+    const navigate = useNavigate();
     function getRoles() {
         fetch('http://localhost:5000/api/role')
             .then((res) => res.json())
@@ -76,6 +76,9 @@ function Roles() {
             })
         );
     }, [search]);
+    function LinkToDetail(id) {
+        navigate('/roles/detail/' + id);
+    }
 
     return (
         <div>
@@ -102,7 +105,7 @@ function Roles() {
                         />
                     </div>
 
-                    <Link to="/role/add" className="btn btn-md bg-green-600 hover:bg-green-500">
+                    <Link to="/roles/add" className="btn btn-md bg-green-600 hover:bg-green-500">
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
@@ -130,12 +133,21 @@ function Roles() {
                 <tbody>
                     {renderRoles?.map((role) => (
                         <tr key={role.id} className="cursor-pointer border-b border-slate-200 hover:bg-slate-100">
-                            <td className="py-2 text-center">{role.id}</td>
-                            <td className="py-2 text-center">{role.name}</td>
-                            <td className="py-2 text-center">{role.description}</td>
-                            <td className="py-2 text-center">
+                            <td className="py-2 text-center" onClick={() => LinkToDetail(role._id)}>
+                                {role.id}{' '}
+                            </td>
+                            <td className="py-2 text-center" onClick={() => LinkToDetail(role._id)}>
+                                {role.name}
+                            </td>
+                            <td className="py-2 text-center" onClick={() => LinkToDetail(role._id)}>
+                                {role.description}
+                            </td>
+                            <td className="py-2 text-center" onClick={() => LinkToDetail(role._id)}>
                                 <div className="flex justify-end">
-                                    <Link to="/role/update" className="btn btn-sm bg-blue-500 hover:bg-blue-400">
+                                    <Link
+                                        to={'/roles/update/' + role._id}
+                                        className="btn btn-sm bg-blue-500 hover:bg-blue-400"
+                                    >
                                         <span className="pr-1">
                                             <i className="fa-solid fa-pen-to-square"></i>
                                         </span>

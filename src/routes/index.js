@@ -21,6 +21,7 @@ import Login from '../pages/Login';
 import Roles from '../pages/Roles';
 import AddRole from '../pages/AddRole';
 import UpdateRole from '../pages/UpdateRole';
+import DetailRole from '../pages/DetailRole';
 import UpdateProduct from '../pages/UpdateProduct';
 import AddCustomer from '../pages/AddCustomer';
 import UpdateCustomer from '../pages/UpdateCustomer';
@@ -168,13 +169,6 @@ const publicRoutes = [
         },
     },
     {
-        path: '/account/detail/:id',
-        component: DetailAccount,
-        props: {
-            heading: 'Chi tiết tài khoản',
-        },
-    },
-    {
         path: '/account/add',
         component: AddAccount,
         props: {
@@ -186,6 +180,13 @@ const publicRoutes = [
         component: UpdateAccount,
         props: {
             heading: 'Chỉnh sửa tài khoản',
+        },
+    },
+    {
+        path: '/account/detail/:id',
+        component: DetailAccount,
+        props: {
+            heading: 'Chi tiết tài khoản',
         },
     },
 
@@ -212,12 +213,20 @@ const publicRoutes = [
         },
     },
     {
-        path: '/roles/update',
+        path: '/roles/update/:id',
         component: UpdateRole,
         props: {
             heading: 'Sửa chức vụ',
         },
     },
+    {
+        path: '/roles/detail/:id',
+        component: DetailRole,
+        props: {
+            heading: 'Chi tiết chức vụ',
+        },
+    },
+
     {
         path: '/login',
         layout: FullLayout,

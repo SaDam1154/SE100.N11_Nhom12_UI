@@ -1,48 +1,24 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const FUNCTIONS = [
-    {
-        _id: 1,
-        name: 'product/read',
-        displayName: 'Xem sản phẩm',
-        index: '101',
-    },
-    {
-        _id: 2,
-        name: 'product/add',
-        displayName: 'Thêm sản phẩm',
-        index: '102',
-    },
-    {
-        _id: 3,
-        name: 'product/update',
-        displayName: 'Sửa sản phẩm',
-        index: '103',
-    },
-
-    {
-        _id: 4,
-        name: 'customer/read',
-        displayName: 'Xem khách hàng',
-        index: '101',
-    },
-    {
-        _id: 5,
-        name: 'customer/add',
-        displayName: 'Thêm khách hàng',
-        index: '102',
-    },
-    {
-        _id: 6,
-        name: 'customer/update',
-        displayName: 'Sửa khách hàng',
-        index: '103',
-    },
-];
 
 function AddRole() {
     const [selectedFunctionIds, setSelectedFunctionIds] = useState([1, 3, 5]);
+    const [FUNCTIONS, setFunctions] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:5000/api/function')
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success) {
+                    setFunctions(resJson.functions);
+                } else {
+                    setFunctions([]);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
     const [checkAll, setCheckAll] = useState(false);
 
     function isChecked(id) {

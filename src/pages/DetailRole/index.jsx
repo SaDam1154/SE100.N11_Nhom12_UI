@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function UpdateRole() {
+function DetailRole() {
     const [selectedFunctionIds, setSelectedFunctionIds] = useState([1, 3, 5]);
     const [FUNCTIONS, setFunctions] = useState([]);
     useEffect(() => {
@@ -53,7 +53,7 @@ function UpdateRole() {
     }
 
     return (
-        <div className="container h-[100%] min-w-[790px]">
+        <div className="container h-[100%] min-w-[790px] select-none">
             <div className="mx-auto max-w-[800px]">
                 <div className="mt-5 flex items-center justify-center space-x-4">
                     <div className="w-[300px]">
@@ -141,4 +141,4 @@ function UpdateRole() {
     );
 }
 
-export default UpdateRole;
+export default DetailRole;
