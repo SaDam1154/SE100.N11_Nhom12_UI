@@ -29,6 +29,7 @@ import AddProductType from '../pages/AddProductType';
 import DetailTypeProduct from '../pages/DetailTypeProduct';
 import UpdateProductType from '../pages/UpdateProductType';
 import DetailOrder from '../pages/DetailOrder';
+import DetailRole from '../pages/DetailRole';
 
 // Public routes
 const publicRoutes = [
@@ -199,21 +200,28 @@ const publicRoutes = [
         },
     },
     {
-        path: '/roles',
+        path: '/role',
         component: Roles,
         props: {
             heading: 'Quy định',
         },
     },
     {
-        path: '/roles/add',
+        path: '/role/add',
         component: AddRole,
         props: {
             heading: 'Thêm chức vụ',
         },
     },
     {
-        path: '/roles/update/:id',
+        path: '/role/detail/:id',
+        component: DetailRole,
+        props: {
+            heading: 'Chi tiết chức vụ',
+        },
+    },
+    {
+        path: '/role/update/:id',
         component: UpdateRole,
         props: {
             heading: 'Sửa chức vụ',

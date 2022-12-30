@@ -126,7 +126,7 @@ const groupMenus = [
         main: {
             iconClassname: 'fa-solid fa-clipboard',
             text: 'Chức vụ',
-            link: '/roles',
+            link: '/role',
         },
         children: [
             {

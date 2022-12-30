@@ -1,7 +1,7 @@
-import clsx from 'clsx';
-import { Fragment, useState, useEffect } from 'react';
+import { Fragment } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { Popover } from '@headlessui/react';
+import { useEffect, useState } from 'react';
 
 function removeVietnameseTones(stra) {
     var str = stra;
@@ -47,11 +47,13 @@ function Roles() {
             .then((resJson) => {
                 if (resJson.success) {
                     setRoles(resJson.roles);
-                    setRenderRoles(resJson.roles);
                 } else {
                     setRoles([]);
-                    setRenderRoles(resJson.roles);
                 }
+            })
+            .catch((error) => {
+                console.log(error);
+                setRoles([]);
             });
     }
 
@@ -84,12 +86,14 @@ function Roles() {
         <div>
             <div className="flex space-x-4">
                 <div className="flex">
-                    <label className="text-2xl font-bold text-slate-800">Danh sách phân quyền</label>
+                    <label className="text-2xl font-bold text-slate-800">Danh sách chức vụ</label>
                     <button type="button" className="ml-3 text-gray-800 hover:underline">
                         <span className="font-sm pr-1">
                             <i className="fa fa-refresh" aria-hidden="true"></i>
                         </span>
-                        <span className="">Tải lại</span>
+                        <span className="" onClick={() => getRoles()}>
+                            Tải lại
+                        </span>
                     </button>
                 </div>
 
@@ -116,16 +120,22 @@ function Roles() {
             <table className="mt-4 w-full">
                 <colgroup>
                     <col span="1" style={{ width: '10%' }} />
-                    <col span="1" style={{ width: '10%' }} />
-                    <col span="1" style={{ width: '30%' }} />
+                    <col span="1" style={{ width: '20%' }} />
+                    <col span="1" style={{ width: '40%' }} />
                     <col span="1" style={{ width: '10%' }} />
                 </colgroup>
 
                 <thead className="h-11 rounded bg-blue-500 text-white">
                     <tr>
-                        <th scope="col">Mã chức vụ</th>
-                        <th scope="col">Tên chức vụ</th>
-                        <th scope="col">Chú thích</th>
+                        <th scope="col" className="text-center">
+                            Mã chức vụ
+                        </th>
+                        <th scope="col" className="text-left">
+                            Tên chức vụ
+                        </th>
+                        <th scope="col" className="text-left">
+                            Chú thích
+                        </th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
