@@ -88,7 +88,7 @@ function DetailRole() {
 
                 <div className="mt-5 flex items-center justify-end">
                     <div className="flex">
-                        <Link to={'/role'} className="btn btn-blue btn-md">
+                        <Link to={'/role/'} className="btn btn-blue btn-md">
                             <span className="pr-1">
                                 <i className="fa-solid fa-circle-xmark"></i>
                             </span>

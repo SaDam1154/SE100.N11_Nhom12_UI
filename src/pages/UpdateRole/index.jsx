@@ -232,7 +232,7 @@ function UpdateRole() {
                             <i className="fa-solid fa-spinner animate-spin text-xl"></i>
                             <span className="text-lx pl-3 font-medium">Đang chỉnh sửa chức vụ</span>
                         </div>
-                        <Link to={'/role'} className="btn btn-red btn-md">
+                        <Link to={'/role/'} className="btn btn-red btn-md">
                             <span className="pr-1">
                                 <i className="fa-solid fa-circle-xmark"></i>
                             </span>
