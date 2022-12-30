@@ -218,29 +218,33 @@ function AddOrder() {
                         {/* LIST PRODUCT */}
                         <div className="flex h-[68vh] flex-col overflow-scroll">
                             <div className=" grid max-h-[100] min-h-[50] grid-cols-3 gap-2">
-                                {renderProduct?.map((product) => (
-                                    <div
-                                        key={product.id}
-                                        className="cursor-pointer select-none overflow-hidden rounded-md border shadow hover:shadow-md"
-                                        onClick={() => handleAddProduct(product)}
-                                    >
-                                        <img
-                                            className="aspect-[5/3] w-full object-cover"
-                                            src={product.image || '/placeholder.png'}
-                                        />
-                                        <div className="space-y-1 p-2">
-                                            <p className="font-semibold text-blue-600">{product.name}</p>
-                                            <p className="text-sm font-semibold">{'Mã: ' + product.id}</p>
-                                            <p className="text-sm font-semibold">
-                                                {'Loại: ' + product.type?.name || '-'}
-                                            </p>
-                                            <p className="">
-                                                <PriceFormat>{product.price}</PriceFormat>
-                                                <span className="ml-1">VNĐ</span>
-                                            </p>
+                                {renderProduct
+                                    ?.filter((product) => {
+                                        if (product.quantity > 0) return product;
+                                    })
+                                    .map((product) => (
+                                        <div
+                                            key={product.id}
+                                            className="cursor-pointer select-none overflow-hidden rounded-md border shadow hover:shadow-md"
+                                            onClick={() => handleAddProduct(product)}
+                                        >
+                                            <img
+                                                className="aspect-[5/3] w-full object-cover"
+                                                src={product.image || '/placeholder.png'}
+                                            />
+                                            <div className="space-y-1 p-2">
+                                                <p className="font-semibold text-blue-600">{product.name}</p>
+                                                <p className="text-sm font-semibold">{'Mã: ' + product.id}</p>
+                                                <p className="text-sm font-semibold">
+                                                    {'Loại: ' + product.type?.name || '-'}
+                                                </p>
+                                                <p className="">
+                                                    <PriceFormat>{product.price}</PriceFormat>
+                                                    <span className="ml-1">VNĐ</span>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
                             </div>
                         </div>
                     </div>

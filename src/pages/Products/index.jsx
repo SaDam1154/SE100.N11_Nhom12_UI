@@ -232,7 +232,9 @@ function Products() {
                                         <PriceFormat>{product.price}</PriceFormat>
                                     </td>
                                     <td
-                                        className="flex w-24 items-center justify-end px-2 py-2"
+                                        className={clsx('flex w-24 items-center justify-end px-2 py-2', {
+                                            'text-red-600': product.quantity === 0,
+                                        })}
                                         onClick={() => linkToDetail(product.id)}
                                     >
                                         {product.quantity}
