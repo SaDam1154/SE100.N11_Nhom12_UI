@@ -14,7 +14,7 @@ import AddProduct from '../pages/AddProduct';
 import ProductType from '../pages/ProductType';
 import ProductsView from '../pages/ProductsView';
 import Customers from '../pages/Customers';
-import Dashboard from '../pages/Dashboard';
+import Statistic from '../pages/Statistic';
 import DetailTree from '../pages/DetailTree';
 import DetailCustomer from '../pages/DetailCustomer';
 import Login from '../pages/Login';
@@ -192,10 +192,10 @@ const publicRoutes = [
 
     // *****
     {
-        path: '/dashboard',
-        component: Dashboard,
+        path: '/statistic',
+        component: Statistic,
         props: {
-            heading: 'Báo cáo',
+            heading: 'Thống kê',
         },
     },
     {

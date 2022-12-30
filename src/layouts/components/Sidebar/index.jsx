@@ -100,6 +100,13 @@ const groupMenus = [
     },
     {
         main: {
+            iconClassname: 'fa-solid fa-table',
+            text: 'Thống kê',
+            link: '/statistic',
+        },
+    },
+    {
+        main: {
             iconClassname: ' fa-solid fa-user',
             text: 'Tài khoản',
             link: '/account',
@@ -119,13 +126,7 @@ const groupMenus = [
             },
         ],
     },
-    // {
-    //     main: {
-    //         iconClassname: 'fa-solid fa-users',
-    //         text: 'Báo cáo',
-    //         link: '/dashboard',
-    //     },
-    // },
+
     {
         main: {
             iconClassname: 'fa-solid fa-clipboard',
