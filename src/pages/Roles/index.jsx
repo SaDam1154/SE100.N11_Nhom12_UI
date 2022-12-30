@@ -18,6 +18,10 @@ function Roles() {
                 } else {
                     setRoles([]);
                 }
+            })
+            .catch((error) => {
+                console.log(error);
+                setRoles([]);
             });
     }
 
