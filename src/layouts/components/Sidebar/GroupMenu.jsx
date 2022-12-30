@@ -25,7 +25,6 @@ function GroupMenu({ groupMenu }) {
             return false;
         }
         const findResult = account?.functions?.find((_func) => _func?.name === functionName);
-        console.log(account?.functions, functionName, findResult);
         if (findResult) {
             return false;
         }
