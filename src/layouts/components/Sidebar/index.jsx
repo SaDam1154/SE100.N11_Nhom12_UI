@@ -1,4 +1,8 @@
 import GroupMenu from './GroupMenu';
+import { useDispatch, useSelector } from 'react-redux';
+import { accountActions } from '../../../redux/slices/accountSlide';
+import { accountSelector } from '../../../redux/selectors';
+import { toast } from 'react-toastify';
 
 const groupMenus = [
     {
@@ -146,6 +150,10 @@ const groupMenus = [
 ];
 
 function Sidebar() {
+    const dispatch = useDispatch();
+    const account = useSelector(accountSelector);
+    const showLogoutNoti = () => toast.info('Đã đăng xuất!');
+
     return (
         <div className="flex h-full min-w-[240px] flex-col bg-blue-500">
             <header className="mb-8 flex h-16 w-full select-none flex-col items-center justify-center text-white">
@@ -153,11 +161,27 @@ function Sidebar() {
                 <div className="font-bold">CỬA HÀNG CÂY XANH</div>
             </header>
 
-            <ul className="flex select-none flex-col space-y-0.5 p-2 " style={{ overflowY: 'overlay' }}>
+            <ul className="flex flex-1 select-none flex-col space-y-0.5 p-2 " style={{ overflowY: 'overlay' }}>
                 {groupMenus.map((groupMenu, index) => (
                     <GroupMenu key={index} groupMenu={groupMenu} />
                 ))}
             </ul>
+
+            <div className="w-full border-t border-white p-3 text-white">
+                <div className="mb-2">
+                    <p className="font-bold">{account?.name}</p>
+                    <p className="text-sm">{account?.role?.name}</p>
+                </div>
+                <button
+                    className="btn btn-md w-full border border-white hover:bg-blue-400"
+                    onClick={() => {
+                        dispatch(accountActions.logout());
+                        showLogoutNoti();
+                    }}
+                >
+                    Đăng xuất
+                </button>
+            </div>
         </div>
     );
 }
