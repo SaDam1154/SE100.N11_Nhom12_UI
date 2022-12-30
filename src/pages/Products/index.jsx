@@ -243,7 +243,6 @@ function Products() {
                             ))}
                     </tbody>
                 </table>
-                <ToastContainer hideProgressBar />
             </div>
 
             {/* DELETE DIALOG */}

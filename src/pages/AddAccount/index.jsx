@@ -288,7 +288,6 @@ function AddAccount() {
                     </form>
                 </div>
             </div>
-            <ToastContainer hideProgressBar />
         </>
     );
 }

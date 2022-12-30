@@ -130,7 +130,6 @@ function AddProductType() {
                     </form>
                 </div>
             </div>
-            <ToastContainer hideProgressBar />
         </>
     );
 }

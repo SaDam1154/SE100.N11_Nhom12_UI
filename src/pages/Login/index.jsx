@@ -2,23 +2,58 @@ import * as Yup from 'yup';
 import { Formik, useFormik } from 'formik';
 
 import clsx from 'clsx';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { accountActions } from '../../redux/slices/accountSlide';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const validationSchema = Yup.object({
-    account: Yup.string().required('Vui lòng nhập tên tài tài khoản!'),
+    username: Yup.string().required('Vui lòng nhập tên tài tài khoản!'),
     password: Yup.string().required('Vui lòng nhập nhập mật khẩu!'),
 });
 
 function Login() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const showSuccessNoti = () => toast.info('Đăng nhập thành công!');
+    const showErorrNoti = () => toast.error('Đăng nhập không thành công!');
+
     const bacsicForm = useFormik({
         initialValues: {
-            account: '',
+            username: '',
             password: '',
         },
         validationSchema,
         onSubmit: handleFormsubmit,
     });
-    function handleFormsubmit() {
-        console.log(bacsicForm.values);
+    function handleFormsubmit(values) {
+        setLoading(true);
+        fetch('http://localhost:5000/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values),
+        })
+            .then((res) => res.json())
+            .then((resJson) => {
+                if (resJson.success) {
+                    console.log(resJson.account);
+                    setLoading(false);
+                    showSuccessNoti();
+                    dispatch(accountActions.login(resJson.account));
+                    navigate('/');
+                } else {
+                    setLoading(false);
+                    showErorrNoti();
+                }
+            })
+            .catch(() => {
+                setLoading(false);
+                showErorrNoti();
+            });
     }
     return (
         <div>
@@ -32,41 +67,36 @@ function Login() {
                         />
                         CỬA HÀNG CÂY XANH
                     </a>
-                    <div className="w-full rounded-lg bg-white shadow    sm:max-w-md md:mt-0 xl:p-0">
-                        <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
-                            <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-gray-900  md:text-2xl">
-                                Đăng nhập
-                            </h1>
-                            <form className="space-y-1 md:space-y-2" onSubmit={bacsicForm.handleSubmit}>
-                                <div>
-                                    <label htmlFor="account" className="mb-2 block text-sm font-medium text-gray-900 ">
+                    <div className=" w-[448px] rounded-lg bg-white shadow">
+                        <div className="space-y-4 p-8">
+                            <h1 className="text-center text-2xl font-semibold text-gray-900">Đăng nhập</h1>
+                            <form onSubmit={bacsicForm.handleSubmit}>
+                                <div className="mb-2">
+                                    <label htmlFor="username" className="mb-1 block font-medium text-gray-900 ">
                                         Tài khoản
                                     </label>
                                     <input
                                         type="text"
-                                        name="account"
-                                        id="account"
-                                        className={clsx(
-                                            'focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900    sm:text-sm',
-                                            {
-                                                invalid: bacsicForm.touched.account && bacsicForm.errors.account,
-                                            }
-                                        )}
+                                        name="username"
+                                        id="username"
+                                        className={clsx('text-input w-full py-2', {
+                                            invalid: bacsicForm.touched.username && bacsicForm.errors.username,
+                                        })}
                                         onChange={bacsicForm.handleChange}
                                         onBlur={bacsicForm.handleBlur}
-                                        value={bacsicForm.values.account}
+                                        value={bacsicForm.values.username}
                                         placeholder="Tên tài khoản"
                                     />
                                     <span
                                         className={clsx('text-sm text-red-500 opacity-0', {
-                                            'opacity-100': bacsicForm.touched.account && bacsicForm.errors.account,
+                                            'opacity-100': bacsicForm.touched.username && bacsicForm.errors.username,
                                         })}
                                     >
-                                        {bacsicForm.errors.account || 'No message'}
+                                        {bacsicForm.errors.username || 'No message'}
                                     </span>
                                 </div>
-                                <div>
-                                    <label htmlFor="password" className="mb-2 block text-sm font-medium text-gray-900 ">
+                                <div className="mb-2">
+                                    <label htmlFor="password" className="mb-1 block font-medium text-gray-900 ">
                                         Mật khẩu
                                     </label>
                                     <input
@@ -77,7 +107,9 @@ function Login() {
                                         onBlur={bacsicForm.handleBlur}
                                         value={bacsicForm.values.password}
                                         placeholder="Mật khẩu của bạn"
-                                        className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900     sm:text-sm"
+                                        className={clsx('text-input w-full py-2', {
+                                            invalid: bacsicForm.touched.password && bacsicForm.errors.password,
+                                        })}
                                     />
                                     <span
                                         className={clsx('text-sm text-red-500 opacity-0', {
@@ -90,9 +122,30 @@ function Login() {
 
                                 <button
                                     type="submit"
-                                    className="btn btn-blue focus:ring-primary-300  w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
+                                    className="btn btn-blue btn-md mt-4 w-full"
+                                    disabled={!bacsicForm.dirty || loading}
                                 >
-                                    Đăng nhập
+                                    {!loading ? (
+                                        <span>Đăng nhập</span>
+                                    ) : (
+                                        <div className="flex items-center">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke-width="1.5"
+                                                stroke="currentColor"
+                                                class="h-4 w-4 animate-spin"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+                                                />
+                                            </svg>
+                                            <span className="ml-1">Đang đăng nhập</span>
+                                        </div>
+                                    )}
                                 </button>
                             </form>
                         </div>
