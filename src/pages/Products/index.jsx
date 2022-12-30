@@ -48,7 +48,6 @@ function Products() {
     const navigate = useNavigate();
     const showDeleteNoti = () => toast.success('Xóa sản phẩm thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
-
     const account = useSelector(accountSelector);
     function isHiddenItem(functionName) {
         if (!account) {
@@ -164,7 +163,7 @@ function Products() {
                 {/* LIST */}
                 <table className="mt-8 w-full">
                     <thead className="w-full rounded bg-blue-500 text-white">
-                        <tr className="flex h-11 w-full">
+                        <tr className="flex h-11 min-h-[56px] w-full">
                             <th className="flex w-16 items-center justify-end px-2">Mã số</th>
                             <th className="flex w-24 items-center justify-center px-2">Ảnh</th>
                             <th className="flex flex-[2] items-center justify-start px-2">Tên cây</th>

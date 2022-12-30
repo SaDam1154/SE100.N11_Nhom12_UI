@@ -3,10 +3,27 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import clsx from 'clsx';
+import { useSelector } from 'react-redux';
+import { accountSelector } from '../../redux/selectors';
 
 function DetailCustomer() {
     const { id } = useParams();
     const [customer, setCustomer] = useState({});
+    const account = useSelector(accountSelector);
+    function isHiddenItem(functionName) {
+        if (!account) {
+            return true;
+        }
+        if (!functionName) {
+            return false;
+        }
+        const findResult = account?.functions?.find((_func) => _func?.name === functionName);
+        if (findResult) {
+            return false;
+        }
+        return true;
+    }
     useEffect(() => {
         callApi();
     }, []);
@@ -81,7 +98,12 @@ function DetailCustomer() {
                     </div>
 
                     <div className="float-right flex basis-1 flex-col">
-                        <Link to={'/customer/update/' + customer.id} className="btn btn-md btn-green">
+                        <Link
+                            to={'/customer/update/' + customer.id}
+                            className={clsx('btn btn-md btn-green', {
+                                hidden: isHiddenItem('customer/update'),
+                            })}
+                        >
                             <span className="pr-2">
                                 <i className="fa fa-share" aria-hidden="true"></i>
                             </span>

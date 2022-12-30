@@ -7,6 +7,9 @@ import { useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment';
+
+import { useSelector } from 'react-redux';
+import { accountSelector } from '../../redux/selectors';
 function removeVietnameseTones(stra) {
     var str = stra;
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
@@ -45,7 +48,20 @@ function ProductType() {
     const [deletingProductTypeId, setDeletingProductTypeId] = useState(null);
     const showDeleteNoti = () => toast.success('Xóa loại sản phẩm thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
-
+    const account = useSelector(accountSelector);
+    function isHiddenItem(functionName) {
+        if (!account) {
+            return true;
+        }
+        if (!functionName) {
+            return false;
+        }
+        const findResult = account?.functions?.find((_func) => _func?.name === functionName);
+        if (findResult) {
+            return false;
+        }
+        return true;
+    }
     useEffect(() => {
         getProductTypes();
     }, []);
@@ -120,7 +136,12 @@ function ProductType() {
                             />
                         </div>
 
-                        <Link to="/product-type/add" className="btn btn-md btn-green">
+                        <Link
+                            to="/product-type/add"
+                            className={clsx('btn btn-md btn-green', {
+                                hidden: isHiddenItem('product-type/create'),
+                            })}
+                        >
                             <span className="pr-1">
                                 <i className="fa fa-share"></i>
                             </span>
@@ -132,7 +153,7 @@ function ProductType() {
                 {/* LIST */}
                 <table className="mt-8 w-full">
                     <thead className="w-full rounded bg-blue-500 text-white">
-                        <tr className="flex h-11 w-full">
+                        <tr className="flex  h-11 w-full">
                             <th className="flex w-20 items-center justify-end px-2">Mã số</th>
                             <th className="flex flex-[1] items-center justify-start pl-28">Tên loại sản phẩm</th>
                             <th className="flex flex-[1] items-center justify-start px-2">Ngày thêm</th>
@@ -159,7 +180,7 @@ function ProductType() {
                             ?.map((productType) => (
                                 <tr
                                     key={productType.id}
-                                    className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                                    className="flex min-h-[56px] cursor-pointer border-b border-slate-200 hover:bg-slate-100"
                                 >
                                     <td
                                         className="flex w-20 items-center justify-center px-2"
@@ -185,7 +206,9 @@ function ProductType() {
                                         <div className="flex justify-end">
                                             <Link
                                                 to={'/product-type/update/' + productType.id}
-                                                className="btn btn-sm btn-blue"
+                                                className={clsx('btn btn-md btn-blue', {
+                                                    hidden: isHiddenItem('product-type/update'),
+                                                })}
                                             >
                                                 <span className="pr-1">
                                                     <i className="fa-solid fa-pen-to-square"></i>
@@ -193,7 +216,9 @@ function ProductType() {
                                                 <span>Sửa</span>
                                             </Link>
                                             <button
-                                                className="btn btn-sm btn-red"
+                                                className={clsx('btn btn-md btn-red', {
+                                                    hidden: isHiddenItem('product-type/delete'),
+                                                })}
                                                 onClick={() => {
                                                     {
                                                         setShowDeleteDialog(true);

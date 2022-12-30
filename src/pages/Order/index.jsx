@@ -6,6 +6,8 @@ import { useEffect } from 'react';
 import moment from 'moment';
 import PriceFormat from '../../components/PriceFormat';
 import { toast, ToastContainer } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { accountSelector } from '../../redux/selectors';
 function Orders() {
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [deletingOrderId, setDeletingOrderId] = useState(null);
@@ -14,7 +16,20 @@ function Orders() {
     const navigate = useNavigate();
     const showDeleteNoti = () => toast.success('Xóa hoá đơn thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
-
+    const account = useSelector(accountSelector);
+    function isHiddenItem(functionName) {
+        if (!account) {
+            return true;
+        }
+        if (!functionName) {
+            return false;
+        }
+        const findResult = account?.functions?.find((_func) => _func?.name === functionName);
+        if (findResult) {
+            return false;
+        }
+        return true;
+    }
     useEffect(() => {
         getOrders();
     }, []);
@@ -93,7 +108,12 @@ function Orders() {
                             /> */}
                         </div>
 
-                        <Link to="/order/add" className="btn btn-md btn-green">
+                        <Link
+                            to="/order/add"
+                            className={clsx('btn btn-md btn-green', {
+                                hidden: isHiddenItem('order/create'),
+                            })}
+                        >
                             <span className="pr-1">
                                 <i className="fa fa-share"></i>
                             </span>
@@ -119,7 +139,7 @@ function Orders() {
                         {orders?.map((order) => (
                             <tr
                                 key={order.id}
-                                className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                                className="flex min-h-[56px] cursor-pointer border-b border-slate-200 hover:bg-slate-100"
                                 onClick={() => linkToDetail(order.id)}
                             >
                                 <td className="flex w-16 items-center justify-end px-2 py-2">{order.id}</td>
@@ -138,7 +158,9 @@ function Orders() {
                                 <td className="flex w-[140px] items-center justify-center px-2 py-2">
                                     <div className="flex justify-end">
                                         <button
-                                            className="btn btn-sm btn-red"
+                                            className={clsx('btn btn-md btn-red', {
+                                                hidden: isHiddenItem('order/delete'),
+                                            })}
                                             onClick={(e) => {
                                                 {
                                                     e.stopPropagation();

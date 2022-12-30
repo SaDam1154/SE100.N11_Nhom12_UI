@@ -3,10 +3,27 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import clsx from 'clsx';
+import { useSelector } from 'react-redux';
+import { accountSelector } from '../../redux/selectors';
 
 function DetailTypeProduct() {
     const { id } = useParams();
     const [productType, setProductType] = useState({});
+    const account = useSelector(accountSelector);
+    function isHiddenItem(functionName) {
+        if (!account) {
+            return true;
+        }
+        if (!functionName) {
+            return false;
+        }
+        const findResult = account?.functions?.find((_func) => _func?.name === functionName);
+        if (findResult) {
+            return false;
+        }
+        return true;
+    }
     useEffect(() => {
         callApi();
     }, []);
@@ -59,7 +76,12 @@ function DetailTypeProduct() {
                         </span>
                         <span>Quay lại</span>
                     </Link>
-                    <Link to={'/product-type/update/' + productType.id} className="btn btn-md btn-green">
+                    <Link
+                        to={'/product-type/update/' + productType.id}
+                        className={clsx('btn btn-md btn-blue', {
+                            hidden: isHiddenItem('product-type/update'),
+                        })}
+                    >
                         <span className="pr-2">
                             <i className="fa fa-share" aria-hidden="true"></i>
                         </span>

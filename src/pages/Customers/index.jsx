@@ -2,7 +2,8 @@ import clsx from 'clsx';
 import { Fragment, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-
+import { useSelector } from 'react-redux';
+import { accountSelector } from '../../redux/selectors';
 function Customers() {
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [deletingCustomerId, setDeletingCustomerId] = useState(null);
@@ -13,7 +14,20 @@ function Customers() {
 
     const showDeleteNoti = () => toast.success('Xóa khách hàng thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
-
+    const account = useSelector(accountSelector);
+    function isHiddenItem(functionName) {
+        if (!account) {
+            return true;
+        }
+        if (!functionName) {
+            return false;
+        }
+        const findResult = account?.functions?.find((_func) => _func?.name === functionName);
+        if (findResult) {
+            return false;
+        }
+        return true;
+    }
     useEffect(() => {
         getCustomers();
     }, []);
@@ -87,7 +101,12 @@ function Customers() {
                             />
                         </div>
 
-                        <Link to="/customer/add" className="btn btn-md bg-green-600 hover:bg-green-500">
+                        <Link
+                            to="/customer/add"
+                            className={clsx('btn btn-md btn-green', {
+                                hidden: isHiddenItem('customer/create'),
+                            })}
+                        >
                             <span className="pr-1">
                                 <i className="fa fa-share"></i>
                             </span>
@@ -117,7 +136,7 @@ function Customers() {
                             ?.map((customer, index) => (
                                 <tr
                                     key={customer._id}
-                                    className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                                    className="flex min-h-[56px] cursor-pointer border-b border-slate-200 hover:bg-slate-100"
                                 >
                                     <td
                                         className="flex w-20 items-center justify-end px-2"
@@ -147,7 +166,9 @@ function Customers() {
                                         <div className="flex justify-end">
                                             <Link
                                                 to={'/customer/update/' + customer.id}
-                                                className="btn btn-sm btn-blue"
+                                                className={clsx('btn btn-md btn-blue', {
+                                                    hidden: isHiddenItem('customer/update'),
+                                                })}
                                             >
                                                 <span className="pr-1">
                                                     <i className="fa-solid fa-pen-to-square"></i>
@@ -155,7 +176,9 @@ function Customers() {
                                                 <span>Sửa</span>
                                             </Link>
                                             <button
-                                                className="btn btn-sm btn-red"
+                                                className={clsx('btn btn-md btn-red', {
+                                                    hidden: isHiddenItem('customer/delete'),
+                                                })}
                                                 onClick={() => {
                                                     {
                                                         setShowDeleteDialog(true);

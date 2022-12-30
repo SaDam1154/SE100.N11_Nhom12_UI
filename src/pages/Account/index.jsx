@@ -165,7 +165,7 @@ function Accounts() {
                         {renderAccounts.map((account) => (
                             <tr
                                 key={account._id}
-                                className="flex cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                                className="flex min-h-[56px] cursor-pointer border-b border-slate-200 hover:bg-slate-100"
                             >
                                 <td
                                     className="flex w-20 items-center justify-center px-2"
