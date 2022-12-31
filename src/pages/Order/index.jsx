@@ -17,6 +17,7 @@ function Orders() {
     const showDeleteNoti = () => toast.success('Xóa hoá đơn thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
+    const [allDay, setAllDay] = useState('');
     const [value, setValue] = useState({
         startDate: moment(new Date()).format('YYYY-MM-DD'),
         endDate: moment(new Date()).format('YYYY-MM-DD'),
@@ -117,6 +118,7 @@ function Orders() {
                                         startDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
                                         endDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
                                     });
+                                    setAllDay('');
                                 }}
                             >
                                 Hôm qua
@@ -128,9 +130,18 @@ function Orders() {
                                         startDate: moment(new Date()).format('YYYY-MM-DD'),
                                         endDate: moment(new Date()).format('YYYY-MM-DD'),
                                     });
+                                    setAllDay('');
                                 }}
                             >
                                 Hôm nay
+                            </div>
+                            <div
+                                className="w-1/2 cursor-pointer whitespace-nowrap rounded p-2 text-blue-600 transition-all duration-300 hover:bg-gray-100 hover:text-blue-700 dark:text-blue-400 dark:hover:bg-white/10 dark:hover:text-blue-400 md:w-1/3 lg:w-auto"
+                                onClick={() => {
+                                    setAllDay('all');
+                                }}
+                            >
+                                Tất cả
                             </div>
                         </div>
 
@@ -164,7 +175,8 @@ function Orders() {
                     <tbody className="flex h-[75vh] w-full flex-col" style={{ overflowY: 'overlay' }}>
                         {orders
                             ?.filter((order) => {
-                                if (isDateBetween(order.createdAt, value.startDate, value.endDate)) {
+                                if (allDay == 'all') return true;
+                                else if (isDateBetween(order.createdAt, value.startDate, value.endDate)) {
                                     return true;
                                 }
                                 return false;
