@@ -132,7 +132,7 @@ function Statistic() {
                         <div className="mr-2 flex grow">
                             <Datepicker
                                 value={value}
-                                i18n={'vi'}
+                                i18n={'en'}
                                 configs={{
                                     shortcuts: {
                                         today: 'Hôm nay',
