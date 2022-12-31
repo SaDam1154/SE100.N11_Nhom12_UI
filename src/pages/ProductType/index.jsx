@@ -108,7 +108,7 @@ function ProductType() {
                 <div className="flex space-x-4">
                     {/* tite + reload btn */}
                     <div className="flex">
-                        <label className="text-2xl font-bold text-slate-800">Danh sách loại cây</label>
+                        <label className="text-2xl font-bold text-slate-800">Danh sách loại sản phẩm</label>
                         <button
                             type="button"
                             className="ml-3 text-gray-800 hover:underline"
@@ -144,7 +144,7 @@ function ProductType() {
                             <span className="pr-1">
                                 <i className="fa fa-share"></i>
                             </span>
-                            <span>Thêm loại cây mới</span>
+                            <span>Thêm loại sản phẩm mới</span>
                         </Link>
                     </div>
                 </div>
