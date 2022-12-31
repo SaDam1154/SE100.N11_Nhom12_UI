@@ -132,6 +132,16 @@ function Statistic() {
                         <div className="mr-2 flex grow">
                             <Datepicker
                                 value={value}
+                                i18n={'vi'}
+                                configs={{
+                                    shortcuts: {
+                                        today: 'Hôm nay',
+                                        yesterday: 'Hôm qua',
+                                        past: (period) => `${period} ngày trước`,
+                                        currentMonth: 'Tháng này',
+                                        pastMonth: 'Tháng trước',
+                                    },
+                                }}
                                 inputClassName="border-2 border-gray-500 outline-none w-full text-base !py-1.5 hover:border-blue-500"
                                 displayFormat={'DD/MM/YYYY'}
                                 separator={'đến'}
