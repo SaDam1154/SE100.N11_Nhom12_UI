@@ -8,6 +8,7 @@ import { accountActions } from '../../redux/slices/accountSlide';
 function Home() {
     const dispatch = useDispatch();
     const showLogoutNoti = () => toast.info('Đã đăng xuất!');
+
     return (
         <div className="container flex h-full w-full items-center justify-center space-x-11">
             <div className=" space-y-3 text-gray-600">
