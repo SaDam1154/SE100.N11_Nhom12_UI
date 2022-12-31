@@ -12,7 +12,33 @@ const groupMenus = [
             link: '/',
         },
     },
-
+    {
+        main: {
+            iconClassname: 'fa-solid fa-clipboard',
+            text: 'Hoá đơn',
+            link: '/order',
+        },
+        children: [
+            {
+                iconClassname: 'fa-solid fa-list',
+                text: 'Danh sách',
+                link: '/',
+                functionName: 'order/read',
+            },
+            {
+                iconClassname: 'fa-solid fa-circle-plus',
+                text: 'Thêm',
+                link: '/add',
+                functionName: 'order/create',
+            },
+            {
+                iconClassname: 'fa-solid fa-table',
+                text: 'Thống kê',
+                link: '/statistic',
+                functionName: 'order/statistc',
+            },
+        ],
+    },
     {
         main: {
             iconClassname: 'fa-solid fa-box-open',
@@ -77,33 +103,7 @@ const groupMenus = [
             },
         ],
     },
-    {
-        main: {
-            iconClassname: 'fa-solid fa-clipboard',
-            text: 'Hoá đơn',
-            link: '/order',
-        },
-        children: [
-            {
-                iconClassname: 'fa-solid fa-list',
-                text: 'Danh sách',
-                link: '/',
-                functionName: 'order/read',
-            },
-            {
-                iconClassname: 'fa-solid fa-circle-plus',
-                text: 'Thêm',
-                link: '/add',
-                functionName: 'order/create',
-            },
-            {
-                iconClassname: 'fa-solid fa-table',
-                text: 'Thống kê',
-                link: '/statistic',
-                functionName: 'order/statistc',
-            },
-        ],
-    },
+
     {
         main: {
             iconClassname: ' fa-solid fa-user',
