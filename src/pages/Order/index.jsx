@@ -17,18 +17,24 @@ function Orders() {
     const showDeleteNoti = () => toast.success('Xóa hoá đơn thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
-    const [allDay, setAllDay] = useState('');
-    const [value, setValue] = useState({
-        startDate: moment(new Date()).format('YYYY-MM-DD'),
-        endDate: moment(new Date()).format('YYYY-MM-DD'),
-    });
-    function isDateBetween(createdAt, startDate, endDate) {
-        const createdAtFormated = moment(createdAt).format('YYYY-MM-DD');
-        if (moment(startDate) <= moment(createdAtFormated) && moment(endDate) >= moment(createdAtFormated)) {
+    const [dateFilter, setDateFilter] = useState('all');
+
+    function checkDateInFilter(order) {
+        if (dateFilter === 'all') {
+            return true;
+        }
+        if (
+            dateFilter === 'yesterday' &&
+            moment().subtract(1, 'days').format('YYYY-MM-DD') == moment(order.createdAt).format('YYYY-MM-DD')
+        ) {
+            return true;
+        }
+        if (dateFilter === 'today' && moment().format('YYYY-MM-DD') == moment(order.createdAt).format('YYYY-MM-DD')) {
             return true;
         }
         return false;
     }
+
     const account = useSelector(accountSelector);
     function isHiddenItem(functionName) {
         if (!account) {
@@ -45,7 +51,7 @@ function Orders() {
     }
     useEffect(() => {
         getOrders();
-    }, [value]);
+    }, []);
 
     function getOrders() {
         fetch('http://localhost:5000/api/order')
@@ -112,36 +118,37 @@ function Orders() {
                         {/* Search */}
                         <div className="mr-2 flex grow">
                             <div
-                                className="w-1/2 cursor-pointer whitespace-nowrap rounded p-2 text-blue-600 transition-all duration-300 hover:bg-gray-100 hover:text-blue-700 dark:text-blue-400 dark:hover:bg-white/10 dark:hover:text-blue-400 md:w-1/3 lg:w-auto"
-                                onClick={() => {
-                                    setValue({
-                                        startDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
-                                        endDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
-                                    });
-                                    setAllDay('');
-                                }}
+                                className={clsx(
+                                    'ml-1 cursor-pointer rounded p-2 text-blue-600 transition hover:bg-gray-100',
+                                    {
+                                        '!bg-blue-500 !text-white': dateFilter === 'all',
+                                    }
+                                )}
+                                onClick={() => setDateFilter('all')}
+                            >
+                                Tất cả
+                            </div>
+                            <div
+                                className={clsx(
+                                    'ml-1 cursor-pointer rounded p-2 text-blue-600 transition hover:bg-gray-100',
+                                    {
+                                        '!bg-blue-500 !text-white': dateFilter === 'yesterday',
+                                    }
+                                )}
+                                onClick={() => setDateFilter('yesterday')}
                             >
                                 Hôm qua
                             </div>
                             <div
-                                className="w-1/2 cursor-pointer whitespace-nowrap rounded p-2 text-blue-600 transition-all duration-300 hover:bg-gray-100 hover:text-blue-700 dark:text-blue-400 dark:hover:bg-white/10 dark:hover:text-blue-400 md:w-1/3 lg:w-auto"
-                                onClick={() => {
-                                    setValue({
-                                        startDate: moment(new Date()).format('YYYY-MM-DD'),
-                                        endDate: moment(new Date()).format('YYYY-MM-DD'),
-                                    });
-                                    setAllDay('');
-                                }}
+                                className={clsx(
+                                    'ml-1 cursor-pointer rounded p-2 text-blue-600 transition hover:bg-gray-100',
+                                    {
+                                        '!bg-blue-500 !text-white': dateFilter === 'today',
+                                    }
+                                )}
+                                onClick={() => setDateFilter('today')}
                             >
                                 Hôm nay
-                            </div>
-                            <div
-                                className="w-1/2 cursor-pointer whitespace-nowrap rounded p-2 text-blue-600 transition-all duration-300 hover:bg-gray-100 hover:text-blue-700 dark:text-blue-400 dark:hover:bg-white/10 dark:hover:text-blue-400 md:w-1/3 lg:w-auto"
-                                onClick={() => {
-                                    setAllDay('all');
-                                }}
-                            >
-                                Tất cả
                             </div>
                         </div>
 
@@ -174,13 +181,7 @@ function Orders() {
 
                     <tbody className="flex h-[75vh] w-full flex-col" style={{ overflowY: 'overlay' }}>
                         {orders
-                            ?.filter((order) => {
-                                if (allDay == 'all') return true;
-                                else if (isDateBetween(order.createdAt, value.startDate, value.endDate)) {
-                                    return true;
-                                }
-                                return false;
-                            })
+                            ?.filter((order) => checkDateInFilter(order))
                             ?.reverse()
                             .map((order) => (
                                 <tr
