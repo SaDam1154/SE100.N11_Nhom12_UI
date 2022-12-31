@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import PriceFormat from '../../components/PriceFormat';
+import ReactToPrint from 'react-to-print';
 
 function DetailOrder() {
     const { id } = useParams();
     const [order, setOrder] = useState({});
     const [detailOrder, setDetailOrder] = useState([]);
+    const componentRef = useRef();
     useEffect(() => {
         fetch('http://localhost:5000/api/order/' + id)
             .then((res) => res.json())
@@ -42,7 +44,7 @@ function DetailOrder() {
 
     return (
         <div className="container">
-            <div className="mt-5 flex space-x-6">
+            <div className="mt-5 flex space-x-6" ref={componentRef}>
                 {/* PRODUCT */}
                 <div className="flex-1">
                     <table className="mt-2 w-full">
@@ -157,13 +159,16 @@ function DetailOrder() {
                             </span>
                         </div>
                     </div>
-
-                    <div className="mt-3 flex">
-                        <Link to="/order" className="btn btn-blue btn-md">
-                            Quay lại
-                        </Link>
-                    </div>
                 </div>
+            </div>
+            <div className=" flex justify-end">
+                <Link to="/order" className="btn btn-blue btn-md">
+                    Quay lại
+                </Link>
+                <ReactToPrint
+                    trigger={() => <button className="btn btn-green btn-md">In hoá đơn</button>}
+                    content={() => componentRef.current}
+                />
             </div>
         </div>
     );
