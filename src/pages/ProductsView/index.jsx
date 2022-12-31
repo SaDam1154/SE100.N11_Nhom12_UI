@@ -209,7 +209,7 @@ function ProductsView() {
                                 }
                             }
                         })
-                        ?.reverse()
+
                         .map((product) => (
                             <div key={product.id} className=" cursor-pointer select-none  rounded border ">
                                 <img className=" w-[300px] py-2 text-center" src={product.image} />

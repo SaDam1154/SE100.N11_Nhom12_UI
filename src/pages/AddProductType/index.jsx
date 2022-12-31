@@ -14,6 +14,7 @@ const validationSchema = Yup.object({
 function AddProductType() {
     const [loading, setLoading] = useState(false);
     const showSuccessNoti = () => toast.success('Thêm thông tin loại sản phẩm thành công!');
+    const showCD = () => toast.info('Bạn đã được chuyển sang trang thêm sản phẩm!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
 
     const bacsicForm = useFormik({
@@ -41,6 +42,8 @@ function AddProductType() {
                     setLoading(false);
                     showSuccessNoti();
                     bacsicForm.resetForm();
+                    navigate('/product/add');
+                    showCD();
                 } else {
                     setLoading(false);
                     showErorrNoti();
