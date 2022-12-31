@@ -108,7 +108,7 @@ function Roles() {
                     </thead>
 
                     <tbody>
-                        {roles.map((role) => (
+                        {roles.reverse().map((role) => (
                             <tr
                                 key={role.id}
                                 className="cursor-pointer border-b border-slate-200 hover:bg-slate-100"

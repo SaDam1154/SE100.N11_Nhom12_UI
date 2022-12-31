@@ -193,7 +193,8 @@ function Products() {
                                     }
                                 }
                             })
-                            ?.map((product) => (
+                            ?.reverse()
+                            .map((product) => (
                                 <tr
                                     key={product.id}
                                     className={clsx(

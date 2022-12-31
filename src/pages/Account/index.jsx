@@ -162,7 +162,7 @@ function Accounts() {
                     </thead>
 
                     <tbody className="flex h-[75vh] w-full flex-col" style={{ overflowY: 'overlay' }}>
-                        {renderAccounts.map((account) => (
+                        {renderAccounts.reverse().map((account) => (
                             <tr
                                 key={account._id}
                                 className="flex min-h-[56px] cursor-pointer border-b border-slate-200 hover:bg-slate-100"

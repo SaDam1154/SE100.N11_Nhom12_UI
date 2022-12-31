@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Listbox, Popover } from '@headlessui/react';
 import clsx from 'clsx';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { accountSelector } from '../../redux/selectors';
 function removeVietnameseTones(stra) {
     var str = stra;
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
@@ -38,7 +40,20 @@ function ProductsView() {
     const [productTypes, setProductTypes] = useState([]);
     const navigate = useNavigate();
     const [img, setImg] = useState();
-
+    const account = useSelector(accountSelector);
+    function isHiddenItem(functionName) {
+        if (!account) {
+            return true;
+        }
+        if (!functionName) {
+            return false;
+        }
+        const findResult = account?.functions?.find((_func) => _func?.name === functionName);
+        if (findResult) {
+            return false;
+        }
+        return true;
+    }
     useEffect(() => {
         //cleanup
         return () => {
@@ -160,7 +175,12 @@ function ProductsView() {
                         </span>
                         <span>Chuyển sang dạng danh sách</span>
                     </Link>
-                    <Link to="/product/add" className="btn btn-md btn-green">
+                    <Link
+                        to="/product/add"
+                        className={clsx('btn btn-md btn-green', {
+                            hidden: isHiddenItem('product/create'),
+                        })}
+                    >
                         <span className="pr-1">
                             <i className="fa-solid fa-circle-plus"></i>
                         </span>
@@ -189,22 +209,37 @@ function ProductsView() {
                                 }
                             }
                         })
-                        ?.map((product) => (
+                        ?.reverse()
+                        .map((product) => (
                             <div key={product.id} className=" cursor-pointer select-none  rounded border ">
                                 <img className=" w-[300px] py-2 text-center" src={product.image} />
                                 <h1 className="py-2 text-center">{product.type?.name || '-'}</h1>
-                                <h1 className="h-[64px] py-2 text-center">{product.name}</h1>
+                                <h1
+                                    className={clsx('h-[64px] py-2 text-center', {
+                                        'line-through': product.quantity === 0,
+                                    })}
+                                >
+                                    {product.name}
+                                </h1>
                                 <h1 className="py-2 text-center">
                                     {product.price.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
                                 </h1>
                                 <div className="flex justify-center">
-                                    <button className="btn btn-sm btn-blue">
+                                    <button
+                                        className={clsx('btn btn-sm btn-blue', {
+                                            hidden: isHiddenItem('product/update'),
+                                        })}
+                                    >
                                         <span className="pr-1">
                                             <i className="fa-solid fa-pen-to-square"></i>
                                         </span>
                                         <span>Sửa</span>
                                     </button>
-                                    <button className="btn btn-sm btn-red">
+                                    <button
+                                        className={clsx('btn btn-sm btn-red', {
+                                            hidden: isHiddenItem('product/delete'),
+                                        })}
+                                    >
                                         <span className="pr-1">
                                             <i className="fa-solid fa-circle-xmark"></i>
                                         </span>

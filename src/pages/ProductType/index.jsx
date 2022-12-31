@@ -176,7 +176,8 @@ function ProductType() {
                                     }
                                 }
                             })
-                            ?.map((productType) => (
+                            ?.reverse()
+                            .map((productType) => (
                                 <tr
                                     key={productType.id}
                                     className="flex min-h-[56px] cursor-pointer border-b border-slate-200 hover:bg-slate-100"

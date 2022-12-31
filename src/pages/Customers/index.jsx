@@ -133,7 +133,8 @@ function Customers() {
                                     : customer.name.toLowerCase().includes(search) ||
                                           customer.phone.toLowerCase().includes(search);
                             })
-                            ?.map((customer, index) => (
+                            ?.reverse()
+                            .map((customer, index) => (
                                 <tr
                                     key={customer._id}
                                     className="flex min-h-[56px] cursor-pointer border-b border-slate-200 hover:bg-slate-100"

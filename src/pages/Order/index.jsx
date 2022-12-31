@@ -136,7 +136,7 @@ function Orders() {
                     </thead>
 
                     <tbody className="flex h-[75vh] w-full flex-col" style={{ overflowY: 'overlay' }}>
-                        {orders?.map((order) => (
+                        {orders?.reverse().map((order) => (
                             <tr
                                 key={order.id}
                                 className="flex min-h-[56px] cursor-pointer border-b border-slate-200 hover:bg-slate-100"

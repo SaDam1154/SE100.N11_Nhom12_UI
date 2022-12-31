@@ -199,6 +199,7 @@ function Statistic() {
                                     }
                                     return false;
                                 })
+                                .reverse()
                                 .map((order) => (
                                     <tr
                                         key={order.id}
