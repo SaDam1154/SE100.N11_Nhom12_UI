@@ -160,6 +160,7 @@ function AddOrder() {
             body: JSON.stringify({
                 ...order,
                 receivedMoney,
+                exchangeMoney,
             }),
         })
             .then((res) => res.json())
