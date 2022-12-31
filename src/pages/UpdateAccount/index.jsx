@@ -50,7 +50,7 @@ function UpdateAccount() {
         initialValues: {
             name: account.name,
             email: account.email,
-            // role: account.role,
+            role: account.role?._id,
         },
         enableReinitialize: true,
         validationSchema,
@@ -160,19 +160,19 @@ function UpdateAccount() {
                                     </span>
                                 </div>
                                 <div className="form-group flex flex-col">
-                                    <label className="mb-1 select-none  font-semibold text-gray-900 " htmlFor="type">
+                                    <label className="mb-1 select-none  font-semibold text-gray-900 " htmlFor="role">
                                         Chức vụ
                                     </label>
 
                                     <AccountRule
-                                        // id="type"
+                                        id="role"
                                         className={clsx('text-input cursor-pointer py-[5px]', {
-                                            // invalid: bacsicForm.touched.type && bacsicForm.errors.type,
+                                            invalid: bacsicForm.touched.type && bacsicForm.errors.type,
                                         })}
-                                        // onChange={bacsicForm.handleChange}
-                                        // onBlur={bacsicForm.handleBlur}
-                                        // value={bacsicForm.values.role}
-                                        // name="type"
+                                        onChange={bacsicForm.handleChange}
+                                        onBlur={bacsicForm.handleBlur}
+                                        value={bacsicForm.values.role}
+                                        name="role"
                                     />
 
                                     <span
