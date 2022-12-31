@@ -16,6 +16,18 @@ function Orders() {
     const navigate = useNavigate();
     const showDeleteNoti = () => toast.success('Xóa hoá đơn thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
+
+    const [value, setValue] = useState({
+        startDate: moment(new Date()).format('YYYY-MM-DD'),
+        endDate: moment(new Date()).format('YYYY-MM-DD'),
+    });
+    function isDateBetween(createdAt, startDate, endDate) {
+        const createdAtFormated = moment(createdAt).format('YYYY-MM-DD');
+        if (moment(startDate) <= moment(createdAtFormated) && moment(endDate) >= moment(createdAtFormated)) {
+            return true;
+        }
+        return false;
+    }
     const account = useSelector(accountSelector);
     function isHiddenItem(functionName) {
         if (!account) {
@@ -32,7 +44,7 @@ function Orders() {
     }
     useEffect(() => {
         getOrders();
-    }, []);
+    }, [value]);
 
     function getOrders() {
         fetch('http://localhost:5000/api/order')
@@ -98,14 +110,28 @@ function Orders() {
                     <div className="flex grow">
                         {/* Search */}
                         <div className="mr-2 flex grow">
-                            {/* <input
-                                type="text"
-                                className="text-input grow"
-                                onChange={(e) => {
-                                    setSearch(e.target.value);
+                            <div
+                                className="w-1/2 cursor-pointer whitespace-nowrap rounded p-2 text-blue-600 transition-all duration-300 hover:bg-gray-100 hover:text-blue-700 dark:text-blue-400 dark:hover:bg-white/10 dark:hover:text-blue-400 md:w-1/3 lg:w-auto"
+                                onClick={() => {
+                                    setValue({
+                                        startDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
+                                        endDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
+                                    });
                                 }}
-                                placeholder="Tìm kiếm sản phẩm"
-                            /> */}
+                            >
+                                Hôm qua
+                            </div>
+                            <div
+                                className="w-1/2 cursor-pointer whitespace-nowrap rounded p-2 text-blue-600 transition-all duration-300 hover:bg-gray-100 hover:text-blue-700 dark:text-blue-400 dark:hover:bg-white/10 dark:hover:text-blue-400 md:w-1/3 lg:w-auto"
+                                onClick={() => {
+                                    setValue({
+                                        startDate: moment(new Date()).format('YYYY-MM-DD'),
+                                        endDate: moment(new Date()).format('YYYY-MM-DD'),
+                                    });
+                                }}
+                            >
+                                Hôm nay
+                            </div>
                         </div>
 
                         <Link
@@ -136,48 +162,56 @@ function Orders() {
                     </thead>
 
                     <tbody className="flex h-[75vh] w-full flex-col" style={{ overflowY: 'overlay' }}>
-                        {orders?.reverse().map((order) => (
-                            <tr
-                                key={order.id}
-                                className="flex min-h-[56px] cursor-pointer border-b border-slate-200 hover:bg-slate-100"
-                                onClick={() => linkToDetail(order.id)}
-                            >
-                                <td className="flex w-16 items-center justify-end px-2 py-2">{order.id}</td>
-                                <td className="flex flex-[2] items-center justify-start px-4 py-2">
-                                    {order.customer?.name}
-                                </td>
-                                <td className="flex w-60 items-center justify-start px-2 py-2">
-                                    {order.customer?.phone}
-                                </td>
-                                <td className="flex w-44 items-center justify-end px-2 py-2">
-                                    <PriceFormat>{order.totalPrice}</PriceFormat>
-                                </td>
-                                <td className="flex w-56 items-center justify-end px-2 py-2">
-                                    {moment(order.createdAt).format('HH:mm:ss DD/MM/YYYY ')}
-                                </td>
-                                <td className="flex w-[140px] items-center justify-center px-2 py-2">
-                                    <div className="flex justify-end">
-                                        <button
-                                            className={clsx('btn btn-sm btn-red', {
-                                                hidden: isHiddenItem('order/delete'),
-                                            })}
-                                            onClick={(e) => {
-                                                {
-                                                    e.stopPropagation();
-                                                    setShowDeleteDialog(true);
-                                                    setDeletingOrderId(order.id);
-                                                }
-                                            }}
-                                        >
-                                            <span className="pr-1">
-                                                <i className="fa-solid fa-circle-xmark"></i>
-                                            </span>
-                                            <span>Xoá</span>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
+                        {orders
+                            ?.filter((order) => {
+                                if (isDateBetween(order.createdAt, value.startDate, value.endDate)) {
+                                    return true;
+                                }
+                                return false;
+                            })
+                            ?.reverse()
+                            .map((order) => (
+                                <tr
+                                    key={order.id}
+                                    className="flex min-h-[56px] cursor-pointer border-b border-slate-200 hover:bg-slate-100"
+                                    onClick={() => linkToDetail(order.id)}
+                                >
+                                    <td className="flex w-16 items-center justify-end px-2 py-2">{order.id}</td>
+                                    <td className="flex flex-[2] items-center justify-start px-4 py-2">
+                                        {order.customer?.name}
+                                    </td>
+                                    <td className="flex w-60 items-center justify-start px-2 py-2">
+                                        {order.customer?.phone}
+                                    </td>
+                                    <td className="flex w-44 items-center justify-end px-2 py-2">
+                                        <PriceFormat>{order.totalPrice}</PriceFormat>
+                                    </td>
+                                    <td className="flex w-56 items-center justify-end px-2 py-2">
+                                        {moment(order.createdAt).format('HH:mm:ss DD/MM/YYYY ')}
+                                    </td>
+                                    <td className="flex w-[140px] items-center justify-center px-2 py-2">
+                                        <div className="flex justify-end">
+                                            <button
+                                                className={clsx('btn btn-sm btn-red', {
+                                                    hidden: isHiddenItem('order/delete'),
+                                                })}
+                                                onClick={(e) => {
+                                                    {
+                                                        e.stopPropagation();
+                                                        setShowDeleteDialog(true);
+                                                        setDeletingOrderId(order.id);
+                                                    }
+                                                }}
+                                            >
+                                                <span className="pr-1">
+                                                    <i className="fa-solid fa-circle-xmark"></i>
+                                                </span>
+                                                <span>Xoá</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
             </div>
