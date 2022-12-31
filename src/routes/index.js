@@ -63,6 +63,13 @@ const publicRoutes = [
             heading: 'Chi tiết hoá đơn',
         },
     },
+    {
+        path: 'order/statistic',
+        component: Statistic,
+        props: {
+            heading: 'Thống kê',
+        },
+    },
 
     // PRODUCT
     {
@@ -191,13 +198,7 @@ const publicRoutes = [
     },
 
     // *****
-    {
-        path: '/statistic',
-        component: Statistic,
-        props: {
-            heading: 'Thống kê',
-        },
-    },
+
     {
         path: '/role',
         component: Roles,

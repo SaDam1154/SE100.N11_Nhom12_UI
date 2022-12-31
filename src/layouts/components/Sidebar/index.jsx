@@ -96,14 +96,13 @@ const groupMenus = [
                 link: '/add',
                 functionName: 'order/create',
             },
+            {
+                iconClassname: 'fa-solid fa-table',
+                text: 'Thống kê',
+                link: '/statistic',
+                functionName: 'order/statistc',
+            },
         ],
-    },
-    {
-        main: {
-            iconClassname: 'fa-solid fa-table',
-            text: 'Thống kê',
-            link: '/statistic',
-        },
     },
     {
         main: {

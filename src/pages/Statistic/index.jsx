@@ -12,7 +12,6 @@ import { accountSelector } from '../../redux/selectors';
 function Statistic() {
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [deletingOrderId, setDeletingOrderId] = useState(null);
-    const [search, setSearch] = useState('');
     const [money, setMoney] = useState(0);
     const [number, setNumber] = useState(0);
     const [orders, setOrders] = useState([]);
@@ -20,14 +19,35 @@ function Statistic() {
     const showDeleteNoti = () => toast.success('Xóa hoá đơn thành công!');
     const showErorrNoti = () => toast.error('Có lỗi xảy ra!');
     const [value, setValue] = useState({
-        startDate: new Date(),
-        endDate: new Date(),
+        startDate: moment(new Date()).format('YYYY-MM-DD'),
+        endDate: moment(new Date()).format('YYYY-MM-DD'),
     });
 
-    const handleValueChange = (newValue) => {
-        console.log('newValue:', newValue);
-        setValue(newValue);
-    };
+    useEffect(() => {
+        const newMoney = orders?.reduce((prevMoney, currOrder) => {
+            if (isDateBetween(currOrder.createdAt, value.startDate, value.endDate)) {
+                return prevMoney + currOrder.totalPrice;
+            }
+            return prevMoney;
+        }, 0);
+        const newNumber = orders?.filter((order) => {
+            if (isDateBetween(order.createdAt, value.startDate, value.endDate)) {
+                return true;
+            }
+            return false;
+        })?.length;
+
+        setMoney(newMoney);
+        setNumber(newNumber);
+    }, [value, orders]);
+
+    function isDateBetween(createdAt, startDate, endDate) {
+        const createdAtFormated = moment(createdAt).format('YYYY-MM-DD');
+        if (moment(startDate) <= moment(createdAtFormated) && moment(endDate) >= moment(createdAtFormated)) {
+            return true;
+        }
+        return false;
+    }
 
     const account = useSelector(accountSelector);
     function isHiddenItem(functionName) {
@@ -93,8 +113,8 @@ function Statistic() {
             <div className="container">
                 <div className="flex space-x-4">
                     {/* tite + reload btn */}
-                    <div className="flex">
-                        <label className="text-2xl font-bold text-slate-800">Danh sách hóa đơn</label>
+                    <div className="flex items-center">
+                        <label className="text-2xl font-bold text-slate-800">Thống kê hóa đơn</label>
                         <button
                             type="button"
                             className="ml-3 text-gray-800 hover:underline"
@@ -108,18 +128,16 @@ function Statistic() {
                     </div>
 
                     {/* Action group */}
-                    <div className="flex grow">
-                        {/* Search */}
+                    <div className="flex grow items-center">
                         <div className="mr-2 flex grow">
-                            <div>
-                                <Datepicker
-                                    value={value}
-                                    ClassName="w-1"
-                                    dateFormat="dd/mm/yyyy"
-                                    onChange={handleValueChange}
-                                    showShortcuts={true}
-                                />
-                            </div>
+                            <Datepicker
+                                value={value}
+                                inputClassName="border-2 border-gray-500 outline-none w-full text-base !py-1.5 hover:border-blue-500"
+                                displayFormat={'DD/MM/YYYY'}
+                                separator={'đến'}
+                                onChange={(newValue) => setValue(newValue)}
+                                showShortcuts={true}
+                            />
                         </div>
 
                         <Link
@@ -136,9 +154,22 @@ function Statistic() {
                     </div>
                 </div>
 
+                <div className="mt-8 flex w-full justify-center space-x-8">
+                    <div className="flex min-w-[200px] flex-col items-center">
+                        <div className="">Số hoá đơn</div>
+                        <div className="text-6xl font-semibold text-blue-500">{number || 0}</div>
+                    </div>
+                    <div className="flex min-w-[200px] flex-col items-center">
+                        <div className="">Tổng doanh thu (VNĐ)</div>
+                        <div className="text-6xl font-semibold text-blue-500">
+                            <PriceFormat>{money || 0}</PriceFormat>
+                        </div>
+                    </div>
+                </div>
+
                 {/* LIST */}
                 <div className="flex flex-col">
-                    <table className="my-8  w-full">
+                    <table className="mt-8 w-full border-b">
                         <thead className="w-full rounded bg-blue-500 text-white">
                             <tr className="flex h-11 w-full">
                                 <th className="flex w-16 items-center justify-end px-2">Mã</th>
@@ -150,25 +181,13 @@ function Statistic() {
                             </tr>
                         </thead>
 
-                        <tbody className="flex h-[60vh] w-full flex-col" style={{ overflowY: 'overlay' }}>
+                        <tbody className="flex h-[50vh] w-full flex-col" style={{ overflowY: 'overlay' }}>
                             {orders
                                 ?.filter((order) => {
-                                    if (value.startDate <= order.createdAt)
-                                        console.log('value.startDate <= order.createdAt');
-                                    if (value.endDate >= order.createdAt.get) {
-                                        console.log('value.endDate >= order.createdAt');
+                                    if (isDateBetween(order.createdAt, value.startDate, value.endDate)) {
+                                        return true;
                                     }
-                                    if (value.startDate <= order.createdAt && value.endDate >= order.createdAt) {
-                                        //  setMoney(money + order.totalPrice);
-                                        //  setNumber(number + 1);
-                                        // console.log(money, number);
-                                        return order;
-                                    } else {
-                                        if (value.startDate == value.endDate) {
-                                            console.log('==');
-                                            // return order;
-                                        }
-                                    }
+                                    return false;
                                 })
                                 .map((order) => (
                                     <tr
@@ -214,20 +233,6 @@ function Statistic() {
                                 ))}
                         </tbody>
                     </table>
-                    <div className="flex w-full border border-solid">
-                        <div className="mt-2 flex basis-1/2 flex-col">
-                            <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="name">
-                                Số đơn hàng
-                            </label>
-                            <div className="text-input disabled select-none py-[5px]">{number}</div>
-                        </div>
-                        <div className="mt-2 flex basis-1/2 flex-col">
-                            <label className="mb-1 cursor-default text-lg font-semibold" htmlFor="name">
-                                Tổng doanh thu
-                            </label>
-                            <div className="text-input disabled select-none py-[5px]">{money}</div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
