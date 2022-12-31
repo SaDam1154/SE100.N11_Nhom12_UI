@@ -108,10 +108,30 @@ function DetailOrder() {
 
                     <div className="mt-3 space-y-3 border-b pb-3">
                         <div className="text-lg">
-                            <span>Thành tiền: </span>
+                            <span>Tổng tiền: </span>
                             <span className="text-xl font-semibold text-blue-600">
                                 <span>
                                     <PriceFormat>{order?.totalPrice}</PriceFormat>
+                                </span>
+                                <span> VNĐ</span>
+                            </span>
+                        </div>
+                        <div className="text-lg">
+                            <span>Giảm giá: </span>
+                            <span className="text-xl font-semibold text-red-400">
+                                <span>
+                                    <PriceFormat>{order?.discount || 0}</PriceFormat>
+                                </span>
+                                <span> VNĐ</span>
+                            </span>
+                        </div>
+                        <div className="flex items-center text-lg">
+                            <label className="mr-2" htmlFor="price">
+                                Thành tiền:
+                            </label>
+                            <span className="text-xl font-semibold text-blue-600">
+                                <span>
+                                    <PriceFormat>{order?.totalPrice - (order?.discount || 0)}</PriceFormat>
                                 </span>
                                 <span> VNĐ</span>
                             </span>
@@ -120,7 +140,7 @@ function DetailOrder() {
                             <label className="mr-2" htmlFor="price">
                                 Tiền nhận:
                             </label>
-                            <span className="text-xl font-semibold text-blue-600">
+                            <span className="text-xl font-semibold text-green-600">
                                 <span>
                                     <PriceFormat>{order?.receivedMoney}</PriceFormat>
                                 </span>

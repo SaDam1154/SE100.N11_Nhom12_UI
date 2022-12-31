@@ -54,6 +54,7 @@ function AddOrder() {
     const [isValidCustomer, setIsValidCustomer] = useState(false);
 
     const [receivedMoney, setReceivedMoney] = useState(0);
+    const [discount, setDiscount] = useState(0);
     const [exchangeMoney, setExchangeMoney] = useState(0);
 
     const [search, setSearch] = useState('');
@@ -121,6 +122,7 @@ function AddOrder() {
                         name: '',
                         price: 0,
                         quantity: 0,
+                        discount: 0,
                     };
                 }
                 return {
@@ -129,6 +131,7 @@ function AddOrder() {
                     image: matchedProduct.image,
                     name: matchedProduct.name,
                     price: detail.price,
+                    discount: detail.discount,
                     quantity: matchedProduct.quantity,
                     orderQuantity: detail.quantity,
                 };
@@ -137,8 +140,8 @@ function AddOrder() {
     }, [order, products]);
 
     useEffect(() => {
-        setExchangeMoney(receivedMoney - order?.totalPrice);
-    }, [order.totalPrice, receivedMoney]);
+        setExchangeMoney(receivedMoney - (order?.totalPrice - discount));
+    }, [order.totalPrice, receivedMoney, discount]);
 
     function handleAddProduct(product) {
         dispatch(orderActions.add(product));
@@ -161,6 +164,7 @@ function AddOrder() {
                 ...order,
                 receivedMoney,
                 exchangeMoney,
+                discount,
             }),
         })
             .then((res) => res.json())
@@ -432,10 +436,32 @@ function AddOrder() {
 
                                 <div className="mt-3 space-y-3 border-b pb-3">
                                     <div className="text-lg">
-                                        <span>Thành tiền: </span>
+                                        <span>Tổng tiền: </span>
                                         <span className="text-xl font-semibold text-blue-600">
                                             <span>
                                                 <PriceFormat>{order?.totalPrice}</PriceFormat>
+                                            </span>
+                                            <span> VNĐ</span>
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center text-lg">
+                                        <label className="mr-2" htmlFor="discount">
+                                            Giảm giá
+                                        </label>
+                                        <PriceInput
+                                            id="discount"
+                                            name="discount"
+                                            value={discount}
+                                            onChange={(e) => setDiscount(e.target.value)}
+                                            className="w-56"
+                                            placeholder="Giảm giá"
+                                        />
+                                    </div>
+                                    <div className="text-lg">
+                                        <span>Thành tiền: </span>
+                                        <span className="text-xl font-semibold text-blue-600">
+                                            <span>
+                                                <PriceFormat>{order?.totalPrice - discount}</PriceFormat>
                                             </span>
                                             <span> VNĐ</span>
                                         </span>
@@ -453,6 +479,7 @@ function AddOrder() {
                                             placeholder="Tiền nhận"
                                         />
                                     </div>
+
                                     <div className="text-lg">
                                         <span>Tiền thừa: </span>
                                         <span
